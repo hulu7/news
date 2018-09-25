@@ -1,0 +1,4 @@
+[gerrit]
+host=192.168.163.37      
+port=29418
+project=news.git
