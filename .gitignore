@@ -1,0 +1,13 @@
+.idea/
+*.pyc
+flySpider/huxiu/huSpider/build/
+flySpider/huxiu/huSpider/dbs/
+flySpider/huxiu/huSpider/eggs/
+flySpider/huxiu/huSpider/project.egg-info/
+flySpider/huxiu/huSpider/setup.py
+
+flySpider/infzm/infzmSpider/build/
+flySpider/infzm/infzmSpider/dbs/
+flySpider/infzm/infzmSpider/project.egg-info/
+flySpider/infzm/infzmSpider/setup.py
+
