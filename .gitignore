@@ -5,9 +5,17 @@ flySpider/huxiu/huSpider/dbs/
 flySpider/huxiu/huSpider/eggs/
 flySpider/huxiu/huSpider/project.egg-info/
 flySpider/huxiu/huSpider/setup.py
+flySpider/huxiu/huSpider/twistd.pid
 
 flySpider/infzm/infzmSpider/build/
 flySpider/infzm/infzmSpider/dbs/
 flySpider/infzm/infzmSpider/project.egg-info/
 flySpider/infzm/infzmSpider/setup.py
+flySpider/infzm/infzmSpider/twistd.pid
 
+flySpider/ifeng/ifengSpider/build/
+flySpider/ifeng/ifengSpider/dbs/
+flySpider/ifeng/ifengSpider/eggs/
+flySpider/ifeng/ifengSpider/project.egg-info/
+flySpider/ifeng/ifengSpider/setup.py
+flySpider/ifeng/ifengSpider/twistd.pid

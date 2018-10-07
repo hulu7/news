@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from scrapy import Request
 from scrapy.spiders import CrawlSpider, Rule
-from huSpider.items import HuspiderToMongodbItem
 
 class HuxiuSpider(CrawlSpider):
     name = 'huxiu'
