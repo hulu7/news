@@ -36,16 +36,11 @@ class IfengspiderToMongodbPipeline(object):
 
     def _process_ifengspider_item(self,item):
         mongodbItem = dict(item)
-        mongodbItem.pop('content')
         self.db.contentInfo.insert(mongodbItem)
 
 class IfengspiderToTxtPipeline(object):
     def process_item(self, item, spider):
-        file_name = spider.name + "_" + item['id'] + "_" + ".txt"
-        fp = open(spider.settings.get('TXT_PATH') + '/' + file_name, 'w')
-        fp.write(item['content'])
-        fp.close()
         cache = open(spider.settings.get('CACHE_PATH'), 'w')
-        cache.write(filter(str.isdigit, item['url']))
+        cache.write(filter(str.isdigit, item['id']))
         cache.close()
         return item

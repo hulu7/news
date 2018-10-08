@@ -151,8 +151,6 @@ AUTOTHROTTLE_MAX_DELAY = 60
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MAX_PAGE = 300000
 SELENIUM_TIMEOUT = 10
 CHROMEDRIVER_SERVICE_ARGS = "//usr//bin//chromedriver"
-TXT_PATH = "//home//dev//Data//files//ifeng//txt"
 CACHE_PATH = "//home//dev//Data//files//ifeng//cache//cache.txt"

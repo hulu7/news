@@ -1,22 +1,22 @@
 echo "****************************install pip******************************"
-yum -y install epel-release
-yum -y install python-pip
+echo 'y' | yum -y install epel-release
+echo 'y' | yum -y install python-pip
 pip install --upgrade pip
 echo "*************************install setuptools**************************"
-yum install gcc-c++
-yum install zlib
-yum install zlib-devel
+echo 'y' | yum install gcc-c++
+echo 'y' | yum install zlib
+echo 'y' | yum install zlib-devel
 pip install setuptools
 echo "****************************install openssl**************************"
-yum install openssl
-yum install openssl-devel
+echo 'y' | yum install openssl
+echo 'y' | yum install openssl-devel
 echo "***************************install chrome****************************"
-yum install wget
-yum install -y lsb
-yum install -y libXScrnSaver
+echo 'y' | yum install wget
+echo 'y' | yum install -y lsb
+echo 'y' | yum install -y libXScrnSaver
 cd '/opt/'
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-yum localinstall google-chrome-stable_current_x86_64.rpm
+echo 'y' | yum localinstall google-chrome-stable_current_x86_64.rpm
 echo "***************************install requests**************************"
 pip install requests
 echo "************************install Beautifulsoup4***********************"
@@ -30,7 +30,7 @@ pip install pymongo
 echo "************************install zope.interface***********************"
 pip install zope.interface
 echo "****************************install Twisted**************************"
-yum install python-devel
+echo 'y' | yum install python-devel
 pip install Twisted
 echo "****************************install Scrapy***************************"
 pip install Scrapy
@@ -46,12 +46,13 @@ echo "***************************install BloomFilter***********************"
 pip install pybloom
 echo "******************************install Redis**************************"
 cd '/usr/local/'
-yum install gcc make readline readline-devel tkutil tk tkutil-devel tk-devel ntp -y
+echo 'y' | yum install gcc make readline readline-devel tkutil tk tkutil-devel tk-devel ntp -y
 wget http://distfiles.macports.org/redis/redis-4.0.11.tar.gz
 tar -zxvf redis-4.0.11.tar.gz
-cd '/usr/local/redis-4.0.11'
+mv redis-4.0.11 redis
+cd '/usr/local/redis'
 make
-cd '/usr/local/redis-4.0.11/src'
+cd '/usr/local/redis/src'
 make test
 echo "****************************install redis-py**************************"
 pip install redis
@@ -60,7 +61,7 @@ pip install scrapy_redis
 echo "*****************************install Selenium**************************"
 pip install Selenium
 echo "***************************install Chromedriver************************"
-yum install unzip
+echo 'y' | yum install unzip
 cd '/opt/'
 wget http://chromedriver.storage.googleapis.com/70.0.3538.16/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip
@@ -73,7 +74,7 @@ gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-4.0.asc
 ' >> '/etc/yum.repos.d/MongoDB.repo'
-yum install -y mongodb-org
+echo 'y' | yum install -y mongodb-org
 echo "*****************************install sqlite3***************************"
 echo 'y' | yum install sqlite-devel
 echo "*****************************install iptables**************************"
