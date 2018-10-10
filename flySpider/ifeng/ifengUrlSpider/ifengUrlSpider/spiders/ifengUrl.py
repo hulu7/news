@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from scrapy import Request
 from scrapy.spiders import CrawlSpider, Rule
-from ifengSpider.items import IfengspiderToMongodbItem
+from ifengUrlSpider.items import IfengUrlspiderToMongodbItem
 from scrapy.linkextractors import LinkExtractor
 from scrapy.selector import Selector
 import re
 
-class IfengSpider(CrawlSpider):
-    name = 'ifeng'
+class IfengUrlSpider(CrawlSpider):
+    name = 'ifengUrl'
     allowed_domains = ["ifeng.com"]
     start_urls = ['http://www.ifeng.com/']
     id=0
@@ -17,8 +17,13 @@ class IfengSpider(CrawlSpider):
                            follow = True),
     )
 
+    def restart(self):
+        with open(self.settings.get('CACHE_PATH')) as file:
+            self.id = int(file.read())
+
     def parse_start_url(self, response):
-        item = IfengspiderToMongodbItem()
+        self.restart()
+        item = IfengUrlspiderToMongodbItem()
         sel = Selector(response)
         url_list = sel.xpath('//a[contains(@href, "shtml")]').extract()
         pattern_url = re.compile(r"(?<=href=\").*?(?=\")")
@@ -29,12 +34,13 @@ class IfengSpider(CrawlSpider):
                 requestedItem = re.findall(pattern_artical, href_item)
                 if len(requestedItem) != 0:
                     self.id += 1
-                    item['url'] = href_item.split('%')[0].strip('/').strip('?').strip('#')
+                    item['url'] = href_item.split('%')[0].strip('/').strip('?')
                     item['id'] = str(self.id)
                     yield item
 
     def parse_item(self, response):
-        item = IfengspiderToMongodbItem()
+        self.restart()
+        item = IfengUrlspiderToMongodbItem()
         sel = Selector(response)
         not_fnd = sel.xpath(".//*[@class='tips404']").extract()
         if len(not_fnd) != 1:

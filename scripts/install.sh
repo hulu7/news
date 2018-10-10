@@ -54,6 +54,7 @@ cd '/usr/local/redis'
 make
 cd '/usr/local/redis/src'
 make test
+make install
 echo "****************************install redis-py**************************"
 pip install redis
 echo "***************************install scrapy-redis***********************"
