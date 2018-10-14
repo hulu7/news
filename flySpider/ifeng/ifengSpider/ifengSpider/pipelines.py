@@ -10,6 +10,14 @@ sys.setdefaultencoding('utf-8')
 import pymongo
 from ifengSpider.items import IfengspiderToMongodbItem
 
+class IfengspiderToTxtPipeline(object):
+    def process_item(self, item, spider):
+        file_name = spider.name + "_" + str(item['id']) + "_" + ".txt"
+        fp = open(spider.settings.get('TXT_PATH') + '/' + file_name, 'w')
+        fp.write(str(item['content']))
+        fp.close()
+        return item
+
 class IfengspiderToMongodbPipeline(object):
     def __init__(self, mongo_uri, mongo_db,replicaset):
         self.mongo_uri = mongo_uri
@@ -30,17 +38,16 @@ class IfengspiderToMongodbPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        if isinstance(item,IfengspiderToMongodbItem):
-            self._process_ifengspider_item(item)
+        if isinstance(item, IfengspiderToMongodbItem):
+            self._process_ifengspider_item(item, spider)
         return item
 
-    def _process_ifengspider_item(self,item):
+    def _process_ifengspider_item(self, item, spider):
         mongodbItem = dict(item)
+        mongodbItem.pop('content')
         self.db.contentInfo.insert(mongodbItem)
 
-class IfengspiderToTxtPipeline(object):
-    def process_item(self, item, spider):
-        cache = open(spider.settings.get('CACHE_PATH'), 'w')
-        cache.write(filter(str.isdigit, item['id']))
-        cache.close()
-        return item
+        id_cache = open(spider.settings.get('CACHE_PATH'), 'w')
+        next_id = int(item['id'])
+        id_cache.write(str(next_id))
+        id_cache.close()

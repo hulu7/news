@@ -47,8 +47,8 @@ DEFAULT_REQUEST_HEADERS = {
   'Cache-Control':'no-cache',
   'Pragma':'no-cache',
   'Upgrade-Insecure-Requests':'1',
-  'Host':'www.huxiu.com',
-  'referer':'https://www.huxiu.com/'
+  'Host':'www.ifeng.com',
+  'referer':'http://www.ifeng.com/'
 }
 
 USER_AGENTS = [
@@ -126,8 +126,8 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'ifengSpider.pipelines.IfengspiderToMongodbPipeline': 302,
-   'ifengSpider.pipelines.IfengspiderToTxtPipeline': 602
+    'ifengSpider.pipelines.IfengspiderToMongodbPipeline': 302,
+    'ifengSpider.pipelines.IfengspiderToTxtPipeline': 600
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -153,4 +153,11 @@ AUTOTHROTTLE_MAX_DELAY = 60
 
 SELENIUM_TIMEOUT = 10
 CHROMEDRIVER_SERVICE_ARGS = "//usr//bin//chromedriver"
-CACHE_PATH = "//home//dev//Data//files//ifeng//cache//cache.txt"
+CACHE_PATH = "//home//dev//Data//files//ifeng//data//cache//cache.txt"
+TXT_PATH = "//home//dev//Data//files//ifeng//data//txt"
+CSV_PATH = "//home//dev//Data//files//ifeng//data//data.csv"
+MONGO_URI = 'mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019'
+REPLICASET = 'repset'
+MONGO_DATABASE ='ifeng'
+MONGO_DATABASE_URL ='ifengUrl'
+
