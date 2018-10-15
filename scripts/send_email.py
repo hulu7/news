@@ -5,9 +5,9 @@ from time import sleep
 def sentemail():
     host = 'smtp.163.com'
     port = 465
-    sender = 'hui_asus@163.com'
-    pwd = 'thebest1990'
-    receiver = 'huiskai@qq.com'
+    sender = '@163.com'
+    pwd = ''
+    receiver = '@qq.com'
     url_download=open('//home//dev//Backups//prd1//files//ifeng//url//cache//cache.txt', 'r')
     url_status=url_download.read()
     url_download.close()
