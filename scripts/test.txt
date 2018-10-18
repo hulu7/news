@@ -1,0 +1,10 @@
+${time}
+${`date "+%Y-%m-%d %H:%M:%S "`}
+
+%date%
+20181017
+20181017+Octh10m1539780571s%
+Wed Oct 17 20:50:17 CST 2018
+Wed Oct 17 20:50:54 CST 2018
+Wed Oct 17 20:50:54 CST 2018
+Wed Oct 17 20:52:31 CST 2018 : step2 start

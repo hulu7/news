@@ -55,7 +55,6 @@ class Scheduler(object):
     @classmethod
     def from_crawler(cls, crawler):
         instance = cls.from_settings(crawler.settings)
-        # FIXME: for now, stats are only supported from this constructor
         instance.stats = crawler.stats
         return instance
 
