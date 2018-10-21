@@ -30,8 +30,9 @@ clean_file='clean_file.txt'
 file = open(clean_file,'r')
 content = file.read()
 file.close()
-splt=re.split('。|！|\!|\.|？|\?', content)
-for line in splt:
+split_list=re.split('。|！|\!|\.|？|\?', content)
+sentence_list=list(filter(None, split_list))
+for line in sentence_list:
 
     if (line == ''):
         break
@@ -78,3 +79,30 @@ print json.dumps(relationships, ensure_ascii=False, encoding='UTF-8')
 tojson = open('map.json', 'w')
 tojson.write(json.dumps(relationships, ensure_ascii=False))
 tojson.close()
+
+file = open('map.json', 'r')
+parent_object = json.load(file)
+file.close()
+all_layers = []
+def find(parent_object, link_layer):
+    for child_first_key in parent_object:
+        if child_first_key == link_layer[len(link_layer) - 1]:
+            child_object = parent_object[child_first_key]
+            for child_second_key in child_object:
+                if child_second_key not in link_layer:
+                    link_layer.append(child_second_key)
+                    return find(parent_object, link_layer)
+    return link_layer
+
+for child_first_key in parent_object:
+    link_layer = [child_first_key]
+    all_layers.append(find(parent_object, link_layer))
+
+deep = []
+for layer in all_layers:
+    deep.append(len(layer))
+deepest = str(max(deep))
+file2 = open('result_json.txt', 'w')
+file2.write(str(deepest))
+file2.close()
+print "deep: " + str(deepest)

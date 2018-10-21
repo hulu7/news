@@ -8,13 +8,13 @@ def sentemail():
     sender = 'hui_asus@163.com'
     pwd = 'thebest1990'
     receiver = 'huiskai@qq.com'
-    url_download=open('//home//dev//Backups//spiderNode1//files//ifeng//url//cache//cache.txt', 'r')
+    url_download=open('//home//dev//Repository//news//scripts//deep_cache.txt', 'r')
     url_status=url_download.read()
     url_download.close()
     content_download=open('//home//dev//Backups//spiderNode1//files//ifeng//data//cache//cache.txt', 'r')
     content_status=content_download.read()
     content_download.close()
-    body = '<p>Url Status:</p>' + '<p>'+ url_status +'</p>' + '<p>Content Status:</p>' + '<p>'+ content_status +'</p>'
+    body = '<p>Deep process:</p>' + '<p>'+ url_status +'</p>' + '<p>Content Status:</p>' + '<p>'+ content_status +'</p>'
     msg = MIMEText(body, 'html')
     msg['subject'] = 'ifeng status'
     msg['from'] = sender
