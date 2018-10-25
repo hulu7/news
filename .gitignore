@@ -20,6 +20,8 @@ flySpider/ifeng/ifengSpider/project.egg-info/
 flySpider/ifeng/ifengSpider/setup.py
 flySpider/ifeng/ifengSpider/twistd.pid
 
+flySpider/ifeng/ifengUrlSpider2/log.log
+
 flySpider/ifeng/ifengUrlSpider/build/
 flySpider/ifeng/ifengUrlSpider/dbs/
 flySpider/ifeng/ifengUrlSpider/eggs/
