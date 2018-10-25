@@ -6,12 +6,12 @@ import email.MIMEBase  # import MIMEBase
 from email.mime.application import MIMEApplication
 import os.path
 
-From = "@163.com"
-To = "@qq.com"
-file_base_path = r"/home/dev/Data/files/ifeng/data/txt/"
+From = "zixun18@163.com"
+To = "huiskai@qq.com"
+file_base_path = r"/home/dev/Data/files/huxiu/txt/"
 
 server = smtplib.SMTP("smtp.163.com")
-server.login("@163.com", "")
+server.login("zixun18@163.com", "thebest1990")
 
 main_msg = email.MIMEMultipart.MIMEMultipart()
 part = email.MIMEText.MIMEText("这是所有文章，请您查收", _charset="utf-8")
@@ -44,5 +44,8 @@ try:
     with open(cacheFilePath, 'w') as txt_writer:
         txt_writer.write(str(last_sent))
     txt_writer.close()
+    print ('Done.sent email success')
+except smtplib.SMTPException:
+    print ('Error.sent email fail')
 finally:
     server.quit()

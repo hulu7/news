@@ -54,10 +54,13 @@ def crawl_pages(url_object_list, base_url,class_name, restart):
 
         if items != None:
             for item in items:
-                writeToCSV(saveCSVFilePath, [item['collect_time'], item['id'], item['title'], class_name, item['url'], item['docUrl'], item['imageUrl'], url_object['i'] + '_' + url_object['j'] + '_' + restart['total']])
-                restart['total'] = str(int(restart['total']) + 1)
-                writeToTxt(cacheFilePath, url_object['i'] + '_' + url_object['j'] + '_' + restart['total'] + '_' + class_name)
-                print url_object['i'] + '_' + url_object['j'] + '_' + restart['total'] + '---' + item['docUrl'] + '---' + item['title'] + '---' + class_name
+                finishedIds = readFromCSV(finishedIdPath)
+                if [item['id']] not in finishedIds:
+                    writeToCSV(saveCSVFilePath, [item['collect_time'], item['id'], item['title'], class_name, item['url'], item['docUrl'], item['imageUrl'], url_object['i'] + '_' + url_object['j'] + '_' + restart['total']])
+                    writeToCSV(finishedIdPath, [item['id']])
+                    restart['total'] = str(int(restart['total']) + 1)
+                    writeToTxt(cacheFilePath, url_object['i'] + '_' + url_object['j'] + '_' + restart['total'] + '_' + class_name)
+                    print url_object['i'] + '_' + url_object['j'] + '_' + restart['total'] + '---' + item['docUrl'] + '---' + item['title'] + '---' + class_name
 
 def writeToCSV(file_path, content):
     with open(file_path, 'a') as scv_file:
@@ -92,26 +95,11 @@ def readCacheInfo(file_path):
     return restart
 
 if __name__ == '__main__':
-    one_dic = [{'href' : 'http://inews.ifeng.com',
-                    'name' : '新闻'},
-                {'href': 'http://ifinance.ifeng.com',
-                    'name': '财经'},
-                {'href' : 'http://ient.ifeng.com',
-                    'name' : '娱乐'},
-                {'href' : 'http://isports.ifeng.com',
-                    'name' : '体育'},
-                {'href' : 'http://imil.ifeng.com',
-                    'name' : '军事'},
-                {'href' : 'http://ifashion.ifeng.com',
-                    'name' : '时尚'},
-                {'href' : 'http://itech.ifeng.com',
-                    'name' : '科技'},
-                {'href' : 'http://ihistory.ifeng.com',
-                    'name' : '历史'}
-    ]
+    item = {'href' : 'http://ifashion.ifeng.com', 'name' : '时尚'}
     max_deep = 100
-    cacheFilePath = '/home/dev/Repository/news/scripts/deep_cache.txt'
-    finishedFilePath = '/home/dev/Repository/news/scripts/deep_cache_finished.csv'
+    cacheFilePath = '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/ifashion/cache.txt'
+    finishedIdPath = '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/ifashion/finished_id.csv'
+
     restart = {
         'i': '0',
         'j': '0',
@@ -119,45 +107,40 @@ if __name__ == '__main__':
         'class': ''
     }
 
-    finished = []
-    isFinishedFileExits = os.path.exists(finishedFilePath)
-    if isFinishedFileExits:
-        finished = readFromCSV(finishedFilePath)
-    else:
-        writeToCSV(finishedFilePath, ['Finished'])
+    finishedIds = []
 
     isCacheFileExits = os.path.exists(cacheFilePath)
     if isCacheFileExits:
        restart = readCacheInfo(cacheFilePath)
     else:
-        writeToTxt(cacheFilePath, '0_0_0_' + one_dic[0]['name'])
+        writeToTxt(cacheFilePath, '0_0_0_' + item['name'])
 
-    for item in one_dic:
-        restart = readCacheInfo(cacheFilePath)
-        if int(restart['i']) == (max_deep - 1) and int(restart['j']) == (max_deep - 1):
-            restart['i'] = str(0)
-            restart['j'] = str(0)
-            writeToCSV(finishedFilePath, restart['class'])
+    isFinishedIdFileExits = os.path.exists(finishedIdPath)
+    if isFinishedIdFileExits:
+        finishedIds = readFromCSV(finishedIdPath)
+    else:
+        writeToCSV(finishedIdPath, ['Finished'])
 
-        finished = readFromCSV(finishedFilePath)
-        if [item['name']] not in finished:
-            url_object_list = []
-            saveCSVFilePath = '/home/dev/Repository_Test_Data/ifeng/' + restart['class'] + '.csv'
-            if int(restart['i']) == 0 and int(restart['j']) == 0:
-                writeToCSV(saveCSVFilePath, ['collect_time', 'id', 'title', 'class', 'url', 'docUrl', 'imageUrl', 'i_j_total'])
+    restart = readCacheInfo(cacheFilePath)
+    if int(restart['i']) == (max_deep - 1) and int(restart['j']) == (max_deep - 1):
+        restart['i'] = str(0)
+        restart['j'] = str(0)
 
-            for i in range(int(restart['i']), max_deep):
-                if i == int(restart['i']):
-                    j_restart = int(restart['j'])
-                else:
-                    j_restart = 0
-                for j in range(j_restart, max_deep):
-                    url_object_list.append({
-                        'url': item['href'] + '/' + str(i) + '_' + str(j) + '/data.shtml',
-                        'i': str(i),
-                        'j': str(j)
-                    })
-            crawl_pages(url_object_list, item['href'], item['name'], restart)
+    url_object_list = []
+    saveCSVFilePath = '/home/dev/Repository_Test_Data/ifeng/' + item['name'] + '.csv'
+    saveFileExits = os.path.exists(saveCSVFilePath)
+    if saveFileExits is False:
+        writeToCSV(saveCSVFilePath, ['collect_time', 'id', 'title', 'class', 'url', 'docUrl', 'imageUrl', 'i_j_total'])
+
+    for i in range(int(restart['i']), max_deep):
+        if i == int(restart['i']):
+            j_restart = int(restart['j'])
         else:
-            continue
-
+            j_restart = 0
+        for j in range(j_restart, max_deep):
+            url_object_list.append({
+                'url': item['href'] + '/' + str(i) + '_' + str(j) + '/data.shtml',
+                'i': str(i),
+                'j': str(j)
+            })
+    crawl_pages(url_object_list, item['href'], item['name'], restart)
