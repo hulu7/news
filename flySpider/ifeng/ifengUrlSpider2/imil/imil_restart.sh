@@ -2,10 +2,10 @@
 MYDATE=$(date)
 runck=`ps -fe |grep "ifeng_imil" |grep -v "grep" |wc -l`
 if [ $runck -eq 0 ]; then
-  echo "${MYDATE}: starting ifeng_imil ..." >> /home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/log.log
+  echo "${MYDATE}: starting ifeng_imil ..." >> /home/dev/Repository_Test_Data/ifeng/log/log.log
   cd '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/imil/'
   python ifeng_imil.py
 else
-  echo "${MYDATE}: ifeng_imil spider is running" >> /home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/log.log
+  echo "${MYDATE}: ifeng_imil spider is running" >> /home/dev/Repository_Test_Data/ifeng/log/log.log
 fi
 

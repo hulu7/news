@@ -1,7 +1,7 @@
 #!/bin/bash
 MYDATE=$(date)
-echo "${MYDATE}: restarting global_restart ..." >> /home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/log.log
-echo "${MYDATE}: starting spiders ..." >> /home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/log.log
+echo "${MYDATE}: restarting global_restart ..." >> /home/dev/Repository_Test_Data/ifeng/log/log.log
+echo "${MYDATE}: starting spiders ..." >> /home/dev/Repository_Test_Data/ifeng/log/log.log
 cd '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/ihistory/'
 sh ihistory_restart.sh
 cd '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/imil/'
@@ -19,4 +19,4 @@ sh isports_restart.sh
 cd '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/itech/'
 sh itech_restart.sh
 ps aux | grep "global_restart" |grep -v grep| cut -c 9-15 | xargs kill -9
-echo "${MYDATE}: restarted global_restart ..." >> /home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/log.log
+echo "${MYDATE}: restarted global_restart ..." >> /home/dev/Repository_Test_Data/ifeng/log/log.log

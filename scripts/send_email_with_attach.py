@@ -7,7 +7,7 @@ from email.mime.application import MIMEApplication
 import os.path
 
 From = "zixun18@163.com"
-To = "huiskai@qq.com"
+To = "zixun18@163.com"
 file_base_path = r"/home/dev/Data/files/huxiu/txt/"
 
 server = smtplib.SMTP("smtp.163.com")

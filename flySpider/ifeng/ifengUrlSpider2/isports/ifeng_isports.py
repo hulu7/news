@@ -97,8 +97,8 @@ def readCacheInfo(file_path):
 if __name__ == '__main__':
     item = {'href' : 'http://isports.ifeng.com', 'name' : '体育'}
     max_deep = 100
-    cacheFilePath = '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/isports/cache.txt'
-    finishedIdPath = '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/isports/finished_id.csv'
+    cacheFilePath = '/home/dev/Repository_Test_Data/ifeng/log/isports/cache.txt'
+    finishedIdPath = '/home/dev/Repository_Test_Data/ifeng/log/isports/finished_id.csv'
 
     restart = {
         'i': '0',

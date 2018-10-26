@@ -97,8 +97,8 @@ def readCacheInfo(file_path):
 if __name__ == '__main__':
     item = {'href' : 'http://ihistory.ifeng.com', 'name' : '历史'}
     max_deep = 100
-    cacheFilePath = '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/ihistory/cache.txt'
-    finishedIdPath = '/home/dev/Repository/news/flySpider/ifeng/ifengUrlSpider2/ihistory/finished_id.csv'
+    cacheFilePath = '/home/dev/Repository_Test_Data/ifeng/log/ihistory/cache.txt'
+    finishedIdPath = '/home/dev/Repository_Test_Data/ifeng/log/ihistory/finished_id.csv'
 
     restart = {
         'i': '0',
