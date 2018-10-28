@@ -29,19 +29,5 @@ flySpider/ifeng/ifengUrlSpider/project.egg-info/
 flySpider/ifeng/ifengUrlSpider/setup.py
 flySpider/ifeng/ifengUrlSpider/twistd.pid
 
-flySpider/ifeng/ifengUrlSpider2/isports/cache.txt
-flySpider/ifeng/ifengUrlSpider2/isports/finished_id.csv
-flySpider/ifeng/ifengUrlSpider2/itech/cache.txt
-flySpider/ifeng/ifengUrlSpider2/itech/finished_id.csv
-flySpider/ifeng/ifengUrlSpider2/inews/cache.txt
-flySpider/ifeng/ifengUrlSpider2/inews/finished_id.csv
-flySpider/ifeng/ifengUrlSpider2/imil/cache.txt
-flySpider/ifeng/ifengUrlSpider2/imil/finished_id.csv
-flySpider/ifeng/ifengUrlSpider2/ihistory/cache.txt
-flySpider/ifeng/ifengUrlSpider2/ihistory/finished_id.csv
-flySpider/ifeng/ifengUrlSpider2/ifinance/cache.txt
-flySpider/ifeng/ifengUrlSpider2/ifinance/finished_id.csv
-flySpider/ifeng/ifengUrlSpider2/ifashion/cache.txt
-flySpider/ifeng/ifengUrlSpider2/ifashion/finished_id.csv
-flySpider/ifeng/ifengUrlSpider2/ient/cache.txt
-flySpider/ifeng/ifengUrlSpider2/ient/finished_id.csv
+
+scripts/send_email_cache.txt

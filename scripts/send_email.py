@@ -33,6 +33,12 @@ def sentemail():
     itech_file=open(base_path + 'itech//cache.txt', 'r')
     itech_log=itech_file.read()
     itech_file.close()
+    iculture_file=open(base_path + 'iculture//cache.txt', 'r')
+    iculture_log=itech_file.read()
+    iculture_file.close()
+    ibook_file=open(base_path + 'ibook//cache.txt', 'r')
+    ibook_log=itech_file.read()
+    ibook_file.close()
     body = '<p>娱乐:</p>' + '<p>'+ ient_log +'</p>' + \
            '<div></div>' + \
            '<p>时尚:</p>' + '<p>' + ifashion_log + '</p>' + \
@@ -48,6 +54,10 @@ def sentemail():
            '<p>体育:</p>' + '<p>' + isports_log + '</p>' + \
            '<div></div>' + \
            '<p>科技:</p>' + '<p>' + itech_log + '</p>' + \
+           '<div></div>' + \
+           '<p>文化:</p>' + '<p>' + iculture_log + '</p>' + \
+           '<div></div>' + \
+           '<p>读书:</p>' + '<p>' + ibook_log + '</p>' + \
            '<div></div>'
     msg = MIMEText(body, 'html')
     msg['subject'] = 'ifeng status'
