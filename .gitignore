@@ -31,3 +31,16 @@ flySpider/ifeng/ifengUrlSpider/twistd.pid
 
 
 scripts/send_email_cache.txt
+scripts/.deep_cache_finished.csv.swp
+scripts/test.txt
+scripts/pos_file.txt
+scripts/log.txt
+scripts/map.json
+scripts/.deep_cache_finished.csv.swp
+scripts/abstract_file.txt
+scripts/clean_file.txt
+scripts/deep.csv
+scripts/deep.py
+scripts/deep_cache.txt
+scripts/deep_cache_finished.csv
+

@@ -1,0 +1,8 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 centos7_dev
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.163.26 centos7_dev
+192.168.1.9 spiderNode1
+192.168.163.39 websever1
+192.168.163.42 prd1
+192.168.163.43 prd2
+192.168.163.44 prd3

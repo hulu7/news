@@ -8,4 +8,3 @@ if [ $runck -eq 0 ]; then
 else
   echo "${MYDATE}: ifeng_ient spider is running" >> /home/dev/Repository_Test_Data/ifeng/log/log.log
 fi
-

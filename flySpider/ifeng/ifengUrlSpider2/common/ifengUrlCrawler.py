@@ -50,24 +50,18 @@ class ifengUrlCrawler():
             return
         for url_object in url_object_list:
             print url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + class_name
-            self.writeToTxt(self.cacheFilePath,
-                       url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + class_name)
+            self.writeToTxt(self.cacheFilePath, url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + class_name)
             items = self.crawl_one_page(url_object, base_url)
 
             if items != None:
                 for item in items:
                     finishedIds = self.readFromCSV(self.finishedIdPath)
                     if [item['id']] not in finishedIds:
-                        self.writeToCSV(self.saveCSVFilePath,
-                                   [item['collect_time'], item['id'], item['title'], class_name, item['url'],
-                                    item['docUrl'], item['imageUrl'],
-                                    url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total']])
+                        self.writeToCSV(self.saveCSVFilePath,[item['collect_time'], item['id'], item['title'], class_name, item['url'],item['docUrl'], item['imageUrl'], url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total']])
                         self.writeToCSV(self.finishedIdPath, [item['id']])
                         self.restart['total'] = str(int(self.restart['total']) + 1)
-                        self.writeToTxt(self.cacheFilePath,
-                                   url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + class_name)
-                        print url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '---' + item[
-                            'docUrl'] + '---' + item['title'] + '---' + class_name
+                        self.writeToTxt(self.cacheFilePath, url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + class_name)
+                        print url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '---' + item['docUrl'] + '---' + item['title'] + '---' + class_name
 
     def writeToCSV(self, file_path, content):
         with open(file_path, 'a') as scv_file:
@@ -125,13 +119,13 @@ class ifengUrlCrawler():
         else:
             self.writeToCSV(self.finishedIdPath, ['Finished'])
 
-        restart = self.readCacheInfo(self.cacheFilePath)
-        if int(restart['i']) == (max_deep - 1) and int(restart['j']) == (max_deep - 1):
-            restart['i'] = str(0)
-            restart['j'] = str(0)
+        self.restart = self.readCacheInfo(self.cacheFilePath)
+        if int(self.restart['i']) == (max_deep - 1) and int(self.restart['j']) == (max_deep - 1):
+            self.restart['i'] = str(0)
+            self.restart['j'] = str(0)
 
         url_object_list = []
-        self.saveCSVFilePath = file_path + url_obj['name'] + '.csv'
+        self.saveCSVFilePath = file_path + '/' + url_obj['name'] + '.csv'
         saveFileExits = os.path.exists(self.saveCSVFilePath)
         if saveFileExits is False:
             self.writeToCSV(self.saveCSVFilePath, ['collect_time', 'id', 'title', 'class', 'url', 'docUrl', 'imageUrl', 'i_j_total'])

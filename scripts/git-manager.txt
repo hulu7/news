@@ -1,0 +1,29 @@
+192.168.163.26 centos7_dev
+             user: dev
+             email: gerrit_user1@sina.com
+192.168.163.36 gerritserver 
+             user: gerrit
+             adm: gerrit-admin
+             email: gerrit_adm@sina.com
+
+192.168.163.37 gitlabserver
+             user: gitlab-admin
+             account: gerrit-admin
+             email: gitlab_adim0@sina.com
+             
+192.168.163.38 jenkinsserver
+             user: jenkins-admin
+             account: jenkins
+             email: jenkins_adm@126.com
+        
+192.168.163.39 webserver1
+               user: web1
+               virtual server1 192.168.163.40
+               virtual server2 192.168.163.41
+
+
+192.168.1.5 spiderNode1
+
+192.168.163.42 prd1
+192.168.163.43 prd2
+192.168.163.44 prd3
