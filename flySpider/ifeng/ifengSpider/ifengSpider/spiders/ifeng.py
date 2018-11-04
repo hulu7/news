@@ -11,22 +11,19 @@ import pymongo
 class IfengSpider(CrawlSpider):
     name = 'ifeng'
     allowed_domains = ["ifeng.com"]
+    file_path = '/home/dev/rsyncData/prd2/ifeng/new_id.csv'
+
+    def readFromCSV(self):
+        content = []
+        with open(self.file_path, 'r') as scv_file:
+            content = list(csv.reader(scv_file))
+        scv_file.close()
+        return content
+
     def start_requests(self):
-        cac = open(self.settings.get('CACHE_PATH'))
-        restart = int(cac.read())
-        cac.close()
-        client = pymongo.MongoClient(self.settings.get('MONGO_URI'))
-        db = client[self.settings.get('MONGO_DATABASE_URL')]
-        url_list = db.contentInfo.find()
-        client.close()
+        url_list = self.readFromCSV()
         for url_item in url_list:
-            if restart < int(url_item['id']):
-                final = url_item['url'].split('?')[0]
-                if 'http' in final:
-                    url = final
-                else:
-                    url = 'http://' + final
-                yield Request(url, meta={'id': url_item['id']}, callback=self.parse)
+            yield Request(url_item[0], meta={'id': url_item[1]}, callback=self.parse)
 
     def parse(self, response):
         url_id = int(response.meta['id'])

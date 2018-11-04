@@ -6,6 +6,10 @@ from datetime import datetime
 import csv
 import re
 import os
+import pymongo
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class ifengUrlCrawler():
     def crawl_one_page(self, url_object, base_url):
@@ -57,7 +61,20 @@ class ifengUrlCrawler():
                 for item in items:
                     finishedIds = self.readFromCSV(self.finishedIdPath)
                     if [item['id']] not in finishedIds:
-                        self.writeToCSV(self.saveCSVFilePath,[item['collect_time'], item['id'], item['title'], class_name, item['url'],item['docUrl'], item['imageUrl'], url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total']])
+                        mongoItem = {
+                            'catalog':self.topic,
+                            'content':{
+                            'collect_time':item['collect_time'],
+                            'id':item['id'],
+                            'title':item['title'],
+                            'class':class_name,
+                            'url':item['url'],
+                            'docUrl':item['docUrl'],
+                            'imageUrl':item['imageUrl'],
+                            'i_j_total':self.restart['total']
+                            }
+                        }
+                        self.writeToMongo(mongoItem)
                         self.writeToCSV(self.finishedIdPath, [item['id']])
                         self.restart['total'] = str(int(self.restart['total']) + 1)
                         self.writeToTxt(self.cacheFilePath, url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + class_name)
@@ -96,16 +113,26 @@ class ifengUrlCrawler():
         restart['class'] = str(cache[3])
         return restart
 
+    def writeToMongo(self, content):
+        client = pymongo.MongoClient('mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019', replicaset='repset')
+
+        db = client[self.domain]
+        mongodbItem = dict(content)
+        db.contentInfo.insert(mongodbItem)
+        client.close()
+
     def startIfengUrlSpider(self, url_obj, file_path, max_deep):
-        topic = url_obj['href'].split('//')[1].split('.')[0]
-        self.cacheFilePath = file_path + '/log/' + topic + '/cache.txt'
-        self.finishedIdPath = file_path + '/log/' + topic + '/finished_id.csv'
+        self.topic = url_obj['href'].split('//')[1].split('.')[0]
+        self.domain = url_obj['href'].split('//')[1].split('.')[1]
+        self.cacheFilePath = file_path + '/log/' + self.topic + '/cache.txt'
+        self.finishedIdPath = file_path + '/log/' + self.topic + '/finished_id.csv'
         self.restart = {
             'i': '0',
             'j': '0',
             'total': '0',
             'class': ''
         }
+
         self.finishedIds = []
         isCacheFileExits = os.path.exists(self.cacheFilePath)
         if isCacheFileExits:
@@ -125,10 +152,6 @@ class ifengUrlCrawler():
             self.restart['j'] = str(0)
 
         url_object_list = []
-        self.saveCSVFilePath = file_path + '/' + url_obj['name'] + '.csv'
-        saveFileExits = os.path.exists(self.saveCSVFilePath)
-        if saveFileExits is False:
-            self.writeToCSV(self.saveCSVFilePath, ['collect_time', 'id', 'title', 'class', 'url', 'docUrl', 'imageUrl', 'i_j_total'])
 
         for i in range(int(self.restart['i']), max_deep):
             if i == int(self.restart['i']):
@@ -145,7 +168,7 @@ class ifengUrlCrawler():
 
 
 if __name__ == '__main__':
-    item = {'href' : 'http://iculture.ifeng.com', 'name' : '娱乐'}
+    item = {'href' : 'http://ifashion.ifeng.com', 'name' : '时尚'}
     basePath = '/home/dev/Repository_Test_Data/ifeng'
     max_deep = 100
     urlSpider = ifengUrlCrawler()

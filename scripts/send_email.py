@@ -8,8 +8,7 @@ def sentemail():
     sender = 'zixun18@163.com'
     pwd = 'thebest1990'
     receiver = 'zixun18@163.com'
-    base_path = '//home//dev//Repository_Test_Data//ifeng//log//'
-    base_path2 = '//home//dev//Backups//spiderNode1//files//ifeng//log//'
+    base_path = '//home//dev//rsyncData//prd2//ifeng//log//'
 
     ient_file=open(base_path + 'ient//cache.txt', 'r')
     ient_log=ient_file.read()
@@ -51,87 +50,17 @@ def sentemail():
     ibook_log=ibook_file.read()
     ibook_file.close()
 
-    ient_file2=open(base_path2 + 'ient//cache.txt', 'r')
-    ient_log2=ient_file2.read()
-    ient_file2.close()
-
-    ifashion_file2=open(base_path2 + 'ifashion//cache.txt', 'r')
-    ifashion_log2=ifashion_file2.read()
-    ifashion_file2.close()
-
-    ifinance_file2=open(base_path2 + 'ifinance//cache.txt', 'r')
-    ifinance_log2=ifinance_file2.read()
-    ifinance_file2.close()
-
-    ihistory_file2=open(base_path2 + 'ihistory//cache.txt', 'r')
-    ihistory_log2=ihistory_file2.read()
-    ihistory_file2.close()
-
-    imil_file2=open(base_path2 + 'imil//cache.txt', 'r')
-    imil_log2=imil_file2.read()
-    imil_file2.close()
-
-    inews_file2=open(base_path2 + 'inews//cache.txt', 'r')
-    inews_log2=inews_file2.read()
-    inews_file2.close()
-
-    isports_file2=open(base_path2 + 'isports//cache.txt', 'r')
-    isports_log2=isports_file2.read()
-    isports_file2.close()
-
-    itech_file2=open(base_path2 + 'itech//cache.txt', 'r')
-    itech_log2=itech_file2.read()
-    itech_file2.close()
-
-    iculture_file2=open(base_path2 + 'iculture//cache.txt', 'r')
-    iculture_log2=iculture_file2.read()
-    iculture_file2.close()
-
-    ibook_file2=open(base_path2 + 'ibook//cache.txt', 'r')
-    ibook_log2=ibook_file2.read()
-    ibook_file2.close()
-
-    body = '<div>------------Dev------------</div>' + \
-           '<p>娱乐:</p>' + '<p>'+ ient_log +'</p>' + \
-           '<div></div>' + \
-           '<p>时尚:</p>' + '<p>' + ifashion_log + '</p>' + \
-           '<div></div>' + \
-           '<p>金融:</p>' + '<p>' + ifinance_log + '</p>' + \
-           '<div></div>' + \
-           '<p>历史:</p>' + '<p>' + ihistory_log + '</p>' + \
-           '<div></div>' + \
-           '<p>军事:</p>' + '<p>' + imil_log + '</p>' + \
-           '<div></div>' + \
-           '<p>新闻:</p>' + '<p>' + inews_log + '</p>' + \
-           '<div></div>' + \
-           '<p>体育:</p>' + '<p>' + isports_log + '</p>' + \
-           '<div></div>' + \
-           '<p>科技:</p>' + '<p>' + itech_log + '</p>' + \
-           '<div></div>' + \
-           '<p>文化:</p>' + '<p>' + iculture_log + '</p>' + \
-           '<div></div>' + \
-           '<p>读书:</p>' + '<p>' + ibook_log + '</p>' + \
-           '<div>------------SpiderNode1------------</div>' + \
-           '<p>娱乐:</p>' + '<p>' + ient_log2 + '</p>' + \
-           '<div></div>' + \
-           '<p>时尚:</p>' + '<p>' + ifashion_log2 + '</p>' + \
-           '<div></div>' + \
-           '<p>金融:</p>' + '<p>' + ifinance_log2 + '</p>' + \
-           '<div></div>' + \
-           '<p>历史:</p>' + '<p>' + ihistory_log2 + '</p>' + \
-           '<div></div>' + \
-           '<p>军事:</p>' + '<p>' + imil_log2 + '</p>' + \
-           '<div></div>' + \
-           '<p>新闻:</p>' + '<p>' + inews_log2 + '</p>' + \
-           '<div></div>' + \
-           '<p>体育:</p>' + '<p>' + isports_log2 + '</p>' + \
-           '<div></div>' + \
-           '<p>科技:</p>' + '<p>' + itech_log2 + '</p>' + \
-           '<div></div>' + \
-           '<p>文化:</p>' + '<p>' + iculture_log2 + '</p>' + \
-           '<div></div>' + \
-           '<p>读书:</p>' + '<p>' + ibook_log2 + '</p>' + \
-           '<div></div>'
+    body = '<div>------------Prd1------------</div>' + \
+           '<div>' + ient_log + '</div>' + \
+           '<div>' + ifashion_log + '</div>' + \
+           '<div>' + ifinance_log + '</div>' + \
+           '<div>' + ihistory_log + '</div>' + \
+           '<div>' + imil_log + '</div>' + \
+           '<div>' + inews_log + '</div>' + \
+           '<div>' + isports_log + '</div>' + \
+           '<div>' + itech_log + '</div>' + \
+           '<div>' + iculture_log + '</div>' + \
+           '<div>' + ibook_log + '</div>'
     msg = MIMEText(body, 'html')
     msg['subject'] = 'ifeng进度'
     msg['from'] = sender

@@ -153,11 +153,13 @@ AUTOTHROTTLE_MAX_DELAY = 60
 
 SELENIUM_TIMEOUT = 10
 CHROMEDRIVER_SERVICE_ARGS = "//usr//bin//chromedriver"
-CACHE_PATH = "//home//dev//Data//files//ifeng//data//cache//cache.txt"
-TXT_PATH = "//home//dev//Data//files//ifeng//data//txt"
-CSV_PATH = "//home//dev//Data//files//ifeng//data//data.csv"
+CACHE_PATH = "//home//dev//Data//files//ifeng//cache.txt"
+TXT_PATH = "//home//dev//rsyncData//prd1//ifeng//txt"
+CSV_PATH = "//home//dev//rsyncData//prd1//ifeng//data//data.csv"
+FINISHED_PATH = "//home//dev//rsyncData//prd1//ifeng//finished_id.csv"
 MONGO_URI = 'mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019'
 REPLICASET = 'repset'
-MONGO_DATABASE ='ifeng'
+MONGO_DATABASE ='ifeng_content'
 MONGO_DATABASE_URL ='ifengUrl'
+
 

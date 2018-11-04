@@ -1,15 +1,15 @@
 #!/bin/sh
-spiderNode1="spiderNode1"
+machine="prd2"
 HOSTS=/etc/hosts
-NEWIP=/home/dev/Backups/spiderNode1/machine_info/IP.txt
+NEWIP=/home/dev/rsyncData/prd2/IP.txt
 ip=$(cat $NEWIP)
 echo $ip
 cat $HOSTS | while read line
 do
-result=$(echo $line | grep "${spiderNode1}")
+result=$(echo $line | grep "${machine}")
 sed -i '1d' /etc/hosts
 if [ -n "$result" ]; then
-    echo $ip "${spiderNode1}" >> $HOSTS
+    echo $ip "${machine}" >> $HOSTS
 else
     echo $line >> $HOSTS
 fi

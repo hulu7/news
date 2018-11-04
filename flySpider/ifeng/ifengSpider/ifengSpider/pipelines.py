@@ -8,6 +8,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 import pymongo
+import csv
 from ifengSpider.items import IfengspiderToMongodbItem
 
 class IfengspiderToTxtPipeline(object):
@@ -27,7 +28,7 @@ class IfengspiderToMongodbPipeline(object):
     def from_crawler(cls, crawler):
         return cls(
             mongo_uri=crawler.settings.get('MONGO_URI'),
-            mongo_db=crawler.settings.get('MONGO_DATABASE', 'ifeng'),
+            mongo_db=crawler.settings.get('MONGO_DATABASE', 'ifeng_content'),
             replicaset = crawler.settings.get('REPLICASET')
         )
     def open_spider(self, spider):
@@ -42,12 +43,19 @@ class IfengspiderToMongodbPipeline(object):
             self._process_ifengspider_item(item, spider)
         return item
 
+    def writeToCSV(self, file_path, content):
+        with open(file_path, 'a') as scv_file:
+            csv_writer = csv.writer(scv_file)
+            csv_writer.writerow(content)
+        scv_file.close()
+
     def _process_ifengspider_item(self, item, spider):
+        file_name = spider.name + "_" + str(item['id']) + "_" + ".txt"
+        fp = open(spider.settings.get('TXT_PATH') + '/' + file_name, 'w')
+        fp.write(item['content'])
+        fp.close()
         mongodbItem = dict(item)
         mongodbItem.pop('content')
         self.db.contentInfo.insert(mongodbItem)
+        self.writeToCSV(spider.settings.get('FINISHED_PATH'), [item['id']])
 
-        id_cache = open(spider.settings.get('CACHE_PATH'), 'w')
-        next_id = int(item['id'])
-        id_cache.write(str(next_id))
-        id_cache.close()

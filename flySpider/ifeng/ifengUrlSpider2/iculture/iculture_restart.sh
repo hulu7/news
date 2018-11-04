@@ -1,5 +1,6 @@
 #!/bin/bash
 MYDATE=$(date)
+ps aux | grep "ifeng_iculture" |grep -v grep| cut -c 9-15 | xargs kill -9
 runck=`ps -fe |grep "ifeng_iculture" |grep -v "grep" |wc -l`
 if [ $runck -eq 0 ]; then
   echo "${MYDATE}: starting ifeng_iculture ..." >> /home/dev/Repository_Test_Data/ifeng/log/log.log
