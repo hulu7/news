@@ -52,6 +52,7 @@ class SendEmail():
         cache_file = self.file_path + 'cache.txt'
         content_file = self.file_path + 'ifeng_content.csv'
         isCacheFileExists = os.path.exists(cache_file)
+        self.isReadyToSend = False
         if isCacheFileExists is True:
             cache = int(self.readFromTxt(cache_file))
         else:
@@ -79,21 +80,19 @@ class SendEmail():
         else:
             self.isReadyToSend = False
 
-
-
     def send(self, file_path):
         self.file_path = file_path
         self.createEmailBody()
-        host = 'smtp.163.com'
-        port = 465
-        sender = 'hui_asus@163.com'
-        pwd = 'thebest1990'
-        receiver = 'hui_asus@163.com'
-        msg = MIMEText(self.body, 'html')
-        msg['subject'] = '进度监测'
-        msg['from'] = sender
-        msg['to'] = receiver
         if self.isReadyToSend is True:
+            host = 'smtp.163.com'
+            port = 465
+            sender = 'hui_asus@163.com'
+            pwd = 'thebest1990'
+            receiver = 'hui_asus@163.com'
+            msg = MIMEText(self.body, 'html')
+            msg['subject'] = '进度监测'
+            msg['from'] = sender
+            msg['to'] = receiver
             try:
                 s = smtplib.SMTP_SSL(host, port)
                 s.login(sender, pwd)
@@ -104,5 +103,5 @@ class SendEmail():
 
 if __name__ == '__main__':
     send = SendEmail()
-    filePath = '/home/dev/rsyncData/prd1/ifeng/'
+    filePath = '/home/dev/Data/rsyncData/prd1/ifeng/'
     send.send(filePath)

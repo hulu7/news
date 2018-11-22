@@ -7,39 +7,47 @@ from scrapy.selector import Selector
 import re
 import csv
 import pymongo
+import pandas as pd
 
 class IfengSpider(CrawlSpider):
     name = 'ifeng'
     allowed_domains = ["ifeng.com"]
-    file_path = '/home/dev/rsyncData/prd2/ifeng/new_id.csv'
 
-    def readFromCSV(self):
-        content = []
-        with open(self.file_path, 'r') as scv_file:
+    def readColsFromCSV(self, file_path, col_names):
+        cols = pd.read_csv(file_path, usecols=col_names)
+        return cols
+
+    def readFromCSV(self, file_path):
+        with open(file_path, 'r') as scv_file:
             content = list(csv.reader(scv_file))
         scv_file.close()
         return content
 
     def start_requests(self):
-        url_list = self.readFromCSV()
+        url_list = list(self.readColsFromCSV(self.settings['NEW_PATH'], ['content.id', 'content.docUrl'])._get_values)
+        finished_list = self.readFromCSV(self.settings['FINISHED_PATH'])
         for url_item in url_list:
-            yield Request(url_item[0], meta={'id': url_item[1]}, callback=self.parse)
+            if [str(url_item[1])] in finished_list:
+                continue
+            else:
+                if 'ifeng' in str(url_item[0]):
+                    yield Request(url_item[0], meta={'id': str(url_item[1])}, callback=self.parse)
 
     def parse(self, response):
-        url_id = int(response.meta['id'])
+        url_id = response.meta['id']
         sel = Selector(response)
-        not_fnd = sel.xpath(".//*[@class='tips404']").extract()
+        not_fnd = sel.xpath(".//*[contains(@class,'tips404')]").extract()
         if len(not_fnd) != 1:
             article_0 = response.xpath(".//*[@id='artical']")
-            article_1 = response.xpath(".//*[@class='yc_main wrap']")
+            article_1 = response.xpath(".//*[contains(@class,'yc_main wrap')]")
             if len(article_0.extract()) > 0:
                 article = article_0
-                comment_number = filter(str.isdigit,article.xpath(".//*[@class='js_cmtNum']").xpath('string(.)').extract()[0].encode('gbk'))
-                join_number = filter(str.isdigit,article.xpath(".//*[@class='js_joinNum']").xpath('string(.)').extract()[0].encode('gbk'))
+                comment_number = filter(str.isdigit,article.xpath(".//*[contains(@class,'js_cmtNum')]").xpath('string(.)').extract()[0].encode('gbk'))
+                join_number = filter(str.isdigit,article.xpath(".//*[contains(@class,'js_joinNum')]").xpath('string(.)').extract()[0].encode('gbk'))
                 url = response.url
                 content = article.xpath(".//div[@id='main_content']").xpath('string(.)').extract()[0].strip()
-                time = article.xpath(".//*[@class='ss01']").xpath('string(.)').extract()[0].strip()
-                author_name = article.xpath(".//*[@class='ss03']").xpath('string(.)').extract()[0]
+                time = article.xpath(".//*[contains(@class,'ss01')]").xpath('string(.)').extract()[0].strip()
+                author_name = article.xpath(".//*[contains(@class,'ss03')]").xpath('string(.)').extract()[0]
                 title = article.xpath(".//*[@id='artical_topic']").xpath('string(.)').extract()[0].strip()
                 id = url_id
                 articleItem = IfengspiderToMongodbItem(

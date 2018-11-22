@@ -138,20 +138,39 @@ class SendData():
             customer_catalogs = customer[3].split(',')
             customer_keywords = customer[5].split(',')
             customer_service_email = customer[6]
+            if len(str(customer[7])) == 0:
+                customer_deep = 0
+            else:
+                customer_deep = int(customer[7])
 
             committed_data_file = self.data4customers_path + '/' + customer_id + '/' + self.yesterday + '/' + self.yesterday + '.csv'
+            committed_data_file_exists = os.path.exists(committed_data_file)
+            if committed_data_file_exists is False:
+                self.isReadyToSend = False
+                self.writeToTxt(self.log_path, str(self.getCurrntTime() + ": " + customer_email + ' no commited data! '))
+                return
+            committed_data = self.readFromCSV(committed_data_file)
+            if len(committed_data) < 2:
+                self.isReadyToSend = False
+                self.writeToTxt(self.log_path, str(self.getCurrntTime() + ": " + customer_email + ' no rank commited data! '))
+                return
+            rank_committed_data = self.rankDeepByDecrease(committed_data[1:], 5)
             send_data_file = self.data4customers_path + '/' + customer_id + '/' + self.yesterday + '/' + self.yesterday + '_send.csv'
             send_data_file_exists = os.path.exists(send_data_file)
             if send_data_file_exists is False:
                 self.writeToCSVWithoutHeader(send_data_file, ['id', 'title', 'url', 'time', 'catalog', 'deep'])
-            committed_data = self.rankDeepByDecrease(self.readFromCSV(committed_data_file)[1:], 5)
             data_to_send = []
-            for data in committed_data:
-                for key in customer_keywords:
-                    if key in data[1]:
+            for data in rank_committed_data:
+                if int(data[5]) > customer_deep:
+                    if len(customer_keywords) > 1:
+                        for key in customer_keywords:
+                            if key in data[1]:
+                                data_to_send.append(data)
+                                self.writeToCSVWithoutHeader(send_data_file, data)
+                                break
+                    else:
                         data_to_send.append(data)
                         self.writeToCSVWithoutHeader(send_data_file, data)
-                        break
 
             self.sendEmail(customer_email, customer_service_email, customer_catalogs, data_to_send)
 

@@ -70,7 +70,7 @@ mv chromedriver /usr/bin
 echo "*****************************install Mongodb***************************"
 echo '[mongodb-org-4.0]
 name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.0/x86_64/
+baseurl=https://repo.mongodb.org/yum/redhat/7Server/mongodb-org/4.0/x86_64/
 gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-4.0.asc
@@ -83,3 +83,8 @@ echo 'y' | yum install -y iptables
 echo 'y' | yum install iptables-services
 echo "***************************install gnome-terminal**********************"
 echo 'y' | yum install gnome-terminal
+echo "***************************install pandas**********************"
+pip install pandas
+echo "*****************************install rsync**************************"
+echo 'y' | yum -y install rsync
+echo "***************************install finished**********************"

@@ -49,34 +49,26 @@ class SendEmail():
         txt_writer.close()
 
     def createEmailBody(self):
-        cache_file = self.file_path + 'cache.txt'
-        content_file = self.file_path + 'ifeng_content.csv'
-        isCacheFileExists = os.path.exists(cache_file)
-        if isCacheFileExists is True:
-            cache = int(self.readFromTxt(cache_file))
-        else:
-            cache = 0
+        content_file = self.file_path + 'ifeng_urls.csv'
         isContentFileExists = os.path.exists(content_file)
         if isContentFileExists is True:
             items_list = self.readFromCSV(content_file)
-            cand_list = []
+            send_list = []
             for item in items_list:
-                cand_list.append(item)
-            if (cache + 400) < len(cand_list):
+                send_list.append(item)
+            if 0 < len(send_list):
                 self.isReadyToSend = True
                 today = "".join(str(datetime.date.today()))
                 time = "".join(str(datetime.datetime.now())[11:19])
-                self.body = '<p></p>' + '<p>' + today + ' ' + time + '</p>' + '<p> 进度 : ' + str(len(cand_list)) + '</p>'
-                for i in range(cache, cache + 400):
+                self.body = '<p></p>' + '<p>' + today + ' ' + time + '</p>' + '<p> 进度 : ' + str(len(send_list)) + '</p>'
+                for i in range(len(send_list) - 100, len(send_list)):
                     self.body = self.body + \
                            '<p>' + \
-                           '<a href=' + cand_list[i][2] + '>' + \
-                                cand_list[i][3] + \
-                                '[' + cand_list[i][5] + ']' + \
+                           '<a href=' + send_list[i][3] + '>' + \
+                                send_list[i][6] + \
+                                '[' + send_list[i][2] + ']' + \
                            '</a>' + \
                            '</p>'
-                cache = cache + 400
-                self.writeToTxt(cache_file, cache)
         else:
             self.isReadyToSend = False
 
@@ -85,16 +77,16 @@ class SendEmail():
     def send(self, file_path):
         self.file_path = file_path
         self.createEmailBody()
-        host = 'smtp.163.com'
-        port = 465
-        sender = '@163.com'
-        pwd = ''
-        receiver = '@163.com'
-        msg = MIMEText(self.body, 'html')
-        msg['subject'] = '进度监测'
-        msg['from'] = sender
-        msg['to'] = receiver
         if self.isReadyToSend is True:
+            host = 'smtp.163.com'
+            port = 465
+            sender = 'hui_asus@163.com'
+            pwd = 'thebest1990'
+            receiver = 'hui_asus@163.com'
+            msg = MIMEText(self.body, 'html')
+            msg['subject'] = '进度监测'
+            msg['from'] = sender
+            msg['to'] = receiver
             try:
                 s = smtplib.SMTP_SSL(host, port)
                 s.login(sender, pwd)
@@ -105,5 +97,5 @@ class SendEmail():
 
 if __name__ == '__main__':
     send = SendEmail()
-    filePath = '/home/dev/Data/rsyncData/prd1/ifeng/'
+    filePath = '/home/dev/Data/rsyncData/prd2/ifeng/'
     send.send(filePath)

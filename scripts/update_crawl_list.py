@@ -66,7 +66,7 @@ class UpdateCrawlList():
         self.allIdPath = file_path + 'prd2/' + site_name + '/ifeng_urls.csv'
         isAllIdFileExists = os.path.exists(self.allIdPath)
         if isAllIdFileExists:
-           self.allIdUrls = self.readColsFromCSV(self.allIdPath, ['content.id', 'content.docUrl'])._get_values
+           self.allIdUrls = list(self.readColsFromCSV(self.allIdPath, ['content.id', 'content.docUrl'])._get_values)
         else:
             self.allIdUrls = []
         isNewIdFileExits = os.path.exists(self.newIdPath)

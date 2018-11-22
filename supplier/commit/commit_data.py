@@ -138,8 +138,7 @@ class CommitData():
         print 'commit done! in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)
 
 if __name__ == "__main__":
-
-    today = time.strftime("%b %d %Y %H:%M:%S", time.gmtime(t))
+    today = time.strftime('%Y%m%d', time.localtime(time.time()))
     class_finished_path = '/home/dev/Data/Production/catalogs'
     log_path = '/home/dev/Data/Production/log/' + today + '.log'
     customer_info_path = '/home/dev/Data/Production/customerInfo/customers.xlsx'

@@ -2,7 +2,9 @@
 import requests
 import utils
 import time
+import codecs
 from datetime import datetime
+import pandas as pd
 import csv
 import re
 import os
@@ -54,7 +56,7 @@ class ifengUrlCrawler():
             return
         for url_object in url_object_list:
             print url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + class_name
-            self.writeToTxt(self.cacheFilePath, url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + class_name)
+            self.writeToTxt(self.cacheFilePath, url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + self.topic)
             items = self.crawl_one_page(url_object, base_url)
 
             if items != None:
@@ -77,7 +79,7 @@ class ifengUrlCrawler():
                         self.writeToMongo(mongoItem)
                         self.writeToCSV(self.finishedIdPath, [item['id']])
                         self.restart['total'] = str(int(self.restart['total']) + 1)
-                        self.writeToTxt(self.cacheFilePath, url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + class_name)
+                        self.writeToTxt(self.cacheFilePath, url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '_' + self.topic)
                         print url_object['i'] + '_' + url_object['j'] + '_' + self.restart['total'] + '---' + item['docUrl'] + '---' + item['title'] + '---' + class_name
 
     def writeToCSV(self, file_path, content):
@@ -104,6 +106,10 @@ class ifengUrlCrawler():
             txt_writer.write(content)
         txt_writer.close()
 
+    def readColsFromCSV(self, file_path, col_names):
+        cols = pd.read_csv(file_path, usecols=col_names)
+        return cols
+
     def readCacheInfo(self, file_path):
         restart = {}
         cache = re.split('_', self.readFromTxt(file_path).strip('\n'))
@@ -115,22 +121,28 @@ class ifengUrlCrawler():
 
     def writeToMongo(self, content):
         client = pymongo.MongoClient('mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019', replicaset='repset')
-
-        db = client[self.domain]
+        db = client['ifeng']
         mongodbItem = dict(content)
         db.contentInfo.insert(mongodbItem)
         client.close()
 
+    def writeToCSVWithoutHeader(self, filePath, content):
+        with open(filePath, 'a') as csv_file:
+            csv_file.write(codecs.BOM_UTF8)
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow(content)
+        csv_file.close()
+
     def startIfengUrlSpider(self, url_obj, file_path, max_deep):
         self.topic = url_obj['href'].split('//')[1].split('.')[0]
         self.domain = url_obj['href'].split('//')[1].split('.')[1]
-        self.cacheFilePath = file_path + '/log/' + self.topic + '/cache.txt'
-        self.finishedIdPath = file_path + '/log/' + self.topic + '/finished_id.csv'
+        self.cacheFilePath = file_path + '/files/ifeng/' + self.topic + '.txt'
+        self.finishedIdPath = file_path + '/files/ifeng/finished_id.csv'
         self.restart = {
             'i': '0',
             'j': '0',
             'total': '0',
-            'class': ''
+            'class': self.topic
         }
 
         self.finishedIds = []
@@ -138,15 +150,14 @@ class ifengUrlCrawler():
         if isCacheFileExits:
             self.restart = self.readCacheInfo(self.cacheFilePath)
         else:
-           self.writeToTxt(self.cacheFilePath, '0_0_0_' + url_obj['name'])
+           self.writeToTxt(self.cacheFilePath, '0_0_0_' + self.topic)
 
         isFinishedIdFileExits = os.path.exists(self.finishedIdPath)
         if isFinishedIdFileExits:
             self.finishedIds = self.readFromCSV(self.finishedIdPath)
         else:
-            self.writeToCSV(self.finishedIdPath, ['Finished'])
+            self.writeToCSV(self.finishedIdPath, ['finished'])
 
-        self.restart = self.readCacheInfo(self.cacheFilePath)
         if int(self.restart['i']) == (max_deep - 1) and int(self.restart['j']) == (max_deep - 1):
             self.restart['i'] = str(0)
             self.restart['j'] = str(0)
@@ -169,7 +180,7 @@ class ifengUrlCrawler():
 
 if __name__ == '__main__':
     item = {'href' : 'http://ifashion.ifeng.com', 'name' : '时尚'}
-    basePath = '/home/dev/Repository_Test_Data/ifeng'
+    basePath = '/home/dev/Data'
     max_deep = 100
     urlSpider = ifengUrlCrawler()
     urlSpider.startIfengUrlSpider(item, basePath, max_deep)

@@ -81,7 +81,6 @@ class SendEmail():
             self.isReadyToSend = False
 
 
-
     def send(self, file_path):
         self.file_path = file_path
         self.createEmailBody()
@@ -89,7 +88,7 @@ class SendEmail():
         port = 465
         sender = 'hui_asus@163.com'
         pwd = 'thebest1990'
-        receiver = '@qq.com'
+        receiver = '1360264786@qq.com'
         msg = MIMEText(self.body, 'html')
         msg['subject'] = '来自丑宝的推荐-房地产最新消息'
         msg['from'] = sender

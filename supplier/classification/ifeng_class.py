@@ -47,6 +47,12 @@ class UpdateProductionClass():
         txt_file.close()
         return list(filter(None, split_list))
 
+    def writeToTxt(self, filePath, content):
+        with open(filePath, 'a+') as txt_file:
+            txt_file.write(content)
+            txt_file.write('\n')
+        return txt_file.close()
+
     def extractKeyWords(self, content):
         text = content.decode("utf-8").encode("utf-8")
         seg_text = jieba.cut(text.replace("\t", " ").replace("\n", " "))
@@ -58,6 +64,8 @@ class UpdateProductionClass():
         getDigit = filter(str.isdigit, toGBK)
         getYMD = getDigit[0:8]
         return getYMD
+    def getCurrntTime(self):
+        return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
     def loadModel(self):
         self.classifier = fasttext.load_model(self.model_path)
@@ -90,7 +98,7 @@ class UpdateProductionClass():
                 self.writeToCSVWithoutHeader(catalog_cache_path, ['id'])
             if isCatalogFileExists is False:
                 self.writeToCSVWithoutHeader(catalog_path, ['id', 'title', 'url', 'time', 'catalog', 'deep'])
-
+        total = '0'
         for item in content:
             if content.index(item) == 0:
                 continue
@@ -110,12 +118,14 @@ class UpdateProductionClass():
                 copyfile(origin_txt_path, classed_txt_path)
 
                 time_elapsed = time.time() - since
-                print(str(len(self.finishedIds)) + ' complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
+                total = str(len(self.finishedIds))
+                print(total + ' complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
         time_elapsed = time.time() - since
-        print('Done! in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
+        self.writeToTxt(log_path, str(update.getCurrntTime() + ": " + total + ' classify done! in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)))
+        print 'classify done! in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)
 
 if __name__ == "__main__":
-
+    today = time.strftime('%Y%m%d', time.localtime(time.time()))
     catalogs = ['agriculture','astrology','baby','buddhism','car','career',
                 'comic','culture','design','digital','edu','emotion','collect',
                 'entertainment','fashion','festival','finance','food','funny',
@@ -125,12 +135,13 @@ if __name__ == "__main__":
     txt_path = '/home/dev/Data/rsyncData/prd1/ifeng/txt'
     content_path = '/home/dev/Data/rsyncData/prd1/ifeng/ifeng_content.csv'
     class_finished_path = '/home/dev/Data/Production/catalogs'
-    log_path = '/home/dev/Data/Production/log'
+    log_path = '/home/dev/Data/Production/log/' + today + '.log'
     model_path = '/home/dev/Data/npl/classifier/fastText/model_data/news_fasttext.model.bin'
     name = 'ifeng'
 
-    print "start classify..."
     since = time.time()
     dep = deep.deepMax()
     update = UpdateProductionClass()
+    update.writeToTxt(log_path, str(update.getCurrntTime() + ": start classify..."))
+    print "start classify..."
     update.startClassify(txt_path, content_path, class_finished_path, model_path, log_path, catalogs, name)

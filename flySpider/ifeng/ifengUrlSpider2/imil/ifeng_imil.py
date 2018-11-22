@@ -5,7 +5,7 @@ from common.ifengUrlCrawler import ifengUrlCrawler
 
 if __name__ == '__main__':
     item = {'href' : 'http://imil.ifeng.com', 'name' : '军事'}
-    basePath = '/home/dev/Repository_Test_Data/ifeng'
+    basePath = '/home/dev/Data'
     max_deep = 100
     urlSpider = ifengUrlCrawler()
     urlSpider.startIfengUrlSpider(item, basePath, max_deep)
