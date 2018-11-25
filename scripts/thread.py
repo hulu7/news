@@ -31,7 +31,7 @@ if __name__ == '__main__':
     print 'Current process %s.' % os.getpid()
     p = Pool(processes=3)
     # urls = ['https://github.com', 'https://www.huxiu.com', 'https://www.baidu.com']
-    urls = ['http://news.ifeng.com/a/20181121/60169573_0.shtml']
+    urls = ['http://news.ifeng.com/a/20181122/60170977_0.shtml', 'http://news.ifeng.com/a/20181121/60169573_0.shtml']
     for url in urls:
         p.apply_async(run_task, args=(url,))
     print 'Waiting for all subprocesses done...'

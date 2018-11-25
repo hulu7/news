@@ -1,5 +1,7 @@
 #coding:utf-8
-
+#------requirement------
+#selenium-3.14.1
+#------requirement------
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -15,7 +17,7 @@ class SeleniumMiddleware(object):
         self.logger = getLogger(__name__)
         self.timeout = timeout
         chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -25,8 +27,9 @@ class SeleniumMiddleware(object):
 
     def close(self):
         self.browser.close()
+        self.browser.quit()
 
-    def process_request(self, url):
+    def chrome_request(self, url):
         self.init(timeout=Settings.SELENIUM_TIMEOUT, executable_path=Settings.CHROMEDRIVER_PATH)
         try:
             self.logger.debug('--------Chrome is Starting--------')

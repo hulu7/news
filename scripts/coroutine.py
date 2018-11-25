@@ -6,53 +6,61 @@
 #
 #
 #------requirement------
-from selenium import webdriver
 from gevent import monkey
 monkey.patch_all()
 from gevent.pool import Pool
-from lxml import etree
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+sys.path.append("..")
+from settings import Settings
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+from middlewares.fileIO import File
 
-def __init__(executable_path=None):
-    chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    browser = webdriver.Chrome(executable_path=executable_path, chrome_options=chrome_options)
-    return browser
+class Request():
 
-def run_task(url):
-    browser = __init__(executable_path='/usr/bin/chromedriver')
-    print 'Visit --> %s' %url
-    try:
-        browser.get(url)
-        response = browser.page_source
-        html = etree.HTML(response)
-        title = html.xpath(".//*[contains(@class,'yc_tit')]/h1/text()")
-        # html = etree.parse(response)
-        # article_0 = response.xpath(".//*[@id='artical']")
-        # article_1 = response.xpath(".//*[contains(@class,'yc_main wrap')]")
-        # if len(article_0.extract()) > 0:
-        #     article = article_0
-        #     comment_number = filter(str.isdigit,article.xpath(".//*[contains(@class,'js_cmtNum')]").xpath('string(.)').extract()[0].encode('gbk'))
-        #     join_number = filter(str.isdigit,article.xpath(".//*[contains(@class,'js_joinNum')]").xpath('string(.)').extract()[0].encode('gbk'))
-        #     url = response.url
-        #     content = article.xpath(".//div[@id='main_content']").xpath('string(.)').extract()[0].strip()
-        #     time = article.xpath(".//*[contains(@class,'ss01')]").xpath('string(.)').extract()[0].strip()
-        #     author_name = article.xpath(".//*[contains(@class,'ss03')]").xpath('string(.)').extract()[0]
-        #     title = article.xpath(".//*[@id='artical_topic']").xpath('string(.)').extract()[0].strip()
-        print title[0].encode('utf8')
-        browser.close()
-    except Exception, e:
-        print e
-    return 'url:%s ---> finished' % url
+    def init(self, timeout=None, executable_path=None):
+        self.timeout = timeout
+        chrome_options = webdriver.ChromeOptions()
+        # chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        self.browser = webdriver.Chrome(executable_path=executable_path, chrome_options=chrome_options)
+        self.load_timeout = self.browser.set_page_load_timeout(self.timeout)
+        self.wait = WebDriverWait(self.browser, self.timeout)
+
+    def close(self, browsers):
+        for browser in browsers:
+            browser.close()
+
+    def request(self, urls):
+        self.file = File()
+        pool = Pool(Settings.MAX_POOL_SIZE)
+        return pool.map(self.run_task, urls)
+
+    def run_task(self, url):
+        self.init(timeout=Settings.SELENIUM_TIMEOUT, executable_path=Settings.CHROMEDRIVER_PATH)
+        self.file.logger(Settings.LOG_PATH, 'getting --> %s' %url)
+        print 'getting ---> %s' %url
+        try:
+            self.browser.get(url)
+        except TimeoutException:
+            print TimeoutException
+            self.file.logger(Settings.LOG_PATH, str(TimeoutException))
+        self.file.logger(Settings.LOG_PATH, 'url:%s ---> finished' % url)
+        print 'url:%s ---> finished' % url
+        return self.browser.current_url
+
 
 if __name__ == '__main__':
-    pool = Pool(2)
+    r = Request()
     # urls = ['https://www.huxiu.com', 'http://www.ifeng.com/', 'http://www.ce.cn/']
-    urls = ['http://news.ifeng.com/a/20181121/60169573_0.shtml']
-    result = pool.map(run_task, urls)
+    urls = ['http://news.ifeng.com/a/20181122/60170977_0.shtml', 'http://news.ifeng.com/a/20181122/60170867_0.shtml', 'http://news.ifeng.com/a/20181122/60170530_0.shtml']
+    result = r.request(urls)
     print result

@@ -1,3 +1,4 @@
 #!/bin/bash
-scriptDir=/home/dev/Repository/news/scripts
-python ${scriptDir}/send_email.py
+MYDATE=$(date "+%Y-%m-%d")
+spidersPath=/home/dev/Repository/news/Tegenaria/tSpider/tSpider/spiders
+python ${spidersPath}/ifeng.py

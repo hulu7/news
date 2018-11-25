@@ -72,8 +72,6 @@ class SendEmail():
         else:
             self.isReadyToSend = False
 
-
-
     def send(self, file_path):
         self.file_path = file_path
         self.createEmailBody()
@@ -84,7 +82,7 @@ class SendEmail():
             pwd = 'thebest1990'
             receiver = 'hui_asus@163.com'
             msg = MIMEText(self.body, 'html')
-            msg['subject'] = '进度监测'
+            msg['subject'] = 'pr3进度监测'
             msg['from'] = sender
             msg['to'] = receiver
             try:
@@ -97,5 +95,5 @@ class SendEmail():
 
 if __name__ == '__main__':
     send = SendEmail()
-    filePath = '/home/dev/Data/rsyncData/prd2/ifeng/'
+    filePath = '/home/dev/Data/rsyncData/prd3/ifeng/'
     send.send(filePath)

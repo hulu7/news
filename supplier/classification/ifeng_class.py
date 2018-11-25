@@ -132,8 +132,8 @@ if __name__ == "__main__":
                 'game','health','history','home','lottery','military','government',
                 'pet', 'photography', 'politics', 'psychology', 'society', 'sports',
                 'story', 'tech', 'technique', 'travel', 'house', 'life', 'wedding']
-    txt_path = '/home/dev/Data/rsyncData/prd1/ifeng/txt'
-    content_path = '/home/dev/Data/rsyncData/prd1/ifeng/ifeng_content.csv'
+    txt_path = '/home/dev/Data/rsyncData/prd4/ifeng/txt'
+    content_path = '/home/dev/Data/rsyncData/prd4/ifeng/ifeng_content.csv'
     class_finished_path = '/home/dev/Data/Production/catalogs'
     log_path = '/home/dev/Data/Production/log/' + today + '.log'
     model_path = '/home/dev/Data/npl/classifier/fastText/model_data/news_fasttext.model.bin'

@@ -1,6 +1,6 @@
 DATE=$(date "+%Y-%m-%d")
 TIME=$(date)
-scriptDir=/home/dev/Data/rsyncData/prd3/log
+scriptDir=/home/dev/Data/rsyncData/prd4/log
 mode=dev
 deploy=Repository
 mongoDir=/home/${mode}/Data
