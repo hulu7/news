@@ -8,6 +8,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from multiprocessing.pool import ThreadPool as Pool
+import gc
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.seleniumMiddleware import SeleniumMiddleware
@@ -22,13 +23,18 @@ class BrowserRequest():
         try:
             callback({'response': response, 'request_url': url})
         except Exception, e:
-            self.file.logger(Settings.LOG_PATH, 'Exception: %s' % e)
+            self.file.logger(Settings.LOG_PATH, 'Exception: %s for %' % e % url)
             response.close()
+            response.quit()
+            del response, request
+            gc.collect()
         self.content.append({'current_url': response.current_url, 'page_source': response.page_source})
         self.file.logger(Settings.LOG_PATH, 'End: %s' % response.current_url)
         print 'End: %s' % response.current_url
         response.close()
         response.quit()
+        del response, request
+        gc.collect()
 
     def start_chrome(self, urls, processes, callback=callable):
         self.file = FileIOMiddleware()
@@ -40,6 +46,8 @@ class BrowserRequest():
         process.join()
         self.file.logger(Settings.LOG_PATH, 'Done')
         print 'Done'
+        del self.file, process
+        gc.collect()
         return self.content
 
 if __name__ == '__main__':

@@ -10,6 +10,7 @@ sys.setdefaultencoding('utf8')
 from lxml import etree
 import urlparse
 import numpy as np
+import gc
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.mongodbMiddleware import MongoMiddleware
 from browserRequest import BrowserRequest
@@ -39,6 +40,8 @@ class Huxiu():
         isLogPathExists = os.path.exists(Settings.LOG_PATH)
         if isLogPathExists is False:
             os.makedirs(Settings.LOG_PATH)
+        del isWorkPathPrd1Exists, isFinishedTxtPathExists, isLogPathExists
+        gc.collect()
 
     def filter(self, id_urls):
         finished_ids = []
@@ -49,6 +52,8 @@ class Huxiu():
         for id_url in id_urls:
             if [str(id_url[0]).replace('\xef\xbb\xbf','')] not in finished_ids:
                 new_urls.append(id_url[1])
+        del finished_ids, isFinishedIdPathExists
+        gc.collect()
         return new_urls
 
     def readNewUrls(self):
@@ -58,17 +63,22 @@ class Huxiu():
         if isUrlPathExit is True:
             id_urls = np.array(self.file.readColsFromCSV(self.url_path, ['id', 'url']))
             new_urls = self.filter(id_urls)
+        del isUrlPathExit
+        gc.collect()
         return new_urls
 
     def storeFinishedId(self, id):
         print 'Start to store finished id %s' % id
         self.file.writeToCSVWithoutHeader(self.finished_id_path, [id.replace('\xef\xbb\xbf','')])
+        self.file.logger(self.log_path, 'End to store finished id %s' % id)
         print 'End to store finished id %s' % id
 
     def storeMongodb(self, data):
         print 'Start to store mongo %s' % data['url']
         mongo = MongoMiddleware()
         mongo.insert( self.mongo, data)
+        del mongo
+        gc.collect()
         print 'End to store mongo %s' % data['url']
 
     def storeTxt(self, id, content):
@@ -77,23 +87,52 @@ class Huxiu():
         print 'End to store txt %s' % id
         self.storeFinishedId(id)
 
+    def isEmpty(self, item_list):
+        return len([item for item in item_list if item.strip()]) == 0
+
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse %s' % current_url
         html = etree.HTML(response['response'].page_source)
-        title = html.xpath(".//*[contains(@class,'t-h1')]/text()")[0].strip()
-        comment_number = str(
-            filter(str.isdigit, html.xpath(".//*[contains(@class, 'article-pl pull-left')]/text()")[0].encode('gbk')))
-        share_number = str(filter(str.isdigit,
-                                  html.xpath(".//*[contains(@class, 'article-share pull-left')]/text()")[0].encode(
-                                      'gbk')))
-        image_url = html.xpath(".//*[contains(@class, 'article-img-box')]/img/@src")[0]
+        data = {}
+        comment_number = ""
+        title = ""
+        url = ""
+        id = ""
+        share_number = ""
+        image_url = ""
+        content = ""
+        time = ""
+        author_url = ""
+        author_name = ""
+
         url = current_url
-        content = ''.join(html.xpath(".//div[contains(@class, 'article-content-wrap')]/p/text()"))
-        time = html.xpath(".//*[@class='article-time pull-left']/text()")[0]
-        author_url = urlparse.urljoin(current_url, html.xpath(".//*[@class='author-name']/a/@href")[0])
-        author_name = html.xpath(".//*[@class='author-name']/a/text()")[0]
         id = str(filter(str.isdigit, current_url.encode('gbk')))
+        title1 = html.xpath(".//*[contains(@class,'t-h1')]/text()")
+        comment_number1 = html.xpath(".//*[contains(@class, 'article-pl pull-left')]/text()")
+        share_number1 = html.xpath(".//*[contains(@class, 'article-share pull-left')]/text()")
+        image_url1 = html.xpath(".//*[contains(@class, 'article-img-box')]/img/@src")
+        content1 = html.xpath(".//div[contains(@class, 'article-content-wrap')]/p/text()")
+        time1 = html.xpath(".//*[@class='article-time pull-left']/text()")
+        author_url1 = html.xpath(".//*[@class='author-name']/a/@href")
+        author_name1 = html.xpath(".//*[@class='author-name']/a/text()")
+
+        if self.isEmpty(title1) is False:
+            title = title1[0].strip()
+        if self.isEmpty(comment_number1) is False:
+            comment_number = str(filter(str.isdigit, comment_number1[0].encode('gbk'))).strip()
+        if self.isEmpty(share_number1) is False:
+            share_number = str(filter(str.isdigit, share_number1[0].encode('gbk'))).strip()
+        if self.isEmpty(image_url1) is False:
+            image_url = image_url1[0].strip()
+        if self.isEmpty(content1) is False:
+            content = ''.join(content1).strip()
+        if self.isEmpty(time1) is False:
+            time = time1[0]
+        if self.isEmpty(author_url1) is False:
+            author_url = urlparse.urljoin(current_url, author_url1[0].strip())
+        if self.isEmpty(author_name1) is False:
+            author_name = author_name1[0].strip()
         data = {
             'title': title,
             'comment_number': comment_number,
@@ -106,11 +145,12 @@ class Huxiu():
             'id': id
         }
         print 'End to parse %s' % current_url
-
         self.storeMongodb(data)
         self.storeTxt(id, content)
+        del current_url, html, title, comment_number, share_number, image_url, url, content, time, author_url, author_name, id, data
+        gc.collect()
 
-    def start_requests(self, urls):
+    def start_requests(self):
         self.init()
         self.file.logger(self.log_path, 'Start '+ self.name +' requests')
         print 'Start ' + self.name + ' requests'
@@ -123,8 +163,9 @@ class Huxiu():
         content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)
         self.file.logger(self.log_path, 'End %s requests' % str(len(content)))
         print 'End %s requests' % str(len(content))
+        del new_urls, request, content
+        gc.collect()
 
 if __name__ == '__main__':
     huxiu=Huxiu()
-    urls = ['https://www.huxiu.com/article/273257.html', 'https://www.huxiu.com/article/273262.html']
-    huxiu.start_requests(urls)
+    huxiu.start_requests()

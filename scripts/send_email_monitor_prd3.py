@@ -49,10 +49,13 @@ class SendEmail():
         txt_writer.close()
 
     def createEmailBody(self):
-        content_file = self.file_path + 'ifeng_urls.csv'
-        isContentFileExists = os.path.exists(content_file)
-        if isContentFileExists is True:
-            items_list = self.readFromCSV(content_file)
+        ifeng_urls = self.file_path + 'ifeng/ifeng_urls.csv'
+        isIfengUrlsExists = os.path.exists(ifeng_urls)
+        huxiu_urls = self.file_path + 'huxiu/huxiu_urls.csv'
+        isHuxiuUrlsExists = os.path.exists(huxiu_urls)
+        self.isReadyToSend = False
+        if isIfengUrlsExists is True:
+            items_list = self.readFromCSV(ifeng_urls)
             send_list = []
             for item in items_list:
                 send_list.append(item)
@@ -60,8 +63,8 @@ class SendEmail():
                 self.isReadyToSend = True
                 today = "".join(str(datetime.date.today()))
                 time = "".join(str(datetime.datetime.now())[11:19])
-                self.body = '<p></p>' + '<p>' + today + ' ' + time + '</p>' + '<p> 进度 : ' + str(len(send_list)) + '</p>'
-                for i in range(len(send_list) - 100, len(send_list)):
+                self.body = '<p></p>' + '<p>' + today + ' ' + time + '</p>' + '<p> ifeng 进度 : ' + str(len(send_list)) + '</p>'
+                for i in range(len(send_list) - 20, len(send_list)):
                     self.body = self.body + \
                            '<p>' + \
                            '<a href=' + send_list[i][3] + '>' + \
@@ -69,8 +72,23 @@ class SendEmail():
                                 '[' + send_list[i][2] + ']' + \
                            '</a>' + \
                            '</p>'
-        else:
-            self.isReadyToSend = False
+        if isHuxiuUrlsExists is True:
+            items_list = self.readFromCSV(huxiu_urls)
+            send_list = []
+            for item in items_list[1:]:
+                send_list.append(item)
+            if 0 < len(send_list):
+                self.isReadyToSend = True
+                today = "".join(str(datetime.date.today()))
+                time = "".join(str(datetime.datetime.now())[11:19])
+                self.body = self.body + '<p></p>' + '<p>' + today + ' ' + time + '</p>' + '<p> huxiu 进度 : ' + str(len(send_list)) + '</p>'
+                for i in range(len(send_list) - 20, len(send_list)):
+                    self.body = self.body + \
+                           '<p>' + \
+                           '<a href=' + send_list[i][1] + '>' + \
+                                send_list[i][2] + \
+                           '</a>' + \
+                           '</p>'
 
     def send(self, file_path):
         self.file_path = file_path
@@ -95,5 +113,5 @@ class SendEmail():
 
 if __name__ == '__main__':
     send = SendEmail()
-    filePath = '/home/dev/Data/rsyncData/prd3/ifeng/'
+    filePath = '/home/dev/Data/rsyncData/prd3/'
     send.send(filePath)

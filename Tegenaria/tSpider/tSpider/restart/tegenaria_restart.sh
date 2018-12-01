@@ -1,7 +1,7 @@
 #!/bin/bash
-DATE=$(date "+%Y%m%d")
+DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")
-LOGPATH=/home/dev/Data/rsyncData/prd1/log
+LOGPATH=/home/dev/Data/rsyncData/prd4/log
 SPIDERPATH=/home/dev/Repository/news/Tegenaria/tSpider/tSpider/spiders
 
 huxiu=`ps -fe |grep "huxiu.py" |grep -v "grep" |wc -l`
@@ -19,3 +19,4 @@ if [ ${ifeng} -eq 0 ]; then
 else
   echo "${TIME}: ifeng content is running" >> ${LOGPATH}/${DATE}_log.log
 fi
+chmod 777 ${LOGPATH}/${DATE}_log.log

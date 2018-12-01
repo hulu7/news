@@ -5,16 +5,17 @@
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
-from logging import getLogger
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-sys.path.append("..")
+import gc
+sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from settings import Settings
+from middlewares.fileIOMiddleware import FileIOMiddleware
 
 class SeleniumMiddleware(object):
     def init(self, timeout=None, executable_path=None):
-        self.logger = getLogger(__name__)
+        self.file = FileIOMiddleware()
         self.timeout = timeout
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
@@ -28,15 +29,15 @@ class SeleniumMiddleware(object):
     def close(self):
         self.browser.close()
         self.browser.quit()
+        del self.browser, self.file, self.timeout, self.load_timeout, self.wait
+        gc.collect()
 
     def chrome_request(self, url):
         self.init(timeout=Settings.SELENIUM_TIMEOUT, executable_path=Settings.CHROMEDRIVER_PATH)
         try:
-            self.logger.debug('--------Chrome is Starting--------')
+            self.file.logger(Settings.LOG_PATH, 'Starting Chrome')
             self.browser.get(url)
             return self.browser
-
         except TimeoutException:
-            self.logger.debug('--------Chrome is Timeout--------')
+            self.file.logger(Settings.LOG_PATH, 'Chrome Timeout')
             self.close()
-            self.init()
