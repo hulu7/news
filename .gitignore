@@ -45,3 +45,5 @@ scripts/deep.py
 scripts/deep_cache.txt
 scripts/deep_cache_finished.csv
 
+venv/
+
