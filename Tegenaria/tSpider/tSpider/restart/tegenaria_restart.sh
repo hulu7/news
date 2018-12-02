@@ -19,4 +19,13 @@ if [ ${ifeng} -eq 0 ]; then
 else
   echo "${TIME}: ifeng content is running" >> ${LOGPATH}/${DATE}_log.log
 fi
+
+ce=`ps -fe |grep "ce.py" |grep -v "grep" |wc -l`
+if [ ${ce} -eq 0 ]; then
+  echo "${TIME}: Restart ce content spider ..." >> ${LOGPATH}/${DATE}_log.log
+  python ${SPIDERPATH}/ce.py
+else
+  echo "${TIME}: ce content is running" >> ${LOGPATH}/${DATE}_log.log
+fi
+
 chmod 777 ${LOGPATH}/${DATE}_log.log

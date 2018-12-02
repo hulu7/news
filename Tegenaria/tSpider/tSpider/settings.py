@@ -79,8 +79,24 @@ class Settings():
         'FINISHED_URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_SP + "//finished_url.csv",
         'FINISHED_CONTENT_PATH': RSYNC_PRD1 + "//" + SETTINGS_SP + "//" + SETTINGS_SP + "_content.csv",
         'URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_SP + "//" + SETTINGS_SP + "_urls.csv",
-        'MAX_POOL_SIZE': 1,
+        'MAX_POOL_SIZE': 2,
         'URLS':['http://www.bjhd.gov.cn/xinxigongkai/zdly/zf/']
+    }
+
+    SETTINGS_CE = 'ce'
+    CE = {
+        'NAME': SETTINGS_CE,
+        'MONGO': SETTINGS_CE,
+        'MONGO_URLS': SETTINGS_CE + "_urls",
+        'WORK_PATH_PRD1': RSYNC_PRD1 + "//" + SETTINGS_CE,
+        'WORK_PATH_PRD2': RSYNC_PRD2 + "//" + SETTINGS_CE,
+        'FINISHED_TXT_PATH': RSYNC_PRD1 + "//" + SETTINGS_CE + "//txt",
+        'FINISHED_ID_PATH': RSYNC_PRD1 + "//" + SETTINGS_CE + "//finished_id.csv",
+        'FINISHED_URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_CE + "//finished_url.csv",
+        'FINISHED_CONTENT_PATH': RSYNC_PRD1 + "//" + SETTINGS_CE + "//" + SETTINGS_CE + "_content.csv",
+        'URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_CE + "//" + SETTINGS_CE + "_urls.csv",
+        'MAX_POOL_SIZE': 2,
+        'URLS':['http://www.ce.cn/']
     }
 
     SETTINGS_IFENG = 'ifeng'
