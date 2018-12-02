@@ -11,7 +11,6 @@ from lxml import etree
 import re
 import numpy as np
 import gc
-from memory_profiler import profile
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.mongodbMiddleware import MongoMiddleware
 from browserRequest import BrowserRequest
@@ -56,8 +55,23 @@ class Ifeng():
                     self.storeFinishedId(str(id_url[1]).replace('\xef\xbb\xbf',''))
                     print 'Empty url with id: ' + str(id_url[1])
                     self.file.logger(self.log_path, 'Empty url with id: ' + str(id_url[1]))
-                else:
-                    new_urls.append(id_url[0])
+                    continue
+                if (str(id_url[0]).split('/'))[3] != 'a':
+                    self.storeFinishedId(str(id_url[1]).replace('\xef\xbb\xbf',''))
+                    print 'Invalid url with id: ' + str(id_url[1])
+                    self.file.logger(self.log_path, 'Invalid url with id: ' + str(id_url[1]))
+                    continue
+                if 'biz' in str(id_url[0]):
+                    self.storeFinishedId(str(id_url[1]).replace('\xef\xbb\xbf',''))
+                    print 'Ignored biz with id: ' + str(id_url[1])
+                    self.file.logger(self.log_path, 'Ignored biz with id: ' + str(id_url[1]))
+                    continue
+                if 'guoxue' in str(id_url[0]):
+                    self.storeFinishedId(str(id_url[1]).replace('\xef\xbb\xbf',''))
+                    print 'Ignored guoxue with id: ' + str(id_url[1])
+                    self.file.logger(self.log_path, 'Ignored guoxue with id: ' + str(id_url[1]))
+                    continue
+                new_urls.append(id_url[0])
         del finished_ids, isFinishedIdPathExists
         gc.collect()
         return new_urls
@@ -102,14 +116,26 @@ class Ifeng():
         if len(valid) == 0:
             invalid_id = re.split('_', re.split('/', response['request_url'])[5])[0]
             self.storeFinishedId(invalid_id)
-            self.file.logger(self.log_path, 'Invalid url')
-            print 'Invalid url'
+            self.file.logger(self.log_path, 'Invalid url: %s' % current_url)
+            print 'Invalid url: %s' % current_url
+            return
+        if "#p" in current_url:
+            invalid_id = re.split('_', re.split('/', response['request_url'])[5])[0]
+            self.storeFinishedId(invalid_id)
+            self.file.logger(self.log_path, 'It is picture page: %s' % current_url)
+            print 'It is picture page: %s' % current_url
+            return
+        if (current_url.split('/'))[3] != 'a':
+            invalid_id = re.split('_', re.split('/', response['request_url'])[5])[0]
+            self.storeFinishedId(invalid_id)
+            print 'Invalid url with id: ' + str(invalid_id)
+            self.file.logger(self.log_path, 'Invalid url with id: ' + str(invalid_id))
             return
         print 'Start to parse %s' % current_url
         current_id = re.split('_', re.split('/', current_url)[5])[0]
         html = etree.HTML(response['response'].page_source)
         not_fnd = html.xpath(".//*[contains(@class,'tips404')]/text()")
-        data={}
+        data = {}
         comment_number = ""
         join_number = ""
         url = ""
@@ -244,7 +270,7 @@ class Ifeng():
         self.file.logger(self.log_path, 'Start '+ self.name +' requests')
         print 'Start ' + self.name + ' requests'
         new_urls = self.readNewUrls()
-        # new_urls = ["http://news.ifeng.com/a/20181122/60170554_0.shtml"]
+        # new_urls = ["http://news.ifeng.com/a/20181113/60157274_0.shtml"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for ' + self.name + ' and return')
             print 'No new url for ' + self.name + ' and return'

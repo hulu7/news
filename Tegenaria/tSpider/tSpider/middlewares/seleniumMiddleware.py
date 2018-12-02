@@ -35,9 +35,11 @@ class SeleniumMiddleware(object):
     def chrome_request(self, url):
         self.init(timeout=Settings.SELENIUM_TIMEOUT, executable_path=Settings.CHROMEDRIVER_PATH)
         try:
-            self.file.logger(Settings.LOG_PATH, 'Starting Chrome')
+            self.file.logger(Settings.LOG_PATH, 'Starting Chrome for: %s' % url)
             self.browser.get(url)
             return self.browser
         except TimeoutException:
-            self.file.logger(Settings.LOG_PATH, 'Chrome Timeout')
+            browser = self.browser
+            self.file.logger(Settings.LOG_PATH, 'Chrome timeout for: % s' % url)
             self.close()
+            return browser
