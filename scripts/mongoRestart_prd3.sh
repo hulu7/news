@@ -1,5 +1,5 @@
 DATE=$(date "+%Y-%m-%d")
-TIME=$(date)
+TIME=$(date "+%Y-%m-%d %H:%M:%S")
 scriptDir=/home/dev/Data/rsyncData/prd3/log
 mode=dev
 deploy=Repository
