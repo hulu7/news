@@ -67,6 +67,22 @@ class Settings():
         'URLS':['https://www.huxiu.com/']
     }
 
+    SETTINGS_SP = 'sp'
+    SP = {
+        'NAME': SETTINGS_SP,
+        'MONGO': SETTINGS_SP,
+        'MONGO_URLS': SETTINGS_SP + "_urls",
+        'WORK_PATH_PRD1': RSYNC_PRD1 + "//" + SETTINGS_SP,
+        'WORK_PATH_PRD2': RSYNC_PRD2 + "//" + SETTINGS_SP,
+        'FINISHED_TXT_PATH': RSYNC_PRD1 + "//" + SETTINGS_SP + "//txt",
+        'FINISHED_ID_PATH': RSYNC_PRD1 + "//" + SETTINGS_SP + "//finished_id.csv",
+        'FINISHED_URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_SP + "//finished_url.csv",
+        'FINISHED_CONTENT_PATH': RSYNC_PRD1 + "//" + SETTINGS_SP + "//" + SETTINGS_SP + "_content.csv",
+        'URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_SP + "//" + SETTINGS_SP + "_urls.csv",
+        'MAX_POOL_SIZE': 1,
+        'URLS':['http://www.bjhd.gov.cn/xinxigongkai/zdly/zf/']
+    }
+
     SETTINGS_IFENG = 'ifeng'
     IFENG = {
         'NAME': SETTINGS_IFENG,
