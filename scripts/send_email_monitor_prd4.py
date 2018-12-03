@@ -49,29 +49,35 @@ class SendEmail():
         txt_writer.close()
 
     def createEmailBody(self):
-        content_file = self.file_path + 'ifeng_content.csv'
-        isContentFileExists = os.path.exists(content_file)
-        if isContentFileExists is True:
-            items_list = self.readFromCSV(content_file)
-            send_list = []
-            for item in items_list:
-                send_list.append(item)
-            if 0 < len(send_list):
-                self.isReadyToSend = True
-                today = "".join(str(datetime.date.today()))
-                time = "".join(str(datetime.datetime.now())[11:19])
-                self.body = '<p></p>' + '<p>' + today + ' ' + time + '</p>' + '<p> 进度 : ' + str(len(send_list)) + '</p>'
-                for i in range(len(send_list) - 100, len(send_list)):
-                    self.body = self.body + \
-                           '<p>' + \
-                           '<a href=' + send_list[i][2] + '>' + \
-                                send_list[i][3] + \
-                                '[' + send_list[i][5] + \
-                                '--' + send_list[i][4] + ']' + \
-                            '</a>' + \
-                           '</p>'
-        else:
-            self.isReadyToSend = False
+        self.isReadyToSend = False
+        all_pages = os.listdir(self.file_path)
+        all_pages.remove('log')
+        today = "".join(str(datetime.date.today()))
+        time = "".join(str(datetime.datetime.now())[11:19])
+        self.body = '<p></p><p>{0} {1}</p><p> --------prd4-------- </p>'.format(today, time)
+        for page in all_pages:
+            page_file = '{0}/{1}/{2}_content.csv'.format(self.file_path, page, page)
+            isPageFileExists = os.path.exists(page_file)
+            if isPageFileExists is True:
+                items_list = self.readFromCSV(page_file)
+                self.body = '{0}<p>{1} 进度 -- {2}</p>'.format(self.body, page, str(len(items_list) - 1))
+        for page in all_pages:
+            page_file = '{0}/{1}/{2}_content.csv'.format(self.file_path, page, page)
+            isPageFileExists = os.path.exists(page_file)
+            if isPageFileExists is True:
+                items_list = self.readFromCSV(page_file)
+                send_list = []
+                for item in items_list:
+                    send_list.append(item)
+                if 0 < len(send_list):
+                    self.isReadyToSend = True
+                    self.body = '{0}<p>-- {1} 最新消息 --</p>'.format(self.body, page)
+                    for i in range(len(send_list) - 20, len(send_list)):
+                        url = send_list[i][2]
+                        title = send_list[i][1]
+                        time = '[{0}]'.format(send_list[i][4])
+                        author = send_list[i][3]
+                        self.body = '{0}<p><a href={1}>@ {2} {3} {4}</a></p>'.format(self.body, url, title, time, author)
 
     def send(self, file_path):
         self.file_path = file_path
@@ -96,5 +102,5 @@ class SendEmail():
 
 if __name__ == '__main__':
     send = SendEmail()
-    filePath = '/home/dev/Data/rsyncData/prd4/ifeng/'
+    filePath = '/home/dev/Data/rsyncData/prd4'
     send.send(filePath)
