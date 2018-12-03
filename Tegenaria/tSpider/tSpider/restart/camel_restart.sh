@@ -20,3 +20,10 @@ else
   echo "${TIME}: ce url is running" >> ${LOGPATH}/${DATE}_log.log
 fi
 
+yicai=`ps -fe |grep "yicai_url.py" |grep -v "grep" |wc -l`
+if [ ${yicai} -eq 0 ]; then
+  echo "${TIME}: Restart yicai url spider ..." >> ${LOGPATH}/${DATE}_log.log
+  python ${SPIDERPATH}/yicai/yicai_url.py
+else
+  echo "${TIME}: yicai url is running" >> ${LOGPATH}/${DATE}_log.log
+fi

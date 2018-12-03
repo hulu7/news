@@ -73,7 +73,7 @@ class SendEmail():
                 if 0 < len(send_list):
                     self.isReadyToSend = True
                     self.body = '{0}<p>-- {1} 最新消息 --</p>'.format(self.body, page)
-                    for i in range(len(send_list) - 20, len(send_list)):
+                    for i in range(len(send_list) - 5, len(send_list)):
                         if page in ['ifeng']:
                             url = send_list[i][3]
                             title = send_list[i][6]

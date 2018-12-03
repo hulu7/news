@@ -28,4 +28,12 @@ else
   echo "${TIME}: ce content is running" >> ${LOGPATH}/${DATE}_log.log
 fi
 
+yicai=`ps -fe |grep "yicai.py" |grep -v "grep" |wc -l`
+if [ ${yicai} -eq 0 ]; then
+  echo "${TIME}: Restart yicai content spider ..." >> ${LOGPATH}/${DATE}_log.log
+  python ${SPIDERPATH}/yicai.py
+else
+  echo "${TIME}: yicai content is running" >> ${LOGPATH}/${DATE}_log.log
+fi
+
 chmod 777 ${LOGPATH}/${DATE}_log.log

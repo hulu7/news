@@ -99,6 +99,22 @@ class Settings():
         'URLS':['http://www.ce.cn/']
     }
 
+    SETTINGS_YICAI = 'yicai'
+    YICAI = {
+        'NAME': SETTINGS_YICAI,
+        'MONGO': SETTINGS_YICAI,
+        'MONGO_URLS': SETTINGS_YICAI + "_urls",
+        'WORK_PATH_PRD1': RSYNC_PRD1 + "//" + SETTINGS_YICAI,
+        'WORK_PATH_PRD2': RSYNC_PRD2 + "//" + SETTINGS_YICAI,
+        'FINISHED_TXT_PATH': RSYNC_PRD1 + "//" + SETTINGS_YICAI + "//txt",
+        'FINISHED_ID_PATH': RSYNC_PRD1 + "//" + SETTINGS_YICAI + "//finished_id.csv",
+        'FINISHED_URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_YICAI + "//finished_url.csv",
+        'FINISHED_CONTENT_PATH': RSYNC_PRD1 + "//" + SETTINGS_YICAI + "//" + SETTINGS_YICAI + "_content.csv",
+        'URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_YICAI + "//" + SETTINGS_YICAI + "_urls.csv",
+        'MAX_POOL_SIZE': 2,
+        'URLS':['https://www.yicai.com/']
+    }
+
     SETTINGS_IFENG = 'ifeng'
     IFENG = {
         'NAME': SETTINGS_IFENG,
