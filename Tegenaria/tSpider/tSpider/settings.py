@@ -45,40 +45,42 @@ class Settings():
     RSYNC_PRD1 = "//home//dev//Data//rsyncData//prd4"
     RSYNC_PRD2 = "//home//dev//Data//rsyncData//prd3"
 
-    LOG_PATH = RSYNC_PRD1 + "//log"
-    LOG_PATH_PRD2 = RSYNC_PRD2 + "//log"
+    LOG_PATH = "{0}//log".format(RSYNC_PRD1)
+    LOG_PATH_PRD2 = "{0}//log".format(RSYNC_PRD2)
 
     MONGO_URI = 'mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019'
     REPLICASET = 'repset'
+
+    CHRONUS_SETTINGS = "{0}//chronus.csv".format(RSYNC_PRD1)
 
     SETTINGS_HUXIU = 'huxiu'
     HUXIU = {
         'NAME': SETTINGS_HUXIU,
         'MONGO': SETTINGS_HUXIU,
-        'MONGO_URLS': SETTINGS_HUXIU + "_urls",
-        'WORK_PATH_PRD1': RSYNC_PRD1 + "//" + SETTINGS_HUXIU,
-        'WORK_PATH_PRD2': RSYNC_PRD2 + "//" + SETTINGS_HUXIU,
-        'FINISHED_TXT_PATH': RSYNC_PRD1 + "//" + SETTINGS_HUXIU + "//txt",
-        'FINISHED_ID_PATH': RSYNC_PRD1 + "//" + SETTINGS_HUXIU + "//finished_id.csv",
-        'FINISHED_URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_HUXIU + "//finished_url.csv",
-        'FINISHED_CONTENT_PATH': RSYNC_PRD1 + "//" + SETTINGS_HUXIU + "//" + SETTINGS_HUXIU + "_content.csv",
-        'URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_HUXIU + "//" + SETTINGS_HUXIU + "_urls.csv",
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_HUXIU),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_HUXIU),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_HUXIU),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_HUXIU),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_HUXIU),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_HUXIU),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_HUXIU, SETTINGS_HUXIU),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_HUXIU, SETTINGS_HUXIU),
         'MAX_POOL_SIZE': 2,
-        'URLS':['https://www.huxiu.com/']
+        'URLS': ['https://www.huxiu.com/']
     }
 
     SETTINGS_SP = 'sp'
     SP = {
         'NAME': SETTINGS_SP,
         'MONGO': SETTINGS_SP,
-        'MONGO_URLS': SETTINGS_SP + "_urls",
-        'WORK_PATH_PRD1': RSYNC_PRD1 + "//" + SETTINGS_SP,
-        'WORK_PATH_PRD2': RSYNC_PRD2 + "//" + SETTINGS_SP,
-        'FINISHED_TXT_PATH': RSYNC_PRD1 + "//" + SETTINGS_SP + "//txt",
-        'FINISHED_ID_PATH': RSYNC_PRD1 + "//" + SETTINGS_SP + "//finished_id.csv",
-        'FINISHED_URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_SP + "//finished_url.csv",
-        'FINISHED_CONTENT_PATH': RSYNC_PRD1 + "//" + SETTINGS_SP + "//" + SETTINGS_SP + "_content.csv",
-        'URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_SP + "//" + SETTINGS_SP + "_urls.csv",
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_SP),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_SP),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_SP),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_SP),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_SP),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_SP),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_SP, SETTINGS_SP),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_SP, SETTINGS_SP),
         'MAX_POOL_SIZE': 2,
         'URLS':['http://www.bjhd.gov.cn/xinxigongkai/zdly/zf/']
     }
@@ -87,14 +89,14 @@ class Settings():
     CE = {
         'NAME': SETTINGS_CE,
         'MONGO': SETTINGS_CE,
-        'MONGO_URLS': SETTINGS_CE + "_urls",
-        'WORK_PATH_PRD1': RSYNC_PRD1 + "//" + SETTINGS_CE,
-        'WORK_PATH_PRD2': RSYNC_PRD2 + "//" + SETTINGS_CE,
-        'FINISHED_TXT_PATH': RSYNC_PRD1 + "//" + SETTINGS_CE + "//txt",
-        'FINISHED_ID_PATH': RSYNC_PRD1 + "//" + SETTINGS_CE + "//finished_id.csv",
-        'FINISHED_URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_CE + "//finished_url.csv",
-        'FINISHED_CONTENT_PATH': RSYNC_PRD1 + "//" + SETTINGS_CE + "//" + SETTINGS_CE + "_content.csv",
-        'URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_CE + "//" + SETTINGS_CE + "_urls.csv",
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_CE),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_CE),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_CE),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_CE),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_CE),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_CE),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CE, SETTINGS_CE),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CE, SETTINGS_CE),
         'MAX_POOL_SIZE': 2,
         'URLS':['http://www.ce.cn/']
     }
@@ -103,14 +105,14 @@ class Settings():
     YICAI = {
         'NAME': SETTINGS_YICAI,
         'MONGO': SETTINGS_YICAI,
-        'MONGO_URLS': SETTINGS_YICAI + "_urls",
-        'WORK_PATH_PRD1': RSYNC_PRD1 + "//" + SETTINGS_YICAI,
-        'WORK_PATH_PRD2': RSYNC_PRD2 + "//" + SETTINGS_YICAI,
-        'FINISHED_TXT_PATH': RSYNC_PRD1 + "//" + SETTINGS_YICAI + "//txt",
-        'FINISHED_ID_PATH': RSYNC_PRD1 + "//" + SETTINGS_YICAI + "//finished_id.csv",
-        'FINISHED_URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_YICAI + "//finished_url.csv",
-        'FINISHED_CONTENT_PATH': RSYNC_PRD1 + "//" + SETTINGS_YICAI + "//" + SETTINGS_YICAI + "_content.csv",
-        'URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_YICAI + "//" + SETTINGS_YICAI + "_urls.csv",
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_YICAI),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_YICAI),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_YICAI),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_YICAI),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_YICAI),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_YICAI),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_YICAI, SETTINGS_YICAI),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_YICAI, SETTINGS_YICAI),
         'MAX_POOL_SIZE': 2,
         'URLS':['https://www.yicai.com/']
     }
@@ -119,16 +121,14 @@ class Settings():
     IFENG = {
         'NAME': SETTINGS_IFENG,
         'MONGO': SETTINGS_IFENG,
-        'MONGO_URLS': SETTINGS_IFENG + "_URLS",
-        'WORK_PATH_PRD1': RSYNC_PRD1 + "//" + SETTINGS_IFENG,
-        'WORK_PATH_PRD2': RSYNC_PRD2 + "//" + SETTINGS_IFENG,
-        'FINISHED_TXT_PATH': RSYNC_PRD1 + "//" + SETTINGS_IFENG + "//txt",
-        'FINISHED_ID_PATH': RSYNC_PRD1 + "//" + SETTINGS_IFENG + "//finished_id.csv",
-        'FINISHED_URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_IFENG + "//finished_url.csv",
-        'FINISHED_CONTENT_PATH': RSYNC_PRD1 + "//" + SETTINGS_IFENG + "//" + SETTINGS_IFENG + "_content.csv",
-        'URL_PATH': RSYNC_PRD2 + "//" + SETTINGS_IFENG + "//" + SETTINGS_IFENG + "_urls.csv",
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_IFENG),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_IFENG),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_IFENG),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_IFENG),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_IFENG),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_IFENG),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IFENG, SETTINGS_IFENG),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IFENG, SETTINGS_IFENG),
         'MAX_POOL_SIZE': 2,
         'URLS': []
     }
-
-
