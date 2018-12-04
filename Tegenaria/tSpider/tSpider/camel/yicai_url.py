@@ -73,7 +73,6 @@ class Yicai():
             short_url = item.xpath("@href")[0].strip()
             if ('html' not in short_url) or ('daohang' in short_url) or ('video' in short_url):
                 continue
-            print short_url
             title_content0_1 = item.xpath(".//div/h2/text()")
             title_content0_2 = item.xpath(".//div/h3/span/text()")
             short_url_parts = re.split(r'[., /, _]', short_url)
@@ -85,7 +84,6 @@ class Yicai():
                 title = title_content0_2[0]
             else:
                 title = ""
-            print title
             if (len(str(filter(str.isdigit, id))) != 0) and ([int(id)] not in self.finished_ids) and (title != None):
                 data.append({
                     'title': title,

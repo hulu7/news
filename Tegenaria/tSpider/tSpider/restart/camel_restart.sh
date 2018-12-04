@@ -2,28 +2,16 @@
 DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")
 LOGPATH=/home/dev/Data/rsyncData/prd3/log
-SPIDERPATH=/home/dev/Repository/news/Tegenaria/tSpider/tSpider/camel
-
-huxiu=`ps -fe |grep "huxiu_url.py" |grep -v "grep" |wc -l`
-if [ ${huxiu} -eq 0 ]; then
-  echo "${TIME}: Restart huxiu url spider ..." >> ${LOGPATH}/${DATE}_log.log
-  python ${SPIDERPATH}/huxiu/huxiu_url.py
-else
-  echo "${TIME}: huxiu url is running" >> ${LOGPATH}/${DATE}_log.log
-fi
-
-ce=`ps -fe |grep "ce_url.py" |grep -v "grep" |wc -l`
-if [ ${ce} -eq 0 ]; then
-  echo "${TIME}: Restart ce url spider ..." >> ${LOGPATH}/${DATE}_log.log
-  python ${SPIDERPATH}/ce/ce_url.py
-else
-  echo "${TIME}: ce url is running" >> ${LOGPATH}/${DATE}_log.log
-fi
-
-yicai=`ps -fe |grep "yicai_url.py" |grep -v "grep" |wc -l`
-if [ ${yicai} -eq 0 ]; then
-  echo "${TIME}: Restart yicai url spider ..." >> ${LOGPATH}/${DATE}_log.log
-  python ${SPIDERPATH}/yicai/yicai_url.py
-else
-  echo "${TIME}: yicai url is running" >> ${LOGPATH}/${DATE}_log.log
-fi
+CAMELPATH=/home/dev/Repository/news/Tegenaria/tSpider/tSpider/camel
+for camel in $(ls ${CAMELPATH})
+do
+    if [ "${camel}" != "__init__.py" ] && [ "${camel}" != "sp_url.py" ]; then
+        camelExists=`ps -fe |grep "${camel}" |grep -v "grep" |wc -l`
+        if [ ${camelExists} -eq 0 ]; then
+           echo "${TIME}: Restart ${camel} content spider ..." >> ${LOGPATH}/${DATE}_log.log
+           python ${CAMELPATH}/${camel}
+        else
+           echo "${TIME}: ${camel} content is running" >> ${LOGPATH}/${DATE}_log.log
+        fi
+    fi
+done

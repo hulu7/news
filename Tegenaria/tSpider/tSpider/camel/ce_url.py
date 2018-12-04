@@ -77,7 +77,6 @@ class Ce():
             id = short_url_parts[len(short_url_parts) - 2]
             url = urlparse.urljoin(current_url, short_url)
             title = item.text
-            print title
             if (len(str(filter(str.isdigit, id))) != 0) and ([int(id)] not in self.finished_ids) and (title != None):
                 data.append({
                     'title': title,
