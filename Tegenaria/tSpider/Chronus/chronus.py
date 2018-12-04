@@ -109,7 +109,7 @@ class Chronus():
         print 'Now time is {0}'.format(self.hourMinute)
         self.report()
         print 'End report'
-        if self.hourMinute == "18:00":
+        if self.hourMinute == "00:00":
             print 'Start to store table'
             self.updateTable()
             print 'End to update table'
