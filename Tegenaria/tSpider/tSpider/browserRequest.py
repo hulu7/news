@@ -24,6 +24,7 @@ class BrowserRequest():
             callback({'response': response, 'request_url': url})
         except Exception, e:
             self.file.logger(Settings.LOG_PATH, 'Exception: %s for %' % e % url)
+            print 'Exception: %s for %' % e % url
             response.close()
             response.quit()
             del response, request

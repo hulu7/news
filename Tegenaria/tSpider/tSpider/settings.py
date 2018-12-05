@@ -132,3 +132,19 @@ class Settings():
         'MAX_POOL_SIZE': 2,
         'URLS': []
     }
+
+    SETTINGS_JINGJI21 = 'jingji21'
+    JINGJI21 = {
+        'NAME': SETTINGS_JINGJI21,
+        'MONGO': SETTINGS_JINGJI21,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_JINGJI21),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_JINGJI21),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_JINGJI21),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_JINGJI21),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_JINGJI21),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
+        'MAX_POOL_SIZE': 2,
+        'URLS': ['http://www.21jingji.com/']
+    }
