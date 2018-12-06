@@ -51,7 +51,7 @@ class Settings():
     MONGO_URI = 'mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019'
     REPLICASET = 'repset'
 
-    CHRONUS_SETTINGS = "{0}//chronus.csv".format(RSYNC_PRD1)
+    CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(RSYNC_PRD1)
 
     SETTINGS_HUXIU = 'huxiu'
     HUXIU = {
@@ -147,4 +147,20 @@ class Settings():
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
         'MAX_POOL_SIZE': 2,
         'URLS': ['http://www.21jingji.com/']
+    }
+
+    SETTINGS_STCN = 'stcn'
+    STCN = {
+        'NAME': SETTINGS_STCN,
+        'MONGO': SETTINGS_STCN,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_STCN),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_STCN),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_STCN),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_STCN),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_STCN),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_STCN),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_STCN, SETTINGS_STCN),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_STCN, SETTINGS_STCN),
+        'MAX_POOL_SIZE': 2,
+        'URLS': ['http://www.stcn.com/']
     }
