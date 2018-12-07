@@ -30,7 +30,7 @@ class Chronus():
         self.body = '{0}<div>{1} -- {2} -- {3} -- {4}</div>'.format(self.body, 'Name', 'Pre', 'Now', 'Increase')
         self.isReadyToSend = True
         for i in range(1, len(self.static)):
-            self.body = '{0}<div>{1} -- {2} -- {3} -- {4}</div>'.format(self.body, self.header[i], self.preData[i], self.data[1][i], self.static[i])
+            self.body = '{0}<div>{1} -- {2} -- {3} -- {4}</div>'.format(self.body, self.data[0][i], self.preData[i], self.data[1][i], self.static[i])
 
     def collectStatisticData(self):
         files = os.listdir(self.base_path)
@@ -50,13 +50,13 @@ class Chronus():
             self.data[0].append(file)
             self.data[1].append(str(len(content) - 1))
             print file + ' ' + str(len(content) - 1)
-        self.header = self.data[0]
+        newHeader = self.data[0]
         preHeader = previousData[len(previousData) - 2]
         self.preData = previousData[len(previousData) - 1]
         self.static = [0]
         self.increase_sum = 0
         self.total = 0
-        for header in self.header:
+        for header in newHeader:
             if header == 'time':
                 continue
             self.total = self.total + int(self.data[1][self.data[0].index(header)])
@@ -74,18 +74,8 @@ class Chronus():
         self.YearMonthDay = time.strftime('%Y-%m-%d ', time.localtime(time.time()))
 
     def updateTable(self):
-        files = os.listdir(self.base_path)
-        files.remove('log')
-        data = [str(self.YearMonthDay)]
-        header = ["time"]
-        header.extend(files)
-        self.file.writeToCSVWithoutHeader(self.table_path, header)
-        for file in files:
-            file_path = "{0}//{1}//{2}_content.csv".format(self.base_path, file, file)
-            content = self.file.readFromCSV(file_path)
-            data.append(str(len(content)))
-            print '{0} {1}'.format(file, str(len(content)))
-        self.file.writeToCSVWithoutHeader(self.table_path, self.data)
+        self.file.writeToCSVWithoutHeader(self.table_path, self.data[0])
+        self.file.writeToCSVWithoutHeader(self.table_path, self.data[1])
 
     def sendEmail(self):
         self.createEmailBody()
