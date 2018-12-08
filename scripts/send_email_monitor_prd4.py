@@ -72,7 +72,7 @@ class SendEmail():
                 if 0 < len(send_list):
                     self.isReadyToSend = True
                     self.body = '{0}<p>-- {1} 最新消息 --</p>'.format(self.body, page)
-                    for i in range(len(send_list) - 5, len(send_list)):
+                    for i in range(len(send_list) - 10, len(send_list)):
                         url = send_list[i][2]
                         title = send_list[i][1]
                         time = '[{0}]'.format(send_list[i][4])
@@ -88,10 +88,12 @@ class SendEmail():
             sender = 'hui_asus@163.com'
             pwd = 'thebest1990'
             receiver = 'hui_asus@163.com'
-            msg = MIMEText(self.body, 'html')
+            msg = MIMEText(self.body, 'html', 'utf-8')
             msg['subject'] = 'pr4进度监测'
             msg['from'] = sender
             msg['to'] = receiver
+            msg["Accept-Language"] = 'zh-CN'
+            msg["Accept-Charset"] = 'ISO-8859-1,utf-8'
             try:
                 s = smtplib.SMTP_SSL(host, port)
                 s.login(sender, pwd)

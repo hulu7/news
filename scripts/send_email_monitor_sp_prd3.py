@@ -85,10 +85,12 @@ class SendEmail():
             sender = 'hui_asus@163.com'
             pwd = 'thebest1990'
             receiver = 'hui_asus@163.com'
-            msg = MIMEText(self.body, 'html')
+            msg = MIMEText(self.body, 'html', 'utf-8')
             msg['subject'] = 'pr3-通知监测'
             msg['from'] = sender
             msg['to'] = receiver
+            msg["Accept-Language"] = 'zh-CN'
+            msg["Accept-Charset"] = 'ISO-8859-1,utf-8'
             try:
                 s = smtplib.SMTP_SSL(host, port)
                 s.login(sender, pwd)
