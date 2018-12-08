@@ -29,8 +29,14 @@ class Chronus():
         self.body = '{0}<div>Total {1} Increase {2} for {3} app</div>'.format(self.body ,str(self.total), str(self.increase_sum), str(len(self.preData) - 1))
         self.body = '{0}<div>{1} -- {2} -- {3} -- {4}</div>'.format(self.body, 'Name', 'Pre', 'Now', 'Increase')
         self.isReadyToSend = True
-        for i in range(1, len(self.static)):
-            self.body = '{0}<div>{1} -- {2} -- {3} -- {4}</div>'.format(self.body, self.data[0][i], self.preData[i], self.data[1][i], self.static[i])
+        for data in self.data[0]:
+            if data == 'time':
+                continue
+            dataIndex = self.data[0].index(data)
+            if data in self.preHeader:
+                self.body = '{0}<div>{1} -- {2} -- {3} -- {4}</div>'.format(self.body, data, self.preData[self.preHeader.index(self.data[0][dataIndex])], self.data[1][dataIndex], self.static[dataIndex])
+            else:
+                self.body = '{0}<div>{1} -- {2} -- {3} -- {4}</div>'.format(self.body, data, 0, self.data[1][dataIndex], self.static[dataIndex])
 
     def collectStatisticData(self):
         files = os.listdir(self.base_path)
@@ -51,7 +57,7 @@ class Chronus():
             self.data[1].append(str(len(content) - 1))
             print file + ' ' + str(len(content) - 1)
         newHeader = self.data[0]
-        preHeader = previousData[len(previousData) - 2]
+        self.preHeader = previousData[len(previousData) - 2]
         self.preData = previousData[len(previousData) - 1]
         self.static = [0]
         self.increase_sum = 0
@@ -60,8 +66,8 @@ class Chronus():
             if header == 'time':
                 continue
             self.total = self.total + int(self.data[1][self.data[0].index(header)])
-            if header in preHeader:
-                increase = int(self.data[1][self.data[0].index(header)]) - int(self.preData[preHeader.index(header)])
+            if header in self.preHeader:
+                increase = int(self.data[1][self.data[0].index(header)]) - int(self.preData[self.preHeader.index(header)])
             else:
                 increase = int(self.data[1][self.data[0].index(header)])
             self.increase_sum = self.increase_sum + increase
