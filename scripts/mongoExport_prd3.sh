@@ -6,6 +6,7 @@ huxiuSyncDir=${prd3Path}/huxiu
 ceSyncDir=${prd3Path}/ce
 yicaiSyncDir=${prd3Path}/yicai
 jingji21SyncDir=${prd3Path}/jingji21
+stcnSyncDir=${prd3Path}/stcn
 
 mongoexport -d 'ifeng' -c 'contentInfo' --csv -f catalog,content.class,content.collect_time,content.docUrl,content.id,content.imageUrl,content.title,content.url -o ${tmpDir}/ifeng_urls_tmp.csv
 mv ${tmpDir}/ifeng_urls_tmp.csv ${ifengSyncDir}/ifeng_urls.csv
@@ -26,3 +27,7 @@ chmod 777 ${yicaiSyncDir}/yicai_urls.csv
 mongoexport -d 'jingji21_urls' -c 'contentInfo' --csv -f id,url,title -o ${tmpDir}/jingji21_urls_tmp.csv
 mv ${tmpDir}/jingji21_urls_tmp.csv ${jingji21SyncDir}/jingji21_urls.csv
 chmod 777 ${jingji21SyncDir}/jingji21_urls.csv
+
+mongoexport -d 'stcn_urls' -c 'contentInfo' --csv -f id,url,title -o ${tmpDir}/stcn_urls_tmp.csv
+mv ${tmpDir}/stcn_urls_tmp.csv ${stcnSyncDir}/stcn_urls.csv
+chmod 777 ${stcnSyncDir}/stcn_urls.csv

@@ -20,3 +20,7 @@ chmod 777 ${baseDir}/yicai/yicai_content.csv
 mongoexport -d 'jingji21' -c 'contentInfo' --csv -f id,title,url,author_name,time -o ${tmpDir}/jingji21_content_tmp.csv
 mv ${tmpDir}/jingji21_content_tmp.csv ${baseDir}/jingji21/jingji21_content.csv
 chmod 777 ${baseDir}/jingji21/jingji21_content.csv
+
+mongoexport -d 'stcn' -c 'contentInfo' --csv -f id,title,url,author_name,time -o ${tmpDir}/stcn_content_tmp.csv
+mv ${tmpDir}/stcn_content_tmp.csv ${baseDir}/stcn/stcn_content.csv
+chmod 777 ${baseDir}/stcn/stcn_content.csv

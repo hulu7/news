@@ -161,6 +161,14 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_STCN),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_STCN, SETTINGS_STCN),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_STCN, SETTINGS_STCN),
-        'MAX_POOL_SIZE': 2,
-        'URLS': ['http://www.stcn.com/']
+        'MAX_POOL_SIZE': 4,
+        'URLS': ['http://www.stcn.com/', 'http://news.stcn.com/', 'http://kuaixun.stcn.com/index.shtml',
+                 'http://news.stcn.com/roll/', 'http://news.stcn.com/sdbd/', 'http://news.stcn.com/xwpl/',
+                 'http://news.stcn.com/sbgc/', 'http://space.stcn.com/', 'http://stock.stcn.com/',
+                 'http://stock.stcn.com/dapan/index.shtml', 'http://stock.stcn.com/bankuai/index.shtml',
+                 'http://stock.stcn.com/xingu/index.shtml', 'http://stock.stcn.com/zhuli/index.shtml',
+                 'http://kuaixun.stcn.com/list/kxyb.shtml', 'http://company.stcn.com/', 'http://zt.stcn.com/',
+                 'http://news.stcn.com/gzlfzzl/', 'http://finance.stcn.com/', 'http://news.stcn.com/xwct/',
+                 'http://company.stcn.com/gsdt/', 'http://yq.stcn.com/', 'http://data.stcn.com/',
+                 'http://data.stcn.com/list/djsj.shtml', 'http://data.stcn.com/list/djsj.shtml', 'http://data.stcn.com/zijinliuxiang/']
     }
