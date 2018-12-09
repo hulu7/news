@@ -56,6 +56,10 @@ class Yicai():
     def storeMongodb(self, data):
         mongo = MongoMiddleware()
         for item in data:
+            finished_ids = self.readFinishedIds()
+            if [int(item['id'])] in finished_ids:
+                self.file.logger(self.log_path, 'Url exits %s' % item['url'])
+                continue
             self.file.logger(self.log_path, 'Start to store mongo %s' % item['url'])
             print 'Start to store mongo %s' % item['url']
             mongo.insert( self.mongo, item)
@@ -84,7 +88,8 @@ class Yicai():
                 title = title_content0_2[0]
             else:
                 title = ""
-            if (len(str(filter(str.isdigit, id))) != 0) and ([int(id)] not in self.finished_ids) and (title != None):
+            finished_ids = self.readFinishedIds()
+            if (len(str(filter(str.isdigit, id))) != 0) and ([int(id)] not in finished_ids) and (title != None):
                 data.append({
                     'title': title,
                     'url': url,
@@ -100,7 +105,6 @@ class Yicai():
         self.init()
         self.file.logger(self.log_path, 'Start '+ self.name +' requests')
         print 'Start ' + self.name + ' requests'
-        self.finished_ids = self.readFinishedIds()
         new_urls = self.urls
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)

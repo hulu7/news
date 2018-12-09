@@ -67,8 +67,8 @@ class UpdateProductionClass():
     def getCurrntTime(self):
         return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
-    def loadModel(self):
-        self.classifier = fasttext.load_model(self.model_path)
+    def loadModel(self, model_path):
+        self.classifier = fasttext.load_model(model_path)
 
     def predictClass(self, content):
         keywords = self.extractKeyWords(content)
@@ -81,13 +81,11 @@ class UpdateProductionClass():
         self.model_path = model_path
         self.catalogs = catalogs
         self.txt_path = txt_path
-
-        self.loadModel()
         content = self.readFromCSV(content_path)
         self.finishedIds = []
         for catalog in catalogs:
-            catalog_path = self.class_finished_path + '/' + catalog + '/' + catalog + '.csv'
-            catalog_cache_path = self.class_finished_path + '/' + catalog + '/cache/' + name + '_cache.csv'
+            catalog_path = '{0}/{1}/{2}.csv'.format(self.class_finished_path, catalog, catalog)
+            catalog_cache_path = '{0}/{1}/cache/{2}_cache.csv'.format(self.class_finished_path, catalog, name)
             isCatalogFileExists = os.path.exists(catalog_path)
             isCatalogCacheFileExists = os.path.exists(catalog_cache_path)
             if isCatalogCacheFileExists is True:
@@ -101,20 +99,34 @@ class UpdateProductionClass():
         total = '0'
         for item in content:
             if content.index(item) == 0:
+                self.id_index = item.index('id')
+                self.title_index = item.index('title')
+                self.url_index = item.index('url')
+                self.time_index = item.index('time')
                 continue
-            if item[6] not in self.finishedIds:
-                file = name + '_' + item[6] + '_.txt'
-                most_possible = self.predictClass(item[3])
+            id = item[self.id_index]
+            title = item[self.title_index]
+            url = item[self.url_index]
+            time_ = item[self.time_index]
+            if len(title) == 0 or len(url) == 0 or len(time_) == 0:
+                self.finishedIds.append(id)
+                continue
+            if id not in self.finishedIds:
+                file = '{0}_{1}.txt'.format(name, id)
+                most_possible = self.predictClass(title)
                 catalog = str(most_possible[0][0].split('__')[2])
-                deep = dep.howDeep(self.txt_path + '/' + file)
-                catalog_cache_path = self.class_finished_path + '/' + catalog + '/cache/' + name + '_cache.csv'
-                catalog_path = self.class_finished_path + '/' + catalog + '/' + catalog + '.csv'
-                YMD = self.extractTime(item[5])
-                self.writeToCSVWithoutHeader(catalog_cache_path, [item[6]])
-                self.finishedIds.append(item[6])
-                self.writeToCSVWithoutHeader(catalog_path, [item[6], item[3], item[2], YMD, catalog, deep])
-                origin_txt_path = self.txt_path + '/' + file
-                classed_txt_path = self.class_finished_path + '/' + catalog + '/txt/' + file
+                deep = dep.howDeep('{0}/{1}'.format(self.txt_path, file))
+                if len(str(deep)) == 0:
+                    self.writeToTxt(log_path, "{0}: empty {1}".format(str(update.getCurrntTime()), file))
+                    continue
+                catalog_cache_path = '{0}/{1}/cache/{2}_cache.csv'.format(self.class_finished_path, catalog, name)
+                catalog_path = '{0}/{1}/{2}.csv'.format(self.class_finished_path, catalog, catalog)
+                YMD = self.extractTime(time_)
+                self.writeToCSVWithoutHeader(catalog_cache_path, [id])
+                self.finishedIds.append(id)
+                self.writeToCSVWithoutHeader(catalog_path, [id, title, url, YMD, catalog, deep])
+                origin_txt_path = '{0}/{1}'.format(self.txt_path, file)
+                classed_txt_path = '{0}/{1}/txt/{2}'.format(self.class_finished_path, catalog, file)
                 copyfile(origin_txt_path, classed_txt_path)
 
                 time_elapsed = time.time() - since
@@ -132,16 +144,24 @@ if __name__ == "__main__":
                 'game','health','history','home','lottery','military','government',
                 'pet', 'photography', 'politics', 'psychology', 'society', 'sports',
                 'story', 'tech', 'technique', 'travel', 'house', 'life', 'wedding']
-    txt_path = '/home/dev/Data/rsyncData/prd4/ifeng/txt'
-    content_path = '/home/dev/Data/rsyncData/prd4/ifeng/ifeng_content.csv'
-    class_finished_path = '/home/dev/Data/Production/catalogs'
-    log_path = '/home/dev/Data/Production/log/' + today + '.log'
+
+    base_path = '/home/dev/Data/rsyncData/prd4'
+    production_path = '/home/dev/Data/Production'
     model_path = '/home/dev/Data/npl/classifier/fastText/model_data/news_fasttext.model.bin'
-    name = 'ifeng'
 
     since = time.time()
     dep = deep.deepMax()
     update = UpdateProductionClass()
-    update.writeToTxt(log_path, str(update.getCurrntTime() + ": start classify..."))
-    print "start classify..."
-    update.startClassify(txt_path, content_path, class_finished_path, model_path, log_path, catalogs, name)
+    update.loadModel(model_path)
+
+    file_list = os.listdir(base_path)
+    file_list.remove('log')
+    for file in file_list:
+        txt_path = '{0}/{1}/txt'.format(base_path, file)
+        content_path = '{0}/{1}/{1}_content.csv'.format(base_path, file, file)
+        class_finished_path = '{0}/catalogs'.format(production_path)
+        log_path = '{0}/log/{1}.log'.format(production_path, today)
+        name = file
+        update.writeToTxt(log_path, '{0}: start classify: {1}'.format(str(update.getCurrntTime()), file))
+        print 'start classify: {0}'.format(file)
+        update.startClassify(txt_path, content_path, class_finished_path, model_path, log_path, catalogs, name)

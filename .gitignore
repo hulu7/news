@@ -1,6 +1,7 @@
 .idea/
 *.pyc
 *.csv
+*.txt
 flySpider/huxiu/huSpider/build/
 flySpider/huxiu/huSpider/dbs/
 flySpider/huxiu/huSpider/eggs/

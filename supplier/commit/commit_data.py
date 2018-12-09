@@ -98,11 +98,13 @@ class CommitData():
         for data in current_catalog_data:
             if current_catalog_data.index(data) == 0:
                 continue
+            if source_name not in data[2]:
+                continue
             item_date_int = int(data[3])
-            if item_date_int >= today_int:
+            if item_date_int >= 20181204:
                 id = data[0].replace('\xef\xbb\xbf','')
                 if id not in finishedIds:
-                    file = (source_name + '_' + id + '_.txt')
+                    file = (source_name + '_' + id + '.txt')
                     origin_txt_path = self.class_finished_path + '/' + catalog_name + '/txt/' + file
                     destination_txt_path = customer_data_folder_txt + '/' + file
                     finishedIds.append(id)

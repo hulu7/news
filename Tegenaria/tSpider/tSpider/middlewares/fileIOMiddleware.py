@@ -5,6 +5,7 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
+import fcntl
 import time
 import codecs
 import csv
@@ -40,6 +41,7 @@ class FileIOMiddleware():
 
     def writeToCSVWithoutHeader(self, filePath, content):
         with open(filePath, 'a') as csv_file:
+            fcntl.flock(csv_file.fileno(), fcntl.LOCK_EX)
             csv_writer = csv.writer(csv_file)
             csv_writer.writerow(content)
         csv_file.close()

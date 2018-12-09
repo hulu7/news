@@ -54,6 +54,10 @@ class Huxiu():
     def storeMongodb(self, data):
         mongo = MongoMiddleware()
         for item in data:
+            finished_ids = self.readFinishedIds()
+            if [int(item['id'])] in finished_ids:
+                self.file.logger(self.log_path, 'Url exits %s' % item['url'])
+                continue
             self.file.logger(self.log_path, 'Start to store mongo %s' % item['url'])
             print 'Start to store mongo %s' % item['url']
             mongo.insert( self.mongo, item)
@@ -71,7 +75,8 @@ class Huxiu():
             short_url = item.xpath("@href")[0]
             id = str(filter(str.isdigit, short_url.encode('gbk')))
             url = urlparse.urljoin(current_url, short_url)
-            if [int(id)] not in self.finished_ids:
+            finished_ids = self.readFinishedIds()
+            if [int(id)] not in finished_ids:
                 title = item.text
                 data.append({
                     'title': title,
@@ -88,7 +93,6 @@ class Huxiu():
         self.init()
         self.file.logger(self.log_path, 'Start '+ self.name +' requests')
         print 'Start ' + self.name + ' requests'
-        self.finished_ids = self.readFinishedIds()
         new_urls = urls
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)

@@ -56,6 +56,10 @@ class Sp():
     def storeMongodb(self, data):
         mongo = MongoMiddleware()
         for item in data:
+            finished_ids = self.readFinishedIds()
+            if [int(item['id'])] in finished_ids:
+                self.file.logger(self.log_path, 'Url exits %s' % item['url'])
+                continue
             self.file.logger(self.log_path, 'Start to store mongo %s' % item['url'])
             print 'Start to store mongo: %s' % item['url']
             mongo.insert( self.mongo, item)
@@ -73,7 +77,8 @@ class Sp():
             short_url = item.xpath(".//*[contains(@class,'leaidx')]/@href")[0]
             id = re.split(r'[., /, _]', short_url)[4]
             url = urlparse.urljoin(current_url, short_url)
-            if [int(id)] not in self.finished_ids:
+            finished_ids = self.readFinishedIds()
+            if [int(id)] not in finished_ids:
                 title = item.xpath(".//*[contains(@class,'leaidx')]/text()")[0]
                 time = re.split(r'[\[, \]]', item.xpath(".//*[contains(@class,'date leaidx')]/text()")[0])[1]
                 data.append({
@@ -92,7 +97,6 @@ class Sp():
         self.init()
         self.file.logger(self.log_path, 'Start '+ self.name +' requests')
         print 'Start ' + self.name + ' requests'
-        self.finished_ids = self.readFinishedIds()
         new_urls = self.urls
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)

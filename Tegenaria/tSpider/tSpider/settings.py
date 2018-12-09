@@ -161,7 +161,7 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_STCN),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_STCN, SETTINGS_STCN),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_STCN, SETTINGS_STCN),
-        'MAX_POOL_SIZE': 4,
+        'MAX_POOL_SIZE': 2,
         'URLS': ['http://www.stcn.com/', 'http://news.stcn.com/', 'http://kuaixun.stcn.com/index.shtml',
                  'http://news.stcn.com/roll/', 'http://news.stcn.com/sdbd/', 'http://news.stcn.com/xwpl/',
                  'http://news.stcn.com/sbgc/', 'http://space.stcn.com/', 'http://stock.stcn.com/',
