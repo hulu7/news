@@ -1,7 +1,11 @@
 #!/bin/bash
 MYDATE=$(date)
-cd '/home/dev/Repository/news/supplier/commit/'
-echo "${MYDATE}: start commit ..."
-python commit_data.py
-chmod -R 777 /home/dev/Data/Production
-echo "${MYDATE}: end commit"
+COMMITPATH=/home/dev/Repository/news/supplier/commit
+isCommitExists=`ps -fe |grep "commit_data.py" |grep -v "grep" |wc -l`
+if [ ${isCommitExists} -eq 0 ]; then
+   echo "${MYDATE}: Restart commit ..."
+   python ${COMMITPATH}/commit_data.py
+   chmod -R 777 /home/dev/Data/Production
+else
+   echo "${MYDATE}: commit is running"
+fi
