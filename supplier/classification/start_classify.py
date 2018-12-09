@@ -84,6 +84,21 @@ class UpdateProductionClass():
         content = self.readFromCSV(content_path)
         self.finishedIds = []
         for catalog in catalogs:
+            catalog_file_path = '{0}/{1}'.format(self.class_finished_path, catalog)
+            catalog_cache_file_path = '{0}/{1}/cache'.format(self.class_finished_path, catalog)
+            catalog_txt_file_path = '{0}/{1}/txt'.format(self.class_finished_path, catalog)
+            isCatalogFilePathExists = os.path.exists(catalog_file_path)
+            isFinishedFilePathExists = os.path.exists(self.class_finished_path)
+            isCatalogCacheFilePathExists = os.path.exists(catalog_cache_file_path)
+            isCatalogTxtFilePathExists = os.path.exists(catalog_txt_file_path)
+            if isFinishedFilePathExists is False:
+                os.mkdir(self.class_finished_path)
+            if isCatalogFilePathExists is False:
+                os.mkdir(catalog_file_path)
+            if isCatalogCacheFilePathExists is False:
+                os.mkdir(catalog_cache_file_path)
+            if isCatalogTxtFilePathExists is False:
+                os.mkdir(catalog_txt_file_path)
             catalog_path = '{0}/{1}/{2}.csv'.format(self.class_finished_path, catalog, catalog)
             catalog_cache_path = '{0}/{1}/cache/{2}_cache.csv'.format(self.class_finished_path, catalog, name)
             isCatalogFileExists = os.path.exists(catalog_path)
