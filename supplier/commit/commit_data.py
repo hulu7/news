@@ -101,7 +101,7 @@ class CommitData():
             if source_name not in data[2]:
                 continue
             item_date_int = int(data[3])
-            if item_date_int >= 20181204:
+            if item_date_int >= today_int:
                 id = data[0].replace('\xef\xbb\xbf','')
                 if id not in finishedIds:
                     file = (source_name + '_' + id + '.txt')
