@@ -74,14 +74,9 @@ class SendEmail():
                     self.isReadyToSend = True
                     self.body = '{0}<p>-- {1} 最新消息 --</p>'.format(self.body, page)
                     for i in range(len(send_list) - 10, len(send_list)):
-                        if page in ['ifeng']:
-                            url = send_list[i][3]
-                            title = send_list[i][6]
-                            get_time = '[{0}]'.format(send_list[i][2])
-                        if page not in ['ifeng']:
-                            url = send_list[i][1]
-                            title = send_list[i][2]
-                            get_time = ""
+                        url = send_list[i][1]
+                        title = send_list[i][2]
+                        get_time = ""
                         self.body = '{0}<p><a href={1}>@ {2} {3}</a></p>'.format(self.body, url, title, get_time)
 
     def send(self, file_path):
