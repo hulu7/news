@@ -130,7 +130,31 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IFENG, SETTINGS_IFENG),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IFENG, SETTINGS_IFENG),
         'MAX_POOL_SIZE': 2,
-        'URLS': []
+        'URLS': ['https://www.ifeng.com/', 'https://mil.ifeng.com/', 'http://news.ifeng.com/',
+                 'http://news.ifeng.com/listpage/11502/0/1/rtlist.shtml', 'http://news.ifeng.com/mainland/',
+                 'http://news.ifeng.com/world/', 'http://news.ifeng.com/taiwan/', 'http://news.ifeng.com/society/',
+                 'https://pl.ifeng.com/', 'https://history.ifeng.com/', 'http://culture.ifeng.com/', 'http://culture.ifeng.com/shanklist/17-35104-',
+                 'http://culture.ifeng.com/shanklist/17-35106-', 'http://culture.ifeng.com/shanklist//17-35107-',
+                 'http://culture.ifeng.com/shanklist//17-35108-', 'https://pit.ifeng.com/', 'https://pit.ifeng.com/shanklist/pit/23-35162-/1/',
+                 'https://pl.ifeng.com/shanklist/original/21-35136-', 'http://news.ifeng.com/listpage/70374/1/list.shtml',
+                 'http://news.ifeng.com/mainland/xuanzhan2020/', 'http://news.ifeng.com/o/dynpage/56-/1/plist.shtml',
+                 'http://news.ifeng.com/listpage/111175/1/list.shtml', 'http://finance.ifeng.com/', 'http://finance.ifeng.com/shanklist/1-66-',
+                 'http://finance.ifeng.com/stock/', 'http://finance.ifeng.com/hk', 'http://finance.ifeng.com/gold/',
+                 'http://tech.ifeng.com/', 'http://tech.ifeng.com/digi/', 'http://tech.ifeng.com/mobile/', 'http://tech.ifeng.com/24h/',
+                 'http://tech.ifeng.com/core/', 'http://tech.ifeng.com/lab/', 'http://tech.ifeng.com/profound/', 'http://tech.ifeng.com/blockchain/',
+                 'http://tech.ifeng.com/autotech', 'https://tech.ifeng.com/shanklist/5-75005-75006-', 'http://tech.ifeng.com/shanklist/5-75005-75007-',
+                 'http://tech.ifeng.com/shanklist/5-75005-75008-', 'http://tech.ifeng.com/shanklist/5-75005-75009-', 'http://tech.ifeng.com/shanklist/5-75005-75010-',
+                 'http://tech.ifeng.com/shanklist/5-75005-75011-', 'http://tech.ifeng.com/shanklist/5-75005-75012-', 'http://tech.ifeng.com/shanklist/5-75005-75013-',
+                 'http://tech.ifeng.com/shanklist/5-75005-75014-', 'http://ent.ifeng.com/', 'http://ent.ifeng.com/star/', 'http://ent.ifeng.com/movie/',
+                 'http://ent.ifeng.com/tv/', 'http://ent.ifeng.com/listpage/30741/1/list.shtml', 'http://ent.ifeng.com/music/',
+                 'http://sports.ifeng.com/', 'http://sports.ifeng.com/gjzq/', 'http://sports.ifeng.com/zgzq/', 'http://sports.ifeng.com/nba/',
+                 'http://sports.ifeng.com/zglq/', 'http://sports.ifeng.com/zhty/', 'http://sports.ifeng.com/pb/', 'https://f1.ifeng.com/listpage/101220/1/list.shtml',
+                 'http://sports.ifeng.com/zgzq/', 'http://d.sports.ifeng.com/pc/special/58998/index.shtml', 'http://sports.ifeng.com/djpl/',
+                 'http://d.sports.ifeng.com/pc/special/100791/index.shtml', 'http://sports.ifeng.com/lqd/', 'http://sports.ifeng.com/ydh/', 'http://sports.ifeng.com/ylt/',
+                 'http://sports.ifeng.com/scsd/', 'http://house.ifeng.com/', 'http://house.ifeng.com/news', 'http://house.ifeng.com/news/policy/', 'http://house.ifeng.com/news/market/',
+                 'http://house.ifeng.com/news/sec/', 'http://house.ifeng.com/industry/companies/', 'http://house.ifeng.com/news/buying/', 'http://house.ifeng.com/house/daogou/',
+                 'http://house.ifeng.com/news/dujia/', 'http://house.ifeng.com/news/view/', 'http://house.ifeng.com/industry/land/', 'http://history.ifeng.com/',
+                 'http://history.ifeng.com/shanklist/15-35075-', 'http://history.ifeng.com/shanklist/original/15-35076-']
     }
 
     SETTINGS_JINGJI21 = 'jingji21'

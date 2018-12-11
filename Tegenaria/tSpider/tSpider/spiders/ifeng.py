@@ -50,28 +50,10 @@ class Ifeng():
             finished_ids = self.file.readFromCSV(self.finished_id_path)
         new_urls = []
         for id_url in id_urls:
-            if [str(id_url[1]).replace('\xef\xbb\xbf','')] not in finished_ids:
-                if Settings.SETTINGS_IFENG not in str(id_url[0]):
-                    self.storeFinishedId(str(id_url[1]).replace('\xef\xbb\xbf',''))
-                    print 'Empty url with id: ' + str(id_url[1])
-                    self.file.logger(self.log_path, 'Empty url with id: ' + str(id_url[1]))
-                    continue
-                if (str(id_url[0]).split('/'))[3] != 'a':
-                    self.storeFinishedId(str(id_url[1]).replace('\xef\xbb\xbf',''))
-                    print 'Invalid url with id: ' + str(id_url[1])
-                    self.file.logger(self.log_path, 'Invalid url with id: ' + str(id_url[1]))
-                    continue
-                if 'biz' in str(id_url[0]):
-                    self.storeFinishedId(str(id_url[1]).replace('\xef\xbb\xbf',''))
-                    print 'Ignored biz with id: ' + str(id_url[1])
-                    self.file.logger(self.log_path, 'Ignored biz with id: ' + str(id_url[1]))
-                    continue
-                if 'guoxue' in str(id_url[0]):
-                    self.storeFinishedId(str(id_url[1]).replace('\xef\xbb\xbf',''))
-                    print 'Ignored guoxue with id: ' + str(id_url[1])
-                    self.file.logger(self.log_path, 'Ignored guoxue with id: ' + str(id_url[1]))
-                    continue
-                new_urls.append(id_url[0])
+            id = str(id_url[0])
+            url = str(id_url[1])
+            if [id.replace('\xef\xbb\xbf','')] not in finished_ids:
+                new_urls.append(url)
         del finished_ids, isFinishedIdPathExists
         gc.collect()
         return new_urls
@@ -81,7 +63,7 @@ class Ifeng():
         isUrlPathExit = os.path.exists(self.url_path)
         new_urls = []
         if isUrlPathExit is True:
-            id_urls = np.array(self.file.readColsFromCSV(self.url_path, ['content.id', 'content.docUrl']))
+            id_urls = np.array(self.file.readColsFromCSV(self.url_path, ['id', 'url']))
             new_urls = self.filter(id_urls)
         del isUrlPathExit
         gc.collect()

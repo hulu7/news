@@ -8,7 +8,7 @@ yicaiSyncDir=${prd3Path}/yicai
 jingji21SyncDir=${prd3Path}/jingji21
 stcnSyncDir=${prd3Path}/stcn
 
-mongoexport -d 'ifeng' -c 'contentInfo' --csv -f catalog,content.class,content.collect_time,content.docUrl,content.id,content.imageUrl,content.title,content.url -o ${tmpDir}/ifeng_urls_tmp.csv
+mongoexport -d 'ifeng_urls' -c 'contentInfo' --csv -f id,url,title -o ${tmpDir}/ifeng_urls_tmp.csv
 mv ${tmpDir}/ifeng_urls_tmp.csv ${ifengSyncDir}/ifeng_urls.csv
 chmod  777 ${ifengSyncDir}/ifeng_urls.csv
 
