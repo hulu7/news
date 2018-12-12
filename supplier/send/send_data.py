@@ -105,7 +105,7 @@ class SendData():
         pwd = 'thebest1990'
         receiver = customer_email
         msg = MIMEText(str(self.body), 'html', 'utf-8')
-        msg['subject'] = "房地产最新消息"
+        msg['subject'] = "经济和房地产最新消息"
         msg['from'] = sender
         msg['to'] = receiver
         msg["Accept-Language"] = 'zh-CN'
@@ -175,7 +175,7 @@ class SendData():
 if __name__ == "__main__":
 
     today = time.strftime('%Y%m%d', time.localtime(time.time()))
-    yesterday = (date.today() + timedelta(days = -1)).strftime("%Y%m%d")
+    yesterday = (date.today() + timedelta(days=-1)).strftime("%Y%m%d")
     log_path = '/home/dev/Data/Production/log/{0}.log'.format(today)
     customer_info_path = '/home/dev/Data/Production/customerInfo/customers.xlsx'
     data4customers_path = '/home/dev/Data/Production/data4customers'
