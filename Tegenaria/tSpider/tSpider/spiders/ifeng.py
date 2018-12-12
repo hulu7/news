@@ -94,27 +94,20 @@ class Ifeng():
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
-        valid = str(filter(str.isdigit, current_url))
-        if len(valid) == 0:
-            invalid_id = re.split('_', re.split('/', response['request_url'])[5])[0]
-            self.storeFinishedId(invalid_id)
-            self.file.logger(self.log_path, 'Invalid url: %s' % current_url)
-            print 'Invalid url: %s' % current_url
+        if self.isEmpty(current_url):
             return
-        if "#p" in current_url:
-            invalid_id = re.split('_', re.split('/', response['request_url'])[5])[0]
-            self.storeFinishedId(invalid_id)
-            self.file.logger(self.log_path, 'It is picture page: %s' % current_url)
-            print 'It is picture page: %s' % current_url
-            return
-        if (current_url.split('/'))[3] != 'a':
-            invalid_id = re.split('_', re.split('/', response['request_url'])[5])[0]
-            self.storeFinishedId(invalid_id)
-            print 'Invalid url with id: ' + str(invalid_id)
-            self.file.logger(self.log_path, 'Invalid url with id: ' + str(invalid_id))
-            return
-        print 'Start to parse %s' % current_url
-        current_id = re.split('_', re.split('/', current_url)[5])[0]
+        url_parts = re.split(r'[., /, _]', current_url)
+        current_id = ""
+        if '/c/' in current_url:
+            id_index = url_parts.index('c') + 1
+            current_id = url_parts[id_index].strip()
+        if '/a/' in current_url:
+            id_index = url_parts.index('a') + 2
+            current_id = url_parts[id_index].strip()
+        if 'detail' in current_url:
+            id_index = url_parts.index('detail') + 4
+            current_id = url_parts[id_index].strip()
+        print 'Start to parse: {0} with id: {1}'.format(current_url, current_id)
         html = etree.HTML(response['response'].page_source)
         not_fnd = html.xpath(".//*[contains(@class,'tips404')]/text()")
         data = {}
@@ -130,6 +123,9 @@ class Ifeng():
             article_0 = html.xpath(".//*[@id='artical']")
             article_1 = html.xpath(".//*[contains(@class, 'yc_main wrap')]")
             article_2 = html.xpath(".//*[contains(@class, 'col01')]")
+            article_3 = html.xpath(".//*[contains(@class, 'artical-_Qk9Dp2t')]")
+            article_4 = html.xpath(".//*[contains(@class, 'wdetailbox ctltbox')]")
+            article_5 = html.xpath(".//*[contains(@class, 'w90 artical')]")
             if len(article_0) > 0:
                 comment_number0_1 = html.xpath(".//*[contains(@class, 'js_cmtNum')]//text()")
                 join_number0_1 = html.xpath(".//*[contains(@class, 'js_cmtNum')]//text()")
@@ -238,13 +234,112 @@ class Ifeng():
                     'id': id
                 }
 
+            if len(article_3) > 0:
+                comment_number3_1 = html.xpath(".//*[contains(@class, 'num-1eBOY5Jv')]//text()")
+                join_number3_1 = html.xpath(".//*[contains(@class, 'num-1eBOY5Jv')]//text()")
+                content3_1 = html.xpath(".//div[contains(@class, 'text-3zQ3cZD4')]/p/text()")
+                time3_1 = html.xpath(".//*[contains(@class, 'time-hm3v7ddj')]/span/text()")
+                author_name3_1 = html.xpath(".//*[contains(@class, 'source-2pXi2vGI')]/span/text()")
+                title3_1 = html.xpath(".//*[contains(@class, 'topic-3bY8Hw-9')]//text()")
+
+                url = current_url
+                id = current_id
+                if self.isEmpty(comment_number3_1) is False:
+                    comment_number = str(filter(str.isdigit, comment_number3_1[1].encode('gbk'))).strip()
+                if self.isEmpty(join_number3_1) is False:
+                    join_number = str(filter(str.isdigit, join_number3_1[0].encode('gbk'))).strip()
+                if self.isEmpty(content3_1) is False:
+                    content = ''.join(content3_1)
+                if self.isEmpty(time3_1) is False:
+                    time = time3_1[0].strip()
+                if self.isEmpty(author_name3_1) is False:
+                    author_name = ''.join(author_name3_1).strip()
+                if self.isEmpty(title3_1) is False:
+                    title = title3_1[0].strip()
+
+                data = {
+                    'comment_number': comment_number,
+                    'join_number': join_number,
+                    'url': url,
+                    'time': time,
+                    'author_name': author_name,
+                    'title': title,
+                    'id': id
+                }
+
+            if len(article_4) > 0:
+                comment_number4_1 = html.xpath(".//*[contains(@class, 'comments')]/a/strong/text()")
+                join_number4_1 = html.xpath(".//*[contains(@class, 'peoples')]/a/strong/text()")
+                content4_1 = html.xpath(".//div[contains(@class, 'article')]/p/text()")
+                time4_1 = html.xpath(".//*[contains(@class, 'marb-5')]/span/text()")
+                author_name4_1 = html.xpath(".//*[contains(@class, 'pr')]/span/text()")
+                title4_1 = html.xpath(".//*[contains(@class, 'title')]/h2/text()")
+
+                url = current_url
+                id = current_id
+                if self.isEmpty(comment_number4_1) is False:
+                    comment_number = str(filter(str.isdigit, comment_number4_1[0].encode('gbk'))).strip()
+                if self.isEmpty(join_number4_1) is False:
+                    join_number = str(filter(str.isdigit, join_number4_1[0].encode('gbk'))).strip()
+                if self.isEmpty(content4_1) is False:
+                    content = ''.join(content4_1)
+                if self.isEmpty(time4_1) is False:
+                    time = time4_1[0].strip()
+                if self.isEmpty(author_name4_1) is False:
+                    author_name = ''.join(author_name4_1).strip()
+                if self.isEmpty(title4_1) is False:
+                    title = title4_1[0].strip()
+
+                data = {
+                    'comment_number': comment_number,
+                    'join_number': join_number,
+                    'url': url,
+                    'time': time,
+                    'author_name': author_name,
+                    'title': title,
+                    'id': id
+                }
+
+            if len(article_5) > 0:
+                comment_number5_1 = html.xpath(".//*[contains(@class, 'w-num')]//text()")
+                join_number5_1 = html.xpath(".//*[contains(@class, 'w-num')]//text()")
+                content5_1 = html.xpath(".//div[contains(@class, 'artical-main')]/p/text()")
+                time5_1 = html.xpath(".//*[contains(@class, 'artical-source')]//text()")
+                author_name5_1 = html.xpath(".//*[contains(@class, 'artical-time')]//text()")
+                title5_1 = html.xpath(".//*[contains(@class, 'w90 artical')]/h1/text()")
+
+                url = current_url
+                id = current_id
+                if self.isEmpty(comment_number5_1) is False:
+                    comment_number = str(filter(str.isdigit, comment_number5_1[1].encode('gbk'))).strip()
+                if self.isEmpty(join_number5_1) is False:
+                    join_number = str(filter(str.isdigit, join_number5_1[0].encode('gbk'))).strip()
+                if self.isEmpty(content5_1) is False:
+                    content = ''.join(content5_1)
+                if self.isEmpty(time5_1) is False:
+                    time = time5_1[0].strip()
+                if self.isEmpty(author_name5_1) is False:
+                    author_name = ''.join(author_name5_1).strip()
+                if self.isEmpty(title5_1) is False:
+                    title = title5_1[0].strip()
+
+                data = {
+                    'comment_number': comment_number,
+                    'join_number': join_number,
+                    'url': url,
+                    'time': time,
+                    'author_name': author_name,
+                    'title': title,
+                    'id': id
+                }
+
             print 'End to parse %s' % current_url
             if len(data) == 0:
                 self.storeFinishedId(current_id)
             else:
                 self.storeMongodb(data)
                 self.storeTxt(id, content)
-        del current_url, valid,  current_id, html, not_fnd, data
+        del current_url, current_id, html, not_fnd, data
         gc.collect()
 
     def start_requests(self):
@@ -252,7 +347,7 @@ class Ifeng():
         self.file.logger(self.log_path, 'Start '+ self.name +' requests')
         print 'Start ' + self.name + ' requests'
         new_urls = self.readNewUrls()
-        # new_urls = ["http://news.ifeng.com/a/20181113/60157274_0.shtml"]
+        # new_urls = ["https://ihouse.ifeng.com/detail/2018_12_12/51784060_0.shtml"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for ' + self.name + ' and return')
             print 'No new url for ' + self.name + ' and return'
