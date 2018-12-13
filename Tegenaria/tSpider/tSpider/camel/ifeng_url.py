@@ -75,7 +75,6 @@ class Ifeng():
         print 'Start to parse %s' % current_url
         html = etree.HTML(response['response'].page_source)
         href_items = html.xpath(".//a")
-        data = []
         goodkeys = ['/a/', '/c/', 'detail']
         badkeys = ['jpg', 'yc', '#p', 'cosmetics', 'weidian', 'homedetail', 'detail?']
 
@@ -123,15 +122,15 @@ class Ifeng():
                 title = title[0]
                 finished_ids = self.readFinishedIds()
                 if [id] not in finished_ids:
-                    data.append({
+                    data = {
                         'title': title.strip(),
                         'url': url.strip(),
                         'id': id.strip()
-                    })
+                    }
+                    self.storeMongodb(data)
+                    self.file.logger(self.log_path, 'End to parse %s' % current_url)
                 else:
                     print 'Url invalid %s' % url
-        self.storeMongodb(data)
-        self.file.logger(self.log_path, 'End to parse %s' % current_url)
         print 'End to parse %s' % current_url
 
     def start_requests(self):

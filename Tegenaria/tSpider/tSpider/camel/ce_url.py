@@ -49,55 +49,74 @@ class Ce():
         return finished_ids
 
     def storeFinishedIds(self, id):
-        print 'Start to store finished id %s' % id
+        print 'Start to store finished id {0}'.format(id)
         self.file.writeToCSVWithoutHeader(self.finished_url_path, [id.replace('\xef\xbb\xbf','')])
-        print 'End to store finished id %s' % id
+        print 'End to store finished id {0}'.format(id)
 
     def storeMongodb(self, data):
         mongo = MongoMiddleware()
-        for item in data:
-            finished_ids = self.readFinishedIds()
-            if [int(item['id'])] in finished_ids:
-                self.file.logger(self.log_path, 'Url exits %s' % item['url'])
-                continue
-            self.file.logger(self.log_path, 'Start to store mongo %s' % item['url'])
-            print 'Start to store mongo %s' % item['url']
-            mongo.insert( self.mongo, item)
-            self.storeFinishedIds(str(item['id']))
-            self.file.logger(self.log_path, 'End to store mongo %s' % item['url'])
-            print 'End to store mongo %s' % item['url']
+        finished_ids = self.readFinishedIds()
+        if [int(data['id'])] in finished_ids:
+            self.file.logger(self.log_path, 'Url exits {0}'.format(data['url']))
+            return
+        self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
+        print 'Start to store mongo {0}'.format(data['url'])
+        mongo.insert(self.mongo, data)
+        self.storeFinishedIds(str(data['id']))
+        self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
+        print 'End to store mongo {0}'.format(data['url'])
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
+        badkeys = ['randid=0.4', '?pc', '/about/', '/more/', 'xwzx', 'index']
+        goodkeys = ['']
         print 'Start to parse %s' % current_url
         html = etree.HTML(response['response'].page_source)
         href_items = html.xpath(".//a")
-        data = []
         for item in href_items:
-            short_url = item.xpath("@href")[0]
-            if 'html' not in short_url:
+            href = item.xpath("@href")
+            valid = True
+            if len(href) == 0:
                 continue
-            short_url_parts = re.split(r'[., /, _]', short_url)
-            id = short_url_parts[len(short_url_parts) - 2]
-            url = urlparse.urljoin(current_url, short_url)
-            title = item.text
-            finished_ids = self.readFinishedIds()
-            if (len(str(filter(str.isdigit, id))) != 0) and ([int(id)] not in finished_ids) and (title != None):
-                data.append({
-                    'title': title,
-                    'url': url,
-                    'id': id
-                })
+            href_url = href[0]
+            if 'html' not in href_url:
+                continue
+            for good in goodkeys:
+                if valid == True:
+                    continue
+                if good in href_url:
+                    valid = True
+            for bad in badkeys:
+                if valid == False:
+                    continue
+                if bad in href_url:
+                    valid = False
+            if valid:
+                short_url_parts = re.split(r'[., /, _]', href_url)
+                id = short_url_parts[len(short_url_parts) - 2]
+                url = urlparse.urljoin(current_url, href_url)
+                title = item.text
+                finished_ids = self.readFinishedIds()
+                if ([int(id)] not in finished_ids) and (title != None):
+                    data = {
+                        'title': title.strip(),
+                        'url': url.strip(),
+                        'id': id.strip()
+                    }
+                    self.storeMongodb(data)
+                    self.file.logger(self.log_path, 'Done for {0}'.format(url))
+                else:
+                    self.file.logger(self.log_path, 'Invalid {0}'.format(url))
+                    print 'Invalid {0}'.format(url)
             else:
-                print 'Url invalid %s' % url
-        self.storeMongodb(data)
-        self.file.logger(self.log_path, 'End to parse %s' % current_url)
-        print 'End to parse %s' % current_url
+                self.file.logger(self.log_path, 'Invalid {0}'.format(href_url))
+                print 'Invalid {0}'.format(href_url)
+        print 'End to parse {0}'.format(href_url)
 
     def start_requests(self):
         self.init()
-        self.file.logger(self.log_path, 'Start '+ self.name +' requests')
-        print 'Start ' + self.name + ' requests'
+        self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
+        print 'Start {0} requests'.format(self.name)
         new_urls = self.urls
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)

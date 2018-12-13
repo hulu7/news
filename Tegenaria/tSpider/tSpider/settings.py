@@ -98,8 +98,15 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CE, SETTINGS_CE),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CE, SETTINGS_CE),
         'MAX_POOL_SIZE': 2,
-        'URLS':['http://tech.ce.cn/']
-        # 'URLS': ['http://www.ce.cn/', 'http://finance.ce.cn/stock/', 'http://tech.ce.cn/']
+        'URLS': ['http://www.ce.cn/', 'http://finance.ce.cn/stock/', 'http://tech.ce.cn/',
+                'http://tech.ce.cn/news/', 'http://tech.ce.cn/tech2018/kjmq/', 'http://tech.ce.cn/tech2018/kx/',
+                'http://tech.ce.cn/tech2018/rgzn/', 'http://tech.ce.cn/tech2018/life/', 'http://tech.ce.cn/tech2018/newtech/',
+                'http://tech.ce.cn/tech2018/safe/', 'http://tech.ce.cn/tech2018/zxjy/', 'http://finance.ce.cn/stock/gsgdbd/index.shtml',
+                'http://finance.ce.cn/', 'http://finance.ce.cn/shqgc/index.shtml', 'http://finance.ce.cn/zjjp/index.shtml',
+                'http://finance.ce.cn/home/zqzq/dp/', 'http://finance.ce.cn/home/jrzq/dc/index.shtml', 'http://finance.ce.cn/10cjsy/bg/',
+                'http://finance.ce.cn/10cjsy/hw/', 'http://finance.ce.cn/10cjsy/qt/', 'http://finance.ce.cn/home/cfzq/zq/',
+                'http://finance.ce.cn/sub/ggttk/index.shtml', 'http://finance.ce.cn/sub/cj2009/index.shtml', 'http://finance.ce.cn/10cjsy/bk/',
+                'http://finance.ce.cn/jjpd/index.shtml', 'http://finance.ce.cn/futures/', 'http://finance.ce.cn/gold/']
     }
 
     SETTINGS_YICAI = 'yicai'
