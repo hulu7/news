@@ -158,7 +158,7 @@ class SendData():
                 self.writeToCSVWithoutHeader(send_data_file, ['id', 'title', 'url', 'time', 'catalog', 'deep'])
             data_to_send = []
             for data in rank_committed_data:
-                if int(data[5]) > customer_deep:
+                if int(data[5]) > 0:
                     if len(customer_keywords) > 1:
                         for key in customer_keywords:
                             if key in data[1]:
