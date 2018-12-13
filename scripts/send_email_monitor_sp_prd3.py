@@ -66,38 +66,33 @@ class SendEmail():
                     self.isReadyToSend = True
                     today = "".join(str(datetime.date.today()))
                     time = "".join(str(datetime.datetime.now())[11:19])
-                    self.body = '<p></p>' + '<p>' + today + ' ' + time + '</p>' + '<p> 最新通知 : ' + str(len(send_list)) + '</p>'
+                    self.body = '<p>{0} {1} 龙华园新上房源{2}套 </p>'.format(today, time, str(len(send_list)))
                     for i in range(len(sent_ids) - 1, len(send_list)):
-                        self.body = self.body + \
-                               '<p>' + \
-                               '<a href=' + send_list[i][2] + '>' + \
-                                    '[' + str(i - len(sent_ids) + 2) + '] ' + send_list[i][1] + \
-                                    '[' + send_list[i][3] + ']' + \
-                               '</a>' + \
-                               '</p>'
+                        self.body = '{0}<p><a href= {1}>[{2}] {3} [价格 - {4} 万]</a></p>'.format(self.body, send_list[i][2], str(i - len(sent_ids) + 2), send_list[i][1], send_list[i][3])
 
     def send(self, file_path):
         self.file_path = file_path
         self.createEmailBody()
         if self.isReadyToSend is True:
-            host = 'smtp.163.com'
-            port = 465
-            sender = 'hui_asus@163.com'
-            pwd = 'thebest1990'
-            receiver = 'hui_asus@163.com'
-            msg = MIMEText(self.body, 'html', 'utf-8')
-            msg['subject'] = 'pr3-通知监测'
-            msg['from'] = sender
-            msg['to'] = receiver
-            msg["Accept-Language"] = 'zh-CN'
-            msg["Accept-Charset"] = 'ISO-8859-1,utf-8'
-            try:
-                s = smtplib.SMTP_SSL(host, port)
-                s.login(sender, pwd)
-                s.sendmail(sender, receiver, msg.as_string())
-                print ('Done! Sent email success')
-            except smtplib.SMTPException:
-                print ('Error! Sent email fail')
+            receivers = ['hui_asus@163.com', 'liusk92@163.com']
+            for receiver in receivers:
+                host = 'smtp.163.com'
+                port = 465
+                sender = 'hui_asus@163.com'
+                pwd = 'thebest1990'
+                msg = MIMEText(self.body, 'html', 'utf-8')
+                msg['subject'] = 'pr3-龙华园新上房源'
+                msg['from'] = sender
+                msg['to'] = receiver
+                msg["Accept-Language"] = 'zh-CN'
+                msg["Accept-Charset"] = 'ISO-8859-1,utf-8'
+                try:
+                    s = smtplib.SMTP_SSL(host, port)
+                    s.login(sender, pwd)
+                    s.sendmail(sender, receiver, msg.as_string())
+                    print ('Done! Sent email success')
+                except smtplib.SMTPException:
+                    print ('Error! Sent email fail')
 
 if __name__ == '__main__':
     send = SendEmail()

@@ -204,3 +204,19 @@ class Settings():
                  'http://company.stcn.com/gsdt/', 'http://yq.stcn.com/', 'http://data.stcn.com/',
                  'http://data.stcn.com/list/djsj.shtml', 'http://data.stcn.com/list/djsj.shtml', 'http://data.stcn.com/zijinliuxiang/']
     }
+
+    SETTINGS_LIANJIA = 'lianjia'
+    LIANJIA = {
+        'NAME': SETTINGS_LIANJIA,
+        'MONGO': SETTINGS_LIANJIA,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_LIANJIA),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_LIANJIA),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_LIANJIA),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_LIANJIA),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_LIANJIA),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_LIANJIA),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_LIANJIA, SETTINGS_LIANJIA),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_LIANJIA, SETTINGS_LIANJIA),
+        'MAX_POOL_SIZE': 2,
+        'URLS': ['https://bj.lianjia.com/ershoufang/rs%E9%BE%99%E5%8D%8E%E5%9B%AD/']
+    }
