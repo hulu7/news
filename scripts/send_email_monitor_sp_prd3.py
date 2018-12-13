@@ -66,7 +66,7 @@ class SendEmail():
                     self.isReadyToSend = True
                     today = "".join(str(datetime.date.today()))
                     time = "".join(str(datetime.datetime.now())[11:19])
-                    self.body = '<p>{0} {1} 龙华园新上房源{2}套 </p>'.format(today, time, str(len(send_list)))
+                    self.body = '<p>{0} {1} 龙华园新上房源 </p>'.format(today, time)
                     for i in range(len(sent_ids) - 1, len(send_list)):
                         self.body = '{0}<p><a href= {1}>[{2}] {3} [价格 - {4} 万]</a></p>'.format(self.body, send_list[i][2], str(i - len(sent_ids) + 2), send_list[i][1], send_list[i][3])
 
