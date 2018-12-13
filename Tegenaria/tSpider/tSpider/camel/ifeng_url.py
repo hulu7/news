@@ -55,17 +55,16 @@ class Ifeng():
 
     def storeMongodb(self, data):
         mongo = MongoMiddleware()
-        for item in data:
-            finished_ids = self.readFinishedIds()
-            if [item['id']] in finished_ids:
-                self.file.logger(self.log_path, 'Url exits %s' % item['url'])
-                continue
-            self.file.logger(self.log_path, 'Start to store mongo %s' % item['url'])
-            print 'Start to store mongo %s' % item['url']
-            mongo.insert( self.mongo, item)
-            self.storeFinishedIds(str(item['id']))
-            self.file.logger(self.log_path, 'End to store mongo %s' % item['url'])
-            print 'End to store mongo %s' % item['url']
+        finished_ids = self.readFinishedIds()
+        if [data['id']] in finished_ids:
+            self.file.logger(self.log_path, 'Url exits %s' % data['url'])
+            return
+        self.file.logger(self.log_path, 'Start to store mongo %s' % data['url'])
+        print 'Start to store mongo %s' % data['url']
+        mongo.insert(self.mongo, data)
+        self.storeFinishedIds(str(data['id']))
+        self.file.logger(self.log_path, 'End to store mongo %s' % data['url'])
+        print 'End to store mongo %s' % data['url']
 
     def isEmpty(self, item_list):
         return len([item for item in item_list if item.strip()]) == 0

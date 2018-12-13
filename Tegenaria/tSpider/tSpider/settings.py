@@ -178,7 +178,7 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
         'MAX_POOL_SIZE': 2,
-        'URLS': ['http://www.21jingji.com/']
+        'URLS': ['http://www.21jingji.com/', 'http://www.21jingji.com/channel/politics/']
     }
 
     SETTINGS_STCN = 'stcn'

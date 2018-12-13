@@ -55,24 +55,23 @@ class Jingji21():
 
     def storeMongodb(self, data):
         mongo = MongoMiddleware()
-        for item in data:
-            finished_ids = self.readFinishedIds()
-            if [item['id']] in finished_ids:
-                self.file.logger(self.log_path, 'Url exits %s' % item['url'])
-                continue
-            self.file.logger(self.log_path, 'Start to store mongo %s' % item['url'])
-            print 'Start to store mongo %s' % item['url']
-            mongo.insert( self.mongo, item)
-            self.storeFinishedIds(str(item['id']))
-            self.file.logger(self.log_path, 'End to store mongo %s' % item['url'])
-            print 'End to store mongo %s' % item['url']
+        finished_ids = self.readFinishedIds()
+        if [data['id']] in finished_ids:
+            self.file.logger(self.log_path, 'Url exits %s' % data['url'])
+            return
+        self.file.logger(self.log_path, 'Start to store mongo %s' % data['url'])
+        print 'Start to store mongo %s' % data['url']
+        mongo.insert(self.mongo, data)
+        self.storeFinishedIds(str(data['id']))
+        self.file.logger(self.log_path, 'End to store mongo %s' % data['url'])
+        print 'End to store mongo %s' % data['url']
+
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse %s' % current_url
         html = etree.HTML(response['response'].page_source)
         href_items = html.xpath(".//a[contains(@class,'listTit')]")
-        data = []
         for item in href_items:
             short_url = item.xpath("@href")[0]
             if 'html' not in short_url:
@@ -83,15 +82,15 @@ class Jingji21():
             title = item.text
             finished_ids = self.readFinishedIds()
             if ([id] not in finished_ids) and (title != None):
-                data.append({
-                    'title': title,
-                    'url': url,
-                    'id': id
-                })
+                data = {
+                    'title': title.strip(),
+                    'url': url.strip(),
+                    'id': id.strip()
+                }
+                self.storeMongodb(data)
+                self.file.logger(self.log_path, 'End to parse %s' % current_url)
             else:
                 print 'Url invalid %s' % url
-        self.storeMongodb(data)
-        self.file.logger(self.log_path, 'End to parse %s' % current_url)
         print 'End to parse %s' % current_url
 
     def start_requests(self):
