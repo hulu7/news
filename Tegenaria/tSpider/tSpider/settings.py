@@ -2,7 +2,7 @@
 
 class Settings():
 
-    SELENIUM_TIMEOUT = 60
+    SELENIUM_TIMEOUT = 120
     CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
 
     USER_AGENTS = [
@@ -98,7 +98,8 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CE, SETTINGS_CE),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CE, SETTINGS_CE),
         'MAX_POOL_SIZE': 2,
-        'URLS':['http://www.ce.cn/']
+        'URLS':['http://tech.ce.cn/']
+        # 'URLS': ['http://www.ce.cn/', 'http://finance.ce.cn/stock/', 'http://tech.ce.cn/']
     }
 
     SETTINGS_YICAI = 'yicai'
