@@ -49,29 +49,28 @@ class Jingji21():
         return finished_ids
 
     def storeFinishedIds(self, id):
-        print 'Start to store finished id %s' % id
+        print 'Start to store finished id: {0}'.format(id)
         self.file.writeToCSVWithoutHeader(self.finished_url_path, [id.replace('\xef\xbb\xbf','')])
-        print 'End to store finished id %s' % id
+        print 'End to store finished id: {0}'.format(id)
+
+    def idInStoredFormat(self, id):
+        return [id]
 
     def storeMongodb(self, data):
         mongo = MongoMiddleware()
-        finished_ids = self.readFinishedIds()
-        if [data['id']] in finished_ids:
-            self.file.logger(self.log_path, 'Url exits %s' % data['url'])
-            return
-        self.file.logger(self.log_path, 'Start to store mongo %s' % data['url'])
-        print 'Start to store mongo %s' % data['url']
+        self.file.logger(self.log_path, 'Start to store mongo: {0}'.format(data['url']))
+        print 'Start to store mongo: {0}'.format(data['url'])
         mongo.insert(self.mongo, data)
+        self.file.logger(self.log_path, 'End to store mongo: {0}'.format(data['url']))
+        print 'End to store mongo: {0}'.format(data['url'])
         self.storeFinishedIds(str(data['id']))
-        self.file.logger(self.log_path, 'End to store mongo %s' % data['url'])
-        print 'End to store mongo %s' % data['url']
-
+        self.finished_ids.append(self.idInStoredFormat(data['id']))
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
-        print 'Start to parse %s' % current_url
+        print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
-        href_items = html.xpath(".//a[contains(@class,'listTit')]")
+        href_items = html.xpath(".//*[contains(@class,'news_list')]/a")
         for item in href_items:
             short_url = item.xpath("@href")[0]
             if 'html' not in short_url:
@@ -79,29 +78,34 @@ class Jingji21():
             short_url_parts = re.split(r'[., /, _]', short_url)
             id = short_url_parts[len(short_url_parts) - 2]
             url = urlparse.urljoin(current_url, short_url)
-            title = item.text
-            finished_ids = self.readFinishedIds()
-            if ([id] not in finished_ids) and (title != None):
+            title = ''.join(item.xpath(".//*[contains(@class,'news_title')]/text()"))
+            is_finished = self.idInStoredFormat(id) in self.finished_ids
+            is_title_empty = len(title) == 0
+            if (is_finished is False) and (is_title_empty is False):
                 data = {
                     'title': title.strip(),
                     'url': url.strip(),
                     'id': id.strip()
                 }
                 self.storeMongodb(data)
-                self.file.logger(self.log_path, 'End to parse %s' % current_url)
+                self.file.logger(self.log_path, 'End to parse: {0}'.format(current_url))
             else:
-                print 'Url invalid %s' % url
-        print 'End to parse %s' % current_url
+                if is_title_empty is True:
+                    self.file.logger(self.log_path, 'Empty title for {0}'.format(url))
+                    print 'Empty title for: {0}'.format(url)
+                print 'Url exits of tile empty: {0}'.format(url)
+        print 'End to parse: {0}'.format(current_url)
 
     def start_requests(self):
         self.init()
-        self.file.logger(self.log_path, 'Start '+ self.name +' requests')
-        print 'Start ' + self.name + ' requests'
+        self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
+        print 'Start request: {0}'.format(self.name)
+        self.finished_ids = self.readFinishedIds().tolist()
         new_urls = self.urls
         request = BrowserRequest()
-        content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)
-        self.file.logger(self.log_path, 'End %s requests' % str(len(content)))
-        print 'End %s requests' % str(len(content))
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
+        self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
+        print 'End requests: {0}'.format(str(len(content)))
 
 if __name__ == '__main__':
     jinji21=Jingji21()

@@ -53,23 +53,21 @@ class Ce():
         self.file.writeToCSVWithoutHeader(self.finished_url_path, [id.replace('\xef\xbb\xbf','')])
         print 'End to store finished id {0}'.format(id)
 
+    def idInStoredFormat(self, id):
+        return [int(id)]
+
     def storeMongodb(self, data):
         mongo = MongoMiddleware()
-        finished_ids = self.readFinishedIds()
-        if [int(data['id'])] in finished_ids:
-            self.file.logger(self.log_path, 'Url exits {0}'.format(data['url']))
-            return
         self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
         print 'Start to store mongo {0}'.format(data['url'])
         mongo.insert(self.mongo, data)
-        self.storeFinishedIds(str(data['id']))
         self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
         print 'End to store mongo {0}'.format(data['url'])
+        self.storeFinishedIds(str(data['id']))
+        self.finished_ids.append(self.idInStoredFormat(data['id']))
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
-        badkeys = ['randid=0.4', '?pc', '/about/', '/more/', 'xwzx', 'index']
-        goodkeys = ['']
         print 'Start to parse %s' % current_url
         html = etree.HTML(response['response'].page_source)
         href_items = html.xpath(".//a")
@@ -81,12 +79,12 @@ class Ce():
             href_url = href[0]
             if 'html' not in href_url:
                 continue
-            for good in goodkeys:
+            for good in self.goodkeys:
                 if valid == True:
                     continue
                 if good in href_url:
                     valid = True
-            for bad in badkeys:
+            for bad in self.badkeys:
                 if valid == False:
                     continue
                 if bad in href_url:
@@ -96,8 +94,9 @@ class Ce():
                 id = short_url_parts[len(short_url_parts) - 2]
                 url = urlparse.urljoin(current_url, href_url)
                 title = item.text
-                finished_ids = self.readFinishedIds()
-                if ([int(id)] not in finished_ids) and (title != None):
+                is_finished = self.idInStoredFormat(id) in self.finished_ids
+                is_title_empty = title == None
+                if (is_finished is False) and (is_title_empty is False):
                     data = {
                         'title': title.strip(),
                         'url': url.strip(),
@@ -106,8 +105,10 @@ class Ce():
                     self.storeMongodb(data)
                     self.file.logger(self.log_path, 'Done for {0}'.format(url))
                 else:
-                    self.file.logger(self.log_path, 'Invalid {0}'.format(url))
-                    print 'Invalid {0}'.format(url)
+                    if is_title_empty is True:
+                        self.file.logger(self.log_path, 'Empty title for {0}'.format(url))
+                        print 'Empty title for {0}'.format(url)
+                    print 'Finished or Empty title for {0}'.format(url)
             else:
                 self.file.logger(self.log_path, 'Invalid {0}'.format(href_url))
                 print 'Invalid {0}'.format(href_url)
@@ -117,11 +118,14 @@ class Ce():
         self.init()
         self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
         print 'Start {0} requests'.format(self.name)
+        self.badkeys = ['tu', 'index']
+        self.goodkeys = ['']
+        self.finished_ids = self.readFinishedIds().tolist()
         new_urls = self.urls
         request = BrowserRequest()
-        content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)
-        self.file.logger(self.log_path, 'End %s requests' % str(len(content)))
-        print 'End %s requests' % str(len(content))
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
+        self.file.logger(self.log_path, 'End for {0} requests'.format(str(len(content))))
+        print 'End for {0} requests'.format(str(len(content)))
 
 if __name__ == '__main__':
     ce=Ce()

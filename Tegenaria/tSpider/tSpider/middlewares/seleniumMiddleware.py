@@ -32,14 +32,14 @@ class SeleniumMiddleware(object):
         del self.browser, self.file, self.timeout, self.load_timeout, self.wait
         gc.collect()
 
-    def chrome_request(self, url):
+    def chrome_request(self, url, log_path):
         self.init(timeout=Settings.SELENIUM_TIMEOUT, executable_path=Settings.CHROMEDRIVER_PATH)
         try:
-            self.file.logger(Settings.LOG_PATH, 'Starting Chrome for: %s' % url)
+            self.file.logger(log_path, 'Starting Chrome for: {0}'.format(url))
             self.browser.get(url)
             return self.browser
         except TimeoutException:
             browser = self.browser
-            self.file.logger(Settings.LOG_PATH, 'Chrome timeout for: % s' % url)
+            self.file.logger(log_path, 'Chrome timeout for: {0}'.format(url))
             self.close()
             return browser

@@ -98,15 +98,10 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CE, SETTINGS_CE),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CE, SETTINGS_CE),
         'MAX_POOL_SIZE': 2,
-        'URLS': ['http://www.ce.cn/', 'http://finance.ce.cn/stock/', 'http://tech.ce.cn/',
-                'http://tech.ce.cn/news/', 'http://tech.ce.cn/tech2018/kjmq/', 'http://tech.ce.cn/tech2018/kx/',
-                'http://tech.ce.cn/tech2018/rgzn/', 'http://tech.ce.cn/tech2018/life/', 'http://tech.ce.cn/tech2018/newtech/',
-                'http://tech.ce.cn/tech2018/safe/', 'http://tech.ce.cn/tech2018/zxjy/', 'http://finance.ce.cn/stock/gsgdbd/index.shtml',
-                'http://finance.ce.cn/', 'http://finance.ce.cn/shqgc/index.shtml', 'http://finance.ce.cn/zjjp/index.shtml',
-                'http://finance.ce.cn/home/zqzq/dp/', 'http://finance.ce.cn/home/jrzq/dc/index.shtml', 'http://finance.ce.cn/10cjsy/bg/',
-                'http://finance.ce.cn/10cjsy/hw/', 'http://finance.ce.cn/10cjsy/qt/', 'http://finance.ce.cn/home/cfzq/zq/',
-                'http://finance.ce.cn/sub/ggttk/index.shtml', 'http://finance.ce.cn/sub/cj2009/index.shtml', 'http://finance.ce.cn/10cjsy/bk/',
-                'http://finance.ce.cn/jjpd/index.shtml', 'http://finance.ce.cn/futures/', 'http://finance.ce.cn/gold/']
+        'URLS': ['http://m.ce.cn', 'http://m.ce.cn/yw/', 'http://m.ce.cn/cj/', 'http://m.ce.cn/gp/',
+                'http://m.ce.cn/gj/', 'http://m.ce.cn/gs/', 'http://m.ce.cn/lc/', 'http://m.ce.cn/lv/fo/',
+                'http://m.ce.cn/qc/', 'http://m.ce.cn/fc/', 'http://m.ce.cn/fa/', 'http://m.ce.cn/lv/',
+                'http://m.ce.cn/sh/', 'http://m.ce.cn/lv/jk/']
     }
 
     SETTINGS_YICAI = 'yicai'
@@ -122,7 +117,13 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_YICAI, SETTINGS_YICAI),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_YICAI, SETTINGS_YICAI),
         'MAX_POOL_SIZE': 2,
-        'URLS':['https://www.yicai.com/']
+        'URLS':['https://m.yicai.com/', 'https://m.yicai.com/news/gushi/', 'https://m.yicai.com/news/hongguan/',
+                'https://m.yicai.com/news/minsheng/', 'https://m.yicai.com/news/policy/', 'https://m.yicai.com/news/gaige/',
+                'https://m.yicai.com/news/jinrong/', 'https://m.yicai.com/news/quanqiushichang/', 'https://m.yicai.com/news/gongsi/',
+                'https://m.yicai.com/news/jiankangshenghuo/', 'https://m.yicai.com/news/shijie/', 'https://m.yicai.com/news/kechuang/',
+                'https://m.yicai.com/news/quyu/', 'https://m.yicai.com/news/comment/', 'https://m.yicai.com/news/dafengwenhua/',
+                'https://m.yicai.com/news/books/', 'https://m.yicai.com/news/loushi/', 'https://m.yicai.com/news/automobile/',
+                'https://m.yicai.com/news/fashion/', 'https://m.yicai.com/news/ad/']
     }
 
     SETTINGS_IFENG = 'ifeng'
@@ -178,7 +179,13 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
         'MAX_POOL_SIZE': 2,
-        'URLS': ['http://www.21jingji.com/', 'http://www.21jingji.com/channel/politics/']
+        'URLS': ['https://m.21jingji.com/', 'https://m.21jingji.com/channel/finance', 'https://m.21jingji.com/channel/politics',
+                 'https://m.21jingji.com/channel/capital', 'https://m.21jingji.com/channel/business', 'https://m.21jingji.com/channel/opinion',
+                 'https://m.21jingji.com/channel/technology', 'https://m.21jingji.com/channel/life', 'https://m.21jingji.com/channel/global',
+                 'https://m.21jingji.com/channel/entrepreneur', 'https://m.21jingji.com/channel/19th', 'https://m.21jingji.com/channel/21tv',
+                 'https://m.21jingji.com/channel/TVS1', 'https://m.21jingji.com/channel/marathon', 'https://m.21jingji.com/channel/BandR',
+                 'https://m.21jingji.com/channel/readnumber', 'https://m.21jingji.com/channel/GHM_GreaterBay', 'https://m.21jingji.com/channel/Property',
+                 'https://m.21jingji.com/channel/AIWriter', 'https://m.21jingji.com/channel/ftz', 'https://m.21jingji.com/channel/investment']
     }
 
     SETTINGS_STCN = 'stcn'
@@ -199,7 +206,7 @@ class Settings():
                  'http://news.stcn.com/sbgc/', 'http://space.stcn.com/', 'http://stock.stcn.com/',
                  'http://stock.stcn.com/dapan/index.shtml', 'http://stock.stcn.com/bankuai/index.shtml',
                  'http://stock.stcn.com/xingu/index.shtml', 'http://stock.stcn.com/zhuli/index.shtml',
-                 'http://kuaixun.stcn.com/list/kxyb.shtml', 'http://company.stcn.com/', 'http://zt.stcn.com/',
+                 'http://kuaixun.stcn.com/list/kxyb.shtml', 'http://company.stcn.com/',
                  'http://news.stcn.com/gzlfzzl/', 'http://finance.stcn.com/', 'http://news.stcn.com/xwct/',
                  'http://company.stcn.com/gsdt/', 'http://yq.stcn.com/', 'http://data.stcn.com/',
                  'http://data.stcn.com/list/djsj.shtml', 'http://data.stcn.com/list/djsj.shtml', 'http://data.stcn.com/zijinliuxiang/']
