@@ -68,31 +68,31 @@ class Huxiu():
         return new_urls
 
     def storeFinishedId(self, id):
-        print 'Start to store finished id %s' % id
+        print 'Start to store finished id: {0}'.format(id)
         self.file.writeToCSVWithoutHeader(self.finished_id_path, [id.replace('\xef\xbb\xbf','')])
-        self.file.logger(self.log_path, 'End to store finished id %s' % id)
-        print 'End to store finished id %s' % id
+        self.file.logger(self.log_path, 'End to store finished id: {0}'.format(id))
+        print 'End to store finished id: {0}'.format(id)
 
     def storeMongodb(self, data):
-        print 'Start to store mongo %s' % data['url']
+        print 'Start to store mongo: {0}'.format(data['url'])
         mongo = MongoMiddleware()
-        mongo.insert( self.mongo, data)
+        mongo.insert(self.mongo, data)
+        print 'End to store mongo: {0}'.format(data['url'])
+        self.storeFinishedId(data['id'])
         del mongo
         gc.collect()
-        print 'End to store mongo %s' % data['url']
 
     def storeTxt(self, id, content):
-        print 'Start to store txt %s' % id
-        self.file.writeToTxtCover(self.finished_txt_path + '//' + self.name + '_' + id + '.txt', content)
-        print 'End to store txt %s' % id
-        self.storeFinishedId(id)
+        print 'Start to store txt: {0}'.format(id)
+        self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(self.finished_txt_path, self.name, id), content)
+        print 'End to store txt: {0}'.format(id)
 
     def isEmpty(self, item_list):
         return len([item for item in item_list if item.strip()]) == 0
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
-        print 'Start to parse %s' % current_url
+        print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
         data = {}
         comment_number = ""
@@ -105,6 +105,7 @@ class Huxiu():
         time = ""
         author_url = ""
         author_name = ""
+        valid = False
 
         url = current_url
         id = str(filter(str.isdigit, current_url.encode('gbk')))
@@ -127,12 +128,14 @@ class Huxiu():
             image_url = image_url1[0].strip()
         if self.isEmpty(content1) is False:
             content = ''.join(content1).strip()
+            valid = True
         if self.isEmpty(time1) is False:
             time = time1[0]
         if self.isEmpty(author_url1) is False:
             author_url = urlparse.urljoin(current_url, author_url1[0].strip())
         if self.isEmpty(author_name1) is False:
             author_name = author_name1[0].strip()
+
         data = {
             'title': title,
             'comment_number': comment_number,
@@ -144,25 +147,28 @@ class Huxiu():
             'author_name': author_name,
             'id': id
         }
-        print 'End to parse %s' % current_url
-        self.storeMongodb(data)
-        self.storeTxt(id, content)
+        print 'End to parse: {0}'.format(current_url)
+        if valid == True:
+            self.storeMongodb(data)
+            self.storeTxt(id, content)
+        else:
+            self.storeFinishedId(id)
         del current_url, html, title, comment_number, share_number, image_url, url, content, time, author_url, author_name, id, data
         gc.collect()
 
     def start_requests(self):
         self.init()
-        self.file.logger(self.log_path, 'Start '+ self.name +' requests')
+        self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start ' + self.name + ' requests'
         new_urls = self.readNewUrls()
         if len(new_urls) == 0:
-            self.file.logger(self.log_path, 'No new url for ' + self.name + ' and return')
-            print 'No new url for ' + self.name + ' and return'
+            self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
+            print 'No new url for: {0}'.format(self.name)
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)
-        self.file.logger(self.log_path, 'End %s requests' % str(len(content)))
-        print 'End %s requests' % str(len(content))
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
+        self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
+        print 'End requests: {0}'.format(str(len(content)))
         del new_urls, request, content
         gc.collect()
 

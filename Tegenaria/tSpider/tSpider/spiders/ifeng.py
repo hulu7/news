@@ -53,7 +53,7 @@ class Ifeng():
             id = str(id_url[0])
             url = str(id_url[1])
             if [id.replace('\xef\xbb\xbf','')] not in finished_ids:
-                new_urls.append(url)
+                    new_urls.append(url)
         del finished_ids, isFinishedIdPathExists
         gc.collect()
         return new_urls
@@ -70,33 +70,52 @@ class Ifeng():
         return new_urls
 
     def storeFinishedId(self, id):
-        print 'Start to store finished id %s' % id
+        print 'Start to store finished id: {0}'.format(id)
         self.file.writeToCSVWithoutHeader(self.finished_id_path, [id])
-        self.file.logger(self.log_path, 'End to store finished id %s' % id)
-        print 'End to store finished id %s' % id
+        self.file.logger(self.log_path, 'End to store finished id: {0}'.format(id))
+        print 'End to store finished id: {0}'.format(id)
 
     def storeMongodb(self, data):
-        print 'Start to store mongo %s' % data['url']
+        print 'Start to store mongo: {0}'.format(data['url'])
         mongo = MongoMiddleware()
         mongo.insert(self.mongo, data)
+        print 'End to store mongo: {0}'.format(data['url'])
+        self.storeFinishedId(data['id'])
         del mongo
         gc.collect()
-        print 'End to store mongo %s' % data['url']
 
     def storeTxt(self, id, content):
-        print 'Start to store txt %s' % id
-        self.file.writeToTxtCover(self.finished_txt_path + '//' + self.name + '_' + id + '.txt', content)
-        print 'End to store txt %s' % id
-        self.storeFinishedId(id)
+        print 'Start to store txt: {0}'.format(id)
+        self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(self.finished_txt_path, self.name, id), content)
+        print 'End to store txt: {0}'.format(id)
 
     def isEmpty(self, item_list):
         return len([item for item in item_list if item.strip()]) == 0
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
+        request_url = response['request_url'].encode('gbk')
         if self.isEmpty(current_url):
             return
-        url_parts = re.split(r'[., /, _]', current_url)
+        url_parts = re.split(r'[., /, _, #]', current_url)
+        for key in self.badkeys:
+            if key in current_url:
+                self.file.logger(self.log_path, 'Bad url: {0}'.format(request_url))
+                print 'Bad url: {0}'.format(request_url)
+                url_parts = re.split(r'[., /, _]', request_url)
+                if '/c/' in request_url:
+                    id_index = url_parts.index('c') + 1
+                    request_id = url_parts[id_index].strip()
+                if '/a/' in request_url:
+                    id_index = url_parts.index('a') + 2
+                    request_id = url_parts[id_index].strip()
+                if 'detail' in request_url:
+                    id_index = url_parts.index('detail') + 4
+                    request_id = url_parts[id_index].strip()
+                self.storeFinishedId(str(request_id))
+                del current_url, request_url
+                return
+
         current_id = ""
         if '/c/' in current_url:
             id_index = url_parts.index('c') + 1
@@ -333,7 +352,7 @@ class Ifeng():
                     'id': id
                 }
 
-            print 'End to parse %s' % current_url
+            print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:
                 self.storeFinishedId(current_id)
             else:
@@ -344,18 +363,19 @@ class Ifeng():
 
     def start_requests(self):
         self.init()
-        self.file.logger(self.log_path, 'Start '+ self.name +' requests')
-        print 'Start ' + self.name + ' requests'
+        self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
+        print 'Start request: {0}'.format(self.name)
+        self.badkeys = ['#p', 'junjichu']
         new_urls = self.readNewUrls()
         # new_urls = ["https://ihouse.ifeng.com/detail/2018_12_12/51784060_0.shtml"]
         if len(new_urls) == 0:
-            self.file.logger(self.log_path, 'No new url for ' + self.name + ' and return')
-            print 'No new url for ' + self.name + ' and return'
+            self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
+            print 'No new url for: {0}'.format(self.name)
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)
-        self.file.logger(self.log_path, 'End %s requests' % str(len(content)))
-        print 'End %s requests' % str(len(content))
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
+        self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
+        print 'End requests: {0}'.format(str(len(content)))
         del content, new_urls, request
         gc.collect()
 

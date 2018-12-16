@@ -68,35 +68,35 @@ class Jingji21():
         return new_urls
 
     def storeFinishedId(self, id):
-        print 'Start to store finished id %s' % id
+        print 'Start to store finished id: {0}'.format(id)
         self.file.writeToCSVWithoutHeader(self.finished_id_path, [id])
-        self.file.logger(self.log_path, 'End to store finished id %s' % id)
-        print 'End to store finished id %s' % id
+        self.file.logger(self.log_path, 'End to store finished id: {0}'.format(id))
+        print 'End to store finished id: {0}'.format(id)
 
     def storeMongodb(self, data):
-        print 'Start to store mongo %s' % data['url']
+        print 'Start to store mongo: {0}'.format(data['url'])
         mongo = MongoMiddleware()
         mongo.insert(self.mongo, data)
+        print 'End to store mongo: {0}'.format(data['url'])
+        self.storeFinishedId(data['id'])
         del mongo
         gc.collect()
-        print 'End to store mongo %s' % data['url']
 
     def storeTxt(self, id, content):
-        print 'Start to store txt %s' % id
-        self.file.writeToTxtCover(self.finished_txt_path + '//' + self.name + '_' + id + '.txt', content)
-        print 'End to store txt %s' % id
-        self.storeFinishedId(id)
+        print 'Start to store txt: {0}'.format(id)
+        self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(self.finished_txt_path, self.name, id), content)
+        print 'End to store txt: {0}'.format(id)
 
     def isEmpty(self, item_list):
         return len([item for item in item_list if item.strip()]) == 0
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
-        print 'Start to parse %s' % current_url
+        print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _]', current_url)
         current_id = short_url_parts[len(short_url_parts) - 2]
         html = etree.HTML(response['response'].page_source)
-        not_fnd = html.xpath(".//*[contains(@class,'titl')]")
+        not_fnd = html.xpath(".//*[contains(@class,'content')]")
         data = {}
         url = ""
         content = ""
@@ -104,34 +104,36 @@ class Jingji21():
         author_name = ""
         title = ""
         id = ""
+        valid = False
         if len(not_fnd) > 0:
-            article_0 = html.xpath(".//*[contains(@class,'titl')]")
+            article_0 = html.xpath(".//*[contains(@class,'content')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//div[contains(@class, 'detailCont')]/p/text()")
-                time0_1 = html.xpath(".//*[contains(@class, 'Wh')]/span/text()")
-                author_name0_1 = html.xpath(".//*[contains(@class, 'baodao')]/text()")
-                title0_1 = html.xpath(".//*[contains(@class,'titl')]/text()")
+                content0_1 = ''.join(html.xpath(".//div[contains(@class, 'txtContent')]/p/text()"))
+                time0_1 = ''.join(html.xpath(".//*[contains(@class, 'newsDate')]/text()"))
+                author_name0_1 = ''.join(html.xpath(".//*[contains(@class, 'newsInfo')]/text()"))
+                title0_1 = ''.join(html.xpath(".//*[contains(@class,'titleHead')]/h1/text()"))
 
                 url = current_url
                 id = current_id
                 if self.isEmpty(content0_1) is False:
-                    content = ''.join(content0_1).strip()
+                    content = content0_1.strip()
+                    valid = True
                 if self.isEmpty(time0_1) is False:
-                    time = '{0} {1}'.format(time0_1[0].strip(), time0_1[1].strip())
+                    time = time0_1.strip()
                 if self.isEmpty(author_name0_1) is False:
-                    author_name = author_name0_1[0].strip()
+                    author_name = author_name0_1.strip()
                 if self.isEmpty(title0_1) is False:
-                    title = title0_1[0].strip()
+                    title = title0_1.strip()
+                if valid:
+                    data = {
+                        'url': url,
+                        'time': time,
+                        'author_name': author_name,
+                        'title': title,
+                        'id': id
+                    }
 
-                data = {
-                    'url': url,
-                    'time': time,
-                    'author_name': author_name,
-                    'title': title,
-                    'id': id
-                }
-
-            print 'End to parse %s' % current_url
+            print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:
                 self.storeFinishedId(current_id)
             else:
@@ -144,18 +146,18 @@ class Jingji21():
 
     def start_requests(self):
         self.init()
-        self.file.logger(self.log_path, 'Start '+ self.name +' requests')
-        print 'Start ' + self.name + ' requests'
+        self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
+        print 'Start request: {0}'.format(self.name)
         new_urls = self.readNewUrls()
         # new_urls = ["http://news.ifeng.com/a/20181113/60157274_0.shtml"]
         if len(new_urls) == 0:
-            self.file.logger(self.log_path, 'No new url for ' + self.name + ' and return')
-            print 'No new url for ' + self.name + ' and return'
+            self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
+            print 'No new url for: {0}'.format(self.name)
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)
-        self.file.logger(self.log_path, 'End %s requests' % str(len(content)))
-        print 'End %s requests' % str(len(content))
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
+        self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
+        print 'End requests: {0}'.format(str(len(content)))
         del content, new_urls, request
         gc.collect()
 

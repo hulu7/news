@@ -68,24 +68,24 @@ class Stcn():
         return new_urls
 
     def storeFinishedId(self, id):
-        print 'Start to store finished id %s' % id
+        print 'Start to store finished id: {0}'.format(id)
         self.file.writeToCSVWithoutHeader(self.finished_id_path, [id])
-        self.file.logger(self.log_path, 'End to store finished id %s' % id)
-        print 'End to store finished id %s' % id
+        self.file.logger(self.log_path, 'End to store finished id: {0}'.format(id))
+        print 'End to store finished id: {0}'.format(id)
 
     def storeMongodb(self, data):
-        print 'Start to store mongo %s' % data['url']
+        print 'Start to store mongo: {0}'.format(data['url'])
         mongo = MongoMiddleware()
         mongo.insert(self.mongo, data)
+        print 'End to store mongo: {0}'.format(data['url'])
+        self.storeFinishedId(data['id'])
         del mongo
         gc.collect()
-        print 'End to store mongo %s' % data['url']
 
     def storeTxt(self, id, content):
-        print 'Start to store txt %s' % id
-        self.file.writeToTxtCover(self.finished_txt_path + '//' + self.name + '_' + id + '.txt', content)
-        print 'End to store txt %s' % id
-        self.storeFinishedId(id)
+        print 'Start to store txt: {0}'.format(id)
+        self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(self.finished_txt_path, self.name, id), content)
+        print 'End to store txt: {0}'.format(id)
 
     def isEmpty(self, item_list):
         return len([item for item in item_list if item.strip()]) == 0
@@ -97,10 +97,10 @@ class Stcn():
             short_url_parts = re.split(r'[., /, _]', response['request_url'])
             invalid_id = short_url_parts[len(short_url_parts) - 2]
             self.storeFinishedId(invalid_id)
-            self.file.logger(self.log_path, 'Invalid url: %s' % current_url)
-            print 'Invalid url: %s' % current_url
+            self.file.logger(self.log_path, 'Invalid url: {0}'.format(current_url))
+            print 'Invalid url: {0}'.format(current_url)
             return
-        print 'Start to parse %s' % current_url
+        print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _]', current_url)
         current_id = short_url_parts[len(short_url_parts) - 2]
         html = etree.HTML(response['response'].page_source)
@@ -177,7 +177,7 @@ class Stcn():
                     'id': id
                 }
 
-            print 'End to parse %s' % current_url
+            print 'End to parse: {0}'.format(current_url)
             if len(data) == 0 or self.isEmpty(content) is True:
                 self.storeFinishedId(current_id)
             else:
@@ -190,18 +190,18 @@ class Stcn():
 
     def start_requests(self):
         self.init()
-        self.file.logger(self.log_path, 'Start '+ self.name +' requests')
-        print 'Start ' + self.name + ' requests'
+        self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
+        print 'Start request: {0}'.format(self.name)
         new_urls = self.readNewUrls()
         # new_urls = ["http://kuaixun.stcn.com/2018/1205/14707149.shtml"]
         if len(new_urls) == 0:
-            self.file.logger(self.log_path, 'No new url for ' + self.name + ' and return')
-            print 'No new url for ' + self.name + ' and return'
+            self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
+            print 'No new url for: {0}'.format(self.name)
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_urls, self.max_pool_size, callback=self.parse)
-        self.file.logger(self.log_path, 'End %s requests' % str(len(content)))
-        print 'End %s requests' % str(len(content))
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
+        self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
+        print 'End requests: {0}'.format(str(len(content)))
         del content, new_urls, request
         gc.collect()
 
