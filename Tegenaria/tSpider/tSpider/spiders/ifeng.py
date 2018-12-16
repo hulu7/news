@@ -106,11 +106,8 @@ class Ifeng():
                 if '/c/' in request_url:
                     id_index = url_parts.index('c') + 1
                     request_id = url_parts[id_index].strip()
-                if '/a/' in request_url:
-                    id_index = url_parts.index('a') + 2
-                    request_id = url_parts[id_index].strip()
-                if 'detail' in request_url:
-                    id_index = url_parts.index('detail') + 4
+                elif 'news' in request_url:
+                    id_index = url_parts.index('ifeng') + 2
                     request_id = url_parts[id_index].strip()
                 self.storeFinishedId(str(request_id))
                 del current_url, request_url
@@ -120,11 +117,8 @@ class Ifeng():
         if '/c/' in current_url:
             id_index = url_parts.index('c') + 1
             current_id = url_parts[id_index].strip()
-        if '/a/' in current_url:
-            id_index = url_parts.index('a') + 2
-            current_id = url_parts[id_index].strip()
-        if 'detail' in current_url:
-            id_index = url_parts.index('detail') + 4
+        if 'news' in current_url:
+            id_index = url_parts.index('ifeng') + 2
             current_id = url_parts[id_index].strip()
         print 'Start to parse: {0} with id: {1}'.format(current_url, current_id)
         html = etree.HTML(response['response'].page_source)
@@ -145,6 +139,7 @@ class Ifeng():
             article_3 = html.xpath(".//*[contains(@class, 'artical-_Qk9Dp2t')]")
             article_4 = html.xpath(".//*[contains(@class, 'wdetailbox ctltbox')]")
             article_5 = html.xpath(".//*[contains(@class, 'w90 artical')]")
+            article_6 = html.xpath(".//*[contains(@class, 'main')]")
             if len(article_0) > 0:
                 comment_number0_1 = html.xpath(".//*[contains(@class, 'js_cmtNum')]//text()")
                 join_number0_1 = html.xpath(".//*[contains(@class, 'js_cmtNum')]//text()")
@@ -341,6 +336,41 @@ class Ifeng():
                     author_name = ''.join(author_name5_1).strip()
                 if self.isEmpty(title5_1) is False:
                     title = title5_1[0].strip()
+
+                data = {
+                    'comment_number': comment_number,
+                    'join_number': join_number,
+                    'url': url,
+                    'time': time,
+                    'author_name': author_name,
+                    'title': title,
+                    'id': id
+                }
+
+            if len(article_6) > 0:
+                comment_number6_1 = html.xpath(".//*[contains(@class, 'w-num')]/text()")
+                join_number6_1 = html.xpath(".//*[contains(@class, 'w-num')]/text()")
+                content6_1 = html.xpath(".//div[contains(@class, 'acTx')]/p/text()")
+                time6_1 = html.xpath(".//*[contains(@class, 'acTxtTit wrap_w94')]/div/div/span/text()")
+                author_name6_1 = html.xpath(".//*[contains(@class, 'acTxtTit wrap_w94')]/div/div/span/a/text()")
+                title6_1 = html.xpath(".//*[contains(@class, 'acTxtTit wrap_w94')]/h1/text()")
+
+                url = current_url
+                id = current_id
+                if self.isEmpty(comment_number6_1) is False:
+                    comment_number = str(filter(str.isdigit, comment_number6_1[1].encode('gbk'))).strip()
+                if self.isEmpty(join_number6_1) is False:
+                    join_number = str(filter(str.isdigit, join_number6_1[0].encode('gbk'))).strip()
+                if self.isEmpty(content6_1) is False:
+                    content = ''.join(content6_1)
+                if self.isEmpty(time6_1) is False:
+                    time = '{0} {1}'.format(time6_1[0], time6_1[1]).strip()
+                if self.isEmpty(author_name6_1) is False:
+                    author_name = ''.join(author_name6_1[0]).strip()
+                else:
+                    author_name = ''.join(time6_1[2]).strip()
+                if self.isEmpty(title6_1) is False:
+                    title = title6_1[0].strip()
 
                 data = {
                     'comment_number': comment_number,

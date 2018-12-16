@@ -68,7 +68,7 @@ class Ce():
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
-        print 'Start to parse %s' % current_url
+        print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
         href_items = html.xpath(".//a")
         for item in href_items:

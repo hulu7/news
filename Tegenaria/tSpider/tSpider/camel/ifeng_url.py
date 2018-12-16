@@ -50,7 +50,7 @@ class Ifeng():
 
     def storeFinishedIds(self, id):
         print 'Start to store finished id: {0}'.format(id)
-        self.file.writeToCSVWithoutHeader(self.finished_url_path, [id.replace('\xef\xbb\xbf','')])
+        self.file.writeToCSVWithoutHeader(self.finished_url_path, self.idInStoredFormat(id.replace('\xef\xbb\xbf','')))
         print 'End to store finished id: {0}'.format(id)
 
     def storeMongodb(self, data):
@@ -77,46 +77,58 @@ class Ifeng():
 
         for item in href_items:
             href = item.xpath("@href")
-            valid = False
             if len(href) == 0:
                 continue
-            if item.xpath('.//text()') == None or self.isEmpty(item.xpath('.//text()')):
+
+            href_url = href[0]
+
+            if self.name not in href_url:
                 continue
+
+            if '/c/' not in href_url:
+                if 'html' not in href_url:
+                    continue
+
+            title0_1 = item.xpath(".//*[contains(@class,'i_con_l')]/h3/text()")
+            title0_2 = item.xpath(".//text()")
+            title = ''
+
+            if len(title0_1) > 0:
+                title = title0_1[0]
+            elif len(title0_2) > 0:
+                title = title0_2[0]
+            if len(title) == 0:
+                continue
+
+            valid = False
             for good in self.goodkeys:
                 if valid == True:
                     continue
-                if good in href[0]:
+                if good in href_url:
                     valid = True
             for bad in self.badkeys:
                 if valid == False:
                     continue
-                if bad in href[0]:
+                if bad in href_url:
                     valid = False
+
             if valid == True:
-                short_url = href[0].strip()
-                if 'http' in short_url:
-                    url = short_url
-                else:
-                    if '//' in short_url:
-                        url = 'https:{0}'.format(short_url)
-                    else:
-                        url = urlparse.urljoin(current_url, short_url.strip())
+                short_url = href_url.strip()
+                url = urlparse.urljoin(current_url, short_url.strip())
 
                 short_url_parts = re.split(r'[., /, _]', url)
-                if '/a/' in short_url:
-                    id_index = short_url_parts.index('a') + 2
-                    id = short_url_parts[id_index].strip()
                 if '/c/' in short_url:
                     id_index = short_url_parts.index('c') + 1
+                    id = short_url_parts[id_index]
+                elif 'news' in short_url:
+                    id_index = short_url_parts.index('ifeng') + 2
                     id = short_url_parts[id_index].strip()
-                if 'detail' in short_url:
-                    id_index = short_url_parts.index('detail') + 4
-                    id = short_url_parts[id_index].strip()
-
-                title = item.xpath(".//text()")
-                if len(title) == 0:
+                else:
                     continue
-                title = title[0]
+
+                if self.isEmpty(id):
+                    continue
+
                 is_finished = self.idInStoredFormat(id) in self.finished_ids
                 if is_finished is False:
                     data = {
@@ -134,8 +146,9 @@ class Ifeng():
         self.init()
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start request: {0}'.format(self.name)
-        self.goodkeys = ['/a/', '/c/', 'detail']
-        self.badkeys = ['jpg', 'yc', '#p', 'cosmetics', 'weidian', 'homedetail', 'detail?']
+        self.goodkeys = ['ifeng', 'news']
+        self.badkeys = ['jpg', 'yc', '#p', 'cosmetics', 'weidian', 'homedetail', 'detail?', 'weather', 'idyn',
+                        'quanmeiti', 'srctag', 'market', 'tv', 'ispecial', 'icommon', 'channel']
         self.finished_ids = self.readFinishedIds().tolist()
         new_urls = self.urls
         request = BrowserRequest()
