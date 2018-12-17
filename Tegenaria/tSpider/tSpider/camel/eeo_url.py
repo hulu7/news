@@ -56,6 +56,9 @@ class Eeo():
     def idInStoredFormat(self, id):
         return [int(id)]
 
+    def isEmpty(self, item_list):
+        return len([item for item in item_list if item.strip()]) == 0
+
     def storeMongodb(self, data):
         mongo = MongoMiddleware()
         self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
