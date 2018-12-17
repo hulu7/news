@@ -94,7 +94,8 @@ class Ce():
         current_url = response['response'].current_url.encode('gbk')
         valid = str(filter(str.isdigit, current_url))
         if len(valid) == 0:
-            invalid_id = re.split('_', re.split('/', response['request_url'])[5])[0]
+            short_url_parts = re.split(r'[., /, _]',  response['request_url'])
+            invalid_id = short_url_parts[len(short_url_parts) - 2]
             self.storeFinishedId(invalid_id)
             self.file.logger(self.log_path, 'Invalid url: {0}'.format(current_url))
             print 'Invalid url: {0}'.format(current_url)
@@ -154,7 +155,7 @@ class Ce():
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
         new_urls = self.readNewUrls()
-        # new_urls = ["http://news.ifeng.com/a/20181113/60157274_0.shtml"]
+        # new_urls = ["http://finance.ce.cn/home/jrzq/dc/201811/26/t20181126_30867105.shtml"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
