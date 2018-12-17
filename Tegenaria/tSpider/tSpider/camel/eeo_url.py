@@ -98,9 +98,14 @@ class Eeo():
                 id = short_url_parts[len(short_url_parts) - 2]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
-                title_list = item.xpath(".//h5")
-                if len(title_list) > 0:
-                    title = title_list[0].text
+                title_list1 = item.xpath(".//h5")
+                title_list2 = item.xpath(".//text()")
+                if len(title_list1) > 0:
+                    title = title_list1[0].text
+                    print title
+                if len(title_list2) > 0:
+                    title = title_list2[0]
+                    print title
                 is_finished = self.idInStoredFormat(id) in self.finished_ids
                 is_title_empty = title == None
                 if (is_finished is False) and (is_title_empty is False):
