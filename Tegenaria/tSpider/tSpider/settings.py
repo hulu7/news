@@ -117,7 +117,21 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_EEO, SETTINGS_EEO),
         'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_EEO, SETTINGS_EEO),
         'MAX_POOL_SIZE': 2,
-        'URLS': ['http://m.eeo.com.cn/']
+        'URLS': ['http://m.eeo.com.cn/', 'http://m.eeo.com.cn/yaowen/sxgd/', 'http://m.eeo.com.cn/yaowen/dzsp/',
+                 'http://m.eeo.com.cn/jinrong/xinsanban/', 'http://m.eeo.com.cn/jinrong/hlwjr/',
+                 'http://m.eeo.com.cn/shangye/hualeizhiyue/', 'http://m.eeo.com.cn/shangye/cyjbj/',
+                 'http://m.eeo.com.cn/yaowen/dashi/', 'http://m.eeo.com.cn/yaowen/hfggzc/',
+                 'http://m.eeo.com.cn/yaowen/hfshuju/', 'http://m.eeo.com.cn/yaowen/hfdongjian/',
+                 'http://m.eeo.com.cn/jinrong/zhengquan/', 'http://m.eeo.com.cn/jinrong/zhaishi/',
+                 'http://m.eeo.com.cn/jinrong/ziben/', 'http://m.eeo.com.cn/jinrong/licai/',
+                 'http://m.eeo.com.cn/shangye/xinnengyuan/', 'http://m.eeo.com.cn/shangye/yiliao/',
+                 'http://m.eeo.com.cn/shangye/wuliu/', 'http://m.eeo.com.cn/shangye/dianshang/',
+                 'http://m.eeo.com.cn/fcqcxf/dichan/', 'http://m.eeo.com.cn/yule/yingshi/',
+                 'http://m.eeo.com.cn/fcqcxf/qiche/', 'http://m.eeo.com.cn/fcqcxf/xiaofei/',
+                 'http://m.eeo.com.cn/yule/yule/', 'http://m.eeo.com.cn/yule/tiyu/',
+                 'http://m.eeo.com.cn/gcj/guanchajia/', 'http://m.eeo.com.cn/gcj/shuping/',
+                 'http://m.eeo.com.cn/gcj/zhuanlan/', 'http://m.eeo.com.cn/gcj/lingdu/'
+                 'http://m.eeo.com.cn/zixun/']
     }
 
     SETTINGS_YICAI = 'yicai'
