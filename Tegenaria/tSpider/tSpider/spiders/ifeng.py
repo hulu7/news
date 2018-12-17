@@ -139,7 +139,7 @@ class Ifeng():
             article_3 = html.xpath(".//*[contains(@class, 'artical-_Qk9Dp2t')]")
             article_4 = html.xpath(".//*[contains(@class, 'wdetailbox ctltbox')]")
             article_5 = html.xpath(".//*[contains(@class, 'w90 artical')]")
-            article_6 = html.xpath(".//*[contains(@class, 'main')]")
+            article_6 = html.xpath(".//*[contains(@class, 'acTxtTit wrap_w94')]")
             if len(article_0) > 0:
                 comment_number0_1 = html.xpath(".//*[contains(@class, 'js_cmtNum')]//text()")
                 join_number0_1 = html.xpath(".//*[contains(@class, 'js_cmtNum')]//text()")
@@ -397,7 +397,7 @@ class Ifeng():
         print 'Start request: {0}'.format(self.name)
         self.badkeys = ['#p', 'junjichu']
         new_urls = self.readNewUrls()
-        # new_urls = ["https://ihouse.ifeng.com/detail/2018_12_12/51784060_0.shtml"]
+        # new_urls = ["https://ent.ifeng.com/c/7iclX0OlBED"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
             print 'No new url for: {0}'.format(self.name)
