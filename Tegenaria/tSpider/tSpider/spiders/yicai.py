@@ -94,7 +94,8 @@ class Yicai():
         current_url = response['response'].current_url.encode('gbk')
         valid = str(filter(str.isdigit, current_url))
         if len(valid) == 0:
-            invalid_id = re.split('_', re.split('/', response['request_url'])[5])[0]
+            invalid_url_parts = re.split(r'[., /, _]', response['request_url'])
+            invalid_id = invalid_url_parts[len(invalid_url_parts) - 2]
             self.storeFinishedId(invalid_id)
             self.file.logger(self.log_path, 'Invalid url: {0}'.format(current_url))
             print 'Invalid url: {0}'.format(current_url)
