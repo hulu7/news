@@ -3,7 +3,7 @@ tmpDir=/home/Data
 prd3Path=/home/dev/Data/rsyncData/prd3
 DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")
-LOGPATH=/home/dev/Data/rsyncData/prd3/log
+LOGPATH=${prd3Path}/log
 CAMELPATH=/home/dev/Repository/news/Tegenaria/tSpider/tSpider/camel
 for camel in $(ls ${CAMELPATH})
 do
