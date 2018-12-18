@@ -110,7 +110,7 @@ class Eeo():
                     title = title_list2[0]
                     print title
                 is_finished = self.idInStoredFormat(id) in self.finished_ids
-                is_title_empty = title == None
+                is_title_empty = self.isEmpty(title)
                 if (is_finished is False) and (is_title_empty is False):
                     data = {
                         'title': title.strip(),
