@@ -165,17 +165,17 @@ class Eeo():
             }
 
         if len(article_2) > 0:
-            content2_1 = html.xpath(".//div[contains(@class, 'xd-nr')]/p/text()")
+            content2_1 = html.xpath(".//div[contains(@class, 'xx_boxsing')]/p/text()")
             time2_1 = html.xpath(".//*[contains(@class, 'xd-b-b')]/p/span/text()")
             author_name2_1 = html.xpath(".//*[contains(@name,'author')]/text()")
-            title2_1 = html.xpath(".//*[contains(@class,'xd-nr')]/h1/text()")
+            title2_1 = html.xpath(".//*[contains(@class,'xd-b-b')]/h1/text()")
 
             url = current_url
             id = current_id
             if self.isEmpty(content2_1) is False:
                 content = ''.join(content2_1).strip()
             if self.isEmpty(time2_1) is False:
-                time = time2_1[1].strip()
+                time = time2_1[0].strip()
             if self.isEmpty(author_name2_1) is False:
                 author_name = author_name2_1[0].strip()
             if self.isEmpty(title2_1) is False:
@@ -203,8 +203,8 @@ class Eeo():
         self.init()
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
-        # new_urls = self.readNewUrls()
-        new_urls = ["http://www.eeo.com.cn/2018/1218/343618.shtml"]
+        new_urls = self.readNewUrls()
+        # new_urls = ["http://www.eeo.com.cn/2018/1218/343618.shtml"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
