@@ -134,6 +134,23 @@ class Settings():
                  'http://m.eeo.com.cn/zixun/']
     }
 
+    SETTINGS_GUANCHA = 'guancha'
+    GUANCHA = {
+        'NAME': SETTINGS_GUANCHA,
+        'MONGO': SETTINGS_GUANCHA,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_GUANCHA),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_GUANCHA),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_GUANCHA),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_GUANCHA),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_GUANCHA),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_GUANCHA),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_GUANCHA, SETTINGS_GUANCHA),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_GUANCHA, SETTINGS_GUANCHA),
+        'MAX_POOL_SIZE': 2,
+        'URLS': ['https://m.guancha.cn/', 'https://m.guancha.cn/politics', 'https://m.guancha.cn/#shiping',
+                 'https://m.guancha.cn/#gundong']
+    }
+
     SETTINGS_YICAI = 'yicai'
     YICAI = {
         'NAME': SETTINGS_YICAI,
