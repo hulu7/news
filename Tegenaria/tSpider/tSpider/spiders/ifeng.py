@@ -395,9 +395,9 @@ class Ifeng():
         self.init()
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start request: {0}'.format(self.name)
-        self.badkeys = ['#p', 'junjichu']
-        new_urls = self.readNewUrls()
-        # new_urls = ["https://finance.ifeng.com/c/7idaeRss1E9"]
+        self.badkeys = ['#p', 'junjichu', '404']
+        # new_urls = self.readNewUrls()
+        new_urls = ["http://inews.ifeng.com/ZkAFC0Iz/news.shtml?tags=taiwan"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
             print 'No new url for: {0}'.format(self.name)
