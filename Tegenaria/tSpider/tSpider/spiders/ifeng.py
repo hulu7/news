@@ -367,8 +367,6 @@ class Ifeng():
                     time = '{0} {1}'.format(time6_1[0], time6_1[1]).strip()
                 if self.isEmpty(author_name6_1) is False:
                     author_name = ''.join(author_name6_1[0]).strip()
-                else:
-                    author_name = ''.join(time6_1[2]).strip()
                 if self.isEmpty(title6_1) is False:
                     title = title6_1[0].strip()
 
@@ -397,7 +395,7 @@ class Ifeng():
         print 'Start request: {0}'.format(self.name)
         self.badkeys = ['#p', 'junjichu', '404']
         new_urls = self.readNewUrls()
-        # new_urls = ["http://inews.ifeng.com/ZkAFC0Iz/news.shtml?tags=taiwan"]
+        # new_urls = ["http://ihistory.ifeng.com/60142357/news.shtml"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
             print 'No new url for: {0}'.format(self.name)
