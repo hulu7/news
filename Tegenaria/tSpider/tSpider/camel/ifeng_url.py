@@ -148,7 +148,7 @@ class Ifeng():
         print 'Start request: {0}'.format(self.name)
         self.goodkeys = ['ifeng', 'news']
         self.badkeys = ['jpg', 'yc', '#p', 'cosmetics', 'weidian', 'homedetail', 'detail?', 'weather', 'idyn',
-                        'quanmeiti', 'srctag', 'market', 'tv', 'ispecial', 'icommon', 'channel']
+                        'quanmeiti', 'srctag', 'market', 'tv', 'ispecial', 'icommon', 'channel', 'taiwan']
         self.finished_ids = self.readFinishedIds().tolist()
         new_urls = self.urls
         request = BrowserRequest()
