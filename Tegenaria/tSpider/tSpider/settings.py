@@ -159,6 +159,25 @@ class Settings():
                  'https://m.huanqiu.com/#channel=business']
     }
 
+    SETTINGS_CANKAOXIAOXI = 'cankaoxiaoxi'
+    CANKAOXIAOXI = {
+        'NAME': SETTINGS_CANKAOXIAOXI,
+        'MONGO': SETTINGS_CANKAOXIAOXI,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_CANKAOXIAOXI),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI, SETTINGS_CANKAOXIAOXI),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI, SETTINGS_CANKAOXIAOXI),
+        'MAX_POOL_SIZE': 2,
+        'URLS': ['http://m.cankaoxiaoxi.com/', 'http://m.cankaoxiaoxi.com/home/', 'http://m.cankaoxiaoxi.com/mil/',
+                 'http://m.cankaoxiaoxi.com/finance/', 'http://m.cankaoxiaoxi.com/world/', 'http://m.cankaoxiaoxi.com/column/',
+                 'http://m.cankaoxiaoxi.com/culture/', 'http://m.cankaoxiaoxi.com/science/', 'http://m.cankaoxiaoxi.com/special/',
+                 'http://m.cankaoxiaoxi.com/ym/', 'http://m.cankaoxiaoxi.com/chuhaiji/']
+    }
+
     SETTINGS_GUANCHA = 'guancha'
     GUANCHA = {
         'NAME': SETTINGS_GUANCHA,
