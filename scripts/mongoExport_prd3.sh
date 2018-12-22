@@ -1,5 +1,5 @@
 #!/bin/bash
-tmpDir=/home/Data
+tmpDir=/home/dev/Data
 prd3Path=/home/dev/Data/rsyncData/prd3
 DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")

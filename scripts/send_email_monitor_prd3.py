@@ -73,7 +73,10 @@ class SendEmail():
                 if 0 < len(send_list):
                     self.isReadyToSend = True
                     self.body = '{0}<p>-- {1} 最新消息 --</p>'.format(self.body, page)
-                    for i in range(len(send_list) - 10, len(send_list)):
+                    start = 0
+                    if len(send_list) > 10:
+                        start = len(send_list) - 10
+                    for i in range(start, len(send_list)):
                         url = send_list[i][1]
                         title = send_list[i][2]
                         get_time = ""

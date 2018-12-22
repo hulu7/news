@@ -134,6 +134,31 @@ class Settings():
                  'http://m.eeo.com.cn/zixun/']
     }
 
+    SETTINGS_HUANQIU = 'huanqiu'
+    HUANQIU = {
+        'NAME': SETTINGS_HUANQIU,
+        'MONGO': SETTINGS_HUANQIU,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_HUANQIU),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_HUANQIU),
+        'WORK_PATH_PRD2': "{0}//{1}".format(RSYNC_PRD2, SETTINGS_HUANQIU),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_HUANQIU),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_HUANQIU),
+        'FINISHED_URL_PATH': "{0}//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_HUANQIU),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_HUANQIU, SETTINGS_HUANQIU),
+        'URL_PATH': "{0}//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_HUANQIU, SETTINGS_HUANQIU),
+        'MAX_POOL_SIZE': 2,
+        'URLS': ['https://m.huanqiu.com/', 'https://m.huanqiu.com/#channel=world', 'https://m.huanqiu.com/#channel=taihai',
+                 'https://m.huanqiu.com/#channel=society', 'https://m.huanqiu.com/#channel=mil', 'https://m.huanqiu.com/#channel=editorial',
+                 'https://m.huanqiu.com/#channel=inland', 'https://m.huanqiu.com/#channel=comment', 'https://m.huanqiu.com/#channel=oversea',
+                 'https://m.huanqiu.com/#channel=finance', 'https://m.huanqiu.com/#channel=chamber', 'https://m.huanqiu.com/#channel=auto',
+                 'https://m.huanqiu.com/#channel=tech', 'https://m.huanqiu.com/#channel=smart', 'https://m.huanqiu.com/#channel=shanrenping',
+                 'https://m.huanqiu.com/#channel=uav', 'https://m.huanqiu.com/#channel=travel', 'https://m.huanqiu.com/#channel=health',
+                 'https://m.huanqiu.com/#channel=ent', 'https://m.huanqiu.com/#channel=art', 'https://m.huanqiu.com/#channel=fashion',
+                 'https://m.huanqiu.com/#channel=women', 'https://m.huanqiu.com/#channel=sports', 'https://m.huanqiu.com/#channel=bigdata',
+                 'https://m.huanqiu.com/#channel=ski', 'https://m.huanqiu.com/#channel=liuxue', 'https://m.huanqiu.com/#channel=city',
+                 'https://m.huanqiu.com/#channel=business']
+    }
+
     SETTINGS_GUANCHA = 'guancha'
     GUANCHA = {
         'NAME': SETTINGS_GUANCHA,
