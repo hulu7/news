@@ -114,12 +114,15 @@ class Ifeng():
                 return
 
         current_id = ""
-        if '/c/' in current_url:
+        hasId = False
+        if ('/c/' in current_url) and (hasId is False):
             id_index = url_parts.index('c') + 1
             current_id = url_parts[id_index].strip()
-        if 'news' in current_url:
+            hasId = True
+        if ('news' in current_url) and (hasId is False):
             id_index = url_parts.index('ifeng') + 2
             current_id = url_parts[id_index].strip()
+            hasId = True
         print 'Start to parse: {0} with id: {1}'.format(current_url, current_id)
         html = etree.HTML(response['response'].page_source)
         not_fnd = html.xpath(".//*[contains(@class,'tips404')]/text()")
@@ -394,8 +397,8 @@ class Ifeng():
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start request: {0}'.format(self.name)
         self.badkeys = ['#p', 'junjichu', '404']
-        new_urls = self.readNewUrls()
-        # new_urls = ["http://ihistory.ifeng.com/60142357/news.shtml"]
+        # new_urls = self.readNewUrls()
+        new_urls = ["https://news.ifeng.com/c/7irQt7udNhI"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
             print 'No new url for: {0}'.format(self.name)
