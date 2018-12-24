@@ -103,8 +103,12 @@ class Guancha():
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _]', current_url)
         current_id = short_url_parts[len(short_url_parts) - 2]
+        if 'main' in current_url:
+            short_url_parts = re.split(r'[., /, _, ?, =]', current_url)
+            current_id = short_url_parts[len(short_url_parts) - 1]
         html = etree.HTML(response['response'].page_source)
-        not_fnd = html.xpath(".//*[contains(@class,'textPageCont')]")
+        content_fnd0_1 = html.xpath(".//*[contains(@class,'textPageCont')]")
+        content_fnd0_2 = html.xpath(".//*[contains(@class,'article-content')]")
         data = {}
         url = ""
         content = ""
@@ -112,13 +116,39 @@ class Guancha():
         author_name = ""
         title = ""
         id = ""
-        if len(not_fnd) > 0:
+        if (len(content_fnd0_1) > 0) or (len(content_fnd0_2) > 0):
             article_0 = html.xpath(".//*[contains(@class,'textPageCont')]")
+            article_1 = html.xpath(".//*[contains(@class,'article-content')]")
             if len(article_0) > 0:
                 content0_1 = html.xpath(".//div[contains(@class, 'textPageContInner')]/p/text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'time')]/text()")
                 author_name0_1 = html.xpath(".//*[contains(@class, 'textPageContInner')]/p/text()")
                 title0_1 = html.xpath(".//*[contains(@class,'textPageContInner')]/h1/text()")
+
+                url = current_url
+                id = current_id
+                if self.isEmpty(content0_1) is False:
+                    content = ''.join(content0_1).strip()
+                if self.isEmpty(time0_1) is False:
+                    time = time0_1[0].strip()
+                if self.isEmpty(author_name0_1) is False:
+                    author_name = author_name0_1[0].strip()
+                if self.isEmpty(title0_1) is False:
+                    title = title0_1[0].strip()
+
+                data = {
+                    'url': url,
+                    'time': time,
+                    'author_name': author_name,
+                    'title': title,
+                    'id': id
+                }
+
+            if len(article_1) > 0:
+                content0_1 = html.xpath(".//div[contains(@class, 'article-txt-content')]/p/text()")
+                time0_1 = html.xpath(".//*[contains(@class, 'time1')]/text()")
+                author_name0_1 = html.xpath(".//*[contains(@class, 'user-main')]/p/text()")
+                title0_1 = html.xpath(".//*[contains(@class,'article-content')]/h1/text()")
 
                 url = current_url
                 id = current_id
@@ -147,7 +177,7 @@ class Guancha():
                 self.storeTxt(id, content)
         else:
             self.storeFinishedId(current_id)
-        del current_url, valid,  current_id, html, not_fnd, data
+        del current_url, valid,  current_id, html, data
         gc.collect()
 
     def start_requests(self):
@@ -155,7 +185,7 @@ class Guancha():
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
         new_urls = self.readNewUrls()
-        # new_urls = ["http://finance.ce.cn/home/jrzq/dc/201811/26/t20181126_30867105.shtml"]
+        # new_urls = ["https://user.guancha.cn/main/content?id=64368"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)

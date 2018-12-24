@@ -94,14 +94,14 @@ class Huanqiu():
         current_url = response['response'].current_url.encode('gbk')
         valid = str(filter(str.isdigit, current_url))
         if len(valid) == 0:
-            short_url_parts = re.split(r'[., /, _]',  response['request_url'])
+            short_url_parts = re.split(r'[., /, _, ?]',  response['request_url'])
             invalid_id = short_url_parts[short_url_parts.index('r') + 1]
             self.storeFinishedId(invalid_id)
             self.file.logger(self.log_path, 'Invalid url: {0}'.format(current_url))
             print 'Invalid url: {0}'.format(current_url)
             return
         print 'Start to parse: {0}'.format(current_url)
-        short_url_parts = re.split(r'[., /, _]', current_url)
+        short_url_parts = re.split(r'[., /, _, ?]', current_url)
         current_id = short_url_parts[short_url_parts.index('r') + 1]
         html = etree.HTML(response['response'].page_source)
         article_0 = html.xpath(".//*[contains(@class, 'conText')]/text()")
@@ -153,7 +153,7 @@ class Huanqiu():
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
         new_urls = self.readNewUrls()
-        # new_urls = ["http://www.eeo.com.cn/2018/1218/343618.shtml"]
+        # new_urls = ["https://m.huanqiu.com/r/MV8wXzEzODQzMTI3XzE0MDBfMTU0NTE3NTc0MA==?recommend=ul"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
