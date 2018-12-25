@@ -48,8 +48,7 @@ class Settings():
     LOG_PATH = "{0}//log".format(RSYNC_PRD1)
     LOG_PATH_PRD2 = "{0}//log".format(RSYNC_PRD2)
 
-    MONGO_URI = 'mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019'
-    REPLICASET = 'repset'
+    MONGO_URI = 'mongodb://127.0.0.1:27017'
 
     CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(RSYNC_PRD1)
 

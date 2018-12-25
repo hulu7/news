@@ -12,7 +12,7 @@ from settings import Settings
 
 class MongoMiddleware():
     def insert(self, database, data):
-        client = pymongo.MongoClient(Settings.MONGO_URI, replicaset=Settings.REPLICASET)
+        client = pymongo.MongoClient(Settings.MONGO_URI)
         db = client[database]
         db.contentInfo.insert(data)
         client.close()
