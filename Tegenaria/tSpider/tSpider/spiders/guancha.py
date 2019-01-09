@@ -185,7 +185,7 @@ class Guancha():
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
         new_urls = self.readNewUrls()
-        # new_urls = ["https://user.guancha.cn/main/content?id=64368"]
+        # new_urls = ["https://user.guancha.cn/main/content?id=66321"]
         if len(new_urls) == 0:
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
