@@ -69,7 +69,7 @@ class SendEmail():
                 send_list = []
                 for item in items_list:
                     send_list.append(item)
-                if 0 < len(send_list):
+                if 10 < len(send_list):
                     self.isReadyToSend = True
                     self.body = '{0}<p>-- {1} 最新消息 --</p>'.format(self.body, page)
                     for i in range(len(send_list) - 10, len(send_list)):
