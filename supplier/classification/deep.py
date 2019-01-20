@@ -121,5 +121,5 @@ class deepMax():
 
 if __name__ == '__main__':
     deep = deepMax()
-    deepMax = deep.howDeep('/home/dev/Data/rsyncData/prd1/ifeng/txt/ifeng_60154294_.txt')
+    deepMax = deep.howDeep('/home/dev/Data/backup/spiderNode1/files/huxiu/txt/huxiu_265211_.txt')
     print deepMax

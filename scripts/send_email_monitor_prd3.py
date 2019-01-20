@@ -51,7 +51,6 @@ class SendEmail():
     def createEmailBody(self):
         self.isReadyToSend = False
         all_pages = os.listdir(self.file_path)
-        all_pages.remove('log')
         all_pages.remove('sp')
         today = "".join(str(datetime.date.today()))
         time = "".join(str(datetime.datetime.now())[11:19])
@@ -107,5 +106,5 @@ class SendEmail():
 
 if __name__ == '__main__':
     send = SendEmail()
-    filePath = '/home/dev/Data/rsyncData/prd3'
+    filePath = '/home/dev/Data/rsyncData/prd3/sites'
     send.send(filePath)

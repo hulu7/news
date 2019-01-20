@@ -1,7 +1,7 @@
 #!/bin/bash
 set timeout 600
 set password 'thebestornothing'
-fromDir=/home/dev/Data/rsyncData/prd3
+fromDir=/home/dev/Data/rsyncData/prd3/sites
 toDir=/home/dev/Data/rsyncData/
 chmod -R 777 ${fromDir}
 expect -c "
