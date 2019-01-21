@@ -10,6 +10,7 @@ sys.setdefaultencoding('utf8')
 from lxml import etree
 import urlparse
 import numpy as np
+import time
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.mongodbMiddleware import MongoMiddleware
 from browserRequest import BrowserRequest
@@ -24,6 +25,8 @@ class Huxiu():
         self.name = Settings.HUXIU['NAME']
         self.max_pool_size = Settings.HUXIU['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH_PRD2
+        self.restart_path = Settings.HUXIU['RESTART_PATH']
+        self.restart_interval = Settings.HUXIU['RESTART_INTERVAL']
 
     def init(self):
         self.getSettings()
@@ -64,6 +67,18 @@ class Huxiu():
         self.storeFinishedIds(str(data['id']))
         self.finished_ids.append(self.idInStoredFormat(data['id']))
 
+    def isExceedRestartInterval(self):
+        isRestartPathExists = os.path.exists(self.restart_path)
+        if isRestartPathExists is False:
+            self.file.writeToTxtCover(self.restart_path, time.time())
+            return True
+        past = float(self.file.readFromTxt(self.restart_path))
+        now = time.time()
+        isExceed = (now - past) // 60 >= self.restart_interval
+        if isExceed is True:
+            self.file.writeToTxtCover(self.restart_path, time.time())
+        return isExceed
+
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
@@ -89,6 +104,8 @@ class Huxiu():
 
     def start_requests(self, urls):
         self.init()
+        if self.isExceedRestartInterval() is False:
+            return
         self.file.logger(self.log_path, 'Start requests: {0}'.format(self.name))
         print 'Start requests: {0}'.format(self.name)
         self.finished_ids = self.readFinishedIds().tolist()

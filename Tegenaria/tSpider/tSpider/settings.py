@@ -64,24 +64,10 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_HUXIU),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_HUXIU, SETTINGS_HUXIU),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_HUXIU, SETTINGS_HUXIU),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_HUXIU),
+        'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
         'URLS': ['https://www.huxiu.com/']
-    }
-
-    SETTINGS_SP = 'sp'
-    SP = {
-        'NAME': SETTINGS_SP,
-        'MONGO': SETTINGS_SP,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_SP),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_SP),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_SP),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_SP),
-        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_SP),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_SP),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_SP, SETTINGS_SP),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_SP, SETTINGS_SP),
-        'MAX_POOL_SIZE': 2,
-        'URLS':['http://www.bjhd.gov.cn/xinxigongkai/zdly/zf/']
     }
 
     SETTINGS_CE = 'ce'
@@ -96,6 +82,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_CE),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CE, SETTINGS_CE),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CE, SETTINGS_CE),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CE),
+        'RESTART_INTERVAL': 20,
         'MAX_POOL_SIZE': 2,
         'URLS': ['http://m.ce.cn', 'http://m.ce.cn/yw/', 'http://m.ce.cn/cj/', 'http://m.ce.cn/gp/',
                 'http://m.ce.cn/gj/', 'http://m.ce.cn/gs/', 'http://m.ce.cn/lc/', 'http://m.ce.cn/lv/fo/',
@@ -115,6 +103,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_EEO),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_EEO, SETTINGS_EEO),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_EEO, SETTINGS_EEO),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_EEO),
+        'RESTART_INTERVAL': 120,
         'MAX_POOL_SIZE': 2,
         'URLS': ['http://m.eeo.com.cn/', 'http://m.eeo.com.cn/yaowen/sxgd/', 'http://m.eeo.com.cn/yaowen/dzsp/',
                  'http://m.eeo.com.cn/jinrong/xinsanban/', 'http://m.eeo.com.cn/jinrong/hlwjr/',
@@ -145,6 +135,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_HUANQIU),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_HUANQIU, SETTINGS_HUANQIU),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_HUANQIU, SETTINGS_HUANQIU),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_HUANQIU),
+        'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
         'URLS': ['https://m.huanqiu.com/', 'https://m.huanqiu.com/#channel=world', 'https://m.huanqiu.com/#channel=taihai',
                  'https://m.huanqiu.com/#channel=society', 'https://m.huanqiu.com/#channel=mil', 'https://m.huanqiu.com/#channel=editorial',
@@ -170,6 +162,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI, SETTINGS_CANKAOXIAOXI),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI, SETTINGS_CANKAOXIAOXI),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
+        'RESTART_INTERVAL': 10,
         'MAX_POOL_SIZE': 2,
         'URLS': ['http://m.cankaoxiaoxi.com/', 'http://m.cankaoxiaoxi.com/home/', 'http://m.cankaoxiaoxi.com/mil/',
                  'http://m.cankaoxiaoxi.com/finance/', 'http://m.cankaoxiaoxi.com/world/', 'http://m.cankaoxiaoxi.com/column/',
@@ -189,6 +183,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_GUANCHA),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_GUANCHA, SETTINGS_GUANCHA),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_GUANCHA, SETTINGS_GUANCHA),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_GUANCHA),
+        'RESTART_INTERVAL': 5,
         'MAX_POOL_SIZE': 2,
         'URLS': ['https://m.guancha.cn/', 'https://m.guancha.cn/politics', 'https://m.guancha.cn/#shiping',
                  'https://m.guancha.cn/#gundong']
@@ -206,6 +202,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_YICAI),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_YICAI, SETTINGS_YICAI),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_YICAI, SETTINGS_YICAI),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_YICAI),
+        'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
         'URLS':['https://m.yicai.com/', 'https://m.yicai.com/news/gushi/', 'https://m.yicai.com/news/hongguan/',
                 'https://m.yicai.com/news/minsheng/', 'https://m.yicai.com/news/policy/', 'https://m.yicai.com/news/gaige/',
@@ -228,6 +226,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_IFENG),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IFENG, SETTINGS_IFENG),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IFENG, SETTINGS_IFENG),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IFENG),
+        'RESTART_INTERVAL': 5,
         'MAX_POOL_SIZE': 2,
         'URLS': ['https://i.ifeng.com/', 'http://ient.ifeng.com/', 'https://i.ifeng.com/idyn/ient/0/3/0/10/10/list.shtml',
                  'https://i.ifeng.com/idyn/ient/0/6/0/10/10/list.shtml', 'https://i.ifeng.com/idyn/ient/0/1370/0/10/10/list.shtml',
@@ -268,6 +268,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_JINGJI21),
+        'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
         'URLS': ['https://m.21jingji.com/', 'https://m.21jingji.com/channel/finance', 'https://m.21jingji.com/channel/politics',
                  'https://m.21jingji.com/channel/capital', 'https://m.21jingji.com/channel/business', 'https://m.21jingji.com/channel/opinion',
@@ -290,6 +292,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_STCN),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_STCN, SETTINGS_STCN),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_STCN, SETTINGS_STCN),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_STCN),
+        'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
         'URLS': ['http://www.stcn.com/', 'http://news.stcn.com/', 'http://kuaixun.stcn.com/index.shtml',
                  'http://news.stcn.com/roll/', 'http://news.stcn.com/sdbd/', 'http://news.stcn.com/xwpl/',
@@ -300,22 +304,6 @@ class Settings():
                  'http://news.stcn.com/gzlfzzl/', 'http://finance.stcn.com/', 'http://news.stcn.com/xwct/',
                  'http://company.stcn.com/gsdt/', 'http://yq.stcn.com/', 'http://data.stcn.com/',
                  'http://data.stcn.com/list/djsj.shtml', 'http://data.stcn.com/list/djsj.shtml', 'http://data.stcn.com/zijinliuxiang/']
-    }
-
-    SETTINGS_LIANJIA = 'lianjia'
-    LIANJIA = {
-        'NAME': SETTINGS_LIANJIA,
-        'MONGO': SETTINGS_LIANJIA,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_LIANJIA),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_LIANJIA),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_LIANJIA),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_LIANJIA),
-        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_LIANJIA),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_LIANJIA),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_LIANJIA, SETTINGS_LIANJIA),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_LIANJIA, SETTINGS_LIANJIA),
-        'MAX_POOL_SIZE': 2,
-        'URLS': ['https://bj.lianjia.com/ershoufang/rs%E9%BE%99%E5%8D%8E%E5%9B%AD/']
     }
 
     SETTINGS_WALLSTREETCN = 'wallstreetcn'
@@ -330,6 +318,8 @@ class Settings():
         'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_WALLSTREETCN, SETTINGS_WALLSTREETCN),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN, SETTINGS_WALLSTREETCN),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN),
+        'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
         'URLS': ['https://m.wallstreetcn.com/news/global',
                  'https://wallstreetcn.com/?from=navbar',

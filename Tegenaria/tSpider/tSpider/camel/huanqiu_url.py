@@ -11,6 +11,7 @@ from lxml import etree
 import urlparse
 import numpy as np
 import re
+import time
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.mongodbMiddleware import MongoMiddleware
 from browserRequest import BrowserRequest
@@ -26,6 +27,8 @@ class Huanqiu():
         self.max_pool_size = Settings.HUANQIU['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH_PRD2
         self.urls = Settings.HUANQIU['URLS']
+        self.restart_path = Settings.HUANQIU['RESTART_PATH']
+        self.restart_interval = Settings.HUANQIU['RESTART_INTERVAL']
 
     def init(self):
         self.getSettings()
@@ -68,6 +71,18 @@ class Huanqiu():
         print 'End to store mongo {0}'.format(data['url'])
         self.storeFinishedIds(str(data['id']))
         self.finished_ids.append(self.idInStoredFormat(data['id']))
+
+    def isExceedRestartInterval(self):
+        isRestartPathExists = os.path.exists(self.restart_path)
+        if isRestartPathExists is False:
+            self.file.writeToTxtCover(self.restart_path, time.time())
+            return True
+        past = float(self.file.readFromTxt(self.restart_path))
+        now = time.time()
+        isExceed = (now - past) // 60 >= self.restart_interval
+        if isExceed is True:
+            self.file.writeToTxtCover(self.restart_path, time.time())
+        return isExceed
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -126,6 +141,8 @@ class Huanqiu():
 
     def start_requests(self):
         self.init()
+        if self.isExceedRestartInterval() is False:
+            return
         self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
         print 'Start {0} requests'.format(self.name)
         self.badkeys = ['tu', 'index']
