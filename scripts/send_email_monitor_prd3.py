@@ -51,7 +51,6 @@ class SendEmail():
     def createEmailBody(self):
         self.isReadyToSend = False
         all_pages = os.listdir(self.file_path)
-        all_pages.remove('sp')
         today = "".join(str(datetime.date.today()))
         time = "".join(str(datetime.datetime.now())[11:19])
         self.body = '<p></p><p>{0} {1}</p><p> --------prd3-------- </p>'.format(today, time)
