@@ -50,6 +50,11 @@ class Settings():
 
     MONGO_URI = 'mongodb://127.0.0.1:27017'
 
+    REDIS_HOST = '127.0.0.1'
+    REDIS_PORT = 6379
+
+    BLOOMFILTER_NAME = "tegenaria:dupefilter"
+
     CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(RSYNC_PRD1)
 
     SETTINGS_HUXIU = 'huxiu'
@@ -61,7 +66,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_HUXIU),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_HUXIU),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_HUXIU),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_HUXIU),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_HUXIU, SETTINGS_HUXIU),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_HUXIU, SETTINGS_HUXIU),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_HUXIU),
@@ -79,7 +83,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_CE),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_CE),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_CE),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_CE),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CE, SETTINGS_CE),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CE, SETTINGS_CE),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CE),
@@ -100,7 +103,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_EEO),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_EEO),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_EEO),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_EEO),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_EEO, SETTINGS_EEO),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_EEO, SETTINGS_EEO),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_EEO),
@@ -132,7 +134,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_HUANQIU),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_HUANQIU),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_HUANQIU),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_HUANQIU),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_HUANQIU, SETTINGS_HUANQIU),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_HUANQIU, SETTINGS_HUANQIU),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_HUANQIU),
@@ -159,7 +160,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI, SETTINGS_CANKAOXIAOXI),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI, SETTINGS_CANKAOXIAOXI),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
@@ -180,7 +180,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_GUANCHA),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_GUANCHA),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_GUANCHA),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_GUANCHA),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_GUANCHA, SETTINGS_GUANCHA),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_GUANCHA, SETTINGS_GUANCHA),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_GUANCHA),
@@ -223,7 +222,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_IFENG),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_IFENG),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_IFENG),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_IFENG),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IFENG, SETTINGS_IFENG),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IFENG, SETTINGS_IFENG),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IFENG),
@@ -265,7 +263,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_JINGJI21),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_JINGJI21),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_JINGJI21),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_JINGJI21),
@@ -289,7 +286,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_STCN),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_STCN),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_STCN),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_STCN),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_STCN, SETTINGS_STCN),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_STCN, SETTINGS_STCN),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_STCN),
@@ -315,7 +311,6 @@ class Settings():
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_WALLSTREETCN),
         'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_WALLSTREETCN),
-        'FINISHED_URL_PATH': "{0}//sites//{1}//finished_url.csv".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_WALLSTREETCN, SETTINGS_WALLSTREETCN),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN, SETTINGS_WALLSTREETCN),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN),
