@@ -31,6 +31,7 @@ class Huxiu():
         self.name = Settings.HUXIU['NAME']
         self.max_pool_size = Settings.HUXIU['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH_PRD2
+        self.urls = Settings.HUANQIU['URLS']
         self.restart_path = Settings.HUXIU['RESTART_PATH']
         self.restart_interval = Settings.HUXIU['RESTART_INTERVAL']
 
@@ -61,12 +62,12 @@ class Huxiu():
                 print 'Url exits: {0}'.format(url)
         print 'End to parse: {0}'.format(current_url)
 
-    def start_requests(self, urls):
+    def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
         self.file.logger(self.log_path, 'Start requests: {0}'.format(self.name))
         print 'Start requests: {0}'.format(self.name)
-        new_urls = urls
+        new_urls = self.urls
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
@@ -74,5 +75,4 @@ class Huxiu():
 
 if __name__ == '__main__':
     huxiu=Huxiu()
-    urls = ['https://www.huxiu.com/']
-    huxiu.start_requests(urls)
+    huxiu.start_requests()
