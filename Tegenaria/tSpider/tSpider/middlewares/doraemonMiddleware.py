@@ -9,6 +9,8 @@ sys.setdefaultencoding('utf8')
 from lxml import etree
 import urlparse
 import re
+from math import isnan
+import numpy as np
 import time
 import redis
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
@@ -56,6 +58,40 @@ class Doraemon():
             print 'Title {0} not exist!'.format(title)
             return False
 
+    def isFinished(self, title):
+        title_encode = title.encode("utf-8")
+        if self.bf.isContains(title_encode):
+            print 'Title {0} exists!'.format(title)
+            return True
+        else:
+            return False
+
+    def storeFinished(self, title):
+        print 'Start to store title: {0}'.format(title)
+        title_encode = title.encode("utf-8")
+        self.bf.insert(title_encode)
+
     def storeMongodb(self, mongo_url, data):
         mongo = MongoMiddleware()
         mongo.insert(mongo_url, data)
+
+    def storeTxt(self, id, content, finished_txt_path, name):
+        print 'Start to store txt: {0}'.format(id)
+        self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(finished_txt_path, name, id), content)
+        print 'End to store txt: {0}'.format(id)
+
+    def filter(self, url_titles):
+        new_url_titles = []
+        for url_title in url_titles:
+            if self.isFinished(url_title[1]) is False:
+                new_url_titles.append(url_title)
+        return new_url_titles
+
+    def readNewUrls(self, url_path):
+        print 'Start to read urls'
+        isUrlPathExit = os.path.exists(url_path)
+        new_url_titles = []
+        if isUrlPathExit is True:
+            url_titles = np.array(self.file.readColsFromCSV(url_path, ['url', 'title']))
+            new_url_titles = self.filter(url_titles)
+        return new_url_titles

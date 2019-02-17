@@ -3,114 +3,48 @@
 #lxml-3.2.1
 #numpy-1.15.2
 #------requirement------
-import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 from lxml import etree
 import re
-import numpy as np
-import gc
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
-from middlewares.mongodbMiddleware import MongoMiddleware
 from browserRequest import BrowserRequest
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
+from middlewares.doraemonMiddleware import Doraemon
 
 class Ifeng():
+
+    def __init__(self):
+
+        self.getSettings()
+        self.file = FileIOMiddleware()
+        self.doraemon = Doraemon()
+        self.doraemon.createFilePath(self.work_path_prd1)
+        self.doraemon.createFilePath(Settings.LOG_PATH)
+
     def getSettings(self):
         self.work_path_prd1 = Settings.IFENG['WORK_PATH_PRD1']
         self.finished_txt_path = Settings.IFENG['FINISHED_TXT_PATH']
-        self.finished_id_path = Settings.IFENG['FINISHED_ID_PATH']
         self.url_path = Settings.IFENG['URL_PATH']
         self.mongo = Settings.IFENG['MONGO']
         self.name = Settings.IFENG['NAME']
         self.max_pool_size = Settings.IFENG['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
 
-    def init(self):
-        self.getSettings()
-        self.file = FileIOMiddleware()
-        isWorkPathPrd1Exists = os.path.exists(self.work_path_prd1)
-        if isWorkPathPrd1Exists is False:
-            os.makedirs(self.work_path_prd1)
-        isFinishedTxtPathExists = os.path.exists(self.finished_txt_path)
-        if isFinishedTxtPathExists is False:
-            os.makedirs(self.finished_txt_path)
-        isLogPathExists = os.path.exists(Settings.LOG_PATH)
-        if isLogPathExists is False:
-            os.makedirs(Settings.LOG_PATH)
-        del isWorkPathPrd1Exists, isFinishedTxtPathExists, isLogPathExists
-        gc.collect()
-
-    def filter(self, id_urls):
-        finished_ids = []
-        isFinishedIdPathExists = os.path.exists(self.finished_id_path)
-        if isFinishedIdPathExists is True:
-            finished_ids = self.file.readFromCSV(self.finished_id_path)
-        new_urls = []
-        for id_url in id_urls:
-            id = str(id_url[0])
-            url = str(id_url[1])
-            if [id.replace('\xef\xbb\xbf','')] not in finished_ids:
-                    new_urls.append(url)
-        del finished_ids, isFinishedIdPathExists
-        gc.collect()
-        return new_urls
-
-    def readNewUrls(self):
-        print 'Start to read urls'
-        isUrlPathExit = os.path.exists(self.url_path)
-        new_urls = []
-        if isUrlPathExit is True:
-            id_urls = np.array(self.file.readColsFromCSV(self.url_path, ['id', 'url']))
-            new_urls = self.filter(id_urls)
-        del isUrlPathExit
-        gc.collect()
-        return new_urls
-
-    def storeFinishedId(self, id):
-        print 'Start to store finished id: {0}'.format(id)
-        self.file.writeToCSVWithoutHeader(self.finished_id_path, [id])
-        self.file.logger(self.log_path, 'End to store finished id: {0}'.format(id))
-        print 'End to store finished id: {0}'.format(id)
-
-    def storeMongodb(self, data):
-        print 'Start to store mongo: {0}'.format(data['url'])
-        mongo = MongoMiddleware()
-        mongo.insert(self.mongo, data)
-        print 'End to store mongo: {0}'.format(data['url'])
-        self.storeFinishedId(data['id'])
-        del mongo
-        gc.collect()
-
-    def storeTxt(self, id, content):
-        print 'Start to store txt: {0}'.format(id)
-        self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(self.finished_txt_path, self.name, id), content)
-        print 'End to store txt: {0}'.format(id)
-
-    def isEmpty(self, item_list):
-        return len([item for item in item_list if item.strip()]) == 0
-
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         request_url = response['request_url'].encode('gbk')
-        if self.isEmpty(current_url):
+        if self.doraemon.isEmpty(current_url):
             return
         url_parts = re.split(r'[., /, _, #]', current_url)
         for key in self.badkeys:
             if key in current_url:
                 self.file.logger(self.log_path, 'Bad url: {0}'.format(request_url))
                 print 'Bad url: {0}'.format(request_url)
-                url_parts = re.split(r'[., /, _]', request_url)
-                if '/c/' in request_url:
-                    id_index = url_parts.index('c') + 1
-                    request_id = url_parts[id_index].strip()
-                elif 'news' in request_url:
-                    id_index = url_parts.index('ifeng') + 2
-                    request_id = url_parts[id_index].strip()
-                self.storeFinishedId(str(request_id))
-                del current_url, request_url
+                self.doraemon.storeFinished(response['request_title'])
+                del current_url
                 return
 
         current_id = ""
@@ -156,23 +90,23 @@ class Ifeng():
 
                 url = current_url
                 id = current_id
-                if self.isEmpty(comment_number0_1) is False:
+                if self.doraemon.isEmpty(comment_number0_1) is False:
                     comment_number = str(filter(str.isdigit, comment_number0_1[0].encode('gbk'))).strip()
-                if self.isEmpty(join_number0_1) is False:
+                if self.doraemon.isEmpty(join_number0_1) is False:
                     join_number = str(filter(str.isdigit, join_number0_1[0].encode('gbk'))).strip()
-                if self.isEmpty(content0_1) is False:
+                if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
-                if self.isEmpty(time0_1) is False:
+                if self.doraemon.isEmpty(time0_1) is False:
                     time = time0_1[0].strip()
-                if self.isEmpty(time0_2) is False:
+                if self.doraemon.isEmpty(time0_2) is False:
                     time = time0_2[0].strip()
-                if self.isEmpty(author_name0_1) is False:
+                if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1[0].strip()
-                if self.isEmpty(author_name0_2) is False:
+                if self.doraemon.isEmpty(author_name0_2) is False:
                     author_name = author_name0_2[1].strip()
-                if self.isEmpty(author_name0_3) is False:
+                if self.doraemon.isEmpty(author_name0_3) is False:
                     author_name = author_name0_3[0].strip()
-                if self.isEmpty(title0_1) is False:
+                if self.doraemon.isEmpty(title0_1) is False:
                     title = title0_1[0].strip()
 
                 data = {
@@ -195,17 +129,17 @@ class Ifeng():
 
                 url = current_url
                 id = current_id
-                if self.isEmpty(comment_number1_1) is False:
+                if self.doraemon.isEmpty(comment_number1_1) is False:
                     comment_number = str(filter(str.isdigit,comment_number1_1[0].encode('gbk'))).strip()
-                if self.isEmpty(join_number1_1) is False:
+                if self.doraemon.isEmpty(join_number1_1) is False:
                     join_number = str(filter(str.isdigit, join_number1_1[0].encode('gbk'))).strip()
-                if self.isEmpty(content1_1) is False:
+                if self.doraemon.isEmpty(content1_1) is False:
                     content = ''.join(content1_1).strip()
-                if self.isEmpty(time1_1) is False:
+                if self.doraemon.isEmpty(time1_1) is False:
                     time = time1_1[0].strip()
-                if self.isEmpty(author_name1_1) is False:
+                if self.doraemon.isEmpty(author_name1_1) is False:
                     author_name = author_name1_1[0].strip()
-                if self.isEmpty(title1_1) is False:
+                if self.doraemon.isEmpty(title1_1) is False:
                     title = title1_1[0].strip()
 
                 data = {
@@ -228,17 +162,17 @@ class Ifeng():
 
                 url = current_url
                 id = current_id
-                if self.isEmpty(comment_number2_1) is False:
+                if self.doraemon.isEmpty(comment_number2_1) is False:
                     comment_number = str(filter(str.isdigit, comment_number2_1)).strip()
-                if self.isEmpty(join_number2_1) is False:
+                if self.doraemon.isEmpty(join_number2_1) is False:
                     join_number = str(filter(str.isdigit, join_number2_1[0].encode('gbk'))).strip()
-                if self.isEmpty(content2_1) is False:
+                if self.doraemon.isEmpty(content2_1) is False:
                     content = ''.join(content2_1)
-                if self.isEmpty(time2_1) is False:
+                if self.doraemon.isEmpty(time2_1) is False:
                     time = time2_1[0].strip()
-                if self.isEmpty(author_name2_1) is False:
+                if self.doraemon.isEmpty(author_name2_1) is False:
                     author_name = ''.join(author_name2_1).strip()
-                if self.isEmpty(title2_1) is False:
+                if self.doraemon.isEmpty(title2_1) is False:
                     title = title2_1[0].strip()
 
                 data = {
@@ -261,17 +195,17 @@ class Ifeng():
 
                 url = current_url
                 id = current_id
-                if self.isEmpty(comment_number3_1) is False:
+                if self.doraemon.isEmpty(comment_number3_1) is False:
                     comment_number = str(filter(str.isdigit, comment_number3_1[1].encode('gbk'))).strip()
-                if self.isEmpty(join_number3_1) is False:
+                if self.doraemon.isEmpty(join_number3_1) is False:
                     join_number = str(filter(str.isdigit, join_number3_1[0].encode('gbk'))).strip()
-                if self.isEmpty(content3_1) is False:
+                if self.doraemon.isEmpty(content3_1) is False:
                     content = ''.join(content3_1)
-                if self.isEmpty(time3_1) is False:
+                if self.doraemon.isEmpty(time3_1) is False:
                     time = time3_1[0].strip()
-                if self.isEmpty(author_name3_1) is False:
+                if self.doraemon.isEmpty(author_name3_1) is False:
                     author_name = ''.join(author_name3_1).strip()
-                if self.isEmpty(title3_1) is False:
+                if self.doraemon.isEmpty(title3_1) is False:
                     title = title3_1[0].strip()
 
                 data = {
@@ -294,17 +228,17 @@ class Ifeng():
 
                 url = current_url
                 id = current_id
-                if self.isEmpty(comment_number4_1) is False:
+                if self.doraemon.isEmpty(comment_number4_1) is False:
                     comment_number = str(filter(str.isdigit, comment_number4_1[0].encode('gbk'))).strip()
-                if self.isEmpty(join_number4_1) is False:
+                if self.doraemon.isEmpty(join_number4_1) is False:
                     join_number = str(filter(str.isdigit, join_number4_1[0].encode('gbk'))).strip()
-                if self.isEmpty(content4_1) is False:
+                if self.doraemon.isEmpty(content4_1) is False:
                     content = ''.join(content4_1)
-                if self.isEmpty(time4_1) is False:
+                if self.doraemon.isEmpty(time4_1) is False:
                     time = time4_1[0].strip()
-                if self.isEmpty(author_name4_1) is False:
+                if self.doraemon.isEmpty(author_name4_1) is False:
                     author_name = ''.join(author_name4_1).strip()
-                if self.isEmpty(title4_1) is False:
+                if self.doraemon.isEmpty(title4_1) is False:
                     title = title4_1[0].strip()
 
                 data = {
@@ -327,17 +261,17 @@ class Ifeng():
 
                 url = current_url
                 id = current_id
-                if self.isEmpty(comment_number5_1) is False:
+                if self.doraemon.isEmpty(comment_number5_1) is False:
                     comment_number = str(filter(str.isdigit, comment_number5_1[1].encode('gbk'))).strip()
-                if self.isEmpty(join_number5_1) is False:
+                if self.doraemon.isEmpty(join_number5_1) is False:
                     join_number = str(filter(str.isdigit, join_number5_1[0].encode('gbk'))).strip()
-                if self.isEmpty(content5_1) is False:
+                if self.doraemon.isEmpty(content5_1) is False:
                     content = ''.join(content5_1)
-                if self.isEmpty(time5_1) is False:
+                if self.doraemon.isEmpty(time5_1) is False:
                     time = time5_1[0].strip()
-                if self.isEmpty(author_name5_1) is False:
+                if self.doraemon.isEmpty(author_name5_1) is False:
                     author_name = ''.join(author_name5_1).strip()
-                if self.isEmpty(title5_1) is False:
+                if self.doraemon.isEmpty(title5_1) is False:
                     title = title5_1[0].strip()
 
                 data = {
@@ -360,17 +294,17 @@ class Ifeng():
 
                 url = current_url
                 id = current_id
-                if self.isEmpty(comment_number6_1) is False:
+                if self.doraemon.isEmpty(comment_number6_1) is False:
                     comment_number = str(filter(str.isdigit, comment_number6_1[1].encode('gbk'))).strip()
-                if self.isEmpty(join_number6_1) is False:
+                if self.doraemon.isEmpty(join_number6_1) is False:
                     join_number = str(filter(str.isdigit, join_number6_1[0].encode('gbk'))).strip()
-                if self.isEmpty(content6_1) is False:
+                if self.doraemon.isEmpty(content6_1) is False:
                     content = ''.join(content6_1)
-                if self.isEmpty(time6_1) is False:
+                if self.doraemon.isEmpty(time6_1) is False:
                     time = '{0} {1}'.format(time6_1[0], time6_1[1]).strip()
-                if self.isEmpty(author_name6_1) is False:
+                if self.doraemon.isEmpty(author_name6_1) is False:
                     author_name = ''.join(author_name6_1[0]).strip()
-                if self.isEmpty(title6_1) is False:
+                if self.doraemon.isEmpty(title6_1) is False:
                     title = title6_1[0].strip()
 
                 data = {
@@ -385,30 +319,30 @@ class Ifeng():
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:
-                self.storeFinishedId(current_id)
+                print 'Empty data: {0}'.format(request_url)
+                self.doraemon.storeFinished(response['request_title'])
             else:
-                self.storeMongodb(data)
-                self.storeTxt(id, content)
-        del current_url, current_id, html, not_fnd, data
-        gc.collect()
+                self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
+                print 'Start to store mongo {0}'.format(data['url'])
+                self.doraemon.storeMongodb(self.mongo, data)
+                self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
+                print 'End to store mongo {0}'.format(data['url'])
+                self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
+                self.doraemon.storeFinished(response['request_title'])
 
     def start_requests(self):
-        self.init()
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start request: {0}'.format(self.name)
         self.badkeys = ['#p', 'junjichu', '404', '/NaN/']
-        new_urls = self.readNewUrls()
-        # new_urls = ["http://ifenghuanghao.ifeng.com/NaN/news.shtml"]
-        if len(new_urls) == 0:
+        new_url_titles = self.doraemon.readNewUrls(self.url_path)
+        if len(new_url_titles) == 0:
             self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
             print 'No new url for: {0}'.format(self.name)
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
+        content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, callback=self.parse)
         self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
         print 'End requests: {0}'.format(str(len(content)))
-        del content, new_urls, request
-        gc.collect()
 
 if __name__ == '__main__':
     ifeng=Ifeng()

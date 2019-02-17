@@ -13,17 +13,17 @@ from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.seleniumMiddleware import SeleniumMiddleware
 
 class BrowserRequest():
-    def run_task(self, url, callback=callable):
-        self.file.logger(self.log_path, 'Start: {0}'.format(url))
-        print 'Start: {0}'.format(url)
+    def run_task(self, url_title, callback=callable):
+        self.file.logger(self.log_path, 'Start: {0}'.format(url_title[0]))
+        print 'Start: {0}'.format(url_title[0])
         request = SeleniumMiddleware()
-        request.chrome_request(url, self.log_path)
+        request.chrome_request(url_title[0], self.log_path)
         response = request.browser
         try:
-            callback({'response': response, 'request_url': url})
+            callback({'response': response, 'request_url': url_title[0], 'request_title': url_title[1]})
         except Exception, e:
-            self.file.logger(self.log_path, 'Exception: {0} for {1}'.format(e, url))
-            print 'Exception: {0} for {1}'.format(e, url)
+            self.file.logger(self.log_path, 'Exception: {0} for {1}'.format(e, url_title[0]))
+            print 'Exception: {0} for {1}'.format(e, url_title[0])
             response.close()
             response.quit()
             del response, request
@@ -36,13 +36,13 @@ class BrowserRequest():
         del response, request
         gc.collect()
 
-    def start_chrome(self, urls, processes, log_path, callback=callable):
+    def start_chrome(self, url_titles, processes, log_path, callback=callable):
         self.file = FileIOMiddleware()
         self.content = []
         self.log_path = log_path
         process = Pool(processes)
-        for url in urls:
-            process.apply_async(self.run_task, args=(url, callback,))
+        for url_title in url_titles:
+            process.apply_async(self.run_task, args=(url_title, callback,))
         process.close()
         process.join()
         self.file.logger(self.log_path, 'Done')

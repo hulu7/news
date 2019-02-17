@@ -63,7 +63,7 @@ class Ce():
                 id = short_url_parts[len(short_url_parts) - 2]
                 url = urlparse.urljoin(current_url, href_url)
                 title = item.text
-                is_title_empty = title == None
+                is_title_empty = title == None or self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
                     data = {
                         'title': title.strip(),
