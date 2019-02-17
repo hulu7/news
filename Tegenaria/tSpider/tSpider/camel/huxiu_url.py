@@ -31,7 +31,7 @@ class Huxiu():
         self.name = Settings.HUXIU['NAME']
         self.max_pool_size = Settings.HUXIU['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH_PRD2
-        self.urls = Settings.HUANQIU['URLS']
+        self.urls = Settings.HUXIU['URLS']
         self.restart_path = Settings.HUXIU['RESTART_PATH']
         self.restart_interval = Settings.HUXIU['RESTART_INTERVAL']
 
