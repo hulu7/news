@@ -67,7 +67,9 @@ class Huxiu():
             return
         self.file.logger(self.log_path, 'Start requests: {0}'.format(self.name))
         print 'Start requests: {0}'.format(self.name)
-        new_urls = self.urls
+        new_urls = []
+        for url in  self.urls:
+            new_urls.append([url, ''])
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
