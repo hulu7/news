@@ -22,6 +22,7 @@ class SeleniumMiddleware(object):
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
+        # chrome_options.add_argument('--proxy-server=http://195.250.188.200:8080')
         self.browser = webdriver.Chrome(executable_path=executable_path, chrome_options=chrome_options)
         self.load_timeout = self.browser.set_page_load_timeout(self.timeout)
         self.wait = WebDriverWait(self.browser, self.timeout)

@@ -57,7 +57,7 @@ class Huxiu():
         comment_number1 = html.xpath(".//*[contains(@class, 'article-pl pull-left')]/text()")
         share_number1 = html.xpath(".//*[contains(@class, 'article-share pull-left')]/text()")
         image_url1 = html.xpath(".//*[contains(@class, 'article-img-box')]/img/@src")
-        content1 = html.xpath(".//div[contains(@class, 'article-content-wrap')]/p/text()")
+        content1 = html.xpath(".//div[contains(@class, 'article-content-wrap')]//*/text()")
         time1 = html.xpath(".//*[@class='article-time pull-left']/text()")
         author_url1 = html.xpath(".//*[@class='author-name']/a/@href")
         author_name1 = html.xpath(".//*[@class='author-name']/a/text()")

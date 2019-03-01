@@ -308,5 +308,29 @@ class Settings():
         'MAX_POOL_SIZE': 2,
         'URLS': ['https://m.wallstreetcn.com/news/global',
                  'https://wallstreetcn.com/?from=navbar',
-                 '']
+                 'https://wallstreetcn.com/',
+                 'https://wallstreetcn.com/themes/1004285',
+                 'https://wallstreetcn.com/themes/1007492',
+                 'https://wallstreetcn.com/themes/1005238',
+                 'https://wallstreetcn.com/themes/1005222',
+                 'https://wallstreetcn.com/themes/1004460',
+                 'https://wallstreetcn.com/themes/1004445',
+                 ]
+    }
+
+    SETTINGS_GONGZHONGHAO = 'sogo'
+    GONGZHONGHAO = {
+        'NAME': SETTINGS_GONGZHONGHAO,
+        'MONGO': SETTINGS_GONGZHONGHAO,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_GONGZHONGHAO),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_GONGZHONGHAO),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_GONGZHONGHAO),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_GONGZHONGHAO),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_GONGZHONGHAO),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_GONGZHONGHAO, SETTINGS_GONGZHONGHAO),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_GONGZHONGHAO, SETTINGS_GONGZHONGHAO),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_GONGZHONGHAO),
+        'RESTART_INTERVAL': 720,
+        'MAX_POOL_SIZE': 2,
+        'URLS': []
     }

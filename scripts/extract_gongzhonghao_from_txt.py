@@ -45,8 +45,7 @@ class ExtractGongzhonghao():
     def writeToCSVWithoutHeader(self, filePath, content):
         with open(filePath, 'a') as csv_file:
             csv_writer = csv.writer(csv_file)
-            for item in content:
-                csv_writer.writerow(item)
+            csv_writer.writerow(content)
         return csv_file.close()
 
     def writeToJson(self, filePath, content):
@@ -71,12 +70,43 @@ class ExtractGongzhonghao():
             id = self.extractId(sentence)
 
     def extractId(self, sentence):
-        gzh = "微信公众号"
+        gzh = "公众号"
         pattern1 = "（ID："
         if gzh in sentence:
             if pattern1 in sentence:
-                print 'start--{0}--end'.format(sentence)
-                print self.extractBracket(sentence)
+                s1 = sentence.replace('\n', '').replace(' ', '')
+                s2 = re.findall(r"公众号：(.+?)）",s1)
+                s3 = re.findall(r"公众号“(.+?)）",s1)
+                print '***{0}***'.format(s1)
+                if (len(s2) != 0):
+                    s2_1 = s2[0].split("（ID：")
+                    if (len(s2_1) == 1):
+                        name = s2_1[0]
+                        extractGongzhonghao.writeToCSVWithoutHeader(to_path, [name, ''])
+                        print '===name==={0}==='.format(name.decode("utf-8"))
+                    else:
+                        name = s2_1[0]
+                        id = s2_1[1]
+                        extractGongzhonghao.writeToCSVWithoutHeader(to_path, [name, id])
+                        print '===name==={0}==='.format(name.decode("utf-8"))
+                        print '===id==={0}==='.format(id.decode("utf-8"))
+                elif (len(s3) != 0):
+                    s3_1 = s3[0].split("”（ID：")
+                    if (len(s3_1) == 1):
+                        name = s3_1[0]
+                        extractGongzhonghao.writeToCSVWithoutHeader(to_path, [name, ''])
+                        print '---name---{0}---'.format(name.decode("utf-8"))
+                    else:
+                        name = s3_1[0]
+                        id = s3_1[1]
+                        extractGongzhonghao.writeToCSVWithoutHeader(to_path, [name, id])
+                        print '---name---{0}---'.format(name.decode("utf-8"))
+                        print '---id---{0}---'.format(id.decode("utf-8"))
+                else:
+                    print '$=={0}==='.format(s1)
+                    extractGongzhonghao.writeToCSVWithoutHeader(to_path, [s1, ''])
+
+                # print self.extractBracket(sentence)
 
     def extractBracket(self, sentence):
         return re.sub(r'[^\x00-\x7f]', '', sentence).replace('ID', '').strip()
@@ -86,10 +116,10 @@ class ExtractGongzhonghao():
 if __name__ == '__main__':
     extractGongzhonghao = ExtractGongzhonghao()
     from_path = '/home/dev/Data/backup/spiderNode1/files/huxiu/txt'
-    to_path = '/home/dev/Data/Production/customerInfo/source/huxiu.csv'
+    to_path = '/home/dev/Data/backup/spiderNode1/files/huxiu/gongzhonghao.csv'
     to_path_exists = os.path.exists(to_path)
     if to_path_exists is False:
-        extractGongzhonghao.writeToCSVWithoutHeader(to_path,['sentense', 'id'])
+        extractGongzhonghao.writeToCSVWithoutHeader(to_path,['name', 'id'])
     file_list = os.listdir(from_path)
     for file in file_list:
         txt_path = '{0}/{1}'.format(from_path, file)

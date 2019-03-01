@@ -6,16 +6,11 @@ import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-from lxml import etree
-import urlparse
-import re
-from math import isnan
 import numpy as np
 import time
 import redis
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.mongodbMiddleware import MongoMiddleware
-from browserRequest import BrowserRequest
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from bloomfilterOnRedis import BloomFilter
@@ -95,3 +90,9 @@ class Doraemon():
             url_titles = np.array(self.file.readColsFromCSV(url_path, ['url', 'title']))
             new_url_titles = self.filter(url_titles)
         return new_url_titles
+
+    def hashSet(self, name, key, value):
+        self.rconn.hset(name, key, value)
+
+    def getHashSet(self, name, key):
+        return self.rconn.hget(name, key)
