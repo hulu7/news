@@ -44,7 +44,7 @@ class Doraemon():
         return len([item for item in item_list if item.strip()]) == 0
 
     def isDuplicated(self, title):
-        title_encode = title.encode("utf-8")
+        title_encode = str(title).encode("utf-8")
         if self.bf.isContains(title_encode):
             print 'Title {0} exists!'.format(title)
             return True
@@ -54,7 +54,7 @@ class Doraemon():
             return False
 
     def isFinished(self, title):
-        title_encode = title.encode("utf-8")
+        title_encode = str(title).encode("utf-8")
         if self.bf.isContains(title_encode):
             print 'Title {0} exists!'.format(title)
             return True
