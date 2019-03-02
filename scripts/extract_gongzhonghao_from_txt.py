@@ -115,8 +115,8 @@ class ExtractGongzhonghao():
 
 if __name__ == '__main__':
     extractGongzhonghao = ExtractGongzhonghao()
-    from_path = '/home/dev/Data/backup/spiderNode1/files/huxiu/txt'
-    to_path = '/home/dev/Data/backup/spiderNode1/files/huxiu/gongzhonghao.csv'
+    from_path = '/home/dev/Data/rsyncData/prd4/huxiu/txt'
+    to_path = '/home/dev/Data/rsyncData/prd4/huxiu/gongzhonghao.csv'
     to_path_exists = os.path.exists(to_path)
     if to_path_exists is False:
         extractGongzhonghao.writeToCSVWithoutHeader(to_path,['name', 'id'])

@@ -58,9 +58,9 @@ class Huxiu():
         share_number1 = html.xpath(".//*[contains(@class, 'article-share pull-left')]/text()")
         image_url1 = html.xpath(".//*[contains(@class, 'article-img-box')]/img/@src")
         content1 = html.xpath(".//div[contains(@class, 'article-content-wrap')]//*/text()")
-        time1 = html.xpath(".//*[@class='article-time pull-left']/text()")
-        author_url1 = html.xpath(".//*[@class='author-name']/a/@href")
-        author_name1 = html.xpath(".//*[@class='author-name']/a/text()")
+        time1 = html.xpath(".//*[contains(@class, 'article-time')]/text()")
+        author_url1 = html.xpath(".//*[contains(@class, 'author-name')]/a/@href")
+        author_name1 = html.xpath(".//*[contains(@class, 'author-name')]/a/text()")
 
         if self.doraemon.isEmpty(title1) is False:
             title = title1[0].strip()
