@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import time
 class Settings():
 
     SELENIUM_TIMEOUT = 120
@@ -54,6 +54,14 @@ class Settings():
     REDIS_PORT = 6379
 
     BLOOMFILTER_NAME = "tegenaria:dupefilter"
+
+    VALID_PROXY_NAME = "valid_proxy"
+    INVALID_PROXY_NAME = "invalid_proxy"
+    PROXY_POOL = "http://127.0.0.1:8000/"
+    FINISHED_GONGZHONGHAO_ID = "finished_gongzhonghao_id"
+    FINISHED_GONGZHONGHAO_ARTICLE_LIST_ID = "finished_gongzhonghao_aritcle_list_id"
+
+    TODAY = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
     CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(RSYNC_PRD1)
 
@@ -330,7 +338,7 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_GONGZHONGHAO, SETTINGS_GONGZHONGHAO),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_GONGZHONGHAO, SETTINGS_GONGZHONGHAO),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_GONGZHONGHAO),
-        'RESTART_INTERVAL': 720,
+        'RESTART_INTERVAL': 0,
         'MAX_POOL_SIZE': 2,
-        'URLS': []
+        'URLS': ['huxiu_com']
     }

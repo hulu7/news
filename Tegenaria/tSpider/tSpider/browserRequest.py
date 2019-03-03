@@ -17,7 +17,7 @@ class BrowserRequest():
         self.file.logger(self.log_path, 'Start: {0}'.format(url_title[0]))
         print 'Start: {0}'.format(url_title[0])
         request = SeleniumMiddleware()
-        request.chrome_request(url_title[0], self.log_path)
+        request.chrome_request(url_title[0], self.log_path, self.proxy)
         response = request.browser
         try:
             callback({'response': response, 'request_url': url_title[0], 'request_title': url_title[1]})
@@ -36,10 +36,11 @@ class BrowserRequest():
         del response, request
         gc.collect()
 
-    def start_chrome(self, url_titles, processes, log_path, callback=callable):
+    def start_chrome(self, url_titles, processes, log_path, proxy, callback=callable):
         self.file = FileIOMiddleware()
         self.content = []
         self.log_path = log_path
+        self.proxy = proxy
         process = Pool(processes)
         for url_title in url_titles:
             process.apply_async(self.run_task, args=(url_title, callback,))

@@ -33,6 +33,7 @@ class Stcn():
         self.name = Settings.WALLSTREETCN['NAME']
         self.max_pool_size = Settings.WALLSTREETCN['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
+        self.today = Settings.TODAY
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -87,7 +88,8 @@ class Stcn():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
 
             if len(article_1) > 0:
@@ -117,7 +119,8 @@ class Stcn():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
 
             if len(article_2) > 0:
@@ -143,7 +146,8 @@ class Stcn():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0 or self.doraemon.isEmpty(content) is True:
@@ -170,7 +174,7 @@ class Stcn():
             print 'No new url for: {0}'.format(self.name)
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, callback=self.parse)
+        content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
         print 'End requests: {0}'.format(str(len(content)))
         del content, new_url_titles, request

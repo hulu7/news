@@ -33,7 +33,7 @@ class Cankaoxiaoxi():
         self.name = Settings.CANKAOXIAOXI['NAME']
         self.max_pool_size = Settings.CANKAOXIAOXI['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
-
+        self.today = Settings.TODAY
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -77,7 +77,8 @@ class Cankaoxiaoxi():
                 'time': time,
                 'author_name': author_name,
                 'title': title,
-                'id': id
+                'id': id,
+                'download_time': self.today
             }
 
         print 'End to parse: {0}'.format(current_url)
@@ -105,7 +106,7 @@ class Cankaoxiaoxi():
             print 'No new url for {0}'.format(self.name)
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, callback=self.parse)
+        content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))
         print 'End requests for {0}'.format(str(len(content)))
         del content, new_url_titles, request

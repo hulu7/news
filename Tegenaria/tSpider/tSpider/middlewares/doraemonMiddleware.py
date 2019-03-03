@@ -96,3 +96,9 @@ class Doraemon():
 
     def getHashSet(self, name, key):
         return self.rconn.hget(name, key)
+
+    def getAllHasSet(self, name):
+        return self.rconn.hgetall(name)
+
+    def delHashSet(self, name, key):
+        return self.rconn.hdel(name, key)

@@ -34,6 +34,7 @@ class Huxiu():
         self.urls = Settings.HUXIU['URLS']
         self.restart_path = Settings.HUXIU['RESTART_PATH']
         self.restart_interval = Settings.HUXIU['RESTART_INTERVAL']
+        self.today = Settings.TODAY
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -50,7 +51,8 @@ class Huxiu():
                 data = {
                     'title': title.strip(),
                     'url': url.strip(),
-                    'id': id.strip()
+                    'id': id.strip(),
+                    'download_time': self.today
                 }
                 self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
                 print 'Start to store mongo {0}'.format(data['url'])
@@ -71,7 +73,7 @@ class Huxiu():
         for url in  self.urls:
             new_urls.append([url, ''])
         request = BrowserRequest()
-        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, callback=self.parse)
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 

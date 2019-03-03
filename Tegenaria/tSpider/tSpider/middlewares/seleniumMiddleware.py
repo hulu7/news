@@ -14,7 +14,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 
 class SeleniumMiddleware(object):
-    def init(self, timeout=None, executable_path=None):
+    def init(self, timeout=None, executable_path=None, proxy=None):
         self.file = FileIOMiddleware()
         self.timeout = timeout
         chrome_options = webdriver.ChromeOptions()
@@ -22,7 +22,8 @@ class SeleniumMiddleware(object):
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
-        # chrome_options.add_argument('--proxy-server=http://195.250.188.200:8080')
+        if proxy is not None:
+            chrome_options.add_argument('--proxy-server=http://{0}'.format(proxy))
         self.browser = webdriver.Chrome(executable_path=executable_path, chrome_options=chrome_options)
         self.load_timeout = self.browser.set_page_load_timeout(self.timeout)
         self.wait = WebDriverWait(self.browser, self.timeout)
@@ -33,8 +34,8 @@ class SeleniumMiddleware(object):
         del self.browser, self.file, self.timeout, self.load_timeout, self.wait
         gc.collect()
 
-    def chrome_request(self, url, log_path):
-        self.init(timeout=Settings.SELENIUM_TIMEOUT, executable_path=Settings.CHROMEDRIVER_PATH)
+    def chrome_request(self, url, log_path, proxy):
+        self.init(timeout=Settings.SELENIUM_TIMEOUT, executable_path=Settings.CHROMEDRIVER_PATH, proxy=proxy)
         try:
             self.file.logger(log_path, 'Starting Chrome for: {0}'.format(url))
             self.browser.get(url)

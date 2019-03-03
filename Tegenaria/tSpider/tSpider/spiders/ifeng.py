@@ -32,6 +32,7 @@ class Ifeng():
         self.name = Settings.IFENG['NAME']
         self.max_pool_size = Settings.IFENG['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
+        self.today = Settings.TODAY
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -91,9 +92,9 @@ class Ifeng():
                 url = current_url
                 id = current_id
                 if self.doraemon.isEmpty(comment_number0_1) is False:
-                    comment_number = str(filter(str.isdigit, comment_number0_1[0].encode('gbk'))).strip()
+                    comment_number = str(filter(str.isdigit, str(comment_number0_1[0]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(join_number0_1) is False:
-                    join_number = str(filter(str.isdigit, join_number0_1[0].encode('gbk'))).strip()
+                    join_number = str(filter(str.isdigit, str(join_number0_1[0]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
@@ -116,7 +117,8 @@ class Ifeng():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
 
             if len(article_1) > 0:
@@ -149,7 +151,8 @@ class Ifeng():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
 
             if len(article_2) > 0:
@@ -165,7 +168,7 @@ class Ifeng():
                 if self.doraemon.isEmpty(comment_number2_1) is False:
                     comment_number = str(filter(str.isdigit, comment_number2_1)).strip()
                 if self.doraemon.isEmpty(join_number2_1) is False:
-                    join_number = str(filter(str.isdigit, join_number2_1[0].encode('gbk'))).strip()
+                    join_number = str(filter(str.isdigit, str(join_number2_1[0]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(content2_1) is False:
                     content = ''.join(content2_1)
                 if self.doraemon.isEmpty(time2_1) is False:
@@ -182,7 +185,8 @@ class Ifeng():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
 
             if len(article_3) > 0:
@@ -196,9 +200,9 @@ class Ifeng():
                 url = current_url
                 id = current_id
                 if self.doraemon.isEmpty(comment_number3_1) is False:
-                    comment_number = str(filter(str.isdigit, comment_number3_1[1].encode('gbk'))).strip()
+                    comment_number = str(filter(str.isdigit, str(comment_number3_1[1]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(join_number3_1) is False:
-                    join_number = str(filter(str.isdigit, join_number3_1[0].encode('gbk'))).strip()
+                    join_number = str(filter(str.isdigit, str(join_number3_1[0]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(content3_1) is False:
                     content = ''.join(content3_1)
                 if self.doraemon.isEmpty(time3_1) is False:
@@ -215,7 +219,8 @@ class Ifeng():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
 
             if len(article_4) > 0:
@@ -229,9 +234,9 @@ class Ifeng():
                 url = current_url
                 id = current_id
                 if self.doraemon.isEmpty(comment_number4_1) is False:
-                    comment_number = str(filter(str.isdigit, comment_number4_1[0].encode('gbk'))).strip()
+                    comment_number = str(filter(str.isdigit, str(comment_number4_1[0]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(join_number4_1) is False:
-                    join_number = str(filter(str.isdigit, join_number4_1[0].encode('gbk'))).strip()
+                    join_number = str(filter(str.isdigit, str(join_number4_1[0]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(content4_1) is False:
                     content = ''.join(content4_1)
                 if self.doraemon.isEmpty(time4_1) is False:
@@ -248,7 +253,8 @@ class Ifeng():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
 
             if len(article_5) > 0:
@@ -262,9 +268,9 @@ class Ifeng():
                 url = current_url
                 id = current_id
                 if self.doraemon.isEmpty(comment_number5_1) is False:
-                    comment_number = str(filter(str.isdigit, comment_number5_1[1].encode('gbk'))).strip()
+                    comment_number = str(filter(str.isdigit, str(comment_number5_1[1]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(join_number5_1) is False:
-                    join_number = str(filter(str.isdigit, join_number5_1[0].encode('gbk'))).strip()
+                    join_number = str(filter(str.isdigit, str(join_number5_1[0]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(content5_1) is False:
                     content = ''.join(content5_1)
                 if self.doraemon.isEmpty(time5_1) is False:
@@ -281,7 +287,8 @@ class Ifeng():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
 
             if len(article_6) > 0:
@@ -295,9 +302,9 @@ class Ifeng():
                 url = current_url
                 id = current_id
                 if self.doraemon.isEmpty(comment_number6_1) is False:
-                    comment_number = str(filter(str.isdigit, comment_number6_1[1].encode('gbk'))).strip()
+                    comment_number = str(filter(str.isdigit, str(comment_number6_1[1]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(join_number6_1) is False:
-                    join_number = str(filter(str.isdigit, join_number6_1[0].encode('gbk'))).strip()
+                    join_number = str(filter(str.isdigit, str(join_number6_1[0]).encode('gbk'))).strip()
                 if self.doraemon.isEmpty(content6_1) is False:
                     content = ''.join(content6_1)
                 if self.doraemon.isEmpty(time6_1) is False:
@@ -314,7 +321,8 @@ class Ifeng():
                     'time': time,
                     'author_name': author_name,
                     'title': title,
-                    'id': id
+                    'id': id,
+                    'download_time': self.today
                 }
 
             print 'End to parse: {0}'.format(current_url)
@@ -340,7 +348,7 @@ class Ifeng():
             print 'No new url for: {0}'.format(self.name)
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, callback=self.parse)
+        content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
         print 'End requests: {0}'.format(str(len(content)))
 
