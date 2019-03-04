@@ -37,9 +37,9 @@ class GongZhongHao():
         self.restart_path = Settings.GONGZHONGHAO['RESTART_PATH']
         self.restart_interval = Settings.GONGZHONGHAO['RESTART_INTERVAL']
         self.proxy_pool = Settings.PROXY_POOL
-        self.valid_proxy_name = Settings.VALID_PROXY_NAME
+        self.valid_proxy_name = Settings.VALID_PROXY_PARENT_URL
         self.finished_gongzhonghao_id = Settings.FINISHED_GONGZHONGHAO_ID
-        self.invalid_proxy_name = Settings.INVALID_PROXY_NAME
+        self.invalid_proxy_name = Settings.INVALID_PROXY_PARENT_URL
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')

@@ -43,7 +43,7 @@ class BrowserRequest():
         self.proxy = proxy
         process = Pool(processes)
         for url_title in url_titles:
-            process.apply_async(self.run_task, args=(url_title, callback,))
+            process.apply_async(self.run_task, args=(url_title, callback))
         process.close()
         process.join()
         self.file.logger(self.log_path, 'Done')

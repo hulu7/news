@@ -17,7 +17,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class GongZhongHaoArticleList():
+class Sogo():
 
     def __init__(self):
 
@@ -28,20 +28,21 @@ class GongZhongHaoArticleList():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd2 = Settings.GONGZHONGHAO['WORK_PATH_PRD2']
-        self.mongo = Settings.GONGZHONGHAO['MONGO_URLS']
-        self.name = Settings.GONGZHONGHAO['NAME']
-        self.max_pool_size = Settings.GONGZHONGHAO['MAX_POOL_SIZE']
+        self.work_path_prd2 = Settings.SOGO['WORK_PATH_PRD2']
+        self.mongo = Settings.SOGO['MONGO_URLS']
+        self.name = Settings.SOGO['NAME']
+        self.max_pool_size = Settings.SOGO['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH_PRD2
-        self.urls = Settings.GONGZHONGHAO['URLS']
-        self.restart_path = Settings.GONGZHONGHAO['RESTART_PATH']
-        self.restart_interval = Settings.GONGZHONGHAO['RESTART_INTERVAL']
+        self.urls = Settings.SOGO['URLS']
+        self.restart_path = Settings.SOGO['RESTART_PATH']
+        self.restart_interval = Settings.SOGO['RESTART_INTERVAL']
         self.proxy_pool = Settings.PROXY_POOL
-        self.valid_proxy_name = Settings.VALID_PROXY_NAME
+        self.valid_proxy_name = Settings.VALID_PROXY_CHILDREN_URL
         self.finished_gongzhonghao_id = Settings.FINISHED_GONGZHONGHAO_ID
-        self.invalid_proxy_name = Settings.INVALID_PROXY_NAME
+        self.invalid_proxy_name = Settings.INVALID_PROXY_CHILDREN_URL
         self.finished_gongzhonghao_aritcle_list_id = Settings.FINISHED_GONGZHONGHAO_ARTICLE_LIST_ID
         self.today = Settings.TODAY
+        self.url_pool = Settings.SETTINGS_GONGZHONGHAO
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -134,7 +135,7 @@ class GongZhongHaoArticleList():
         self.proxy = all_valid_proxy.pop()
         finished_gongzhonghao_aritcle_list_id = list(self.doraemon.getAllHasSet(self.finished_gongzhonghao_aritcle_list_id))
 
-        self.urls_article_list = self.doraemon.getAllHasSet(self.name)
+        self.urls_article_list = self.doraemon.getAllHasSet(self.url_pool)
         for key in self.urls:
             url = self.urls_article_list[key]
             if key not in finished_gongzhonghao_aritcle_list_id:
@@ -153,5 +154,5 @@ class GongZhongHaoArticleList():
         self.file.logger(self.log_path, 'End for requests of {0}.'.format(self.name))
 
 if __name__ == '__main__':
-    gongzhonghaoarticlelist=GongZhongHaoArticleList()
-    gongzhonghaoarticlelist.start_requests()
+    Sogo=Sogo()
+    Sogo.start_requests()

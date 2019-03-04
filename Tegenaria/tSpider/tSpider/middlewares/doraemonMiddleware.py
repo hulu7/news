@@ -22,6 +22,7 @@ class Doraemon():
         self.file = FileIOMiddleware()
         self.rconn = redis.Redis(Settings.REDIS_HOST, Settings.REDIS_PORT)
         self.bf = BloomFilter(self.rconn, Settings.BLOOMFILTER_NAME)
+        self.disable_restart_interval = Settings.DISABLE_RESTART_INTERVAL
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)
@@ -35,7 +36,7 @@ class Doraemon():
             return True
         past = float(self.file.readFromTxt(path))
         now = time.time()
-        isExceed = (now - past) // 60 >= restart_interval
+        isExceed = ((now - past) // 60 >= restart_interval) or (self.disable_restart_interval is True)
         if isExceed is True:
             self.file.writeToTxtCover(path, time.time())
         return isExceed

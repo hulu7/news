@@ -55,8 +55,10 @@ class Settings():
 
     BLOOMFILTER_NAME = "tegenaria:dupefilter"
 
-    VALID_PROXY_NAME = "valid_proxy"
-    INVALID_PROXY_NAME = "invalid_proxy"
+    VALID_PROXY_PARENT_URL = "valid_proxy_parent"
+    INVALID_PROXY_PARENT_URL = "invalid_proxy_parent"
+    VALID_PROXY_CHILDREN_URL = "valid_proxy_children"
+    INVALID_PROXY_CHILDREN_URL = "invalid_proxy_children"
     PROXY_POOL = "http://127.0.0.1:8000/"
     FINISHED_GONGZHONGHAO_ID = "finished_gongzhonghao_id"
     FINISHED_GONGZHONGHAO_ARTICLE_LIST_ID = "finished_gongzhonghao_aritcle_list_id"
@@ -64,6 +66,8 @@ class Settings():
     TODAY = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
     CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(RSYNC_PRD1)
+
+    DISABLE_RESTART_INTERVAL = False
 
     SETTINGS_HUXIU = 'huxiu'
     HUXIU = {
@@ -326,7 +330,7 @@ class Settings():
                  ]
     }
 
-    SETTINGS_GONGZHONGHAO = 'sogo'
+    SETTINGS_GONGZHONGHAO = 'gongzhonghao'
     GONGZHONGHAO = {
         'NAME': SETTINGS_GONGZHONGHAO,
         'MONGO': SETTINGS_GONGZHONGHAO,
@@ -334,7 +338,6 @@ class Settings():
         'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_GONGZHONGHAO),
         'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_GONGZHONGHAO),
         'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_GONGZHONGHAO),
-        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_GONGZHONGHAO),
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_GONGZHONGHAO, SETTINGS_GONGZHONGHAO),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_GONGZHONGHAO, SETTINGS_GONGZHONGHAO),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_GONGZHONGHAO),
@@ -694,5 +697,21 @@ class Settings():
                 'VRkantianxia',
                 'D-entertainment',
                 'globusnews']
+    }
+
+    SETTINGS_SOGO = 'sogo'
+    SOGO = {
+        'NAME': SETTINGS_SOGO,
+        'MONGO': SETTINGS_SOGO,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_SOGO),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_SOGO),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_SOGO),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_SOGO),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_SOGO, SETTINGS_SOGO),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_SOGO, SETTINGS_SOGO),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_SOGO),
+        'RESTART_INTERVAL': 5,
+        'MAX_POOL_SIZE': 2,
+        'URLS': []
     }
 

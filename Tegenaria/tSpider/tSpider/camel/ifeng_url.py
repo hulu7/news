@@ -56,15 +56,18 @@ class Ifeng():
                 if 'html' not in href_url:
                     continue
 
-            title0_1 = item.xpath(".//*[contains(@class,'i_con_l')]/h3/text()")
+            title0_1 = ''.join(item.xpath(".//*[contains(@class,'i_con_l')]/h3/text()")).strip()
             title0_2 = item.xpath(".//text()")
+            title0_3 = ''.join(item.xpath(".//*[contains(@class,'i-title')]/text()")).strip()
             title = ''
 
             if len(title0_1) > 0:
-                title = title0_1[0]
-            elif len(title0_2) > 0:
-                title = title0_2[0]
-            if len(title) == 0:
+                title = title0_1
+            elif len(title0_2) == 1:
+                title = title0_2[0].strip()
+            elif len(title0_3) > 0:
+                title = title0_3
+            if len(title) == 0 or str.isdigit(str(title)):
                 continue
 
             valid = False
@@ -122,9 +125,10 @@ class Ifeng():
         self.badkeys = ['jpg', 'yc', '#p', 'cosmetics', 'weidian', 'homedetail', 'detail?', 'weather', 'idyn',
                         'quanmeiti', 'srctag', 'market', 'tv', 'ispecial', 'icommon', 'channel', 'taiwan']
         new_urls = []
-        for url in  self.urls:
-            new_urls.append([url, ''])
+        for url in self.urls:
+            new_urls.append([url, self.name])
         request = BrowserRequest()
+        # new_urls = [['https://ipit.ifeng.com/', 'TEST']]
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
