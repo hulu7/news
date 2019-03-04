@@ -64,6 +64,15 @@ class GongZhongHao():
             self.current_url.append(new_url)
         print 'End to parse {0}, url: {1}'.format(key, href_item[0])
 
+    def refreshProxy(self):
+        response = requests.get(self.proxy_pool)
+        proxy_pool = eval(response.content)
+        all_invalid_proxy = list(self.doraemon.getAllHasSet(self.invalid_proxy_name))
+        for proxy in proxy_pool:
+            ip_port = '{0}:{1}'.format(proxy[0], proxy[1])
+            if ip_port not in all_invalid_proxy:
+                self.doraemon.hashSet(self.valid_proxy_name, ip_port, ip_port)
+
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
@@ -71,17 +80,10 @@ class GongZhongHao():
         print 'Start {0} requests'.format(self.name)
         self.new_urls = []
         self.current_url = []
-        response = requests.get(self.proxy_pool)
-        proxy_pool = eval(response.content)
-        all_invalid_proxy = list(self.doraemon.getAllHasSet(self.invalid_proxy_name))
-        for proxy in proxy_pool:
-            ip_port = '{0}:{1}'.format(proxy[0], proxy[1])
-            # valid_proxy.append(ip_port)
-            if ip_port not in all_invalid_proxy:
-                self.doraemon.hashSet(self.valid_proxy_name, ip_port, ip_port)
+        self.refreshProxy()
+        all_finished_id = list(self.doraemon.getAllHasSet(self.finished_gongzhonghao_id))
         all_valid_proxy = list(self.doraemon.getAllHasSet(self.valid_proxy_name))
         self.proxy = all_valid_proxy.pop()
-        all_finished_id = list(self.doraemon.getAllHasSet(self.finished_gongzhonghao_id))
         for key in self.urls:
             if key not in all_finished_id:
                 timestamp = '00'.join(str(time.time()).split('.'))
@@ -95,6 +97,7 @@ class GongZhongHao():
 
         while len(self.current_url) > 0:
             request.start_chrome(self.current_url, self.max_pool_size, self.log_path, self.proxy, callback=self.parse)
+            self.refreshProxy()
         self.file.logger(self.log_path, 'End for requests of {0}.'.format(self.name))
 
 if __name__ == '__main__':
