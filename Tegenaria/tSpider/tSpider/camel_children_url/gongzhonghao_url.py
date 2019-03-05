@@ -17,7 +17,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Sogo():
+class Gongzhonghao():
 
     def __init__(self):
 
@@ -28,21 +28,21 @@ class Sogo():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd2 = Settings.SOGO['WORK_PATH_PRD2']
-        self.mongo = Settings.SOGO['MONGO_URLS']
-        self.name = Settings.SOGO['NAME']
-        self.max_pool_size = Settings.SOGO['MAX_POOL_SIZE']
+        self.work_path_prd2 = Settings.GONGZHONGHAO['WORK_PATH_PRD2']
+        self.mongo = Settings.GONGZHONGHAO['MONGO_URLS']
+        self.name = Settings.GONGZHONGHAO['NAME']
+        self.max_pool_size = Settings.GONGZHONGHAO['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH_PRD2
-        self.urls = Settings.SOGO['URLS']
-        self.restart_path = Settings.SOGO['RESTART_PATH']
-        self.restart_interval = Settings.SOGO['RESTART_INTERVAL']
+        self.urls = Settings.GONGZHONGHAO['URLS']
+        self.restart_path = Settings.GONGZHONGHAO['RESTART_PATH']
+        self.restart_interval = Settings.GONGZHONGHAO['RESTART_INTERVAL']
         self.proxy_pool = Settings.PROXY_POOL
-        self.valid_proxy_name = Settings.VALID_PROXY_CHILDREN_URL
+        self.valid_proxy_name = Settings.VALID_PROXY_GONGZHONGHAO_URL
+        self.invalid_proxy_name = Settings.INVALID_PROXY_GONGZHONGHAO_URL
         self.finished_gongzhonghao_id = Settings.FINISHED_GONGZHONGHAO_ID
-        self.invalid_proxy_name = Settings.INVALID_PROXY_CHILDREN_URL
         self.finished_gongzhonghao_aritcle_list_id = Settings.FINISHED_GONGZHONGHAO_ARTICLE_LIST_ID
         self.today = Settings.TODAY
-        self.url_pool = Settings.SETTINGS_GONGZHONGHAO
+        self.url_pool = Settings.SETTINGS_SOGO
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -116,16 +116,6 @@ class Sogo():
             self.current_url.append(new_url)
         print 'End to parse {0}, url: {1}'.format(id, href_item[0])
 
-    def refreshProxy(self):
-        response = requests.get(self.proxy_pool)
-        proxy_pool = eval(response.content)
-        all_invalid_proxy = list(self.doraemon.getAllHasSet(self.invalid_proxy_name))
-        for proxy in proxy_pool:
-            ip_port = '{0}:{1}'.format(proxy[0], proxy[1])
-            # valid_proxy.append(ip_port)
-            if ip_port not in all_invalid_proxy:
-                self.doraemon.hashSet(self.valid_proxy_name, ip_port, ip_port)
-
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
@@ -133,13 +123,12 @@ class Sogo():
         print 'Start {0} requests'.format(self.name)
         self.new_urls = []
         self.current_url = []
-        self.refreshProxy()
         all_valid_proxy = list(self.doraemon.getAllHasSet(self.valid_proxy_name))
         self.proxy = all_valid_proxy.pop()
         finished_gongzhonghao_aritcle_list_id = list(self.doraemon.getAllHasSet(self.finished_gongzhonghao_aritcle_list_id))
-
         self.urls_article_list = self.doraemon.getAllHasSet(self.url_pool)
-        for key in self.urls:
+
+        for key in self.urls_article_list:
             url = self.urls_article_list[key]
             if key not in finished_gongzhonghao_aritcle_list_id:
                 self.new_urls.append([url, key])
@@ -154,9 +143,8 @@ class Sogo():
         request = BrowserRequest()
         while len(self.current_url) > 0:
             request.start_chrome(self.current_url, self.max_pool_size, self.log_path, self.proxy, callback=self.parse)
-            self.refreshProxy()
         self.file.logger(self.log_path, 'End for requests of {0}.'.format(self.name))
 
 if __name__ == '__main__':
-    Sogo=Sogo()
-    Sogo.start_requests()
+    Gongzhonghao=Gongzhonghao()
+    Gongzhonghao.start_requests()
