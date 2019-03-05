@@ -24,18 +24,24 @@ class Proxy():
         self.proxy_pool = Settings.PROXY_POOL
         self.valid_proxy_sogo = Settings.VALID_PROXY_SOGO_URL
         self.valid_proxy_gongzhonghao = Settings.VALID_PROXY_GONGZHONGHAO_URL
+        self.invalid_proxy_sogo = Settings.INVALID_PROXY_SOGO_URL
+        self.invalid_proxy_gongzhonghao = Settings.INVALID_PROXY_GONGZHONGHAO_URL
 
     def refreshProxy(self):
         response = requests.get(self.proxy_pool)
         proxy_pool = eval(response.content)
-        valid_proxy = []
-        valid_proxy.append(self.valid_proxy_sogo)
-        valid_proxy.append(self.valid_proxy_gongzhonghao)
+        invalid_proxy_sogo = list(self.doraemon.getAllHasSet(self.invalid_proxy_sogo))
+        invalid_proxy_gongzhonghao = list(self.doraemon.getAllHasSet(self.invalid_proxy_gongzhonghao))
+
         print 'Start refresh proxy.'
         for proxy in proxy_pool:
             ip_port = '{0}:{1}'.format(proxy[0], proxy[1])
-            for vp in valid_proxy:
-                self.doraemon.hashSet(vp, ip_port, ip_port)
+            if ip_port not in invalid_proxy_sogo:
+                self.doraemon.hashSet(self.valid_proxy_sogo, ip_port, ip_port)
+
+            if ip_port not in invalid_proxy_gongzhonghao:
+                self.doraemon.hashSet(self.valid_proxy_gongzhonghao, ip_port, ip_port)
+
         print 'Finished refresh proxy.'
 
 if __name__ == '__main__':
