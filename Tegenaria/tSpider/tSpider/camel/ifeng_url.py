@@ -125,8 +125,17 @@ class Ifeng():
         self.badkeys = ['jpg', 'yc', '#p', 'cosmetics', 'weidian', 'homedetail', 'detail?', 'weather', 'idyn',
                         'quanmeiti', 'srctag', 'market', 'tv', 'ispecial', 'icommon', 'channel', 'taiwan']
         new_urls = []
-        for url in self.urls:
-            new_urls.append([url, self.name])
+        content = self.file.readFromTxt(self.urls)
+        url_list = content.split('\n')
+
+        for url in url_list:
+            if self.doraemon.isEmpty(url) is False:
+                new_urls.append([url, ''])
+
+        if len(new_urls) == 0:
+            print 'No url.'
+            return
+
         request = BrowserRequest()
         # new_urls = [['https://ipit.ifeng.com/', 'TEST']]
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)

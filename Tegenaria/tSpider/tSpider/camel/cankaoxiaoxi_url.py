@@ -108,9 +108,19 @@ class Cankaoxiaoxi():
         print 'Start {0} requests'.format(self.name)
         self.badkeys = ['mid', 'about', 'photo', 'index']
         self.goodkeys = []
+
         new_urls = []
-        for url in  self.urls:
-            new_urls.append([url, ''])
+        content = self.file.readFromTxt(self.urls)
+        url_list = content.split('\n')
+
+        for url in url_list:
+            if self.doraemon.isEmpty(url) is False:
+                new_urls.append([url, ''])
+
+        if len(new_urls) == 0:
+            print 'No url.'
+            return
+
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
