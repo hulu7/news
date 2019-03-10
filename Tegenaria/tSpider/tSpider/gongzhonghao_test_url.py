@@ -17,7 +17,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Chuansongme():
+class Gongzhonghao():
 
     def __init__(self):
 
@@ -86,5 +86,5 @@ class Chuansongme():
         self.file.logger(self.log_path, 'End for requests of {0}.'.format(self.name))
 
 if __name__ == '__main__':
-    Chuansongme=Chuansongme()
-    Chuansongme.start_requests()
+    Gongzhonghao=Gongzhonghao()
+    Gongzhonghao.start_requests()

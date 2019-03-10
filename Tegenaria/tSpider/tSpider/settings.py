@@ -2,7 +2,7 @@
 import time
 class Settings():
 
-    SELENIUM_TIMEOUT = 120
+    SELENIUM_TIMEOUT = 300
     CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
 
     USER_AGENTS = [

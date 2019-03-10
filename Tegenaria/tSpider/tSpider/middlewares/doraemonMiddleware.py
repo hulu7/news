@@ -72,6 +72,7 @@ class Doraemon():
         mongo.insert(mongo_url, data)
 
     def storeTxt(self, id, content, finished_txt_path, name):
+        self.createFilePath(finished_txt_path)
         print 'Start to store txt: {0}'.format(id)
         self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(finished_txt_path, name, id), content)
         print 'End to store txt: {0}'.format(id)
