@@ -87,7 +87,7 @@ class CommitData():
         commit_csv_exists = os.path.exists(commit_csv_path)
         commit_finished_exists = os.path.exists(commit_finished_file_path)
         if commit_csv_exists is False:
-            self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'title', 'url', 'time', 'catalog', 'deep'])
+            self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache'])
         if commit_finished_exists is False:
             self.writeToCSVWithoutHeader(commit_finished_file_path, ['id'])
 
@@ -100,6 +100,9 @@ class CommitData():
                 continue
             if source_name not in data[2]:
                 continue
+            if len(data[3]) == 0:
+                continue
+
             item_date_int = int(data[3])
             if item_date_int >= today_int:
                 id = data[0].replace('\xef\xbb\xbf','')

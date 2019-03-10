@@ -37,6 +37,6 @@ class RequestsMiddleware():
             res = self.requests.get(url=url, headers=self.headers)
             return res
         except Exception, e:
-            self.file.logger(Settings.LOG_PATH, 'Requests Timeout: ' + e)
+            self.file.logger(Settings.LOG_PATH, 'Requests Timeout: {0}'.format(str(e)))
             del self.file, self.session, self.headers
             gc.collect()
