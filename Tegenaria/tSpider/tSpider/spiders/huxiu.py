@@ -34,6 +34,7 @@ class Huxiu():
         self.max_pool_size = Settings.HUXIU['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
+        self.is_open_cache = Settings.HUXIU['IS_OPEN_CACHE']
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -91,7 +92,8 @@ class Huxiu():
             'author_url': author_url,
             'author_name': author_name,
             'id': id,
-            'download_time': self.today
+            'download_time': self.today,
+            'is_open_cache': self.is_open_cache
         }
         print 'End to parse: {0}'.format(current_url)
         if valid == True:

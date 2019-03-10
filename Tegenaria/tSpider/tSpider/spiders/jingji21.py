@@ -34,6 +34,7 @@ class Jingji21():
         self.max_pool_size = Settings.JINGJI21['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
+        self.is_open_cache = Settings.JINGJI21['IS_OPEN_CACHE']
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -76,7 +77,8 @@ class Jingji21():
                         'author_name': author_name,
                         'title': title,
                         'id': id,
-                        'download_time': self.today
+                        'download_time': self.today,
+                        'is_open_cache': self.is_open_cache
                     }
 
             print 'End to parse: {0}'.format(current_url)

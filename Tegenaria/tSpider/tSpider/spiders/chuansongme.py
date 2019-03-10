@@ -36,6 +36,7 @@ class Chuansongme():
         self.max_pool_size = Settings.CHUANSONGME['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
+        self.is_open_cache = Settings.CHUANSONGME['IS_OPEN_CACHE']
 
     def parse(self, response, request_title):
         current_url = response.url.encode('gbk')
@@ -82,7 +83,8 @@ class Chuansongme():
                     'author_name': author_name,
                     'title': title,
                     'id': id,
-                    'download_time': self.today
+                    'download_time': self.today,
+                    'is_open_cache': self.is_open_cache
                 }
 
             print 'End to parse: {0}'.format(current_url)

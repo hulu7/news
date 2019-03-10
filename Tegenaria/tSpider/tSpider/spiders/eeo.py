@@ -34,6 +34,8 @@ class Eeo():
         self.max_pool_size = Settings.EEO['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
+        self.is_open_cache = Settings.EEO['IS_OPEN_CACHE']
+
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -80,7 +82,8 @@ class Eeo():
                 'author_name': author_name,
                 'title': title,
                 'id': id,
-                'download_time': self.today
+                'download_time': self.today,
+                'is_open_cache': self.is_open_cache
             }
 
         if len(article_1) > 0:
@@ -105,7 +108,9 @@ class Eeo():
                 'time': time,
                 'author_name': author_name,
                 'title': title,
-                'id': id
+                'id': id,
+                'download_time': self.today,
+                'is_open_cache': self.is_open_cache
             }
 
         if len(article_2) > 0:
@@ -130,7 +135,9 @@ class Eeo():
                 'time': time,
                 'author_name': author_name,
                 'title': title,
-                'id': id
+                'id': id,
+                'download_time': self.today,
+                'is_open_cache': self.is_open_cache
             }
 
         print 'End to parse: {0}'.format(current_url)

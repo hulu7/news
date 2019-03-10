@@ -83,7 +83,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_HUXIU),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_HUXIU)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_HUXIU),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_CE = 'ce'
@@ -100,7 +101,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CE),
         'RESTART_INTERVAL': 20,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_CE)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_CE),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_EEO = 'eeo'
@@ -116,7 +118,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_EEO),
         'RESTART_INTERVAL': 120,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_EEO)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_EEO),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_HUANQIU = 'huanqiu'
@@ -132,7 +135,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_HUANQIU),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_HUANQIU)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_HUANQIU),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_CANKAOXIAOXI = 'cankaoxiaoxi'
@@ -148,7 +152,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
         'RESTART_INTERVAL': 10,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_CANKAOXIAOXI)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_CANKAOXIAOXI),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_GUANCHA = 'guancha'
@@ -164,7 +169,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_GUANCHA),
         'RESTART_INTERVAL': 5,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_GUANCHA)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_GUANCHA),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_YICAI = 'yicai'
@@ -180,7 +186,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_YICAI),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_YICAI)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_YICAI),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_IFENG = 'ifeng'
@@ -196,7 +203,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IFENG),
         'RESTART_INTERVAL': 5,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_IFENG)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_IFENG),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_JINGJI21 = 'jingji21'
@@ -212,7 +220,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_JINGJI21),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_JINGJI21)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_JINGJI21),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_STCN = 'stcn'
@@ -228,7 +237,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_STCN),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_STCN)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_STCN),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_WALLSTREETCN = 'wallstreetcn'
@@ -245,7 +255,8 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_WALLSTREETCN)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_WALLSTREETCN),
+        'IS_OPEN_CACHE': False
     }
 
     SETTINGS_CHUANSONGME = 'chuansongme'
@@ -262,6 +273,7 @@ class Settings():
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CHUANSONGME),
         'RESTART_INTERVAL': 120,
         'MAX_POOL_SIZE': 5,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_CHUANSONGME)
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_CHUANSONGME),
+        'IS_OPEN_CACHE': True
     }
 

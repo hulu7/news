@@ -34,6 +34,7 @@ class Huanqiu():
         self.max_pool_size = Settings.HUANQIU['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
+        self.is_open_cache = Settings.HUANQIU['IS_OPEN_CACHE']
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -78,7 +79,8 @@ class Huanqiu():
                 'author_name': author_name,
                 'title': title,
                 'id': id,
-                'download_time': self.today
+                'download_time': self.today,
+                'is_open_cache': self.is_open_cache
             }
 
 

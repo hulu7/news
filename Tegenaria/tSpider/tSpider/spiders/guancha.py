@@ -34,6 +34,7 @@ class Guancha():
         self.max_pool_size = Settings.GUANCHA['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
+        self.is_open_cache = Settings.GUANCHA['IS_OPEN_CACHE']
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -85,7 +86,8 @@ class Guancha():
                     'author_name': author_name,
                     'title': title,
                     'id': id,
-                    'download_time': self.today
+                    'download_time': self.today,
+                    'is_open_cache': self.is_open_cache
                 }
 
             if len(article_1) > 0:
@@ -111,7 +113,8 @@ class Guancha():
                     'author_name': author_name,
                     'title': title,
                     'id': id,
-                    'download_time': self.today
+                    'download_time': self.today,
+                    'is_open_cache': self.is_open_cache
                 }
 
             print 'End to parse: {0}'.format(current_url)
