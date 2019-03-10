@@ -41,6 +41,13 @@ class Settings():
         "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11",
         "Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10"
     ]
+    ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+    ACCEPT_LANGUAGE = "zh-CN,zh;q=0.9,en;q=0.8"
+    ACCEPT_ENC0DING = "gzip, deflate"
+    CONNECTION = "keep-alive"
+    CACHE_CONTROL = "max-age=0"
+    PRAGMA = "no-cache"
+    UPGRADE_INSECURE_REQUESTS = "1"
 
     RSYNC_PRD1 = "//home//dev//Data//rsyncData//prd4"
     RSYNC_PRD2 = "//home//dev//Data//rsyncData//prd3"

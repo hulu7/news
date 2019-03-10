@@ -16,8 +16,7 @@ def crawl_one_page(url):
         'Cache-Control': 'max-age=0',
         'Pragma': 'no-cache',
         'Upgrade-Insecure-Requests': '1',
-        'Referer': 'http://news.ifeng.com/',
-        'Host': 'www.ifeng.com',
+        'Referer': 'https://chuansongme.com/n/2842241949523',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
     }
     response = requests.get(url=url, headers=headers)
@@ -77,8 +76,8 @@ def writeToTxt(file_path, content):
     txt_writer.close()
 
 if __name__ == '__main__':
-    url = 'http://www.ifeng.com/daohang/'
-    saveFilePath = '/home/dev/Repository_Test_Data/ifeng/class.csv'
+    url = 'https://chuansongme.com/n/2842241949523'
+    saveFilePath = '/home/dev/Data/test.csv'
 
     isSaveFileExits = os.path.exists(saveFilePath)
     if isSaveFileExits:
