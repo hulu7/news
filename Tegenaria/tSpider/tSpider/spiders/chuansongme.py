@@ -70,7 +70,7 @@ class Chuansongme():
                 if self.doraemon.isEmpty(time0_1) is False:
                     time = time0_1[0].strip()
                 if self.doraemon.isEmpty(author_name0_1) is False:
-                    author_name = author_name0_1[0].strip()
+                    author_name = ''.join(author_name0_1).strip()
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = title0_1[0].strip()
 
