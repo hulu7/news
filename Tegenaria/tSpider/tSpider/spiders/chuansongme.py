@@ -14,6 +14,7 @@ from browserRequest import BrowserRequest
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
+from middlewares.requestsMiddleware import RequestsMiddleware
 
 class Chuansongme():
 
@@ -21,6 +22,7 @@ class Chuansongme():
 
         self.getSettings()
         self.file = FileIOMiddleware()
+        self.request = RequestsMiddleware()
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd1)
         self.doraemon.createFilePath(Settings.LOG_PATH)
@@ -35,18 +37,18 @@ class Chuansongme():
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
 
-    def parse(self, response):
-        current_url = response['response'].current_url.encode('gbk')
+    def parse(self, response, request_title):
+        current_url = response.url.encode('gbk')
         valid = str(filter(str.isdigit, current_url))
         if len(valid) == 0:
-            self.doraemon.storeFinished(response['request_title'])
+            self.doraemon.storeFinished(request_title)
             self.file.logger(self.log_path, 'Invalid url: {0}'.format(current_url))
             print 'Invalid url: {0}'.format(current_url)
             return
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _]', current_url)
         current_id = short_url_parts[len(short_url_parts) - 1]
-        html = etree.HTML(response['response'].page_source)
+        html = etree.HTML(response.content)
         content_found = html.xpath(".//*[contains(@class,'rich_media_inner')]")
         data = {}
         url = ""
@@ -85,8 +87,8 @@ class Chuansongme():
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:
-                self.doraemon.storeFinished(response['request_title'])
-                print 'No data for {0}'.format(response['request_title'])
+                self.doraemon.storeFinished(request_title)
+                print 'No data for {0}'.format(request_title)
             else:
                 self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
                 print 'Start to store mongo {0}'.format(data['url'])
@@ -94,7 +96,7 @@ class Chuansongme():
                 self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
                 print 'End to store mongo {0}'.format(data['url'])
                 self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
-                self.doraemon.storeFinished(response['request_title'])
+                self.doraemon.storeFinished(request_title)
 
         del current_url, valid,  current_id, html, content_found, data
         gc.collect()
@@ -107,11 +109,19 @@ class Chuansongme():
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
             return
-        request = BrowserRequest()
-        content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
-        self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))
-        print 'End requests for {0}'.format(str(len(content)))
-        del content, new_url_titles, request
+
+        for url_title in new_url_titles:
+            us = url_title[0].split('/')
+            host = us[2]
+            referer = url_title[0]
+            response = self.request.requests_request(url_title[0], None, host, referer)
+            if response.status_code != 200:
+                print 'status: ' + response.status_code
+                continue
+            self.parse(response, url_title[1])
+        self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(new_url_titles))))
+        print 'End requests for {0}'.format(str(len(new_url_titles)))
+        del self.request, response
         gc.collect()
 
 if __name__ == '__main__':
