@@ -63,7 +63,7 @@ class Chuansongme():
             if len(article_0) > 0:
                 content0_1 = html.xpath(".//*[contains(@class, 'rich_media_content ')]//text()")
                 time0_1 = html.xpath(".//*[contains(@id, 'publish_time')]/text()")
-                author_name0_1 = html.xpath(".//*[contains(@class, 'rich_media_meta rich_media_meta_nickname')]//text()")
+                author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'rich_media_title')]/text()")
 
                 url = current_url
@@ -73,7 +73,7 @@ class Chuansongme():
                 if self.doraemon.isEmpty(time0_1) is False:
                     time = time0_1[0].strip()
                 if self.doraemon.isEmpty(author_name0_1) is False:
-                    author_name = ''.join(author_name0_1).strip()
+                    author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = title0_1[0].strip()
 

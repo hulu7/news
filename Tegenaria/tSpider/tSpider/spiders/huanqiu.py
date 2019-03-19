@@ -58,7 +58,7 @@ class Huanqiu():
         id = ""
         if len(article_0) > 0:
             title0_1 = html.xpath(".//*[contains(@class, 'conText')]/h1/text()")
-            author_name0_1 = html.xpath(".//*[contains(@class, 'fromSummary fromSummaryAdd')]/a/text()")
+            author_name0_1 = self.name
             time0_1 = html.xpath(".//*[contains(@class, 'timeSummary')]/text()")
             content0_1 = html.xpath(".//div[contains(@class, 'text')]/p/text()")
 
@@ -69,7 +69,7 @@ class Huanqiu():
             if self.doraemon.isEmpty(time0_1) is False:
                 time = ''.join(time0_1).strip()
             if self.doraemon.isEmpty(author_name0_1) is False:
-                author_name = author_name0_1[0].strip()
+                author_name = author_name0_1
             if self.doraemon.isEmpty(title0_1) is False:
                 title = title0_1[0].strip()
 

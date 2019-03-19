@@ -60,13 +60,11 @@ class Stcn():
             article_0 = html.xpath(".//*[contains(@class,'box_left')]")
             article_1 = html.xpath(".//*[contains(@class,'xiangxi')]")
             if len(article_0) > 0 and len(article_1) == 0:
-                author_name_list0_1 = html.xpath(".//*[contains(@class, 'info')]/span")
-                author_name_list0_2 = html.xpath(".//*[contains(@class, 'info')]/span/a")
                 content0_1 = html.xpath(".//div[contains(@class, 'txt_con')]/p/text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'info')]/text()")
                 title0_1 = html.xpath(".//*[contains(@class,'intal_tit')]/h2/text()")
-                author_name0_1 = html.xpath(".//*[contains(@class, 'info')]/span/text()")
-                author_name0_2 = html.xpath(".//*[contains(@class, 'info')]/span/a/text()")
+                author_name0_1 = self.name
+                author_name0_2 = self.name
 
                 url = current_url
                 id = current_id
@@ -75,11 +73,9 @@ class Stcn():
                 if self.doraemon.isEmpty(time0_1) is False:
                     time = time0_1[0].strip()
                 if self.doraemon.isEmpty(author_name0_1) is False:
-                    if len(author_name_list0_1) == 2:
-                        author_name = ''.join(author_name0_1).strip()
+                    author_name = author_name0_1
                 if self.doraemon.isEmpty(author_name0_2) is False:
-                    if len(author_name_list0_2) == 2:
-                        author_name = ''.join(author_name0_2).strip()
+                    author_name = author_name0_2
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = title0_1[0].strip()
 
@@ -94,24 +90,20 @@ class Stcn():
                 }
 
             if len(article_1) > 0:
-                time_author1_1 = html.xpath(".//*[contains(@class,'xiangxi')]/h2/span/text()")
                 content1_1 = html.xpath(".//div[contains(@class, 'txt_con')]/p/text()")
                 time1_1 = ""
-                author_name1_1= ""
+                author_name1_1= self.name
                 title1_1 = html.xpath(".//*[contains(@class,'xiangxi')]/h2/text()")
 
                 url = current_url
                 id = current_id
-                if self.doraemon.isEmpty(time_author1_1) is False:
-                    time1_1 = re.sub(r'[^\x00-\x7F]+', ' ', time_author1_1[0]).strip()
-                    author_name1_1 = time_author1_1[0].replace(time1_1, '').strip()
 
                 if self.doraemon.isEmpty(content1_1) is False:
                     content = ''.join(content1_1).strip()
                 if self.doraemon.isEmpty(time1_1) is False:
                     time = time1_1[0].strip()
                 if self.doraemon.isEmpty(author_name1_1) is False:
-                    author_name = ''.join(author_name1_1).strip()
+                    author_name = author_name1_1
                 if self.doraemon.isEmpty(title1_1) is False:
                     title = title1_1[0].strip()
 

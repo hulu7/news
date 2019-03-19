@@ -34,7 +34,6 @@ class Ce():
         self.max_pool_size = Settings.CE['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
-        self.is_open_cache = Settings.CE['IS_OPEN_CACHE']
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -61,7 +60,7 @@ class Ce():
             if len(article_0) > 0:
                 content0_1 = html.xpath(".//div[contains(@class, 'TRS_Editor')]/p/text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'time')]/text()")
-                author_name0_1 = html.xpath(".//*[contains(@class, 'media_ly')]//text()")
+                author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'mtnone')]/h2/text()")
 
                 url = current_url
@@ -71,7 +70,7 @@ class Ce():
                 if self.doraemon.isEmpty(time0_1) is False:
                     time = time0_1[0].strip()
                 if self.doraemon.isEmpty(author_name0_1) is False:
-                    author_name = author_name0_1[0].strip()
+                    author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = title0_1[0].strip()
 
@@ -81,8 +80,7 @@ class Ce():
                     'author_name': author_name,
                     'title': title,
                     'id': id,
-                    'download_time': self.today,
-                    'is_open_cache': self.is_open_cache
+                    'download_time': self.today
                 }
 
             print 'End to parse: {0}'.format(current_url)

@@ -15,7 +15,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Guancha():
+class Ce():
 
     def __init__(self):
 
@@ -26,15 +26,14 @@ class Guancha():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd1 = Settings.GUANCHA['WORK_PATH_PRD1']
-        self.finished_txt_path = Settings.GUANCHA['FINISHED_TXT_PATH']
-        self.url_path = Settings.GUANCHA['URL_PATH']
-        self.mongo = Settings.GUANCHA['MONGO']
-        self.name = Settings.GUANCHA['NAME']
-        self.max_pool_size = Settings.GUANCHA['MAX_POOL_SIZE']
+        self.work_path_prd1 = Settings.I36KR['WORK_PATH_PRD1']
+        self.finished_txt_path = Settings.I36KR['FINISHED_TXT_PATH']
+        self.url_path = Settings.I36KR['URL_PATH']
+        self.mongo = Settings.I36KR['MONGO']
+        self.name = Settings.I36KR['NAME']
+        self.max_pool_size = Settings.I36KR['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
-        self.is_open_cache = Settings.GUANCHA['IS_OPEN_CACHE']
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -46,13 +45,9 @@ class Guancha():
             return
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _]', current_url)
-        current_id = short_url_parts[len(short_url_parts) - 2]
-        if 'main' in current_url:
-            short_url_parts = re.split(r'[., /, _, ?, =]', current_url)
-            current_id = short_url_parts[len(short_url_parts) - 1]
+        current_id = short_url_parts[len(short_url_parts) - 1]
         html = etree.HTML(response['response'].page_source)
-        content_fnd0_1 = html.xpath(".//*[contains(@class,'textPageCont')]")
-        content_fnd0_2 = html.xpath(".//*[contains(@class,'article-content')]")
+        not_fnd = html.xpath(".//*[contains(@class,'article-content')]")
         data = {}
         url = ""
         content = ""
@@ -60,21 +55,20 @@ class Guancha():
         author_name = ""
         title = ""
         id = ""
-        if (len(content_fnd0_1) > 0) or (len(content_fnd0_2) > 0):
-            article_0 = html.xpath(".//*[contains(@class,'textPageCont')]")
-            article_1 = html.xpath(".//*[contains(@class,'article-content')]")
+        if len(not_fnd) > 0:
+            article_0 = html.xpath(".//*[contains(@class,'article-content')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'textPageContInner')]/p/text()")
-                time0_1 = html.xpath(".//*[contains(@class, 'time')]/text()")
+                content0_1 = html.xpath(".//div[contains(@class, 'articleDetailContent')]/p/text()")
+                time0_1 = self.today
                 author_name0_1 = self.name
-                title0_1 = html.xpath(".//*[contains(@class,'textPageContInner')]/h1/text()")
+                title0_1 = html.xpath(".//*[contains(@class,'article-title')]/text()")
 
                 url = current_url
                 id = current_id
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1[0].strip()
+                    time = time0_1
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
@@ -86,41 +80,13 @@ class Guancha():
                     'author_name': author_name,
                     'title': title,
                     'id': id,
-                    'download_time': self.today,
-                    'is_open_cache': self.is_open_cache
-                }
-
-            if len(article_1) > 0:
-                content0_1 = html.xpath(".//div[contains(@class, 'article-txt-content')]/p/text()")
-                time0_1 = html.xpath(".//*[contains(@class, 'time1')]/text()")
-                author_name0_1 = self.name
-                title0_1 = html.xpath(".//*[contains(@class,'article-content')]/h1/text()")
-
-                url = current_url
-                id = current_id
-                if self.doraemon.isEmpty(content0_1) is False:
-                    content = ''.join(content0_1).strip()
-                if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1[0].strip()
-                if self.doraemon.isEmpty(author_name0_1) is False:
-                    author_name = author_name0_1
-                if self.doraemon.isEmpty(title0_1) is False:
-                    title = title0_1[0].strip()
-
-                data = {
-                    'url': url,
-                    'time': time,
-                    'author_name': author_name,
-                    'title': title,
-                    'id': id,
-                    'download_time': self.today,
-                    'is_open_cache': self.is_open_cache
+                    'download_time': self.today
                 }
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:
                 self.doraemon.storeFinished(response['request_title'])
-                print 'No data for {0}'.format(title)
+                print 'No data for {0}'.format(response['request_title'])
             else:
                 self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
                 print 'Start to store mongo {0}'.format(data['url'])
@@ -129,11 +95,8 @@ class Guancha():
                 print 'End to store mongo {0}'.format(data['url'])
                 self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
                 self.doraemon.storeFinished(response['request_title'])
-        else:
-            self.doraemon.storeFinished(response['request_title'])
-            print 'No data for {0}'.format(response['request_title'])
 
-        del current_url, valid,  current_id, html, data
+        del current_url, valid,  current_id, html, not_fnd, data
         gc.collect()
 
     def start_requests(self):
@@ -152,5 +115,5 @@ class Guancha():
         gc.collect()
 
 if __name__ == '__main__':
-    guacha=Guancha()
-    guacha.start_requests()
+    ce=Ce()
+    ce.start_requests()

@@ -85,9 +85,9 @@ class Ifeng():
                 content0_1 = html.xpath(".//div[@id='main_content']/p/text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'ss01')]/text()")
                 time0_2 = html.xpath(".//*[@id='artical_sth']/p/span/text()")
-                author_name0_1 = html.xpath(".//*[contains(@class, 'ss03')]//text()")
-                author_name0_2 = html.xpath(".//*[@id='artical_sth']/p/text()")
-                author_name0_3 = html.xpath(".//*[@id='artical_sth']/p/span/span/a/text()")
+                author_name0_1 = self.name
+                author_name0_2 = self.name
+                author_name0_3 = self.name
                 title0_1 = html.xpath(".//*[@id='artical_topic']/text()")
 
                 url = current_url
@@ -103,11 +103,11 @@ class Ifeng():
                 if self.doraemon.isEmpty(time0_2) is False:
                     time = time0_2[0].strip()
                 if self.doraemon.isEmpty(author_name0_1) is False:
-                    author_name = author_name0_1[0].strip()
+                    author_name = author_name0_1
                 if self.doraemon.isEmpty(author_name0_2) is False:
-                    author_name = author_name0_2[1].strip()
+                    author_name = author_name0_2
                 if self.doraemon.isEmpty(author_name0_3) is False:
-                    author_name = author_name0_3[0].strip()
+                    author_name = author_name0_3
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = title0_1[0].strip()
 
@@ -128,7 +128,7 @@ class Ifeng():
                 join_number1_1 = html.xpath(".//*[contains(@class, 'js_joinNum')]//text()")
                 content1_1 = html.xpath(".//div[@id='yc_con_txt']/p/text()")
                 time1_1 = html.xpath(".//*[contains(@class, 'yc_tit')]//p//span/text()")
-                author_name1_1 = html.xpath(".//*[contains(@class, 'yc_tit')]//p//a/text()")
+                author_name1_1 = self.name
                 title1_1 = html.xpath(".//*[contains(@class, 'yc_tit')]//h1/text()")
 
                 url = current_url
@@ -142,7 +142,7 @@ class Ifeng():
                 if self.doraemon.isEmpty(time1_1) is False:
                     time = time1_1[0].strip()
                 if self.doraemon.isEmpty(author_name1_1) is False:
-                    author_name = author_name1_1[0].strip()
+                    author_name = author_name1_1
                 if self.doraemon.isEmpty(title1_1) is False:
                     title = title1_1[0].strip()
 
@@ -163,7 +163,7 @@ class Ifeng():
                 join_number2_1 = html.xpath(".//*[contains(@class, 'w-reply')]//text()")
                 content2_1 = html.xpath(".//div[contains(@class, 'articleContent')]/p/text()")
                 time2_1 = html.xpath(".//*[contains(@class, 'time01')]//text()")
-                author_name2_1 = html.xpath(".//*[contains(@class, 'cmtNav js_crumb')]//a/text()")
+                author_name2_1 = self.name
                 title2_1 = html.xpath(".//*[contains(@class, 'tit01')]//a/text()")
 
                 url = current_url
@@ -177,7 +177,7 @@ class Ifeng():
                 if self.doraemon.isEmpty(time2_1) is False:
                     time = time2_1[0].strip()
                 if self.doraemon.isEmpty(author_name2_1) is False:
-                    author_name = ''.join(author_name2_1).strip()
+                    author_name = author_name2_1
                 if self.doraemon.isEmpty(title2_1) is False:
                     title = title2_1[0].strip()
 
@@ -198,7 +198,7 @@ class Ifeng():
                 join_number3_1 = html.xpath(".//*[contains(@class, 'num-1eBOY5Jv')]//text()")
                 content3_1 = html.xpath(".//div[contains(@class, 'text-3zQ3cZD4')]/p/text()")
                 time3_1 = html.xpath(".//*[contains(@class, 'time-hm3v7ddj')]/span/text()")
-                author_name3_1 = html.xpath(".//*[contains(@class, 'source-2pXi2vGI')]/span/text()")
+                author_name3_1 = self.name
                 title3_1 = html.xpath(".//*[contains(@class, 'topic-3bY8Hw-9')]//text()")
 
                 url = current_url
@@ -212,7 +212,7 @@ class Ifeng():
                 if self.doraemon.isEmpty(time3_1) is False:
                     time = time3_1[0].strip()
                 if self.doraemon.isEmpty(author_name3_1) is False:
-                    author_name = ''.join(author_name3_1).strip()
+                    author_name = author_name3_1
                 if self.doraemon.isEmpty(title3_1) is False:
                     title = title3_1[0].strip()
 
@@ -233,7 +233,7 @@ class Ifeng():
                 join_number4_1 = html.xpath(".//*[contains(@class, 'peoples')]/a/strong/text()")
                 content4_1 = html.xpath(".//div[contains(@class, 'article')]/p/text()")
                 time4_1 = html.xpath(".//*[contains(@class, 'marb-5')]/span/text()")
-                author_name4_1 = html.xpath(".//*[contains(@class, 'pr')]/span/text()")
+                author_name4_1 = self.name
                 title4_1 = html.xpath(".//*[contains(@class, 'title')]/h2/text()")
 
                 url = current_url
@@ -247,7 +247,7 @@ class Ifeng():
                 if self.doraemon.isEmpty(time4_1) is False:
                     time = time4_1[0].strip()
                 if self.doraemon.isEmpty(author_name4_1) is False:
-                    author_name = ''.join(author_name4_1).strip()
+                    author_name = author_name4_1
                 if self.doraemon.isEmpty(title4_1) is False:
                     title = title4_1[0].strip()
 
@@ -268,7 +268,7 @@ class Ifeng():
                 join_number5_1 = html.xpath(".//*[contains(@class, 'w-num')]//text()")
                 content5_1 = html.xpath(".//div[contains(@class, 'artical-main')]/p/text()")
                 time5_1 = html.xpath(".//*[contains(@class, 'artical-source')]//text()")
-                author_name5_1 = html.xpath(".//*[contains(@class, 'artical-time')]//text()")
+                author_name5_1 = self.name
                 title5_1 = html.xpath(".//*[contains(@class, 'w90 artical')]/h1/text()")
 
                 url = current_url
@@ -282,7 +282,7 @@ class Ifeng():
                 if self.doraemon.isEmpty(time5_1) is False:
                     time = time5_1[0].strip()
                 if self.doraemon.isEmpty(author_name5_1) is False:
-                    author_name = ''.join(author_name5_1).strip()
+                    author_name = author_name5_1
                 if self.doraemon.isEmpty(title5_1) is False:
                     title = title5_1[0].strip()
 
@@ -303,7 +303,7 @@ class Ifeng():
                 join_number6_1 = html.xpath(".//*[contains(@class, 'w-num')]/text()")
                 content6_1 = html.xpath(".//div[contains(@class, 'acTx')]/p/text()")
                 time6_1 = html.xpath(".//*[contains(@class, 'acTxtTit wrap_w94')]/div/div/span/text()")
-                author_name6_1 = html.xpath(".//*[contains(@class, 'acTxtTit wrap_w94')]/div/div/span/a/text()")
+                author_name6_1 = self.name
                 title6_1 = html.xpath(".//*[contains(@class, 'acTxtTit wrap_w94')]/h1/text()")
 
                 url = current_url
@@ -317,7 +317,7 @@ class Ifeng():
                 if self.doraemon.isEmpty(time6_1) is False:
                     time = '{0} {1}'.format(time6_1[0], time6_1[1]).strip()
                 if self.doraemon.isEmpty(author_name6_1) is False:
-                    author_name = ''.join(author_name6_1[0]).strip()
+                    author_name = author_name6_1
                 if self.doraemon.isEmpty(title6_1) is False:
                     title = title6_1[0].strip()
 

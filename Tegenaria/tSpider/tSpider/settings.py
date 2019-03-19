@@ -277,3 +277,21 @@ class Settings():
         'IS_OPEN_CACHE': True
     }
 
+    SETTINGS_I36KR = '36kr'
+    I36KR = {
+        'NAME': SETTINGS_I36KR,
+        'MONGO': SETTINGS_I36KR,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_I36KR),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_I36KR),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_I36KR),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_I36KR),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_I36KR),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_I36KR, SETTINGS_I36KR),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_I36KR, SETTINGS_I36KR),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_I36KR),
+        'RESTART_INTERVAL': 30,
+        'MAX_POOL_SIZE': 2,
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_I36KR),
+        'IS_OPEN_CACHE': False
+    }
+

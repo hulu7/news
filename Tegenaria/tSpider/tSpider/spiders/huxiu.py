@@ -62,7 +62,7 @@ class Huxiu():
         content1 = html.xpath(".//div[contains(@class, 'article-content-wrap')]//*/text()")
         time1 = html.xpath(".//*[contains(@class, 'article-time')]/text()")
         author_url1 = html.xpath(".//*[contains(@class, 'author-name')]/a/@href")
-        author_name1 = html.xpath(".//*[contains(@class, 'author-name')]/a/text()")
+        author_name1 = self.name
 
         if self.doraemon.isEmpty(title1) is False:
             title = title1[0].strip()
@@ -80,7 +80,7 @@ class Huxiu():
         if self.doraemon.isEmpty(author_url1) is False:
             author_url = urlparse.urljoin(current_url, author_url1[0].strip())
         if self.doraemon.isEmpty(author_name1) is False:
-            author_name = author_name1[0].strip()
+            author_name = author_name1
 
         data = {
             'title': title,

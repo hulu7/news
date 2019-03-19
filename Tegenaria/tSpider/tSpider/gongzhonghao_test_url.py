@@ -29,61 +29,48 @@ class Gongzhonghao():
 
     def getSettings(self):
         self.work_path_prd2 = Settings.CHUANSONGME['WORK_PATH_PRD2']
-        self.mongo = Settings.CHUANSONGME['MONGO_URLS']
-        self.name = Settings.CHUANSONGME['NAME']
-        self.max_pool_size = Settings.CHUANSONGME['MAX_POOL_SIZE']
+        self.mongo = "gongzhonghao_test"
         self.log_path = Settings.LOG_PATH_PRD2
-        self.urls = Settings.CHUANSONGME['URLS']
-        self.restart_path = Settings.CHUANSONGME['RESTART_PATH']
-        self.restart_interval = Settings.CHUANSONGME['RESTART_INTERVAL']
-        self.finished_ids = Settings.CHUANSONGME['FINISHED_IDS']
+        self.finished_ids = "gongzhonghao_test"
+        self.log_path = Settings.LOG_PATH
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
         key = response['request_title']
-        href_item = html.xpath(".//*[contains(@class, 'user')]/@href")
+        href_item = html.xpath(".//*[contains(@class, 'pagedlist_item')]")
         if len(href_item) == 0:
             print 'No data for: {0}'.format(key)
             return
-        href_url = href_item[0]
-        url = urlparse.urljoin(current_url, href_url)
         self.doraemon.hashSet(self.finished_ids, key, key)
         data = {
             'id': key,
-            'url': url.strip()
+            'url': current_url
         }
         print 'Start to store mongo {0}'.format(data['url'])
         self.doraemon.storeMongodb(self.mongo, data)
-        self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
         print 'Finished for {0}'.format(key)
-        print 'End to parse {0}, url: {1}'.format(key, href_item[0])
 
     def start_requests(self):
-        if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
-            return
-        self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
-        print 'Start {0} requests'.format(self.name)
+        print 'Start requests'
         new_urls = []
         all_finished_id = list(self.doraemon.getAllHasSet(self.finished_ids))
+        txt_path = '/home/dev/Repository/news/Tegenaria/tSpider/tSpider/food/gongzhonghao_test.txt'
+        gonzhonghao = self.file.readFromTxt(txt_path)
+        keys = gonzhonghao.split('\n')
 
-        for key in self.urls:
+        for key in keys:
             if key not in all_finished_id:
-                tmp_url = "https://chuansongme.com/search?q={0}".format(key)
-                self.new_urls.append([tmp_url, key])
+                tmp_url = "https://www.iivv.com/account/{0}".format(key)
+                new_urls.append([tmp_url, key])
 
-        if len(self.new_urls) == 0:
+        if len(new_urls) == 0:
             print 'No more urls.'
             return
 
-        chuansongme = self.file.readFromTxt('/home/dev/Repository/news/Tegenaria/tSpider/tSpider/food/chuansongme.txt')
-        all = chuansongme.split('\n')
-        test = 0
-
         request = BrowserRequest()
-        request.start_chrome(self.new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
-        self.file.logger(self.log_path, 'End for requests of {0}.'.format(self.name))
+        request.start_chrome(new_urls, 2, self.log_path, None, callback=self.parse)
 
 if __name__ == '__main__':
     Gongzhonghao=Gongzhonghao()
