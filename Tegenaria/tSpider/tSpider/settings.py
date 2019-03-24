@@ -68,7 +68,7 @@ class Settings():
 
     CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(RSYNC_PRD1)
 
-    DISABLE_RESTART_INTERVAL = True
+    DISABLE_RESTART_INTERVAL = False
 
     SETTINGS_HUXIU = 'huxiu'
     HUXIU = {
