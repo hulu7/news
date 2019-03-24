@@ -15,7 +15,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class I36kr():
+class Iresearch():
 
     def __init__(self):
 
@@ -26,12 +26,12 @@ class I36kr():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd1 = Settings.I36KR['WORK_PATH_PRD1']
-        self.finished_txt_path = Settings.I36KR['FINISHED_TXT_PATH']
-        self.url_path = Settings.I36KR['URL_PATH']
-        self.mongo = Settings.I36KR['MONGO']
-        self.name = Settings.I36KR['NAME']
-        self.max_pool_size = Settings.I36KR['MAX_POOL_SIZE']
+        self.work_path_prd1 = Settings.IRESEARCH['WORK_PATH_PRD1']
+        self.finished_txt_path = Settings.IRESEARCH['FINISHED_TXT_PATH']
+        self.url_path = Settings.IRESEARCH['URL_PATH']
+        self.mongo = Settings.IRESEARCH['MONGO']
+        self.name = Settings.IRESEARCH['NAME']
+        self.max_pool_size = Settings.IRESEARCH['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
 
@@ -45,9 +45,9 @@ class I36kr():
             return
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _]', current_url)
-        current_id = short_url_parts[len(short_url_parts) - 1]
+        current_id = short_url_parts[len(short_url_parts) - 2]
         html = etree.HTML(response['response'].page_source)
-        not_fnd = html.xpath(".//*[contains(@class,'article-content')]")
+        not_fnd = html.xpath(".//*[contains(@class,'m-cont-hd')]")
         data = {}
         url = ""
         content = ""
@@ -56,12 +56,12 @@ class I36kr():
         title = ""
         id = ""
         if len(not_fnd) > 0:
-            article_0 = html.xpath(".//*[contains(@class,'article-content')]")
+            article_0 = html.xpath(".//*[contains(@class,'m-cont-hd')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//div[contains(@class, 'articleDetailContent')]/p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'm-article')]//p/text()")
                 time0_1 = self.today
                 author_name0_1 = self.name
-                title0_1 = html.xpath(".//*[contains(@class,'article-title')]/text()")
+                title0_1 = html.xpath(".//*[contains(@class,'title')]/h1/text()")
 
                 url = current_url
                 id = current_id
@@ -115,5 +115,5 @@ class I36kr():
         gc.collect()
 
 if __name__ == '__main__':
-    i36kr=I36kr()
-    i36kr.start_requests()
+    iresearch=Iresearch()
+    iresearch.start_requests()

@@ -68,7 +68,7 @@ class Settings():
 
     CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(RSYNC_PRD1)
 
-    DISABLE_RESTART_INTERVAL = False
+    DISABLE_RESTART_INTERVAL = True
 
     SETTINGS_HUXIU = 'huxiu'
     HUXIU = {
@@ -292,6 +292,42 @@ class Settings():
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
         'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_I36KR),
+        'IS_OPEN_CACHE': False
+    }
+
+    SETTINGS_IRESEARCH = 'iresearch'
+    IRESEARCH = {
+        'NAME': SETTINGS_IRESEARCH,
+        'MONGO': SETTINGS_IRESEARCH,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_IRESEARCH),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_IRESEARCH),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_IRESEARCH),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_IRESEARCH),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_IRESEARCH),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IRESEARCH, SETTINGS_IRESEARCH),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IRESEARCH, SETTINGS_IRESEARCH),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IRESEARCH),
+        'RESTART_INTERVAL': 30,
+        'MAX_POOL_SIZE': 2,
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_IRESEARCH),
+        'IS_OPEN_CACHE': False
+    }
+
+    SETTINGS_IYIOU = 'iyiou'
+    IYIOU = {
+        'NAME': SETTINGS_IYIOU,
+        'MONGO': SETTINGS_IYIOU,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_IYIOU),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_IYIOU),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_IYIOU),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_IYIOU),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_IYIOU),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IYIOU, SETTINGS_IYIOU),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IYIOU, SETTINGS_IYIOU),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IYIOU),
+        'RESTART_INTERVAL': 30,
+        'MAX_POOL_SIZE': 2,
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_IYIOU),
         'IS_OPEN_CACHE': False
     }
 
