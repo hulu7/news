@@ -331,3 +331,20 @@ class Settings():
         'IS_OPEN_CACHE': False
     }
 
+    SETTINGS_IHEIMA = 'iheima'
+    IHEIMA = {
+        'NAME': SETTINGS_IHEIMA,
+        'MONGO': SETTINGS_IHEIMA,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_IHEIMA),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_IHEIMA),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_IHEIMA),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_IHEIMA),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_IHEIMA),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IHEIMA, SETTINGS_IHEIMA),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IHEIMA, SETTINGS_IHEIMA),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IHEIMA),
+        'RESTART_INTERVAL': 120,
+        'MAX_POOL_SIZE': 2,
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_IHEIMA),
+        'IS_OPEN_CACHE': False
+    }
