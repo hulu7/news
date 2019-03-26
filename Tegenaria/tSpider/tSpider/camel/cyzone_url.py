@@ -1,0 +1,128 @@
+#coding:utf-8
+#------requirement------
+#lxml-3.2.1
+#numpy-1.15.2
+#------requirement------
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+from lxml import etree
+import urlparse
+import re
+import json
+import urllib2
+sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
+from browserRequest import BrowserRequest
+from settings import Settings
+from middlewares.fileIOMiddleware import FileIOMiddleware
+from middlewares.doraemonMiddleware import Doraemon
+
+class Cyzone():
+
+    def __init__(self):
+
+        self.getSettings()
+        self.file = FileIOMiddleware()
+        self.doraemon = Doraemon()
+        self.doraemon.createFilePath(self.work_path_prd2)
+        self.doraemon.createFilePath(Settings.LOG_PATH)
+
+    def getSettings(self):
+        self.work_path_prd2 = Settings.CYZONE['WORK_PATH_PRD2']
+        self.mongo = Settings.CYZONE['MONGO_URLS']
+        self.name = Settings.CYZONE['NAME']
+        self.max_pool_size = Settings.CYZONE['MAX_POOL_SIZE']
+        self.log_path = Settings.LOG_PATH_PRD2
+        self.urls = Settings.CYZONE['URLS']
+        self.restart_path = Settings.CYZONE['RESTART_PATH']
+        self.restart_interval = Settings.CYZONE['RESTART_INTERVAL']
+        self.today = Settings.TODAY
+
+    def parse(self, response):
+        current_url = response.url.encode('gbk')
+        print 'Start to parse: {0}'.format(current_url)
+        hjson = json.loads(response.read())
+
+        b = hjson['data']
+
+        if len(hjson['data']) == 0:
+            return
+
+        for item in hjson['data']:
+            href_url = item['url'].encode('gbk')
+            hasId = str(filter(str.isdigit, href_url))
+            if len(hasId) == 0:
+                print 'Invalid url for no id: {0}'.format(href_url)
+                continue
+            valid = True
+            for good in self.goodkeys:
+                if valid == True:
+                    continue
+                if good in href_url:
+                    valid = True
+            for bad in self.badkeys:
+                if valid == False:
+                    continue
+                if bad in href_url:
+                    valid = False
+            if valid:
+                id = str(item['content_id'])
+                url = urlparse.urljoin(current_url, href_url)
+                title = str(item['title'])
+                is_title_empty = self.doraemon.isEmpty(title)
+                if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
+                    data = {
+                        'title': title.strip(),
+                        'url': url.strip(),
+                        'id': id.strip(),
+                        'download_time': self.today
+                    }
+                    self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
+                    print 'Start to store mongo {0}'.format(data['url'])
+                    self.doraemon.storeMongodb(self.mongo, data)
+                    self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
+                    print 'End to store mongo {0}'.format(data['url'])
+                    self.file.logger(self.log_path, 'Done for {0}'.format(url))
+                else:
+                    if is_title_empty is True:
+                        self.file.logger(self.log_path, 'Empty title for {0}'.format(url))
+                        print 'Empty title for {0}'.format(url)
+                    print 'Finished or Empty title for {0}'.format(url)
+            else:
+                self.file.logger(self.log_path, 'Invalid {0}'.format(href_url))
+                print 'Invalid {0}'.format(href_url)
+        print 'End to parse {0}'.format(href_url)
+
+    def start_requests(self):
+        if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
+            return
+        self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
+        print 'Start {0} requests'.format(self.name)
+        self.badkeys = []
+        self.goodkeys = []
+
+        new_urls = []
+        content = self.file.readFromTxt(self.urls)
+        url_list = content.split('\n')
+
+        for url in url_list:
+            if self.doraemon.isEmpty(url) is False:
+                new_urls.append([url, ''])
+
+        if len(new_urls) == 0:
+            print 'No url.'
+            return
+
+        for url in url_list:
+            response = urllib2.urlopen(url)
+            if response.code != 200:
+                print 'status: ' + response.status_code
+                continue
+            self.parse(response)
+
+        self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(url_list)), self.name))
+        print 'End for {0} requests of {1}.'.format(str(len(url_list)), self.name)
+
+if __name__ == '__main__':
+    cyzone=Cyzone()
+    cyzone.start_requests()

@@ -70,281 +70,317 @@ class Settings():
 
     DISABLE_RESTART_INTERVAL = False
 
-    SETTINGS_HUXIU = 'huxiu'
+    SETTINGS_NAME = 'huxiu'
     HUXIU = {
-        'NAME': SETTINGS_HUXIU,
-        'MONGO': SETTINGS_HUXIU,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_HUXIU),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_HUXIU),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_HUXIU),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_HUXIU),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_HUXIU, SETTINGS_HUXIU),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_HUXIU, SETTINGS_HUXIU),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_HUXIU),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_HUXIU),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_CE = 'ce'
+    SETTINGS_NAME = 'ce'
     CE = {
-        'NAME': SETTINGS_CE,
-        'MONGO': SETTINGS_CE,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_CE),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_CE),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_CE),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_CE),
-        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_CE),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CE, SETTINGS_CE),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CE, SETTINGS_CE),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CE),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 20,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_CE),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_EEO = 'eeo'
+    SETTINGS_NAME = 'eeo'
     EEO = {
-        'NAME': SETTINGS_EEO,
-        'MONGO': SETTINGS_EEO,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_EEO),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_EEO),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_EEO),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_EEO),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_EEO, SETTINGS_EEO),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_EEO, SETTINGS_EEO),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_EEO),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 120,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_EEO),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_HUANQIU = 'huanqiu'
+    SETTINGS_NAME = 'huanqiu'
     HUANQIU = {
-        'NAME': SETTINGS_HUANQIU,
-        'MONGO': SETTINGS_HUANQIU,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_HUANQIU),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_HUANQIU),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_HUANQIU),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_HUANQIU),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_HUANQIU, SETTINGS_HUANQIU),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_HUANQIU, SETTINGS_HUANQIU),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_HUANQIU),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_HUANQIU),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_CANKAOXIAOXI = 'cankaoxiaoxi'
+    SETTINGS_NAME = 'cankaoxiaoxi'
     CANKAOXIAOXI = {
-        'NAME': SETTINGS_CANKAOXIAOXI,
-        'MONGO': SETTINGS_CANKAOXIAOXI,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_CANKAOXIAOXI),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CANKAOXIAOXI, SETTINGS_CANKAOXIAOXI),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI, SETTINGS_CANKAOXIAOXI),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CANKAOXIAOXI),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 10,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_CANKAOXIAOXI),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_GUANCHA = 'guancha'
+    SETTINGS_NAME = 'guancha'
     GUANCHA = {
-        'NAME': SETTINGS_GUANCHA,
-        'MONGO': SETTINGS_GUANCHA,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_GUANCHA),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_GUANCHA),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_GUANCHA),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_GUANCHA),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_GUANCHA, SETTINGS_GUANCHA),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_GUANCHA, SETTINGS_GUANCHA),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_GUANCHA),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 5,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_GUANCHA),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_YICAI = 'yicai'
+    SETTINGS_NAME = 'yicai'
     YICAI = {
-        'NAME': SETTINGS_YICAI,
-        'MONGO': SETTINGS_YICAI,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_YICAI),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_YICAI),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_YICAI),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_YICAI),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_YICAI, SETTINGS_YICAI),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_YICAI, SETTINGS_YICAI),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_YICAI),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_YICAI),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_IFENG = 'ifeng'
+    SETTINGS_NAME = 'ifeng'
     IFENG = {
-        'NAME': SETTINGS_IFENG,
-        'MONGO': SETTINGS_IFENG,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_IFENG),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_IFENG),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_IFENG),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_IFENG),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IFENG, SETTINGS_IFENG),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IFENG, SETTINGS_IFENG),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IFENG),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 5,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_IFENG),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_JINGJI21 = 'jingji21'
+    SETTINGS_NAME = 'jingji21'
     JINGJI21 = {
-        'NAME': SETTINGS_JINGJI21,
-        'MONGO': SETTINGS_JINGJI21,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_JINGJI21),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_JINGJI21),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_JINGJI21),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_JINGJI21),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_JINGJI21, SETTINGS_JINGJI21),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_JINGJI21),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_JINGJI21),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_STCN = 'stcn'
+    SETTINGS_NAME = 'stcn'
     STCN = {
-        'NAME': SETTINGS_STCN,
-        'MONGO': SETTINGS_STCN,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_STCN),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_STCN),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_STCN),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_STCN),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_STCN, SETTINGS_STCN),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_STCN, SETTINGS_STCN),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_STCN),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_STCN),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_WALLSTREETCN = 'wallstreetcn'
+    SETTINGS_NAME = 'wallstreetcn'
     WALLSTREETCN = {
-        'NAME': SETTINGS_WALLSTREETCN,
-        'MONGO': SETTINGS_WALLSTREETCN,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_WALLSTREETCN),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_WALLSTREETCN),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_WALLSTREETCN),
-        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_WALLSTREETCN),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_WALLSTREETCN, SETTINGS_WALLSTREETCN),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN, SETTINGS_WALLSTREETCN),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_WALLSTREETCN),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_WALLSTREETCN),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_CHUANSONGME = 'chuansongme'
+    SETTINGS_NAME = 'chuansongme'
     CHUANSONGME = {
-        'NAME': SETTINGS_CHUANSONGME,
-        'MONGO': SETTINGS_CHUANSONGME,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_CHUANSONGME),
-        'FINISHED_IDS': "{0}_finished_ids".format(SETTINGS_CHUANSONGME),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_CHUANSONGME),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_CHUANSONGME),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_CHUANSONGME),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_CHUANSONGME, SETTINGS_CHUANSONGME),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_CHUANSONGME, SETTINGS_CHUANSONGME),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_CHUANSONGME),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'FINISHED_IDS': "{0}_finished_ids".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 120,
         'MAX_POOL_SIZE': 5,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_CHUANSONGME),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': True
     }
 
-    SETTINGS_I36KR = '36kr'
+    SETTINGS_NAME = '36kr'
     I36KR = {
-        'NAME': SETTINGS_I36KR,
-        'MONGO': SETTINGS_I36KR,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_I36KR),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_I36KR),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_I36KR),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_I36KR),
-        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_I36KR),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_I36KR, SETTINGS_I36KR),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_I36KR, SETTINGS_I36KR),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_I36KR),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_I36KR),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_IRESEARCH = 'iresearch'
+    SETTINGS_NAME = 'iresearch'
     IRESEARCH = {
-        'NAME': SETTINGS_IRESEARCH,
-        'MONGO': SETTINGS_IRESEARCH,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_IRESEARCH),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_IRESEARCH),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_IRESEARCH),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_IRESEARCH),
-        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_IRESEARCH),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IRESEARCH, SETTINGS_IRESEARCH),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IRESEARCH, SETTINGS_IRESEARCH),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IRESEARCH),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_IRESEARCH),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_IYIOU = 'iyiou'
+    SETTINGS_NAME = 'iyiou'
     IYIOU = {
-        'NAME': SETTINGS_IYIOU,
-        'MONGO': SETTINGS_IYIOU,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_IYIOU),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_IYIOU),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_IYIOU),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_IYIOU),
-        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_IYIOU),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IYIOU, SETTINGS_IYIOU),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IYIOU, SETTINGS_IYIOU),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IYIOU),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 30,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_IYIOU),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }
 
-    SETTINGS_IHEIMA = 'iheima'
+    SETTINGS_NAME = 'iheima'
     IHEIMA = {
-        'NAME': SETTINGS_IHEIMA,
-        'MONGO': SETTINGS_IHEIMA,
-        'MONGO_URLS': "{0}_urls".format(SETTINGS_IHEIMA),
-        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_IHEIMA),
-        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_IHEIMA),
-        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_IHEIMA),
-        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_IHEIMA),
-        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_IHEIMA, SETTINGS_IHEIMA),
-        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_IHEIMA, SETTINGS_IHEIMA),
-        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_IHEIMA),
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
         'RESTART_INTERVAL': 120,
         'MAX_POOL_SIZE': 2,
-        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_IHEIMA),
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
+        'IS_OPEN_CACHE': False
+    }
+
+    SETTINGS_NAME = 'cyzone'
+    CYZONE = {
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
+        'RESTART_INTERVAL': 60,
+        'MAX_POOL_SIZE': 2,
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
+        'IS_OPEN_CACHE': False
+    }
+
+    SETTINGS_NAME = 'guokr'
+    GUOKR = {
+        'NAME': SETTINGS_NAME,
+        'MONGO': SETTINGS_NAME,
+        'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
+        'WORK_PATH_PRD1': "{0}//{1}".format(RSYNC_PRD1, SETTINGS_NAME),
+        'WORK_PATH_PRD2': "{0}//sites//{1}".format(RSYNC_PRD2, SETTINGS_NAME),
+        'FINISHED_TXT_PATH': "{0}//{1}//txt".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_ID_PATH': "{0}//{1}//finished_id.csv".format(RSYNC_PRD1, SETTINGS_NAME),
+        'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
+        'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
+        'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
+        'RESTART_INTERVAL': 0,
+        'MAX_POOL_SIZE': 2,
+        'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False
     }

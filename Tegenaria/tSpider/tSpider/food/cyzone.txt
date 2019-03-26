@@ -1,0 +1,7 @@
+https://api1.cyzone.cn/v2/content/channel/detail?page=1&channel_id=6
+https://api1.cyzone.cn/v2/content/channel/detail?page=1&channel_id=5
+https://api1.cyzone.cn/v2/content/channel/detail?page=1&channel_id=7
+https://api1.cyzone.cn/v2/content/channel/detail?page=1&channel_id=8
+https://api1.cyzone.cn/v2/content/channel/detail?page=1&channel_id=9
+https://api1.cyzone.cn/v2/content/channel/detail?page=1&channel_id=10
+https://api1.cyzone.cn/v2/content/channel/detail?page=1&channel_id=12
