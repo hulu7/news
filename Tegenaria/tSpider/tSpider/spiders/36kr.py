@@ -26,12 +26,13 @@ class I36kr():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd1 = Settings.I36KR['WORK_PATH_PRD1']
-        self.finished_txt_path = Settings.I36KR['FINISHED_TXT_PATH']
-        self.url_path = Settings.I36KR['URL_PATH']
-        self.mongo = Settings.I36KR['MONGO']
-        self.name = Settings.I36KR['NAME']
-        self.max_pool_size = Settings.I36KR['MAX_POOL_SIZE']
+        settings_name = Settings.I36KR
+        self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
+        self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
+        self.url_path = settings_name['URL_PATH']
+        self.mongo = settings_name['MONGO']
+        self.name = settings_name['NAME']
+        self.max_pool_size = settings_name['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
 

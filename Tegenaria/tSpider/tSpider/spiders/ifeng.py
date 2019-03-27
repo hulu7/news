@@ -25,15 +25,16 @@ class Ifeng():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd1 = Settings.IFENG['WORK_PATH_PRD1']
-        self.finished_txt_path = Settings.IFENG['FINISHED_TXT_PATH']
-        self.url_path = Settings.IFENG['URL_PATH']
-        self.mongo = Settings.IFENG['MONGO']
-        self.name = Settings.IFENG['NAME']
-        self.max_pool_size = Settings.IFENG['MAX_POOL_SIZE']
+        settings_name = Settings.IFENG
+        self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
+        self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
+        self.url_path = settings_name['URL_PATH']
+        self.mongo = settings_name['MONGO']
+        self.name = settings_name['NAME']
+        self.max_pool_size = settings_name['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
-        self.is_open_cache = Settings.IFENG['IS_OPEN_CACHE']
+        self.is_open_cache = settings_name['IS_OPEN_CACHE']
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')

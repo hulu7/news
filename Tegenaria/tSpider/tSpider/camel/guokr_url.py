@@ -15,7 +15,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Iheima():
+class Guokr():
 
     def __init__(self):
 
@@ -26,7 +26,7 @@ class Iheima():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = Settings.IHEIMA
+        settings_name = Settings.GUOKR
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']
         self.name = settings_name['NAME']
@@ -41,16 +41,16 @@ class Iheima():
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
-        href_items = html.xpath(".//*[contains(@class, 'title')]")
+        href_items = html.xpath(".//a")
         for item in href_items:
             href = item.xpath("@href")
             valid = True
             if len(href) == 0:
                 continue
             href_url = href[0]
-            hasId = str(filter(str.isdigit, href_url))
-            if len(hasId) == 0:
-                print 'Invalid url for no id: {0}'.format(href_url)
+            isArticle = 'article' in href_url
+            if isArticle is False:
+                print 'Invalid url for: {0}'.format(href_url)
                 continue
             for good in self.goodkeys:
                 if valid == True:
@@ -64,7 +64,7 @@ class Iheima():
                     valid = False
             if valid:
                 short_url_parts = re.split(r'[., /, _, -]', href_url)
-                id = short_url_parts[len(short_url_parts) - 2]
+                id = short_url_parts[short_url_parts.index('article') + 1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
                 title_list1 = item.xpath(".//text()")
@@ -100,7 +100,7 @@ class Iheima():
             return
         self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
         print 'Start {0} requests'.format(self.name)
-        self.badkeys = []
+        self.badkeys = ['comments']
         self.goodkeys = []
 
         new_urls = []
@@ -109,7 +109,7 @@ class Iheima():
 
         for url in url_list:
             if self.doraemon.isEmpty(url) is False:
-                new_urls.append([url, ''])
+                new_urls.append([url, " "])
 
         if len(new_urls) == 0:
             print 'No url.'
@@ -121,5 +121,5 @@ class Iheima():
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
 if __name__ == '__main__':
-    iheima=Iheima()
-    iheima.start_requests()
+    guokr=Guokr()
+    guokr.start_requests()

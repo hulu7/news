@@ -28,7 +28,7 @@ class Gongzhonghao():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd2 = Settings.CHUANSONGME['WORK_PATH_PRD2']
+        self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = "gongzhonghao_test"
         self.log_path = Settings.LOG_PATH_PRD2
         self.finished_ids = "gongzhonghao_test"

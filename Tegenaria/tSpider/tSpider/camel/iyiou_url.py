@@ -26,14 +26,15 @@ class Iyiou():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd2 = Settings.IYIOU['WORK_PATH_PRD2']
-        self.mongo = Settings.IYIOU['MONGO_URLS']
-        self.name = Settings.IYIOU['NAME']
-        self.max_pool_size = Settings.IYIOU['MAX_POOL_SIZE']
+        settings_name = Settings.IYIOU
+        self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
+        self.mongo = settings_name['MONGO_URLS']
+        self.name = settings_name['NAME']
+        self.max_pool_size = settings_name['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH_PRD2
-        self.urls = Settings.IYIOU['URLS']
-        self.restart_path = Settings.IYIOU['RESTART_PATH']
-        self.restart_interval = Settings.IYIOU['RESTART_INTERVAL']
+        self.urls = settings_name['URLS']
+        self.restart_path = settings_name['RESTART_PATH']
+        self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = Settings.TODAY
 
     def parse(self, response):

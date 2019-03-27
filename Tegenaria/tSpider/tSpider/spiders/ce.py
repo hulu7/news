@@ -26,12 +26,13 @@ class Ce():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd1 = Settings.CE['WORK_PATH_PRD1']
-        self.finished_txt_path = Settings.CE['FINISHED_TXT_PATH']
-        self.url_path = Settings.CE['URL_PATH']
-        self.mongo = Settings.CE['MONGO']
-        self.name = Settings.CE['NAME']
-        self.max_pool_size = Settings.CE['MAX_POOL_SIZE']
+        settings_name = Settings.CE
+        self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
+        self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
+        self.url_path = settings_name['URL_PATH']
+        self.mongo = settings_name['MONGO']
+        self.name = settings_name['NAME']
+        self.max_pool_size = settings_name['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
 

@@ -379,7 +379,7 @@ class Settings():
         'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
         'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
         'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(RSYNC_PRD2, SETTINGS_NAME),
-        'RESTART_INTERVAL': 0,
+        'RESTART_INTERVAL': 60,
         'MAX_POOL_SIZE': 2,
         'URLS': "{0}//{1}.txt".format(CAMEL_FOOD, SETTINGS_NAME),
         'IS_OPEN_CACHE': False

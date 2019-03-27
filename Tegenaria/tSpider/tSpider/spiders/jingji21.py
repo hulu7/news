@@ -26,15 +26,16 @@ class Jingji21():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd1 = Settings.JINGJI21['WORK_PATH_PRD1']
-        self.finished_txt_path = Settings.JINGJI21['FINISHED_TXT_PATH']
-        self.url_path = Settings.JINGJI21['URL_PATH']
-        self.mongo = Settings.JINGJI21['MONGO']
-        self.name = Settings.JINGJI21['NAME']
-        self.max_pool_size = Settings.JINGJI21['MAX_POOL_SIZE']
+        settings_name = Settings.JINGJI21
+        self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
+        self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
+        self.url_path = settings_name['URL_PATH']
+        self.mongo = settings_name['MONGO']
+        self.name = settings_name['NAME']
+        self.max_pool_size = settings_name['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH
         self.today = Settings.TODAY
-        self.is_open_cache = Settings.JINGJI21['IS_OPEN_CACHE']
+        self.is_open_cache = settings_name['IS_OPEN_CACHE']
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')

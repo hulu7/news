@@ -26,14 +26,15 @@ class Cankaoxiaoxi():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd2 = Settings.CANKAOXIAOXI['WORK_PATH_PRD2']
-        self.mongo = Settings.CANKAOXIAOXI['MONGO_URLS']
-        self.name = Settings.CANKAOXIAOXI['NAME']
-        self.max_pool_size = Settings.CANKAOXIAOXI['MAX_POOL_SIZE']
+        settings_name = Settings.CANKAOXIAOXI
+        self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
+        self.mongo = settings_name['MONGO_URLS']
+        self.name = settings_name['NAME']
+        self.max_pool_size = settings_name['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH_PRD2
-        self.urls = Settings.CANKAOXIAOXI['URLS']
-        self.restart_path = Settings.CANKAOXIAOXI['RESTART_PATH']
-        self.restart_interval = Settings.CANKAOXIAOXI['RESTART_INTERVAL']
+        self.urls = settings_name['URLS']
+        self.restart_path = settings_name['RESTART_PATH']
+        self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = Settings.TODAY
 
     def parse(self, response):

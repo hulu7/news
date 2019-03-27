@@ -26,8 +26,9 @@ class Cyzone():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd1 = Settings.CYZONE['WORK_PATH_PRD1']
-        self.finished_txt_path = Settings.CYZONE['FINISHED_TXT_PATH']
+        settings_name = Settings.CYZONE
+        self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
+        self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
         self.url_path = Settings.CYZONE['URL_PATH']
         self.mongo = Settings.CYZONE['MONGO']
         self.name = Settings.CYZONE['NAME']

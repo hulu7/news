@@ -28,14 +28,15 @@ class Chuansongme():
         self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd2 = Settings.CHUANSONGME['WORK_PATH_PRD2']
-        self.mongo = Settings.CHUANSONGME['MONGO_URLS']
-        self.name = Settings.CHUANSONGME['NAME']
-        self.max_pool_size = Settings.CHUANSONGME['MAX_POOL_SIZE']
+        settings_name = Settings.CHUANSONGME
+        self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
+        self.mongo = settings_name['MONGO_URLS']
+        self.name = settings_name['NAME']
+        self.max_pool_size = settings_name['MAX_POOL_SIZE']
         self.log_path = Settings.LOG_PATH_PRD2
-        self.urls = Settings.CHUANSONGME['URLS']
-        self.restart_path = Settings.CHUANSONGME['RESTART_PATH']
-        self.restart_interval = Settings.CHUANSONGME['RESTART_INTERVAL']
+        self.urls = settings_name['URLS']
+        self.restart_path = settings_name['RESTART_PATH']
+        self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = Settings.TODAY
 
     def parse(self, response):
