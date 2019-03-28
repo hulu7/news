@@ -107,3 +107,4 @@ class Settings():
         self.YICAI = self.SettingsFormat('yicai', '第一财经', 30, 2, False)
         self.WALLSTREETCN = self.SettingsFormat('wallstreetcn', '华尔街见闻', 30, 2, False)
         self.I36KR = self.SettingsFormat('36kr', '36氪', 30, 2, False)
+        self.BAIJIA = self.SettingsFormat('baijia', '百家号', 60, 2, False)
