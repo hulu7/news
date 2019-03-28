@@ -18,23 +18,25 @@ from middlewares.doraemonMiddleware import Doraemon
 class Eeo():
 
     def __init__(self):
-
+        self.settings = Settings()
+        self.settings.CreateSettings()
         self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd1)
-        self.doraemon.createFilePath(Settings.LOG_PATH)
+        self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = Settings.EEO
+        settings_name = self.settings.EEO
+        self.source = settings_name['SOURCE_NAME']
         self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
         self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
         self.url_path = settings_name['URL_PATH']
         self.mongo = settings_name['MONGO']
         self.name = settings_name['NAME']
         self.max_pool_size = settings_name['MAX_POOL_SIZE']
-        self.log_path = Settings.LOG_PATH
-        self.today = Settings.TODAY
+        self.log_path = self.settings.LOG_PATH
+        self.today = self.settings.TODAY
         self.is_open_cache = settings_name['IS_OPEN_CACHE']
 
 
@@ -84,7 +86,8 @@ class Eeo():
                 'title': title,
                 'id': id,
                 'download_time': self.today,
-                'is_open_cache': self.is_open_cache
+                'is_open_cache': self.is_open_cache,
+                'source': self.source
             }
 
         if len(article_1) > 0:
@@ -111,7 +114,8 @@ class Eeo():
                 'title': title,
                 'id': id,
                 'download_time': self.today,
-                'is_open_cache': self.is_open_cache
+                'is_open_cache': self.is_open_cache,
+                'source': self.source
             }
 
         if len(article_2) > 0:
@@ -138,7 +142,8 @@ class Eeo():
                 'title': title,
                 'id': id,
                 'download_time': self.today,
-                'is_open_cache': self.is_open_cache
+                'is_open_cache': self.is_open_cache,
+                'source': self.source
             }
 
         print 'End to parse: {0}'.format(current_url)

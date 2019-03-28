@@ -11,8 +11,12 @@ sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from settings import Settings
 
 class MongoMiddleware():
+    def __init__(self):
+        self.settings = Settings()
+        self.settings.CreateSettings()
+
     def insert(self, database, data):
-        client = pymongo.MongoClient(Settings.MONGO_URI)
+        client = pymongo.MongoClient(self.settings.MONGO_URI)
         db = client[database]
         db['contentInfo'].insert(data)
         client.close()

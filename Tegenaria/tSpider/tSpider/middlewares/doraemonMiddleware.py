@@ -18,11 +18,12 @@ from bloomfilterOnRedis import BloomFilter
 class Doraemon():
 
     def __init__(self):
-
+        settings = Settings()
+        settings.CreateSettings()
         self.file = FileIOMiddleware()
-        self.rconn = redis.Redis(Settings.REDIS_HOST, Settings.REDIS_PORT)
-        self.bf = BloomFilter(self.rconn, Settings.BLOOMFILTER_NAME)
-        self.disable_restart_interval = Settings.DISABLE_RESTART_INTERVAL
+        self.rconn = redis.Redis(settings.REDIS_HOST, settings.REDIS_PORT)
+        self.bf = BloomFilter(self.rconn, settings.BLOOMFILTER_NAME)
+        self.disable_restart_interval = settings.DISABLE_RESTART_INTERVAL
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)

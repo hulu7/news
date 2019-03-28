@@ -14,6 +14,10 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 
 class SeleniumMiddleware(object):
+    def __init__(self):
+        self.settings = Settings()
+        self.settings.CreateSettings()
+
     def init(self, timeout=None, executable_path=None, proxy=None):
         self.file = FileIOMiddleware()
         self.timeout = timeout
@@ -35,7 +39,7 @@ class SeleniumMiddleware(object):
         gc.collect()
 
     def chrome_request(self, url, log_path, proxy):
-        self.init(timeout=Settings.SELENIUM_TIMEOUT, executable_path=Settings.CHROMEDRIVER_PATH, proxy=proxy)
+        self.init(timeout=self.settings.SELENIUM_TIMEOUT, executable_path=self.settings.CHROMEDRIVER_PATH, proxy=proxy)
         try:
             self.file.logger(log_path, 'Starting Chrome for: {0}'.format(url))
             self.browser.get(url)
