@@ -48,7 +48,7 @@ class Iceo():
             return
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _, %, "]', current_url)
-        current_id = short_url_parts[short_url_parts.index('iceo') + 6]
+        current_id = short_url_parts[len(short_url_parts) - 2]
         html = etree.HTML(response['response'].page_source)
         article_content = html.xpath(".//*[contains(@class,'col-main1')]")
         data = {}

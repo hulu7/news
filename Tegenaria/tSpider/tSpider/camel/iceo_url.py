@@ -67,7 +67,7 @@ class Iceo():
                     valid = False
             if valid:
                 short_url_parts = re.split(r'[., /, _, %, "]', href_url)
-                id = short_url_parts[short_url_parts.index('iceo') + 6]
+                id = short_url_parts[len(short_url_parts) - 2]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
                 title_list1 = item.xpath(".//text()")
