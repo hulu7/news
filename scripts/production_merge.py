@@ -154,7 +154,7 @@ class ProductionMerge():
 
             if isOutputPathExists is False:
 
-                self.writeToCSVWithoutHeader(out_csv_file, ['title', 'url', 'time', 'catalog', 'user'])
+                self.writeToCSVWithoutHeader(out_csv_file, ['title', 'url', 'time', 'catalog', 'user', 'source'])
 
             for item in csv_content[1:]:
 
@@ -178,7 +178,7 @@ class ProductionMerge():
 
                     item[3] = today
 
-                output_content.append([item[1], item[2], item[3], catalog[item[4]], user])
+                output_content.append([item[1], item[2], item[3], catalog[item[4]], user, item[7]])
 
                 finished_titles.append(item[1])
 

@@ -44,7 +44,7 @@ class UpdateMongoDeepNews():
                    'recommend': [],
                    'columnID': '',
                    'columnName': 'article',
-                   'author': '',
+                   'author': data[5],
                    'clickVolume': '',
                    'forceUrl': data[1],
                    'articleCover': 'images/image.jpg',

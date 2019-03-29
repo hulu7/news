@@ -80,6 +80,9 @@ class CommitData():
 
     def commitSingleCatalogSource(self, catalog_name, source_name, customer_data_folder, customer_data_folder_txt):
         catalog_file_path = self.class_finished_path + '/' + catalog_name + '/' + catalog_name + '.csv'
+        catalog_exists = os.path.exists(catalog_file_path)
+        if catalog_exists is False:
+            return
         commit_csv_path = customer_data_folder + '/' + self.today + '.csv'
         commit_finished_file_path = customer_data_folder + '/' + source_name + '_committed.csv'
         current_catalog_data = self.readFromCSV(catalog_file_path)
@@ -87,7 +90,7 @@ class CommitData():
         commit_csv_exists = os.path.exists(commit_csv_path)
         commit_finished_exists = os.path.exists(commit_finished_file_path)
         if commit_csv_exists is False:
-            self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache'])
+            self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source'])
         if commit_finished_exists is False:
             self.writeToCSVWithoutHeader(commit_finished_file_path, ['id'])
 
@@ -110,6 +113,9 @@ class CommitData():
                     file = (source_name + '_' + id + '.txt')
                     origin_txt_path = self.class_finished_path + '/' + catalog_name + '/txt/' + file
                     destination_txt_path = customer_data_folder_txt + '/' + file
+                    origin_txt_exists = os.path.exists(origin_txt_path)
+                    if origin_txt_exists is False:
+                        continue
                     finishedIds.append(id)
                     self.writeToCSVWithoutHeader(commit_finished_file_path, [id])
                     self.writeToCSVWithoutHeader(commit_csv_path, data)
