@@ -13,7 +13,7 @@ from settings import Settings
 class MongoMiddleware():
     def __init__(self):
         self.settings = Settings()
-        self.settings.CreateSettings()
+        self.settings.CreateCommonSettings()
 
     def insert(self, database, data):
         client = pymongo.MongoClient(self.settings.MONGO_URI)

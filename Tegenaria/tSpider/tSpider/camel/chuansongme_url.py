@@ -21,7 +21,6 @@ class Chuansongme():
 
     def __init__(self):
         self.settings = Settings()
-        self.settings.CreateSettings()
         self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
@@ -30,7 +29,7 @@ class Chuansongme():
 
 
     def getSettings(self):
-        settings_name = self.settings.CHUANSONGME
+        settings_name = self.settings.CreateSettings('chuansongme')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']

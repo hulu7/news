@@ -15,11 +15,10 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Eeo():
+class I36kr():
 
     def __init__(self):
         self.settings = Settings()
-        self.settings.CreateSettings()
         self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
@@ -27,7 +26,7 @@ class Eeo():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.I36KR
+        settings_name = self.settings.CreateSettings('i36kr')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']
@@ -71,7 +70,7 @@ class Eeo():
                 title = ""
                 title_list1 = item.xpath(".//text()")
                 if len(title_list1) > 0:
-                    title = title_list1[0]
+                    title = ''.join(title_list1).strip()
                     print title
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
@@ -124,5 +123,5 @@ class Eeo():
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
 if __name__ == '__main__':
-    eeo=Eeo()
-    eeo.start_requests()
+    i36kr=I36kr()
+    i36kr.start_requests()

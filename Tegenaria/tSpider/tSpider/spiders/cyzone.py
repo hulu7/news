@@ -19,7 +19,6 @@ class Cyzone():
 
     def __init__(self):
         self.settings = Settings()
-        self.settings.CreateSettings()
         self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
@@ -27,7 +26,7 @@ class Cyzone():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CYZONE
+        settings_name = self.settings.CreateSettings('cyzone')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
         self.finished_txt_path = settings_name['FINISHED_TXT_PATH']

@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
+from middlewares.fileIOMiddleware import FileIOMiddleware
 import time
 class Settings():
 
     def __init__(self):
+        self.file = FileIOMiddleware()
         self.RSYNC_PRD1 = "//home//dev//Data//rsyncData//prd4"
         self.RSYNC_PRD2 = "//home//dev//Data//rsyncData//prd3"
         self.CAMEL_FOOD = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//food"
+        self.COBWEBS = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs/silk.txt"
 
         self.SELENIUM_TIMEOUT = 300
         self.CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
@@ -81,31 +88,22 @@ class Settings():
             'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(self.RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
             'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(self.RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
             'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(self.RSYNC_PRD2, SETTINGS_NAME),
-            'RESTART_INTERVAL': RESTART_INTERVAL,
-            'MAX_POOL_SIZE': MAX_POOL_SIZE,
+            'RESTART_INTERVAL': int(RESTART_INTERVAL),
+            'MAX_POOL_SIZE': int(MAX_POOL_SIZE),
             'URLS': "{0}//{1}.txt".format(self.CAMEL_FOOD, SETTINGS_NAME),
-            'IS_OPEN_CACHE': IS_OPEN_CACHE,
+            'IS_OPEN_CACHE': str(IS_OPEN_CACHE) == "True",
             'SOURCE_NAME': SOURCE_NAME
         }
 
-    def CreateSettings(self):
-        self.HUXIU = self.SettingsFormat('huxiu', '虎嗅', 30, 2, False)
-        self.CANKAOXIAOXI = self.SettingsFormat('cankaoxiaoxi', '参考消息', 10, 2, False)
-        self.CE = self.SettingsFormat('ce', '中国经济网', 20, 2, False)
-        self.CHUANSONGME = self.SettingsFormat('chuansongme', '微信-传送门', 120, 5, True)
-        self.CYZONE = self.SettingsFormat('cyzone', '创业邦', 60, 2, False)
-        self.EEO = self.SettingsFormat('eeo', '经济观察网', 120, 2, False)
-        self.GUANCHA = self.SettingsFormat('guancha', '观察者网', 5, 2, False)
-        self.GUOKR = self.SettingsFormat('guokr', '果壳网', 60, 2, False)
-        self.HUANQIU = self.SettingsFormat('huanqiu', '环球网', 30, 2, False)
-        self.IFENG = self.SettingsFormat('ifeng', '凤凰网', 10, 2, False)
-        self.IHEIMA = self.SettingsFormat('iheima', '黑马网', 120, 2, False)
-        self.IRESEARCH = self.SettingsFormat('iresearch', '艾瑞网', 120, 2, False)
-        self.IYIOU = self.SettingsFormat('iyiou', '亿欧网', 60, 2, False)
-        self.JINGJI21 = self.SettingsFormat('jingji21', '21经济网', 60, 2, False)
-        self.STCN = self.SettingsFormat('stcn', '证券时报网', 30, 2, False)
-        self.YICAI = self.SettingsFormat('yicai', '第一财经', 30, 2, False)
-        self.WALLSTREETCN = self.SettingsFormat('wallstreetcn', '华尔街见闻', 30, 2, False)
-        self.I36KR = self.SettingsFormat('36kr', '36氪', 30, 2, False)
-        self.BAIJIA = self.SettingsFormat('baijia', '百家号', 60, 2, False)
-        self.ICEO = self.SettingsFormat('iceo', '中国企业家', 120, 2, False)
+    def CreateSettings(self, NAME):
+        content = self.file.readFromTxt(self.COBWEBS)
+        config_list = content.split('\n')
+        for config in config_list:
+            if NAME in config:
+                print "Find the :{0}".format(NAME)
+                data = config.split(',')
+                return self.SettingsFormat(data[0], data[1], data[2], data[3], data[4])
+        print "Cannot find the :{0}".format(NAME)
+
+    def CreateCommonSettings(self):
+        return self.SettingsFormat('0', '0', '0', '0','0')

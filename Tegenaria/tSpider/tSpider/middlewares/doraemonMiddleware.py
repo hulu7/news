@@ -19,7 +19,7 @@ class Doraemon():
 
     def __init__(self):
         settings = Settings()
-        settings.CreateSettings()
+        settings.CreateCommonSettings()
         self.file = FileIOMiddleware()
         self.rconn = redis.Redis(settings.REDIS_HOST, settings.REDIS_PORT)
         self.bf = BloomFilter(self.rconn, settings.BLOOMFILTER_NAME)

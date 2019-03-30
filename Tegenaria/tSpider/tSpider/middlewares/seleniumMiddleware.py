@@ -16,7 +16,7 @@ from middlewares.fileIOMiddleware import FileIOMiddleware
 class SeleniumMiddleware(object):
     def __init__(self):
         self.settings = Settings()
-        self.settings.CreateSettings()
+        self.settings.CreateCommonSettings()
 
     def init(self, timeout=None, executable_path=None, proxy=None):
         self.file = FileIOMiddleware()

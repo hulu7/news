@@ -18,7 +18,6 @@ class Ifeng():
 
     def __init__(self):
         self.settings = Settings()
-        self.settings.CreateSettings()
         self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
@@ -26,7 +25,7 @@ class Ifeng():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.IFENG
+        settings_name = self.settings.CreateSettings('ifeng')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
         self.finished_txt_path = settings_name['FINISHED_TXT_PATH']

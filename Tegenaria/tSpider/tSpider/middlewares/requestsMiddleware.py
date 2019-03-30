@@ -15,7 +15,7 @@ from middlewares.fileIOMiddleware import FileIOMiddleware
 class RequestsMiddleware():
     def __init__(self):
         self.settings = Settings()
-        self.settings.CreateSettings()
+        self.settings.CreateCommonSettings()
 
     def init(self, headers=None, host=None, referer=None):
         self.file = FileIOMiddleware()

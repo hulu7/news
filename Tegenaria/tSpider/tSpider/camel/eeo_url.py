@@ -19,7 +19,6 @@ class Eeo():
 
     def __init__(self):
         self.settings = Settings()
-        self.settings.CreateSettings()
         self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
@@ -27,7 +26,7 @@ class Eeo():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.EEO
+        settings_name = self.settings.CreateSettings('eeo')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']
