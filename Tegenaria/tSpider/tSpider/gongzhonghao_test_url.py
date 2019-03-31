@@ -20,25 +20,23 @@ from middlewares.doraemonMiddleware import Doraemon
 class Gongzhonghao():
 
     def __init__(self):
-
+        self.settings = Settings()
         self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd2)
-        self.doraemon.createFilePath(Settings.LOG_PATH)
 
     def getSettings(self):
-        self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
+        self.work_path_prd2 = "//home//dev//Data//rsyncData//"
         self.mongo = "gongzhonghao_test"
-        self.log_path = Settings.LOG_PATH_PRD2
         self.finished_ids = "gongzhonghao_test"
-        self.log_path = Settings.LOG_PATH
+        self.log_path = "//home//dev//Data//rsyncData//"
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
-        key = response['request_title']
+        key = response['request_title'].strip()
         href_item = html.xpath(".//*[contains(@class, 'pagedlist_item')]")
         if len(href_item) == 0:
             print 'No data for: {0}'.format(key)
@@ -56,13 +54,13 @@ class Gongzhonghao():
         print 'Start requests'
         new_urls = []
         all_finished_id = list(self.doraemon.getAllHasSet(self.finished_ids))
-        txt_path = '/home/dev/Repository/news/Tegenaria/tSpider/tSpider/food/gongzhonghao_test.txt'
+        txt_path = '/home/dev/Data/rsyncData/gongzhonghao_test.txt'
         gonzhonghao = self.file.readFromTxt(txt_path)
         keys = gonzhonghao.split('\n')
 
         for key in keys:
             if key not in all_finished_id:
-                tmp_url = "https://www.iivv.com/account/{0}".format(key)
+                tmp_url = "https://chuansongme.com/account/{0}".format(key)
                 new_urls.append([tmp_url, key])
 
         if len(new_urls) == 0:

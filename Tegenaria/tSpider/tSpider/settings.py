@@ -5,6 +5,7 @@ sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.fileIOMiddleware import FileIOMiddleware
 import time
+import datetime
 class Settings():
 
     def __init__(self):
@@ -71,7 +72,7 @@ class Settings():
 
         self.BLOOMFILTER_NAME = "tegenaria:dupefilter"
 
-        self.TODAY = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+        self.TODAY = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
 
         self.CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(self.RSYNC_PRD1)
 
