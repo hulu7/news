@@ -10,8 +10,29 @@ import shutil
 import time
 reload(sys)
 sys.setdefaultencoding('utf-8')
+from bloomfilterOnRedis import BloomFilter
+import redis
 
 class ProductionMerge():
+    def __init__(self):
+        self.rconn = redis.Redis('127.0.0.1', 6379)
+        self.bf = BloomFilter(self.rconn, 'supplier:merge')
+
+    def isDuplicated(self, title):
+        title_encode = str(title).encode("utf-8")
+        if self.bf.isContains(title_encode):
+            print 'Title {0} exists!'.format(title)
+            return True
+        else:
+            self.bf.insert(title_encode)
+            print 'Title {0} not exist!'.format(title)
+            return False
+
+    def storeFinished(self, title):
+        print 'Start to store title: {0}'.format(title)
+        title_encode = title.encode("utf-8")
+        self.bf.insert(title_encode)
+
     def readFromCSV(self, filePath):
         content = []
         with open(filePath, 'r') as scv_file:
@@ -114,7 +135,7 @@ class ProductionMerge():
                 self.writeToCSVWithoutHeader(out_csv_file, ['title', 'url', 'time', 'catalog', 'user', 'source'])
 
             for item in csv_content[1:]:
-                if item[1] in finished_titles:
+                if self.isDuplicated(item[1]) is True:
                     for content in output_content:
                         if content[0] == item[1]:
                             if user not in content[4]:
@@ -126,7 +147,7 @@ class ProductionMerge():
                 if item[3] == '':
                     item[3] = today
                 output_content.append([item[1], item[2], item[3], catalog[item[4]], user, item[7]])
-                finished_titles.append(item[1])
+                self.storeFinished(item[1])
 
         for content in output_content:
             self.writeToCSVWithoutHeader(out_csv_file, content)

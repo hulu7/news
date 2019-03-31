@@ -11,8 +11,29 @@ import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
+from bloomfilterOnRedis import BloomFilter
+import redis
 
 class CommitData():
+    def __init__(self):
+        self.rconn = redis.Redis('127.0.0.1', 6379)
+        self.bf = BloomFilter(self.rconn, 'supplier:commit')
+
+    def isDuplicated(self, title):
+        title_encode = str(title).encode("utf-8")
+        if self.bf.isContains(title_encode):
+            print 'Title {0} exists!'.format(title)
+            return True
+        else:
+            self.bf.insert(title_encode)
+            print 'Title {0} not exist!'.format(title)
+            return False
+
+    def storeFinished(self, title):
+        print 'Start to store title: {0}'.format(title)
+        title_encode = title.encode("utf-8")
+        self.bf.insert(title_encode)
+
     def readFromCSV(self, filePath):
         content = []
         with open(filePath, 'r') as scv_file:
@@ -109,17 +130,19 @@ class CommitData():
             item_date_int = int(data[3])
             if item_date_int >= today_int:
                 id = data[0].replace('\xef\xbb\xbf','')
-                if id not in finishedIds:
+                title = data[1]
+                if self.isDuplicated(title) is False:
                     file = (source_name + '_' + id + '.txt')
                     origin_txt_path = self.class_finished_path + '/' + catalog_name + '/txt/' + file
                     destination_txt_path = customer_data_folder_txt + '/' + file
                     origin_txt_exists = os.path.exists(origin_txt_path)
                     if origin_txt_exists is False:
                         continue
-                    finishedIds.append(id)
                     self.writeToCSVWithoutHeader(commit_finished_file_path, [id])
                     self.writeToCSVWithoutHeader(commit_csv_path, data)
                     copyfile(origin_txt_path, destination_txt_path)
+                    self.storeFinished(title)
+                    finishedIds.append(id)
                     time_elapsed = time.time() - since
                     print(catalog_name + '_' + source_name + '_' + data[0] + ' and ' + str(len(finishedIds)) + 'itemts complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
 

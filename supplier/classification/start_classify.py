@@ -12,8 +12,29 @@ import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
+from bloomfilterOnRedis import BloomFilter
+import redis
 
 class UpdateProductionClass():
+    def __init__(self):
+        self.rconn = redis.Redis('127.0.0.1', 6379)
+        self.bf = BloomFilter(self.rconn, 'supplier:classification')
+
+    def isDuplicated(self, title):
+        title_encode = str(title).encode("utf-8")
+        if self.bf.isContains(title_encode):
+            print 'Title {0} exists!'.format(title)
+            return True
+        else:
+            self.bf.insert(title_encode)
+            print 'Title {0} not exist!'.format(title)
+            return False
+
+    def storeFinished(self, title):
+        print 'Start to store title: {0}'.format(title)
+        title_encode = title.encode("utf-8")
+        self.bf.insert(title_encode)
+
     def readFromCSV(self, filePath):
         content = []
         with open(filePath, 'r') as scv_file:
@@ -133,7 +154,7 @@ class UpdateProductionClass():
             if len(title) == 0 or len(url) == 0 or len(time_) == 0:
                 self.finishedIds.append(id)
                 continue
-            if id not in self.finishedIds:
+            if self.isDuplicated(title) is False:
                 file = '{0}_{1}.txt'.format(name, id)
                 most_possible = self.predictClass(title)
                 catalog = str(most_possible[0][0].split('__')[2])
@@ -146,6 +167,7 @@ class UpdateProductionClass():
                 YMD = self.extractTime(time_)
                 self.writeToCSVWithoutHeader(catalog_cache_path, [id])
                 self.finishedIds.append(id)
+                self.storeFinished(title)
                 self.writeToCSVWithoutHeader(catalog_path, [id, title, url, YMD, catalog, deep, is_open_cache, source])
                 origin_txt_path = '{0}/{1}'.format(self.txt_path, file)
                 classed_txt_path = '{0}/{1}/txt/{2}'.format(self.class_finished_path, catalog, file)
