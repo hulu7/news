@@ -20,4 +20,4 @@ baijia,百家号,60,2,False
 iceo,中国企业家,120,2,False
 gelonghui,格隆汇,60,2,False
 sohump,搜狐号,60,2,False
-i52rkl,我爱热可乐,0,2,False
+i52rkl,我爱热可乐,60,2,False
