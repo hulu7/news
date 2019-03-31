@@ -9,15 +9,13 @@ sys.setdefaultencoding('utf8')
 from lxml import etree
 import urlparse
 import re
-import json
-import urllib2
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Cyzone():
+class I52rkl():
 
     def __init__(self):
         self.settings = Settings()
@@ -28,7 +26,7 @@ class Cyzone():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('cyzone')
+        settings_name = self.settings.CreateSettings('i52rkl')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']
@@ -41,22 +39,20 @@ class Cyzone():
         self.today = self.settings.TODAY
 
     def parse(self, response):
-        current_url = response.url.encode('gbk')
+        current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
-        hjson = json.loads(response.read())
-
-        b = hjson['data']
-
-        if len(hjson['data']) == 0:
-            return
-
-        for item in hjson['data']:
-            href_url = item['url'].encode('gbk')
+        html = etree.HTML(response['response'].page_source)
+        href_items = html.xpath(".//*[contains(@class, 'excerpt')]/h2/a")
+        for item in href_items:
+            href = item.xpath("@href")
+            valid = True
+            if len(href) == 0:
+                continue
+            href_url = href[0]
             hasId = str(filter(str.isdigit, href_url))
             if len(hasId) == 0:
                 print 'Invalid url for no id: {0}'.format(href_url)
                 continue
-            valid = True
             for good in self.goodkeys:
                 if valid == True:
                     continue
@@ -68,9 +64,14 @@ class Cyzone():
                 if bad in href_url:
                     valid = False
             if valid:
-                id = str(item['content_id'])
+                short_url_parts = re.split(r'[., /, _]', href_url)
+                id = short_url_parts[len(short_url_parts) - 2]
                 url = urlparse.urljoin(current_url, href_url)
-                title = str(item['title'])
+                title = ""
+                title_list1 = item.xpath(".//text()")
+                if len(title_list1) > 0:
+                    title = ''.join(title_list1).strip()
+                    print title
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
                     data = {
@@ -106,26 +107,21 @@ class Cyzone():
 
         new_urls = []
         content = self.file.readFromTxt(self.urls)
-        url_content = content.split('\n')
+        url_list = content.split('\n')
 
-        for url in url_content:
+        for url in url_list:
             if self.doraemon.isEmpty(url) is False:
-                new_urls.append(url)
+                new_urls.append([url, ''])
 
         if len(new_urls) == 0:
             print 'No url.'
             return
 
-        for url in new_urls:
-            response = urllib2.urlopen(url)
-            if response.code != 200:
-                print 'status: ' + response.status_code
-                continue
-            self.parse(response)
-
-        self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(new_urls)), self.name))
-        print 'End for {0} requests of {1}.'.format(str(len(new_urls)), self.name)
+        request = BrowserRequest()
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
+        self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
+        print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
 if __name__ == '__main__':
-    cyzone=Cyzone()
-    cyzone.start_requests()
+    i52rkl=I52rkl()
+    i52rkl.start_requests()

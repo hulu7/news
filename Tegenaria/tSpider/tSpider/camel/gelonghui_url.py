@@ -17,7 +17,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Cyzone():
+class Gelonghui():
 
     def __init__(self):
         self.settings = Settings()
@@ -28,7 +28,7 @@ class Cyzone():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('cyzone')
+        settings_name = self.settings.CreateSettings('gelonghui')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']
@@ -44,14 +44,13 @@ class Cyzone():
         current_url = response.url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         hjson = json.loads(response.read())
+        data = hjson['result']
 
-        b = hjson['data']
-
-        if len(hjson['data']) == 0:
+        if len(data) == 0:
             return
 
-        for item in hjson['data']:
-            href_url = item['url'].encode('gbk')
+        for item in data:
+            href_url = "https://www.gelonghui.com/p/{0}".format(item['postId'])
             hasId = str(filter(str.isdigit, href_url))
             if len(hasId) == 0:
                 print 'Invalid url for no id: {0}'.format(href_url)
@@ -68,9 +67,9 @@ class Cyzone():
                 if bad in href_url:
                     valid = False
             if valid:
-                id = str(item['content_id'])
-                url = urlparse.urljoin(current_url, href_url)
-                title = str(item['title'])
+                id = str(item['postId'])
+                url = href_url
+                title = str(item['articleTitle'])
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
                     data = {
@@ -127,5 +126,5 @@ class Cyzone():
         print 'End for {0} requests of {1}.'.format(str(len(new_urls)), self.name)
 
 if __name__ == '__main__':
-    cyzone=Cyzone()
-    cyzone.start_requests()
+    gelonghui=Gelonghui()
+    gelonghui.start_requests()
