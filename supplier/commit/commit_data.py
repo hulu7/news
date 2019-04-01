@@ -122,8 +122,6 @@ class CommitData():
         for data in current_catalog_data:
             if current_catalog_data.index(data) == 0:
                 continue
-            if source_name not in data[2]:
-                continue
             if len(data[3]) == 0:
                 continue
 
