@@ -7,7 +7,7 @@ import time
 import re
 import csv
 
-base_dir = "/home/dev/Repository_Test_Data/classifier/fastText/"
+base_dir = "/home/dev/Data/npl/classifier/fastText_huxiu/"
 source_dir = base_dir + "source_data/"
 train_dir = base_dir + "train_data/"
 test_dir = base_dir + "test_data/"

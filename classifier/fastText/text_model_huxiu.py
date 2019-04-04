@@ -10,6 +10,7 @@ import time
 import jieba
 import os
 from six import iteritems
+import csv
 
 base_dir = "/home/dev/Data/npl/classifier/fastText_huxiu/"
 source_dir = base_dir + "source_data/"
@@ -20,39 +21,30 @@ modle_dir = base_dir + "model_data/"
 fw = open(modle_dir + "news.tab","w") #保存切分好的文本数据
 fw_type = open(modle_dir + "type.tab","w") #保存新闻类型，与news.tab一一对应
 num = -1
-source_files = os.listdir(source_dir)
+source_files = [
+    train_dir + "/huxiu_train.csv",
+    train_dir + "/ifeng_train.csv"
+]
+
 train_test_data_split = {}
+
+def readFromCSV(filePath):
+    content = []
+    with open(filePath, 'r') as scv_file:
+        content = list(csv.reader(scv_file))
+    scv_file.close()
+    return content
 
 print "starting..."
 since = time.time()
 
 for file in source_files:
-    num += 1
-    indir = source_dir + file
-    with open(indir, 'r') as fr:
-        lines = fr.readlines()
+    indir = file
+    lines = readFromCSV(indir)
+    lines.pop(0)
     for line in lines:
-        extract_items = line.split('_!_')
-        if len(extract_items) < 4:
-            continue
-        catalog_items = extract_items[2].split('_')
-        if len(catalog_items) > 1:
-            catalog = catalog_items[1]
-        else:
-            catalog = catalog_items[0]
-        if train_test_data_split.get(catalog) is None:
-            train_test_data_split[catalog] = {}
-        if train_test_data_split[catalog].get('count') is None:
-            train_test_data_split[catalog]['count'] = 1
-        else:
-            train_test_data_split[catalog]['count'] += 1
-
-        keywords_items = extract_items[4].split(',')
-        title = extract_items[3]
-        keywords = extract_items[4]
-        content = title + ',' + keywords
-
-        text = title.decode("utf-8").encode("utf-8")
+        content = line[0]
+        text = content.decode("utf-8").encode("utf-8")
         seg_text = jieba.cut(text.replace("\t", " ").replace("\n", " "))
         outline = " ".join(seg_text) + "\n"
         outline = outline.encode("utf-8")
@@ -60,7 +52,6 @@ for file in source_files:
         fw.flush()
         fw_type.write(str(num) + "\n")
         fw_type.flush()
-    fr.close()
 print "read file done!"
 fw.close()
 fw_type.flush()
