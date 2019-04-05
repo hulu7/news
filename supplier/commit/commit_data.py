@@ -158,7 +158,7 @@ class CommitData():
                     origin_txt_exists = os.path.exists(origin_txt_path)
                     if origin_txt_exists is False:
                         continue
-                    if customer_id == 'c0':
+                    if customer_id == 'dn201949100':
                         if self.isDuplicated(title, self.bf_huxiu) is True or self.isTitleOk(title) is False:
                             continue
                         self.storeFinished(title, self.bf_huxiu)
