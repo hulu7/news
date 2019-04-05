@@ -61,7 +61,7 @@ class Stcn():
         if len(not_fnd) > 0:
             article_0 = html.xpath(".//*[contains(@class,'box_left')]")
             article_1 = html.xpath(".//*[contains(@class,'xiangxi')]")
-            article_2 = html.xpath(".//*[contains(@class,'article-detail')]")
+            article_2 = html.xpath(".//*[contains(@class,'main')]")
             if len(article_0) > 0 and len(article_1) == 0:
                 content0_1 = html.xpath(".//div[contains(@class, 'txt_con')]/p/text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'info')]/text()")
@@ -125,8 +125,8 @@ class Stcn():
             if len(article_2) > 0:
                 time2_1 = html.xpath(".//time/@datetime")
                 content2_1 = html.xpath(".//*[contains(@class, 'rich-text')]/p/text()")
-                author2_1= self.name
-                title2_1 = html.xpath(".//*[contains(@class,'title')]/text()")
+                author2_1 = self.name
+                title2_1 = html.xpath(".//*[contains(@class,'article-header')]/h1/text()")
 
                 url = current_url
                 id = current_id
