@@ -72,7 +72,7 @@ class Settings():
 
         self.BLOOMFILTER_NAME = "tegenaria:dupefilter"
 
-        self.TODAY = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+        self.TODAY = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
         self.CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(self.RSYNC_PRD1)
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 tmpDir=/home/Data
 prd4Path=/home/dev/Data/rsyncData/prd4
-DATE=$(date -d "+1 day" "+%Y-%m-%d")
+DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")
 LOGPATH=${prd4Path}/log
 CAMELPATH=/home/dev/Repository/news/Tegenaria/tSpider/tSpider/camel
