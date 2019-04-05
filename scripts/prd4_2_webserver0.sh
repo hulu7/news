@@ -15,6 +15,7 @@ if [ ${isWorking} -eq 0 ]; then
         \"yes/no\" {send \"yes\r\"; exp_continue;}
       }
       expect eof"
+    echo 'y' | rm ${OUTPATH}/${FILE_DATE}.csv
 else
    echo "${TIME}: ${USER} is running" >> ${LOGPATH}/${LOG_DATE}_log.log
 fi

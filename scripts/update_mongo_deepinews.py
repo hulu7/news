@@ -2,6 +2,7 @@
 #------requirement------
 #pymongo-3.7.1
 #------requirement------
+import os
 import pymongo
 import sys
 import csv
@@ -11,9 +12,11 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 class UpdateMongoDeepNews():
-    def init(self):
+    def __init__(self):
         self.MONGO_URI = 'mongodb://127.0.0.1:27017'
         self.DATABASE = 'DeepNewsDatabase'
+        self.today = time.strftime('%Y%m%d', time.localtime(time.time()))
+        self.path = '/home/dev/Data/Production/data4deepinews/{0}.csv'.format(self.today)
 
     def readFromCSV(self, filePath):
         content = []
@@ -23,7 +26,6 @@ class UpdateMongoDeepNews():
         return content
 
     def insert(self, data):
-        self.init()
         client = pymongo.MongoClient(self.MONGO_URI)
         db = client[self.DATABASE]
         db.articles.insert(data)
@@ -65,13 +67,17 @@ class UpdateMongoDeepNews():
 
         return format_data
 
-    def updateData(self, path):
-        raw_data = self.readFromCSV(path)
-        for i in range(1, len(raw_data)):
-            self.insert(self.formatData(raw_data[i]))
+    def updateData(self):
+        isFileExit = os.path.exists(self.path)
+        if isFileExit is True:
+            print "file: {0} exits".format(self.path)
+            raw_data = self.readFromCSV(self.path)
+            for i in range(1, len(raw_data)):
+                self.insert(self.formatData(raw_data[i]))
+            os.remove(self.path)
+            return
+        print "file: {0} not eixts".format(self.path)
 
 if __name__ == '__main__':
-    today = time.strftime('%Y%m%d', time.localtime(time.time()))
     u = UpdateMongoDeepNews()
-    path = '/home/dev/Data/Production/data4deepinews/{0}.csv'.format(today)
-    u.updateData(path)
+    u.updateData()

@@ -85,6 +85,7 @@ class UpdateProductionClass():
         getDigit = filter(str.isdigit, toGBK)
         getYMD = getDigit[0:8]
         return getYMD
+
     def getCurrntTime(self):
         return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 

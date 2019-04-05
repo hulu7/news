@@ -9,6 +9,7 @@ from shutil import copyfile
 import pandas as pd
 import os
 import sys
+import jieba
 reload(sys)
 sys.setdefaultencoding('utf-8')
 from bloomfilterOnRedis import BloomFilter
@@ -18,21 +19,30 @@ class CommitData():
     def __init__(self):
         self.rconn = redis.Redis('127.0.0.1', 6379)
         self.bf = BloomFilter(self.rconn, 'supplier:commit')
+        self.bf_huxiu = BloomFilter(self.rconn, 'supplier:commit_huxiu')
+        self.today = time.strftime('%Y%m%d', time.localtime(time.time()))
+        self.class_finished_path = '/home/dev/Data/Production/catalogs'
+        self.log_path = '/home/dev/Data/Production/log/' + self.today + '.log'
+        self.customer_info_path = '/home/dev/Data/Production/customerInfo/customers.xlsx'
+        self.data4customers_path = '/home/dev/Data/Production/data4customers'
+        self.model_huxiu_path = '/home/dev/Data/npl/classifier/fastText/model_data/news_fasttext.model.huxiu.bin'
+        self.classifier = fasttext.load_model(self.model_huxiu_path)
+        self.since = time.time()
 
-    def isDuplicated(self, title):
+    def isDuplicated(self, title, filter):
         title_encode = str(title).encode("utf-8")
-        if self.bf.isContains(title_encode):
+        if filter.isContains(title_encode):
             print 'Title {0} exists!'.format(title)
             return True
         else:
-            self.bf.insert(title_encode)
+            filter.insert(title_encode)
             print 'Title {0} not exist!'.format(title)
             return False
 
-    def storeFinished(self, title):
+    def storeFinished(self, title, filter):
         print 'Start to store title: {0}'.format(title)
         title_encode = title.encode("utf-8")
-        self.bf.insert(title_encode)
+        filter.insert(title_encode)
 
     def readFromCSV(self, filePath):
         content = []
@@ -59,7 +69,6 @@ class CommitData():
 
     def writeToCSVWithoutHeader(self, filePath, content):
         with open(filePath, 'a') as csv_file:
-            csv_file.write(codecs.BOM_UTF8)
             csv_writer = csv.writer(csv_file)
             csv_writer.writerow(content)
         csv_file.close()
@@ -99,13 +108,24 @@ class CommitData():
     def getCurrntTime(self):
         return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
-    def commitSingleCatalogSource(self, catalog_name, source_name, customer_data_folder, customer_data_folder_txt):
-        catalog_file_path = self.class_finished_path + '/' + catalog_name + '/' + catalog_name + '.csv'
+    def isTitleOk(self, title):
+        text = title.decode("utf-8").encode("utf-8")
+        seg_text = jieba.cut(text.replace("\t", " ").replace("\n", " "))
+        texts = [" ".join(seg_text)]
+        labels = self.classifier.predict_proba(texts, k=1)
+        print "title: {0} -- {1}".format(title, labels)
+        if labels[0][0][0] == u'__label__Y':
+            return True
+        else:
+            return False
+
+    def commitSingleCatalogSource(self, customer_id, catalog_name, source_name, customer_data_folder, customer_data_folder_txt):
+        catalog_file_path = '{0}/{1}/{2}.csv'.format(self.class_finished_path, catalog_name, catalog_name)
         catalog_exists = os.path.exists(catalog_file_path)
         if catalog_exists is False:
             return
-        commit_csv_path = customer_data_folder + '/' + self.today + '.csv'
-        commit_finished_file_path = customer_data_folder + '/' + source_name + '_committed.csv'
+        commit_csv_path = '{0}/{1}.csv'.format(customer_data_folder, self.today)
+        commit_finished_file_path = '{0}/{1}_committed.csv'.format(customer_data_folder, source_name)
         current_catalog_data = self.readFromCSV(catalog_file_path)
         today_int = int(self.today)
         commit_csv_exists = os.path.exists(commit_csv_path)
@@ -131,55 +151,46 @@ class CommitData():
             if item_date_int >= today_int:
                 id = data[0].replace('\xef\xbb\xbf','')
                 title = data[1]
-                if self.isDuplicated(title) is False:
-                    file = (source_name + '_' + id + '.txt')
-                    origin_txt_path = self.class_finished_path + '/' + catalog_name + '/txt/' + file
-                    destination_txt_path = customer_data_folder_txt + '/' + file
+                if self.isDuplicated(title, self.bf) is False:
+                    file = '{0}_{1}.txt'.format(source_name, id)
+                    origin_txt_path = '{0}/{1}/txt/{2}'.format(self.class_finished_path, catalog_name, file)
+                    destination_txt_path = '{0}/{1}'.format(customer_data_folder_txt, file)
                     origin_txt_exists = os.path.exists(origin_txt_path)
                     if origin_txt_exists is False:
                         continue
+                    if customer_id == 'c0':
+                        if self.isDuplicated(title, self.bf_huxiu) is True or self.isTitleOk(title) is False:
+                            continue
+                        self.storeFinished(title, self.bf_huxiu)
                     self.writeToCSVWithoutHeader(commit_finished_file_path, [id])
                     self.writeToCSVWithoutHeader(commit_csv_path, data)
                     copyfile(origin_txt_path, destination_txt_path)
-                    self.storeFinished(title)
+                    self.storeFinished(title, self.bf)
                     finishedIds.append(id)
-                    time_elapsed = time.time() - since
-                    print(catalog_name + '_' + source_name + '_' + data[0] + ' and ' + str(len(finishedIds)) + 'itemts complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
+                    time_elapsed = time.time() - self.since
+                    print '{0}_{1}_{2} and {3} itemts complete in {4}m {5}s'.format(catalog_name, source_name, data[0], str(len(finishedIds)), time_elapsed // 60, time_elapsed % 60)
 
-    def startCommit(self, class_finished_path, customer_info_path, data4customers_path, log_path, today):
-        self.class_finished_path = class_finished_path
-        self.customer_info_path = customer_info_path
-        self.data4customers_path = data4customers_path
-        self.log_path = log_path
-        self.today = today
-
-        customers = self.readAllLinesFromExcel(customer_info_path, 'Sheet1')
+    def startCommit(self):
+        customers = self.readAllLinesFromExcel(self.customer_info_path, 'Sheet1')
         for customer in customers:
             customer_id = customer[0]
             customer_catalogs = customer[3].split(',')
             customer_sources = customer[4].split(',')
-            customer_data_folder = self.data4customers_path + '/' + customer_id + '/' + self.today
-            customer_data_folder_txt = self.data4customers_path + '/' + customer_id + '/' + self.today + '/txt'
+            customer_data_folder = '{0}/{1}/{2}'.format(self.data4customers_path, customer_id, self.today)
+            customer_data_folder_txt = '{0}/{1}/{2}/txt'.format(self.data4customers_path, customer_id, self.today)
             customer_data_exists = os.path.exists(customer_data_folder)
             if customer_data_exists is False:
                 os.makedirs(customer_data_folder)
                 os.makedirs(customer_data_folder_txt)
             for catalog in customer_catalogs:
                 for source in customer_sources:
-                    self.commitSingleCatalogSource(catalog, source, customer_data_folder, customer_data_folder_txt)
-        time_elapsed = time.time() - since
-        self.writeToTxt(log_path, str(commit.getCurrntTime() + ": " + 'commit done! in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)))
-        print 'commit done! in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)
+                    self.commitSingleCatalogSource(customer_id, catalog, source, customer_data_folder, customer_data_folder_txt)
+        time_elapsed = time.time() - self.since
+        self.writeToTxt(self.log_path, "{0}: commit done! in {1}m {2}s".format(str(self.getCurrntTime()), time_elapsed // 60, time_elapsed % 60))
+        print 'commit done! in {0}m {1}s'.format(time_elapsed // 60, time_elapsed % 60)
 
 if __name__ == "__main__":
-    today = time.strftime('%Y%m%d', time.localtime(time.time()))
-    class_finished_path = '/home/dev/Data/Production/catalogs'
-    log_path = '/home/dev/Data/Production/log/' + today + '.log'
-    customer_info_path = '/home/dev/Data/Production/customerInfo/customers.xlsx'
-    data4customers_path = '/home/dev/Data/Production/data4customers'
-
-    since = time.time()
     commit = CommitData()
-    commit.writeToTxt(log_path, str(commit.getCurrntTime() + ": start commit..."))
+    commit.writeToTxt(commit.log_path, "{0}: start commit...".format(str(commit.getCurrntTime())))
     print "start commit..."
-    commit.startCommit(class_finished_path, customer_info_path, data4customers_path, log_path, today)
+    commit.startCommit()

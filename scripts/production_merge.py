@@ -17,6 +17,8 @@ class ProductionMerge():
     def __init__(self):
         self.rconn = redis.Redis('127.0.0.1', 6379)
         self.bf = BloomFilter(self.rconn, 'supplier:merge')
+        self.filein = '/home/dev/Data/Production/data4customers'
+        self.fileout = '/home/dev/Data/Production/data4deepinews'
 
     def isDuplicated(self, title):
         title_encode = str(title).encode("utf-8")
@@ -114,15 +116,15 @@ class ProductionMerge():
             'astrology': '星座'
         }
 
-    def Merge(self, filein_path, fileout_path):
+    def Merge(self):
         today = time.strftime('%Y%m%d', time.localtime(time.time()))
         catalog = self.getCatalog()
-        users = os.listdir(filein_path)
-        out_csv_file = "{0}/{1}.csv".format(fileout_path, today)
+        users = os.listdir(self.filein)
+        out_csv_file = "{0}/{1}.csv".format(self.fileout, today)
         output_content = []
         finished_titles = []
         for user in users:
-            in_csv_file = "{0}/{1}/{2}/{3}.csv".format(filein_path, user, today, today)
+            in_csv_file = "{0}/{1}/{2}/{3}.csv".format(self.filein, user, today, today)
             isCsvExists = os.path.exists(in_csv_file)
             if isCsvExists is False:
                 continue
@@ -153,7 +155,5 @@ class ProductionMerge():
             self.writeToCSVWithoutHeader(out_csv_file, content)
 
 if __name__ == "__main__":
-    filein = '/home/dev/Data/Production/data4customers'
-    fileout = '/home/dev/Data/Production/data4deepinews'
     flt = ProductionMerge()
-    flt.Merge(filein, fileout)
+    flt.Merge()
