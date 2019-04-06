@@ -116,7 +116,7 @@ class BaiJia():
         if len(new_urls) == 0:
             print 'No url.'
             return
-
+        # new_urls = [['https://author.baidu.com/home/1618277241075629', '']]
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
