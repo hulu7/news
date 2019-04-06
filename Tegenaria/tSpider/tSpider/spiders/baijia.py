@@ -64,6 +64,7 @@ class Baijia():
                 time0_1 = self.today
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'titleTxt')]/text()")
+                title0_2 = html.xpath(".//*[contains(@class, 'titleSize')]/text()")
 
                 url = current_url
                 id = current_id
@@ -74,7 +75,9 @@ class Baijia():
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
-                    title = title0_1[0].strip()
+                    title = ''.join(title0_1).strip()
+                if self.doraemon.isEmpty(title0_2) is False:
+                    title = ''.join(title0_2).strip()
 
                 data = {
                     'url': url,
