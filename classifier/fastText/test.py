@@ -12,7 +12,7 @@ classifier = fasttext.load_model(modle_dir + "news_fasttext.model.bin")
 time_elapsed = time.time() - since
 print('load model done in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
 
-texts = ['']
+texts = ['地球 上 最 赚钱 公司 ， 正在 被 石油 “ 诅咒 ” ？']
 print "start to classify news..."
 since = time.time()
 labels = classifier.predict_proba(texts, k=1)

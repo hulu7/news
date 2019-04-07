@@ -9,6 +9,7 @@ sys.setdefaultencoding('utf8')
 from lxml import etree
 import urlparse
 import re
+import time
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest
 from settings import Settings
@@ -39,6 +40,7 @@ class BaiJia():
         self.today = self.settings.TODAY
 
     def parse(self, response):
+        time.sleep(1)
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)

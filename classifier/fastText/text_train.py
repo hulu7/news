@@ -16,7 +16,7 @@ result = classifier.test(test_dir + "news_fasttext_test_huxiu.txt")
 print result.precision
 print result.recall
 
-texts = ['呼和浩特 一 小区 居民楼 爆炸   已致 1 死 2 伤']
+texts = ['地球 上 最 赚钱 公司 ， 正在 被 石油 “ 诅咒 ” ？']
 
 labels = classifier.predict_proba(texts, k=1)
 print labels
