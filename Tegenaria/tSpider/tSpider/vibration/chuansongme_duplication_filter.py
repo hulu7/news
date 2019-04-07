@@ -7,10 +7,10 @@ sys.setdefaultencoding('utf8')
 sys.path.append("..")
 from lxml import etree
 import urlparse
-from settings import Settings
-from middlewares.mongodbMiddleware import MongoMiddleware
-from middlewares.fileIOMiddleware import FileIOMiddleware
-from middlewares.doraemonMiddleware import Doraemon
+from Tegenaria.tSpider.tSpider.settings import Settings
+from Tegenaria.tSpider.tSpider.middlewares.mongodbMiddleware import MongoMiddleware
+from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
+from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
 
 class Dup():
     def __init__(self):
