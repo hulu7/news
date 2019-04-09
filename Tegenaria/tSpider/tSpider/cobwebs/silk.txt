@@ -24,3 +24,4 @@ i52rkl,我爱热可乐,60,2,False
 xueqiu,雪球网,30,4,False
 niaogebiji,鸟哥笔记,30,2,False
 tmtpost,钛媒体,30,2,False
+songshuhui,学科松鼠会,60,2,False

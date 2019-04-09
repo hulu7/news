@@ -15,7 +15,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Xueqiu():
+class Songshuhui():
 
     def __init__(self):
         self.settings = Settings()
@@ -26,7 +26,7 @@ class Xueqiu():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('xueqiu')
+        settings_name = self.settings.CreateSettings('songshuhui')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
         self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
@@ -49,7 +49,7 @@ class Xueqiu():
         short_url_parts = re.split(r'[., /, _, %, "]', current_url)
         current_id = short_url_parts[len(short_url_parts) - 1]
         html = etree.HTML(response['response'].page_source)
-        article_content = html.xpath(".//*[contains(@class,'article__bd')]")
+        article_content = html.xpath(".//*[contains(@id,'content')]")
         data = {}
         url = ""
         content = ""
@@ -58,12 +58,12 @@ class Xueqiu():
         title = ""
         id = ""
         if len(article_content) > 0:
-            article_0 = html.xpath(".//*[contains(@class,'article__bd')]")
+            article_0 = html.xpath(".//*[contains(@id,'content')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'article__bd__detail')]//text()")
-                time0_1 = self.today
+                title0_1 = html.xpath(".//*[contains(@class,'contenttitle')]/a/text()")
                 author_name0_1 = self.name
-                title0_1 = html.xpath(".//*[contains(@class,'article__bd__title')]//text()")
+                time0_1 = self.today
+                content0_1 = html.xpath(".//*[contains(@class, 'entry')]//p/text()")
 
                 url = current_url
                 id = current_id
@@ -118,5 +118,5 @@ class Xueqiu():
         gc.collect()
 
 if __name__ == '__main__':
-    xueqiu=Xueqiu()
-    xueqiu.start_requests()
+    songshuhui=Songshuhui()
+    songshuhui.start_requests()

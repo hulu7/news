@@ -9,13 +9,14 @@ sys.setdefaultencoding('utf8')
 from lxml import etree
 import urlparse
 import re
+import time
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Iceo():
+class Songshuhui():
 
     def __init__(self):
         self.settings = Settings()
@@ -26,7 +27,7 @@ class Iceo():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('iceo')
+        settings_name = self.settings.CreateSettings('songshuhui')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']
@@ -37,13 +38,13 @@ class Iceo():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
-        self.regx = re.compile("^(?:http)s?://www.iceo.com.cn/[a-z]{0,}[0-9]{0,}/?[0-9]{0,}/[0-9]{0,}/[0-9]{0,}/[0-9]{0,}.shtml")
+        self.regx = re.compile("^(?:http)s?://songshuhui.net/archives/[0-9]{0,}")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
-        href_items = html.xpath(".//a")
+        href_items = html.xpath(".//a[contains(@class, 'black')]")
         for item in href_items:
             href = item.xpath("@href")
             valid = True
@@ -65,8 +66,8 @@ class Iceo():
                 if bad in href_url:
                     valid = False
             if valid:
-                short_url_parts = re.split(r'[., /, _, %, "]', href_url)
-                id = short_url_parts[len(short_url_parts) - 2]
+                short_url_parts = re.split(r'[., /, _, %, ", -]', href_url)
+                id = short_url_parts[short_url_parts.index('archives') + 1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
                 title_list1 = item.xpath(".//text()")
@@ -117,12 +118,12 @@ class Iceo():
         if len(new_urls) == 0:
             print 'No url.'
             return
-
+        # new_urls = [['https://author.baidu.com/home/1618277241075629', '']]
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
 if __name__ == '__main__':
-    iceo=Iceo()
-    iceo.start_requests()
+    songshuhui=Songshuhui()
+    songshuhui.start_requests()
