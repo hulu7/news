@@ -7,7 +7,7 @@ eeo,经济观察网,120,2,False
 guancha,观察者网,5,2,False
 guokr,果壳网,60,2,False
 huanqiu,环球网,30,2,False
-ifeng,凤凰网,10,2,False
+ifeng,凤凰网,30,2,False
 iheima,黑马网,120,2,False
 iresearch,艾瑞网,120,2,False
 iyiou,亿欧网,60,2,False
@@ -23,3 +23,4 @@ sohump,搜狐号,60,2,False
 i52rkl,我爱热可乐,60,2,False
 xueqiu,雪球网,30,4,False
 niaogebiji,鸟哥笔记,30,2,False
+tmtpost,钛媒体,30,2,False

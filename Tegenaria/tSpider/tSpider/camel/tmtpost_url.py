@@ -15,7 +15,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Ifeng():
+class Tmtpost():
 
     def __init__(self):
         self.settings = Settings()
@@ -24,9 +24,10 @@ class Ifeng():
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd2)
         self.doraemon.createFilePath(self.settings.LOG_PATH)
+        self.regx = re.compile("/[0-9]{0,}.html")
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('ifeng')
+        settings_name = self.settings.CreateSettings('tmtpost')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']
@@ -37,24 +38,19 @@ class Ifeng():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
-        self.regx = re.compile("//feng.ifeng.com/c/[a-z]{0,}[0-9]{0,}")
-
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
         href_items = html.xpath(".//a")
-
         for item in href_items:
             href = item.xpath("@href")
             valid = True
             if len(href) == 0:
                 continue
-
             href_url = href[0]
             isValidUrl = self.regx.match(href_url)
-
             if isValidUrl is None:
                 print 'Invalid url for not match: {0}'.format(href_url)
                 continue
@@ -70,7 +66,7 @@ class Ifeng():
                     valid = False
             if valid:
                 short_url_parts = re.split(r'[., /, _, %, "]', href_url)
-                id = short_url_parts[short_url_parts.index("c") + 1]
+                id = short_url_parts[len(short_url_parts) - 2]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
                 title_list1 = item.xpath(".//text()")
@@ -105,9 +101,9 @@ class Ifeng():
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
-        self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
-        print 'Start request: {0}'.format(self.name)
-        self.badkeys = []
+        self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
+        print 'Start {0} requests'.format(self.name)
+        self.badkeys = ['#', '#comment']
         self.goodkeys = []
 
         new_urls = []
@@ -123,11 +119,10 @@ class Ifeng():
             return
 
         request = BrowserRequest()
-        # new_urls = [['https://ipit.ifeng.com/', 'TEST']]
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
 if __name__ == '__main__':
-    ifeng=Ifeng()
-    ifeng.start_requests()
+    tmtpost=Tmtpost()
+    tmtpost.start_requests()

@@ -8,13 +8,14 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 from lxml import etree
 import re
+import gc
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Ifeng():
+class Tmtpost():
 
     def __init__(self):
         self.settings = Settings()
@@ -25,7 +26,7 @@ class Ifeng():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('ifeng')
+        settings_name = self.settings.CreateSettings('tmtpost')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
         self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
@@ -35,7 +36,6 @@ class Ifeng():
         self.max_pool_size = settings_name['MAX_POOL_SIZE']
         self.log_path = self.settings.LOG_PATH
         self.today = self.settings.TODAY
-        self.is_open_cache = settings_name['IS_OPEN_CACHE']
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -46,10 +46,10 @@ class Ifeng():
             print 'Invalid url: {0}'.format(current_url)
             return
         print 'Start to parse: {0}'.format(current_url)
-        short_url_parts = re.split(r'[., /, _, -]', current_url)
-        current_id = short_url_parts[len(short_url_parts) - 1]
+        short_url_parts = re.split(r'[., /, _, %, "]', current_url)
+        current_id = short_url_parts[len(short_url_parts) - 2]
         html = etree.HTML(response['response'].page_source)
-        article_content = html.xpath(".//*[contains(@class,'container-2ItVJon-')]")
+        article_content = html.xpath(".//article")
         data = {}
         url = ""
         content = ""
@@ -58,12 +58,12 @@ class Ifeng():
         title = ""
         id = ""
         if len(article_content) > 0:
-            article_0 = html.xpath(".//*[contains(@class,'container-2ItVJon-')]")
+            article_0 = html.xpath(".//article")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'text-3zQ3cZD4')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'inner')]//p/text()")
                 time0_1 = self.today
                 author_name0_1 = self.name
-                title0_1 = html.xpath(".//*[contains(@class,'titleLine-gY7DniPB')]/h1/text()")
+                title0_1 = html.xpath(".//article/h1/text()")
 
                 url = current_url
                 id = current_id
@@ -74,7 +74,7 @@ class Ifeng():
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
-                    title = title0_1[0].strip()
+                    title = ''.join(title0_1[0]).strip()
 
                 data = {
                     'url': url,
@@ -99,20 +99,24 @@ class Ifeng():
                 self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
                 self.doraemon.storeFinished(response['request_title'])
 
+        del current_url, valid,  current_id, html, article_content, data
+        gc.collect()
+
     def start_requests(self):
-        self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
-        print 'Start request: {0}'.format(self.name)
-        self.badkeys = ['#']
+        self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
+        print 'Start requests: {0} '.format(self.name)
         new_url_titles = self.doraemon.readNewUrls(self.url_path)
         if len(new_url_titles) == 0:
-            self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
-            print 'No new url for: {0}'.format(self.name)
+            self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
+            print 'No new url for {0}'.format(self.name)
             return
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
-        self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
-        print 'End requests: {0}'.format(str(len(content)))
+        self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))
+        print 'End requests for {0}'.format(str(len(content)))
+        del content, new_url_titles, request
+        gc.collect()
 
 if __name__ == '__main__':
-    ifeng=Ifeng()
-    ifeng.start_requests()
+    tmtpost=Tmtpost()
+    tmtpost.start_requests()
