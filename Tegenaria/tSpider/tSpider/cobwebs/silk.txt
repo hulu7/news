@@ -26,3 +26,4 @@ niaogebiji,鸟哥笔记,30,2,False
 tmtpost,钛媒体,30,2,False
 songshuhui,学科松鼠会,60,2,False
 woshipm,人人都是产品经理,120,2,False
+qdaily,好奇心日报,30,2,False
