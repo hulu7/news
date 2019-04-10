@@ -51,9 +51,7 @@ class Eeo():
         short_url_parts = re.split(r'[., /, _]', current_url)
         current_id = short_url_parts[len(short_url_parts) - 2]
         html = etree.HTML(response['response'].page_source)
-        article_0 = html.xpath(".//*[contains(@class,'contact')]")
-        article_1 = html.xpath(".//*[contains(@class,'news_module mtnone')]")
-        article_2= html.xpath(".//*[contains(@class,'xd-b-b')]")
+        article_0 = html.xpath(".//*[contains(@class,'xd-b-left')]")
         data = {}
         url = ""
         content = ""
@@ -62,77 +60,21 @@ class Eeo():
         title = ""
         id = ""
         if len(article_0) > 0:
-            content0_1 = html.xpath(".//div[contains(@class, 't-neirong t_box_public')]/p/text()")
-            time0_1 = html.xpath(".//*[contains(@class, 'a-content-top')]/div/p/span/text()")
+            content0_1 = html.xpath(".//div[contains(@class, 'xx_boxsing')]//p/text()")
+            time0_1 = self.today
             author_name0_1 = self.name
-            title0_1 = html.xpath(".//*[contains(@class,'a-content-top')]/h2/text()")
+            title0_1 = html.xpath(".//*[contains(@class,'xd-b-b')]/h1/text()")
 
             url = current_url
             id = current_id
             if self.doraemon.isEmpty(content0_1) is False:
                 content = ''.join(content0_1).strip()
             if self.doraemon.isEmpty(time0_1) is False:
-                time = time0_1[1].strip()
+                time = time0_1
             if self.doraemon.isEmpty(author_name0_1) is False:
                 author_name = author_name0_1
             if self.doraemon.isEmpty(title0_1) is False:
-                title = title0_1[0].strip()
-
-            data = {
-                'url': url,
-                'time': time,
-                'author_name': author_name,
-                'title': title,
-                'id': id,
-                'download_time': self.today,
-                'is_open_cache': self.is_open_cache,
-                'source': self.source
-            }
-
-        if len(article_1) > 0:
-            content1_1 = html.xpath(".//div[contains(@class, 'TRS_Editor')]/p/text()")
-            time1_1 = html.xpath(".//*[contains(@class, 'time')]/span/text()")
-            author_name1_1 = self.name
-            title1_1 = html.xpath(".//*[contains(@class,'news_module mtnone')]/h2/text()")
-
-            url = current_url
-            id = current_id
-            if self.doraemon.isEmpty(content1_1) is False:
-                content = ''.join(content1_1).strip()
-            if self.doraemon.isEmpty(time1_1) is False:
-                time = time1_1[1].strip()
-            if self.doraemon.isEmpty(author_name1_1) is False:
-                author_name = author_name1_1
-            if self.doraemon.isEmpty(title1_1) is False:
-                title = title1_1[0].strip()
-
-            data = {
-                'url': url,
-                'time': time,
-                'author_name': author_name,
-                'title': title,
-                'id': id,
-                'download_time': self.today,
-                'is_open_cache': self.is_open_cache,
-                'source': self.source
-            }
-
-        if len(article_2) > 0:
-            content2_1 = html.xpath(".//div[contains(@class, 'xx_boxsing')]/p/text()")
-            time2_1 = html.xpath(".//*[contains(@class, 'xd-b-b')]/p/span/text()")
-            author_name2_1 = self.name
-            title2_1 = html.xpath(".//*[contains(@class,'xd-b-b')]/h1/text()")
-
-            url = current_url
-            id = current_id
-            if self.doraemon.isEmpty(content2_1) is False:
-                content = ''.join(content2_1).strip()
-            if self.doraemon.isEmpty(time2_1) is False:
-                time = time2_1[0].strip()
-            if self.doraemon.isEmpty(author_name2_1) is False:
-                author_name = author_name2_1
-            if self.doraemon.isEmpty(title2_1) is False:
-                title = title2_1[0].strip()
+                title = ''.join(title0_1).strip()
 
             data = {
                 'url': url,

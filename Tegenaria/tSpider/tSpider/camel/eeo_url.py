@@ -37,6 +37,7 @@ class Eeo():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
+        self.regx = re.compile("^(?:http)s?://www.eeo.com.cn/[0-9]{0,}/[0-9]{0,}/[0-9]{0,}.shtml")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -49,11 +50,9 @@ class Eeo():
             if len(href) == 0:
                 continue
             href_url = href[0]
-            hasId = str(filter(str.isdigit, href_url))
-            if len(hasId) == 0:
-                print 'Invalid url for no id: {0}'.format(href_url)
-                continue
-            if 'html' not in href_url:
+            isValidUrl = self.regx.match(href_url)
+            if isValidUrl is None:
+                print 'Invalid url for not match: {0}'.format(href_url)
                 continue
             for good in self.goodkeys:
                 if valid == True:
@@ -70,13 +69,9 @@ class Eeo():
                 id = short_url_parts[len(short_url_parts) - 2]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
-                title_list1 = item.xpath(".//h5")
-                title_list2 = item.xpath(".//text()")
+                title_list1 = item.xpath(".//text()")
                 if len(title_list1) > 0:
-                    title = title_list1[0].text
-                    print title
-                if len(title_list2) > 0:
-                    title = title_list2[0]
+                    title = ''.join(title_list1).strip()
                     print title
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):

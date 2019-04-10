@@ -3,7 +3,7 @@ cankaoxiaoxi,参考消息,10,2,False
 ce,中国经济网,20,2,False
 chuansongme,微信-传送门,120,5,True
 cyzone,创业邦,60,2,False
-eeo,经济观察网,120,2,False
+eeo,经济观察网,60,2,False
 guancha,观察者网,5,2,False
 guokr,果壳网,60,2,False
 huanqiu,环球网,30,2,False
