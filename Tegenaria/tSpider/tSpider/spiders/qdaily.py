@@ -63,7 +63,8 @@ class Qdaily():
                 content0_1 = html.xpath(".//*[contains(@class, 'detail')]//p/text()")
                 time0_1 = self.today
                 author_name0_1 = self.name
-                title0_1 = html.xpath(".//*[contains(@class, 'title')]//text()")
+                title0_1 = html.xpath(".//*[contains(@class, 'media-title')]/h2/text()")
+                title0_2 = html.xpath(".//*[contains(@class, 'category-title')]/h2/text()")
 
                 url = current_url
                 id = current_id
@@ -75,6 +76,8 @@ class Qdaily():
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = ''.join(title0_1).strip()
+                if self.doraemon.isEmpty(title0_2) is False:
+                    title = ''.join(title0_2).strip()
 
                 data = {
                     'url': url,
