@@ -18,15 +18,16 @@ import redis
 class CommitData():
     def __init__(self):
         self.rconn = redis.Redis('127.0.0.1', 6379)
-        self.bf = BloomFilter(self.rconn, 'supplier:commit')
         self.bf_huxiu = BloomFilter(self.rconn, 'supplier:commit_huxiu')
         self.today = time.strftime('%Y%m%d', time.localtime(time.time()))
         self.class_finished_path = '/home/dev/Data/Production/catalogs'
         self.log_path = '/home/dev/Data/Production/log/' + self.today + '.log'
         self.customer_info_path = '/home/dev/Data/Production/customerInfo/customers.xlsx'
         self.data4customers_path = '/home/dev/Data/Production/data4customers'
-        self.model_huxiu_path = '/home/dev/Data/npl/classifier/fastText/model_data/news_fasttext.model.huxiu.bin'
-        self.classifier = fasttext.load_model(self.model_huxiu_path)
+        self.model_huxiu_title_path = '/home/dev/Data/npl/classifier/fastText/model_data/news_fasttext.model.huxiu.bin'
+        self.model_huxiu_content_path = '/home/dev/Data/npl/classifier/fastText/model_data/news_fasttext.model.huxiu_content.bin'
+        self.classifier_content = fasttext.load_model(self.model_huxiu_content_path)
+        self.classifier_title = fasttext.load_model(self.model_huxiu_title_path)
         self.since = time.time()
 
     def isDuplicated(self, title, filter):
@@ -108,16 +109,28 @@ class CommitData():
     def getCurrntTime(self):
         return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
-    def isTitleOk(self, title):
-        text = title.decode("utf-8").encode("utf-8")
+    def isContentForRightCatalog(self, content, title):
+        text = content.decode("utf-8").encode("utf-8")
         seg_text = jieba.cut(text.replace("\t", " ").replace("\n", " "))
         texts = [" ".join(seg_text)]
-        labels = self.classifier.predict_proba(texts, k=1)
+        labels = self.classifier_content.predict_proba(texts, k=1)
         print "title: {0} -- {1}".format(title, labels)
         if labels[0][0][0] == u'__label__Y':
             return True
         else:
             return False
+
+    def isTitleForRightCatalog(self, title):
+        text = title.decode("utf-8").encode("utf-8")
+        seg_text = jieba.cut(text.replace("\t", " ").replace("\n", " "))
+        texts = [" ".join(seg_text)]
+        labels = self.classifier_title.predict_proba(texts, k=1)
+        print "title: {0} -- {1}".format(title, labels)
+        if labels[0][0][0] == u'__label__Y':
+            return True
+        else:
+            return False
+
 
     def commitSingleCatalogSource(self, customer_id, catalog_name, source_name, customer_data_folder, customer_data_folder_txt):
         catalog_file_path = '{0}/{1}/{2}.csv'.format(self.class_finished_path, catalog_name, catalog_name)
@@ -125,20 +138,12 @@ class CommitData():
         if catalog_exists is False:
             return
         commit_csv_path = '{0}/{1}.csv'.format(customer_data_folder, self.today)
-        commit_finished_file_path = '{0}/{1}_committed.csv'.format(customer_data_folder, source_name)
         current_catalog_data = self.readFromCSV(catalog_file_path)
         today_int = int(self.today)
         commit_csv_exists = os.path.exists(commit_csv_path)
-        commit_finished_exists = os.path.exists(commit_finished_file_path)
         if commit_csv_exists is False:
             self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source'])
-        if commit_finished_exists is False:
-            self.writeToCSVWithoutHeader(commit_finished_file_path, ['id'])
 
-        finishedIds = []
-        finished_list = self.readFromCSV(commit_finished_file_path)
-        for finished_item in finished_list[1:]:
-            finishedIds.append(str(finished_item[0].replace('\xef\xbb\xbf', '')))
         for data in current_catalog_data:
             if current_catalog_data.index(data) == 0:
                 continue
@@ -158,17 +163,20 @@ class CommitData():
                     origin_txt_exists = os.path.exists(origin_txt_path)
                     if origin_txt_exists is False:
                         continue
+                    content_txt = self.readFromTxt(origin_txt_path)
+                    if len(content_txt) == 0:
+                        continue
+                    content = content_txt[0]
                     if customer_id == 'dn201949100':
-                        if self.isDuplicated(title, self.bf_huxiu) is True or self.isTitleOk(title) is False:
+                        if self.isDuplicated(title, self.bf_huxiu) is False and self.isContentForRightCatalog(content, title) is True and self.isTitleForRightCatalog(title) is True:
+                            self.storeFinished(title, self.bf_huxiu)
+                        else:
                             continue
-                        self.storeFinished(title, self.bf_huxiu)
-                    self.writeToCSVWithoutHeader(commit_finished_file_path, [id])
                     self.writeToCSVWithoutHeader(commit_csv_path, data)
                     copyfile(origin_txt_path, destination_txt_path)
                     self.storeFinished(title, self.bf)
-                    finishedIds.append(id)
                     time_elapsed = time.time() - self.since
-                    print '{0}_{1}_{2} and {3} itemts complete in {4}m {5}s'.format(catalog_name, source_name, data[0], str(len(finishedIds)), time_elapsed // 60, time_elapsed % 60)
+                    print '{0}_{1}_{2} complete in {3}m {4}s'.format(catalog_name, source_name, data[0], time_elapsed // 60, time_elapsed % 60)
 
     def startCommit(self):
         customers = self.readAllLinesFromExcel(self.customer_info_path, 'Sheet1')
@@ -179,6 +187,7 @@ class CommitData():
             customer_data_folder = '{0}/{1}/{2}'.format(self.data4customers_path, customer_id, self.today)
             customer_data_folder_txt = '{0}/{1}/{2}/txt'.format(self.data4customers_path, customer_id, self.today)
             customer_data_exists = os.path.exists(customer_data_folder)
+            self.bf = BloomFilter(self.rconn, customer_id)
             if customer_data_exists is False:
                 os.makedirs(customer_data_folder)
                 os.makedirs(customer_data_folder_txt)

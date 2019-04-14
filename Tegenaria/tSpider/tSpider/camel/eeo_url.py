@@ -69,9 +69,13 @@ class Eeo():
                 id = short_url_parts[len(short_url_parts) - 2]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
-                title_list1 = item.xpath(".//text()")
+                title_list1 = item.xpath("./text()")
+                title_list2 = item.xpath("@title")
                 if len(title_list1) > 0:
                     title = ''.join(title_list1).strip()
+                    print title
+                if len(title_list2) > 0:
+                    title = ''.join(title_list2).strip()
                     print title
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):

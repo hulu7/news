@@ -105,3 +105,9 @@ class Doraemon():
 
     def delHashSet(self, name, key):
         return self.rconn.hdel(name, key)
+
+    def delKey(self, key):
+        return self.rconn.delete(key)
+
+    def getKeyLen(self, key):
+        return self.rconn.hlen(key)
