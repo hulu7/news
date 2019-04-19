@@ -14,8 +14,9 @@ from browserRequest import BrowserRequest
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
+from middlewares.requestsMiddleware import RequestsMiddleware
 
-class Guancha():
+class Weixin():
 
     def __init__(self):
         self.settings = Settings()
@@ -26,7 +27,7 @@ class Guancha():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('guancha')
+        settings_name = self.settings.CreateSettings('weixin')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']
@@ -37,6 +38,8 @@ class Guancha():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
+
+        self.regx = re.compile("^(?:http)s?://www.anyv.net/index.php/article-[0-9]{0,}")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -49,11 +52,9 @@ class Guancha():
             if len(href) == 0:
                 continue
             href_url = href[0]
-            hasId = str(filter(str.isdigit, href_url))
-            if len(hasId) == 0:
-                print 'Invalid url for no id: {0}'.format(href_url)
-                continue
-            if 'html' not in href_url:
+            isValidUrl = self.regx.match(href_url)
+            if isValidUrl is None:
+                print 'Invalid url for not match: {0}'.format(href_url)
                 continue
             for good in self.goodkeys:
                 if valid == True:
@@ -66,16 +67,16 @@ class Guancha():
                 if bad in href_url:
                     valid = False
             if valid:
-                short_url_parts = re.split(r'[., /, _]', href_url)
-                id = short_url_parts[len(short_url_parts) - 2]
+                short_url_parts = re.split(r'[., /, _, %, ", -]', href_url)
+                id = short_url_parts[short_url_parts.index('article') + 1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
-                title_list1 = item.xpath(".//h3/text()")
+                title_list1 = item.xpath(".//text()")
                 if len(title_list1) > 0:
-                    title = title_list1[0]
+                    title = ''.join(title_list1).strip()
                     print title
                 is_title_empty = self.doraemon.isEmpty(title)
-                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
+                if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
                     data = {
                         'title': title.strip(),
                         'url': url.strip(),
@@ -97,7 +98,7 @@ class Guancha():
             else:
                 self.file.logger(self.log_path, 'Invalid {0}'.format(href_url))
                 print 'Invalid {0}'.format(href_url)
-        print 'End to parse {0}'.format(href_url)
+        print 'End to parse {0}'.format(current_url)
 
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
@@ -125,5 +126,5 @@ class Guancha():
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
 if __name__ == '__main__':
-    guacha=Guancha()
-    guacha.start_requests()
+    Weixin=Weixin()
+    Weixin.start_requests()

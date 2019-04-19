@@ -77,7 +77,7 @@ class Yicai():
                     title = ""
                 is_valid_id = len(str(filter(str.isdigit, id))) != 0
                 is_title_empty = title == None or self.doraemon.isEmpty(title)
-                if (is_valid_id is True) and (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
+                if (is_valid_id is True) and (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
                     data = {
                         'title': title,
                         'url': url,

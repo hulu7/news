@@ -42,7 +42,7 @@ class Huanqiu():
         current_url = response['response'].current_url.encode('gbk')
         valid = str(filter(str.isdigit, current_url))
         if len(valid) == 0:
-            self.doraemon.storeFinished(response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
             self.file.logger(self.log_path, 'Invalid url: {0}'.format(current_url))
             print 'Invalid url: {0}'.format(current_url)
             return
@@ -89,7 +89,7 @@ class Huanqiu():
 
         print 'End to parse: {0}'.format(current_url)
         if len(data) == 0:
-            self.doraemon.storeFinished(response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
         else:
             self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
             print 'Start to store mongo {0}'.format(data['url'])
@@ -97,7 +97,7 @@ class Huanqiu():
             self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
             print 'End to store mongo {0}'.format(data['url'])
             self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
-            self.doraemon.storeFinished(response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
 
         del current_url, valid,  current_id, html, data
         gc.collect()
@@ -105,7 +105,7 @@ class Huanqiu():
     def start_requests(self):
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
-        new_url_titles = self.doraemon.readNewUrls(self.url_path)
+        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf, self.url_path)
         if len(new_url_titles) == 0:
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)

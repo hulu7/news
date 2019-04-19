@@ -78,6 +78,7 @@ class Settings():
 
         self.DISABLE_RESTART_INTERVAL = False
 
+        #sogo-sogo-weixin
         self.VALID_PROXY_POOL_SOGO_ACCOUNT = "valid_proxy_pool:sogo_account"
         self.INVALID_PROXY_POOL_SOGO_ACCOUNT = "invalid_proxy_pool:sogo_account"
         self.VALID_PROXY_POOL_SOGO_ARTICLE_LIST = "valid_proxy_pool:sogo_article_list"
@@ -87,6 +88,10 @@ class Settings():
         self.FINISHED_SOGO_ACCOUNT = "finished:sogo_account"
         self.FINISHED_SOGO_ARTICLE_LIST = "finished:sogo_article_list"
         self.FINISHED__WX = "finished:wx"
+
+        # shenjian-weixin
+        self.FINISHED_WEIXIN_URL_ARTICLE = "finished:weixin_url_article"
+        self.FINISHED_WEIXIN_CONTENT_ARTICLE = "finished:weixin_content_article"
 
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {

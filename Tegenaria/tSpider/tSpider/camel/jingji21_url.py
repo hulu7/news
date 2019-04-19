@@ -52,7 +52,7 @@ class Jingji21():
             url = urlparse.urljoin(current_url, short_url)
             title = ''.join(item.xpath(".//*[contains(@class,'news_title')]/text()"))
             is_title_empty = len(title) == 0
-            if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
+            if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
                 data = {
                     'title': title.strip(),
                     'url': url.strip(),

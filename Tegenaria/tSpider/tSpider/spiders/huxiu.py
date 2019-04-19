@@ -106,16 +106,16 @@ class Huxiu():
             self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
             print 'End to store mongo {0}'.format(data['url'])
             self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
-            self.doraemon.storeFinished(response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
         else:
-            self.doraemon.storeFinished(response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
         del current_url, html, title, comment_number, share_number, image_url, url, content, time, author_url, author_name, id, data
         gc.collect()
 
     def start_requests(self):
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start ' + self.name + ' requests'
-        new_url_titles = self.doraemon.readNewUrls(self.url_path)
+        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf, self.url_path)
         if len(new_url_titles) == 0:
             self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
             print 'No new url for: {0}'.format(self.name)

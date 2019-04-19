@@ -71,7 +71,7 @@ class Chuansongme():
                     title = title_list1[0].strip()
                     print title
                 is_title_empty = self.doraemon.isEmpty(title)
-                if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
+                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
                     data = {
                         'title': title,
                         'url': url,

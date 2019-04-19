@@ -24,6 +24,8 @@ class Doraemon():
         self.rconn = redis.Redis(settings.REDIS_HOST, settings.REDIS_PORT)
         self.bf = BloomFilter(self.rconn, settings.BLOOMFILTER_NAME)
         self.disable_restart_interval = settings.DISABLE_RESTART_INTERVAL
+        self.bf_weixin_url = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_URL_ARTICLE)
+        self.bf_weixin_content = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_CONTENT_ARTICLE)
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)
@@ -45,28 +47,28 @@ class Doraemon():
     def isEmpty(self, item_list):
         return len([item for item in item_list if item.strip()]) == 0
 
-    def isDuplicated(self, title):
-        title_encode = str(title).encode("utf-8")
-        if self.bf.isContains(title_encode):
-            print 'Title {0} exists!'.format(title)
+    def isDuplicated(self, filter, content):
+        content_encode = str(content).encode("utf-8")
+        if filter.isContains(content_encode):
+            print 'Content {0} duplicated!'.format(content)
             return True
         else:
-            self.bf.insert(title_encode)
-            print 'Title {0} not exist!'.format(title)
+            filter.insert(content_encode)
+            print 'Content {0} not duplicated!'.format(content)
             return False
 
-    def isFinished(self, title):
-        title_encode = str(title).encode("utf-8")
-        if self.bf.isContains(title_encode):
-            print 'Title {0} exists!'.format(title)
+    def isFinished(self, filter, content):
+        content_encode = str(content).encode("utf-8")
+        if filter.isContains(content_encode):
+            print 'Title {0} exists!'.format(content)
             return True
         else:
             return False
 
-    def storeFinished(self, title):
-        print 'Start to store title: {0}'.format(title)
-        title_encode = title.encode("utf-8")
-        self.bf.insert(title_encode)
+    def storeFinished(self, filter, content):
+        print 'Start to store title: {0}'.format(content)
+        content_encode = str(content).encode("utf-8")
+        filter.insert(content_encode)
 
     def storeMongodb(self, mongo_url, data):
         mongo = MongoMiddleware()
@@ -78,20 +80,20 @@ class Doraemon():
         self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(finished_txt_path, name, id), content)
         print 'End to store txt: {0}'.format(id)
 
-    def filter(self, url_titles):
+    def filter(self, filter, url_titles):
         new_url_titles = []
         for url_title in url_titles:
-            if self.isFinished(url_title[1]) is False:
+            if self.isFinished(filter, url_title[1]) is False:
                 new_url_titles.append(url_title)
         return new_url_titles
 
-    def readNewUrls(self, url_path):
+    def readNewUrls(self, filter, url_path):
         print 'Start to read urls'
         isUrlPathExit = os.path.exists(url_path)
         new_url_titles = []
         if isUrlPathExit is True:
             url_titles = np.array(self.file.readColsFromCSV(url_path, ['url', 'title']))
-            new_url_titles = self.filter(url_titles)
+            new_url_titles = self.filter(filter, url_titles)
         return new_url_titles
 
     def hashSet(self, name, key, value):

@@ -74,7 +74,7 @@ class Huanqiu():
                 if self.doraemon.isEmpty(title0_2) is False:
                     title = ''.join(title0_2)
                 is_title_empty = self.doraemon.isEmpty(title)
-                if (is_title_empty is False) and (self.doraemon.isDuplicated(title) is False):
+                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
                     data = {
                         'title': title.strip(),
                         'url': url.strip(),
