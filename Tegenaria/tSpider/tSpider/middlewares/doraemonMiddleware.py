@@ -26,6 +26,7 @@ class Doraemon():
         self.disable_restart_interval = settings.DISABLE_RESTART_INTERVAL
         self.bf_weixin_url = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_URL_ARTICLE)
         self.bf_weixin_content = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_CONTENT_ARTICLE)
+        self.bf_weixin_id = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_URL_ID)
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)
@@ -60,13 +61,13 @@ class Doraemon():
     def isFinished(self, filter, content):
         content_encode = str(content).encode("utf-8")
         if filter.isContains(content_encode):
-            print 'Title {0} exists!'.format(content)
+            print 'Content {0} exists!'.format(content)
             return True
         else:
             return False
 
     def storeFinished(self, filter, content):
-        print 'Start to store title: {0}'.format(content)
+        print 'Start to store content: {0}'.format(content)
         content_encode = str(content).encode("utf-8")
         filter.insert(content_encode)
 

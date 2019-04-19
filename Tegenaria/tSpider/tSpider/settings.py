@@ -90,6 +90,7 @@ class Settings():
         self.FINISHED__WX = "finished:wx"
 
         # shenjian-weixin
+        self.FINISHED_WEIXIN_URL_ID = "finished:weixin_url_id"
         self.FINISHED_WEIXIN_URL_ARTICLE = "finished:weixin_url_article"
         self.FINISHED_WEIXIN_CONTENT_ARTICLE = "finished:weixin_content_article"
 
