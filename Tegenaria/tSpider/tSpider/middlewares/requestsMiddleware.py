@@ -7,7 +7,6 @@ import random
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-import gc
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
@@ -42,5 +41,3 @@ class RequestsMiddleware():
             return res
         except Exception, e:
             self.file.logger(self.settings.LOG_PATH, 'Requests Timeout: {0}'.format(str(e)))
-            del self.file, self.requests, self.headers
-            gc.collect()

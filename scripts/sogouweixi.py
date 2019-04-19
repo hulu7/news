@@ -2,9 +2,8 @@
 import wechatsogou
 import time
 ws_api = wechatsogou.WechatSogouAPI()
-ws_api = wechatsogou.WechatSogouAPI(captcha_break_time=3)
-
-for i in range(100):
-    text = ws_api.search_article('huxiu_com')
-    time.sleep(10)
-    print '{0}--{1}'.format(i, text)
+wechatsogou.WechatSogouAPI(proxies={
+    "https": "183.129.244.16:19806"
+})
+test = ws_api.get_gzh_info('huxiu_com')
+test2 = 0

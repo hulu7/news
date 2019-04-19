@@ -78,6 +78,16 @@ class Settings():
 
         self.DISABLE_RESTART_INTERVAL = False
 
+        self.VALID_PROXY_POOL_SOGO_ACCOUNT = "valid_proxy_pool:sogo_account"
+        self.INVALID_PROXY_POOL_SOGO_ACCOUNT = "invalid_proxy_pool:sogo_account"
+        self.VALID_PROXY_POOL_SOGO_ARTICLE_LIST = "valid_proxy_pool:sogo_article_list"
+        self.INVALID_PROXY_POOL_SOGO_ARTICLE_LIST = "invalid_proxy_pool:sogo_article_list"
+        self.VALID_PROXY_POOL_WX = "valid_proxy_pool:wx"
+        self.INVALID_PROXY_POOL_WX = "invalid_proxy_pool:wx"
+        self.FINISHED_SOGO_ACCOUNT = "finished:sogo_account"
+        self.FINISHED_SOGO_ARTICLE_LIST = "finished:sogo_article_list"
+        self.FINISHED__WX = "finished:wx"
+
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {
             'NAME': SETTINGS_NAME,
