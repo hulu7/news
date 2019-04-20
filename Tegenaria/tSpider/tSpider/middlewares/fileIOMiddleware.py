@@ -63,6 +63,13 @@ class FileIOMiddleware():
         del txt_writer
         gc.collect()
 
+    def writeToHtmlCover(self, file_path, content):
+        with open(file_path, 'w') as html_writer:
+            html_writer.write(str(content))
+            html_writer.close()
+        del html_writer
+        gc.collect()
+
     def writeToTxtAdd(self, file_path, content):
         with open(file_path, 'a') as txt_writer:
             txt_writer.write(str(content) + '\n')

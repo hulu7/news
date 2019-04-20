@@ -90,7 +90,7 @@ class Huxiu():
             'share_number': share_number,
             'image_url': image_url,
             'url': url,
-            'time': time,
+            'public_time': time,
             'author_url': author_url,
             'author_name': author_name,
             'id': id,

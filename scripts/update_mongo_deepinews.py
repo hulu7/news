@@ -39,9 +39,18 @@ class UpdateMongoDeepNews():
 
         return users
 
+    def cutTitle(self, title):
+        decoded_title = title.decode('utf8')
+        if len(decoded_title) > 36:
+            short_title = "{0}...".format(decoded_title[0:35].encode('utf8'))
+            return short_title
+        else:
+            return title
+
     def formatData(self, data):
+        title = self.cutTitle(data[0])
         format_data = {
-                   'title': data[0],
+                   'title': title,
                    'isActive': 'true',
                    'recommend': [],
                    'columnID': '',

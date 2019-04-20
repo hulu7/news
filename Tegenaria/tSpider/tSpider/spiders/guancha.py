@@ -84,7 +84,7 @@ class Guancha():
 
                 data = {
                     'url': url,
-                    'time': time,
+                    'public_time': time,
                     'author_name': author_name,
                     'title': title,
                     'id': id,

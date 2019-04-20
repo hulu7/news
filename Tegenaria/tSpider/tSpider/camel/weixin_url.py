@@ -6,13 +6,10 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-from lxml import etree
-import urlparse
 import re
 import datetime
 import json
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
-from browserRequest import BrowserRequest
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
@@ -106,8 +103,8 @@ class Weixin():
         print 'End to parse {0}'.format(current_url)
 
     def start_requests(self):
-        if True is True:
-            return
+        # if True is True:
+        #     return
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
         self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))

@@ -94,6 +94,10 @@ class Settings():
         self.FINISHED_WEIXIN_URL_ARTICLE = "finished:weixin_url_article"
         self.FINISHED_WEIXIN_CONTENT_ARTICLE = "finished:weixin_content_article"
 
+        #sites
+        self.URL_DEEPINEWS_10002_ARTICLE = "http://www.deepinews.com:10002/article/"
+        # self.URL_DEEPINEWS_10002_ARTICLE = 'http://192.168.163.26:8081/demo/'
+
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {
             'NAME': SETTINGS_NAME,
@@ -102,6 +106,8 @@ class Settings():
             'WORK_PATH_PRD1': "{0}//{1}".format(self.RSYNC_PRD1, SETTINGS_NAME),
             'WORK_PATH_PRD2': "{0}//sites//{1}".format(self.RSYNC_PRD2, SETTINGS_NAME),
             'FINISHED_TXT_PATH': "{0}//{1}//txt".format(self.RSYNC_PRD1, SETTINGS_NAME),
+            'FINISHED_HTML_PATH': "{0}//{1}//html".format(self.RSYNC_PRD1, SETTINGS_NAME),
+            'FINISHED_IMG_PATH': "{0}//{1}//img".format(self.RSYNC_PRD1, SETTINGS_NAME),
             'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(self.RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
             'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(self.RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
             'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(self.RSYNC_PRD2, SETTINGS_NAME),

@@ -8,7 +8,10 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 import numpy as np
 import time
+from datetime import datetime
+from datetime import timedelta
 import redis
+import hashlib
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.mongodbMiddleware import MongoMiddleware
 from settings import Settings
@@ -27,6 +30,7 @@ class Doraemon():
         self.bf_weixin_url = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_URL_ARTICLE)
         self.bf_weixin_content = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_CONTENT_ARTICLE)
         self.bf_weixin_id = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_URL_ID)
+        self.md5 = hashlib.md5()
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)
@@ -81,6 +85,12 @@ class Doraemon():
         self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(finished_txt_path, name, id), content)
         print 'End to store txt: {0}'.format(id)
 
+    def storeHtml(self, id, content, finished_html_path):
+        self.createFilePath(finished_html_path)
+        print 'Start to store html: {0}'.format(id)
+        self.file.writeToHtmlCover('{0}//{1}.html'.format(finished_html_path, id), content)
+        print 'End to store html: {0}'.format(id)
+
     def filter(self, filter, url_titles):
         new_url_titles = []
         for url_title in url_titles:
@@ -114,3 +124,30 @@ class Doraemon():
 
     def getKeyLen(self, key):
         return self.rconn.hlen(key)
+
+    def getDateOfDaysBefore(self, days):
+        return (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
+
+    def getDataFromString(self, string_date):
+        if "今天" in string_date:
+            return self.getDateOfDaysBefore(0)
+        if "昨天" in string_date:
+            return self.getDateOfDaysBefore(1)
+        if "前天" in string_date:
+            return self.getDateOfDaysBefore(2)
+        if "3天前" in string_date:
+            return self.getDateOfDaysBefore(3)
+        if "4天前" in string_date:
+            return self.getDateOfDaysBefore(4)
+        if "5天前" in string_date:
+            return self.getDateOfDaysBefore(5)
+        if "6天前" in string_date:
+            return self.getDateOfDaysBefore(6)
+        if "1周前" in string_date:
+            return self.getDateOfDaysBefore(7)
+        else:
+            return string_date
+
+    def getMD5(self, content):
+        self.md5.update(content.encode('utf-8'))
+        return self.md5.hexdigest()
