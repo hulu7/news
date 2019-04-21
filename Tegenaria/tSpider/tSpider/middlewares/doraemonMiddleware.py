@@ -33,6 +33,7 @@ class Doraemon():
         self.bf_weixin_content = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_CONTENT_ARTICLE)
         self.bf_weixin_id = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_URL_ID)
         self.bf_finished_image_id = BloomFilter(self.rconn, settings.FINISHED_IMAGE_ID)
+        self.bf_finished_temp_weixin = BloomFilter(self.rconn, settings.FINISHED_TEMP_WEIXIN)
         self.md5 = hashlib.md5()
 
     def createFilePath(self, path):

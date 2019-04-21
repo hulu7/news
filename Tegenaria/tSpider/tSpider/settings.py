@@ -102,6 +102,11 @@ class Settings():
         #images filter
         self.FINISHED_IMAGE_ID = "finished:image_id"
 
+        #temp folder for html and img
+        self.TEMP_FOLDER_HTML = "//home//dev//Data//Production//data4deepinews//html//"
+        self.TEMP_FOLDER_IMG = "//home//dev//Data//Production//data4deepinews//img//"
+        self.FINISHED_TEMP_WEIXIN = "finished:temp_weixin"
+
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {
             'NAME': SETTINGS_NAME,
