@@ -154,7 +154,7 @@ class Doraemon():
     def getDateOfDaysBefore(self, days):
         return (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
 
-    def getDataFromString(self, string_date):
+    def getDateFromString(self, string_date):
         if "今天" in string_date:
             return self.getDateOfDaysBefore(0)
         if "昨天" in string_date:

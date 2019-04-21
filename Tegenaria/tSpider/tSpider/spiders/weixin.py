@@ -75,7 +75,7 @@ class Weixin():
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(time0_1) is False:
                     time = ''.join(time0_1).strip()
-                    time = self.doraemon.getDataFromString(time)
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
 
