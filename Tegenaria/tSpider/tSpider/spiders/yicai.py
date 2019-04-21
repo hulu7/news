@@ -61,8 +61,8 @@ class Yicai():
         if len(not_fnd) > 0:
             article_0 = html.xpath(".//*[@id='multi-text']")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//div[contains(@class, 'txt')]/p/text()")
-                time0_1 = self.today
+                content0_1 = html.xpath(".//*[contains(@id, 'articlecontent')]//p/text()")
+                time0_1 = html.xpath(".//*[contains(@class, 'f-fs24 f-tac')]/span/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'f-fs42')]/text()")
 
@@ -71,7 +71,9 @@ class Yicai():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1[1].strip()
+                    time = ''.join(time0_1[1]).strip()
+                    time = self.doraemon.getDateFromString(time)
+                    print "----------: {0}".format(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:

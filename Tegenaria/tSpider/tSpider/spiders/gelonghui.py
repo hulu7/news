@@ -62,7 +62,7 @@ class Gelonghui():
             if len(article_0) > 0:
                 content0_1 = html.xpath(".//*[contains(@class, 'article-with-html')]//p/text()")
                 content0_2 = html.xpath(".//*[contains(@class, 'article-with-html')]//span/text()")
-                time0_1 = self.today
+                time0_1 = html.xpath(".//*[contains(@class, 'date')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'article-detail')]/h1/text()")
 
@@ -73,7 +73,8 @@ class Gelonghui():
                 if self.doraemon.isEmpty(content0_2) is False:
                     content = ''.join(content0_2).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1
+                    time = ''.join(time0_1).strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:

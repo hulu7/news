@@ -155,7 +155,23 @@ class Doraemon():
         return (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
 
     def getDateFromString(self, string_date):
-        if "今天" in string_date:
+        regx_time0 = re.compile("[0-9]{1,}-[0-9]{1,} [0-9]{1,}:[0-9]{1,}")
+        regx_time1 = re.compile("[0-9]{1,}-[0-9]{1,}-[0-9]{1,} [0-9]{1,}:[0-9]{1,}")
+        regx_time2 = re.compile("[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}")
+        regx_time3 = re.compile("[0-9]{1,}-[0-9]{1,}-[0-9]{1,}")
+        regx_time4 = re.compile("[0-9]{1,}-[0-9]{1,}-[0-9]{1,} [0-9]{1,}:[0-9]{1,}:[0-9]{1,}")
+        regx_time5 = re.compile("[0-9]{1,}:[0-9]{1,}:[0-9]{1,}")
+        regx_time6 = re.compile("[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,} [0-9]{1,}:[0-9]{1,}:[0-9]{1,}")
+
+        isValidTime0 = regx_time0.match(string_date)
+        isValidTime1 = regx_time1.match(string_date)
+        isValidTime2 = regx_time2.match(string_date)
+        isValidTime3 = regx_time3.match(string_date)
+        isValidTime4 = regx_time4.match(string_date)
+        isValidTime5 = regx_time5.match(string_date)
+        isValidTime6 = regx_time6.match(string_date)
+
+        if "今天" in string_date or "秒前" in string_date or "分钟前" in string_date or "小时前" in string_date:
             return self.getDateOfDaysBefore(0)
         if "昨天" in string_date:
             return self.getDateOfDaysBefore(1)
@@ -171,12 +187,36 @@ class Doraemon():
             return self.getDateOfDaysBefore(6)
         if "1周前" in string_date:
             return self.getDateOfDaysBefore(7)
-        if "月" in string_date and "日" in string_date:
+        if "年" not in string_date and "月" in string_date and "日" in string_date:
             year = time.strftime('%Y',time.localtime(time.time()))
-            month_day = re.split(",", string_date.replace('年', ',').replace('月', ',').replace('日', ''))
-            return "{0}-{1}-{2}".format(year, month_day[0], month_day[1])
-        else:
-            return string_date
+            data = re.split(",", string_date.replace('月', ',').replace('日', ''))
+            return "{0}-{1}-{2}".format(year, data[0], data[1])
+        if "年" in string_date and "月" in string_date and "日" in string_date:
+            data = re.split(",", string_date.replace('年', ',').replace('月', ',').replace('日', ','))
+            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
+        if isValidTime0 is not None:
+            data = re.split(r'[-, ' ']', string_date)
+            year = time.strftime('%Y', time.localtime(time.time()))
+            return "{0}-{1}-{2}".format(year, data[0], data[1])
+        if isValidTime1 is not None:
+            data = re.split(r'[-, ' ']', string_date)
+            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
+        if isValidTime2 is not None:
+            data = re.split(r'[., ' ']', string_date)
+            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
+        if isValidTime3 is not None:
+            data = re.split(r'[-]', string_date)
+            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
+        if isValidTime4 is not None:
+            data = re.split(r'[-, ' ']', string_date)
+            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
+        if isValidTime5 is not None:
+            data = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+            return data
+        if isValidTime6 is not None:
+            data = re.split(r'[/, ' ']', string_date)
+            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
+        return string_date
 
     def getMD5(self, content):
         self.md5.update(content.encode('utf-8'))

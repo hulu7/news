@@ -60,8 +60,8 @@ class I36kr():
         if len(not_fnd) > 0:
             article_0 = html.xpath(".//*[contains(@class,'article-content')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//div[contains(@class, 'articleDetailContent')]/p/text()")
-                time0_1 = self.today
+                content0_1 = html.xpath(".//*[contains(@class, 'articleDetailContent')]/p/text()")
+                time0_1 = html.xpath(".//*[contains(@class, 'title-icon-item item-time')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'article-title')]/text()")
 
@@ -70,7 +70,8 @@ class I36kr():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1
+                    time = ''.join(time0_1).strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:

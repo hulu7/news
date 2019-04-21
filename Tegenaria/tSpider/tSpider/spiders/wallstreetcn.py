@@ -74,7 +74,8 @@ class Stcn():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1[0].strip()
+                    time = ''.join(time0_1[0]).strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(author_name0_2) is False:
@@ -105,7 +106,8 @@ class Stcn():
                 if self.doraemon.isEmpty(content1_1) is False:
                     content = ''.join(content1_1).strip()
                 if self.doraemon.isEmpty(time1_1) is False:
-                    time = time1_1[0].strip()
+                    time = ''.join(time1_1[0]).strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name1_1) is False:
                     author_name = author_name1_1
                 if self.doraemon.isEmpty(title1_1) is False:
@@ -113,7 +115,7 @@ class Stcn():
 
                 data = {
                     'url': url,
-                    'time': time,
+                    'public_time': time,
                     'author_name': author_name,
                     'title': title,
                     'id': id,
@@ -123,7 +125,7 @@ class Stcn():
                 }
 
             if len(article_2) > 0:
-                time2_1 = html.xpath(".//time/@datetime")
+                time2_1 = html.xpath(".//*[contains(@class, 'meta-item time')]/text()")
                 content2_1 = html.xpath(".//*[contains(@class, 'rich-text')]/p/text()")
                 author2_1 = self.name
                 title2_1 = html.xpath(".//*[contains(@class,'article-header')]/h1/text()")
@@ -134,7 +136,8 @@ class Stcn():
                 if self.doraemon.isEmpty(content2_1) is False:
                     content = ''.join(content2_1).strip()
                 if self.doraemon.isEmpty(time2_1) is False:
-                    time = time2_1[0].strip()
+                    time = ''.join(time2_1[0]).strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author2_1) is False:
                     author_name = author2_1
                 if self.doraemon.isEmpty(title2_1) is False:
@@ -142,7 +145,7 @@ class Stcn():
 
                 data = {
                     'url': url,
-                    'time': time,
+                    'public_time': time,
                     'author_name': author_name,
                     'title': title,
                     'id': id,

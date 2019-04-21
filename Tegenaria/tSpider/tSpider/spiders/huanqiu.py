@@ -70,6 +70,7 @@ class Huanqiu():
                 content = ''.join(content0_1).strip()
             if self.doraemon.isEmpty(time0_1) is False:
                 time = ''.join(time0_1).strip()
+                time = self.doraemon.getDateFromString(time)
             if self.doraemon.isEmpty(author_name0_1) is False:
                 author_name = author_name0_1
             if self.doraemon.isEmpty(title0_1) is False:
@@ -110,6 +111,7 @@ class Huanqiu():
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
             return
+        # new_url_titles = [['http://m.huanqiu.com/r/MV8wXzE0NzYyMDY4XzEyNThfMTU1NTgyMTY2MA==', 'test']]
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))

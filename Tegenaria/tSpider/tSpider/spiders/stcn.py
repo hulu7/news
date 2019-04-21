@@ -60,7 +60,8 @@ class Stcn():
         id = ""
         if len(not_fnd) > 0:
             article_0 = html.xpath(".//*[contains(@class,'box_left')]")
-            article_1 = html.xpath(".//*[contains(@class,'xiangxi')]")
+            article_1 = html.xpath(".//*[contains(@class,'box_left3')]")
+            article_2 = html.xpath(".//*[contains(@class,'box_left2')]")
             if len(article_0) > 0 and len(article_1) == 0:
                 content0_1 = html.xpath(".//div[contains(@class, 'txt_con')]/p/text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'info')]/text()")
@@ -73,7 +74,8 @@ class Stcn():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1[0].strip()
+                    time = ''.join(time0_1).strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(author_name0_2) is False:
@@ -94,7 +96,7 @@ class Stcn():
 
             if len(article_1) > 0:
                 content1_1 = html.xpath(".//div[contains(@class, 'txt_con')]/p/text()")
-                time1_1 = ""
+                time1_1 = html.xpath(".//div[contains(@class, 'xiangxi')]/h2/span/text()")
                 author_name1_1= self.name
                 title1_1 = html.xpath(".//*[contains(@class,'xiangxi')]/h2/text()")
 
@@ -104,7 +106,11 @@ class Stcn():
                 if self.doraemon.isEmpty(content1_1) is False:
                     content = ''.join(content1_1).strip()
                 if self.doraemon.isEmpty(time1_1) is False:
-                    time = time1_1[0].strip()
+                    time = ''.join(time1_1).strip()
+                    time = re.sub(r'[^\x00-\x7F]+', ' ', time).strip()
+                    time = re.sub(r'[^\x00-\x7f]', ' ', time).strip()
+                    time = time.strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name1_1) is False:
                     author_name = author_name1_1
                 if self.doraemon.isEmpty(title1_1) is False:
@@ -112,7 +118,37 @@ class Stcn():
 
                 data = {
                     'url': url,
-                    'time': time,
+                    'public_time': time,
+                    'author_name': author_name,
+                    'title': title,
+                    'id': id,
+                    'download_time': self.today,
+                    'is_open_cache': self.is_open_cache,
+                    'source': self.source
+                }
+
+            if len(article_2) > 0:
+                content2_1 = html.xpath(".//div[contains(@class, 'left_txt')]/p/text()")
+                time2_1 = html.xpath(".//div[contains(@class, 'box_r')]/h2/span/text()")
+                author_name2_1= self.name
+                title2_1 = html.xpath(".//*[contains(@class,'box_r')]/h2/text()")
+
+                url = current_url
+                id = current_id
+
+                if self.doraemon.isEmpty(content2_1) is False:
+                    content = ''.join(content2_1).strip()
+                if self.doraemon.isEmpty(time2_1) is False:
+                    time = ''.join(time2_1[0]).strip()
+                    time = self.doraemon.getDateFromString(time)
+                if self.doraemon.isEmpty(author_name2_1) is False:
+                    author_name = author_name2_1
+                if self.doraemon.isEmpty(title2_1) is False:
+                    title = title2_1[0].strip()
+
+                data = {
+                    'url': url,
+                    'public_time': time,
                     'author_name': author_name,
                     'title': title,
                     'id': id,

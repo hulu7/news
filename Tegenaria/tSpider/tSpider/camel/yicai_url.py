@@ -37,6 +37,7 @@ class Yicai():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
+        self.regx = re.compile("/news/[0-9]{0,}.html")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -51,7 +52,9 @@ class Yicai():
             if len(href) == 0:
                 continue
             href_url = href[0]
-            if 'html' not in href_url:
+            isValidUrl = self.regx.match(href_url)
+            if isValidUrl is None:
+                print 'Invalid url for not match: {0}'.format(href_url)
                 continue
             for good in self.goodkeys:
                 if valid == True:

@@ -61,7 +61,7 @@ class Ifeng():
             article_0 = html.xpath(".//*[contains(@class,'container-2ItVJon-')]")
             if len(article_0) > 0:
                 content0_1 = html.xpath(".//*[contains(@class, 'text-3zQ3cZD4')]//p/text()")
-                time0_1 = self.today
+                time0_1 = html.xpath(".//*[contains(@class, 'titleLine-gY7DniPB')]/p/span/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'titleLine-gY7DniPB')]/h1/text()")
 
@@ -70,7 +70,8 @@ class Ifeng():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1
+                    time = ''.join(time0_1).strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:

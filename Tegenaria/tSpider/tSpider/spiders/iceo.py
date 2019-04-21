@@ -61,7 +61,7 @@ class Iceo():
             article_0 = html.xpath(".//*[contains(@class,'col-main1')]")
             if len(article_0) > 0:
                 content0_1 = html.xpath(".//*[contains(@class, 'article-content')]//p/text()")
-                time0_1 = self.today
+                time0_1 = html.xpath(".//*[contains(@class, 'info')]/span/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'titleh1')]//text()")
 
@@ -70,7 +70,10 @@ class Iceo():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1
+                    time = ''.join(time0_1).strip()
+                    time = time.split('|')
+                    time = time[0]
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:

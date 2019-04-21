@@ -78,7 +78,8 @@ class Huxiu():
             content = ''.join(content1).strip()
             valid = True
         if self.doraemon.isEmpty(time1) is False:
-            time = time1[0]
+            time = ''.join(time1).strip()
+            time = self.doraemon.getDateFromString(time)
         if self.doraemon.isEmpty(author_url1) is False:
             author_url = urlparse.urljoin(current_url, author_url1[0].strip())
         if self.doraemon.isEmpty(author_name1) is False:

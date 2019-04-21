@@ -61,7 +61,7 @@ class Iresearch():
             article_0 = html.xpath(".//*[contains(@class,'m-cont-hd')]")
             if len(article_0) > 0:
                 content0_1 = html.xpath(".//*[contains(@class, 'm-article')]//p/text()")
-                time0_1 = self.today
+                time0_1 = html.xpath(".//*[contains(@class, 'origin')]/em/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'title')]/h1/text()")
 
@@ -70,7 +70,8 @@ class Iresearch():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1
+                    time = ''.join(time0_1[0]).strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
@@ -110,6 +111,7 @@ class Iresearch():
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
             return
+        # new_url_titles = [['http://column.iresearch.cn/b/201904/861165.shtml', 'test']]
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))

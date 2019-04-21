@@ -62,7 +62,7 @@ class Songshuhui():
             if len(article_0) > 0:
                 title0_1 = html.xpath(".//*[contains(@class,'contenttitle')]/a/text()")
                 author_name0_1 = self.name
-                time0_1 = self.today
+                time0_1 = html.xpath(".//*[contains(@class,'metax_single')]/text()")
                 content0_1 = html.xpath(".//*[contains(@class, 'entry')]//p/text()")
 
                 url = current_url
@@ -70,7 +70,11 @@ class Songshuhui():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1
+                    time = ''.join(time0_1).strip()
+                    time = re.sub(r'[^\x00-\x7F]+', ' ', time).strip()
+                    time = re.sub(r'[^\x00-\x7f]', ' ', time).strip()
+                    time = time.strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:

@@ -67,7 +67,9 @@ class Jingji21():
                     content = content0_1.strip()
                     valid = True
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = time0_1.strip()
+                    time = ''.join(time0_1).strip()
+                    time = self.doraemon.getDateFromString(time)
+                    print "----------: {0}".format(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
