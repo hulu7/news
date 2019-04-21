@@ -56,6 +56,14 @@ class FileIOMiddleware():
         gc.collect()
         return content
 
+    def readFromHtml(self, file_path):
+        with open(file_path, 'r') as html_file:
+            content = html_file.read()
+        html_file.close()
+        del html_file
+        gc.collect()
+        return content
+
     def writeToTxtCover(self, file_path, content):
         with open(file_path, 'w') as txt_writer:
             txt_writer.write(str(content))

@@ -30,8 +30,7 @@ class Weixin():
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
         self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
-        self.finished_html_path = settings_name['FINISHED_HTML_PATH']
-        self.finished_img_path = settings_name['FINISHED_IMG_PATH']
+        self.finished_origin_html_path = settings_name['FINISHED_ORIGIN_HTML_PATH']
         self.url_path = settings_name['URL_PATH']
         self.mongo = settings_name['MONGO']
         self.name = settings_name['NAME']
@@ -50,7 +49,7 @@ class Weixin():
         print 'Start to parse: {0}'.format(current_url)
         current_id = self.doraemon.getMD5(current_url)
         page_source = response['response'].page_source
-        self.doraemon.storeHtml(current_id, page_source, self.finished_html_path)
+        self.doraemon.storeHtml(current_id, page_source, self.finished_origin_html_path)
         html = etree.HTML(page_source)
         article_content = html.xpath(".//*[contains(@id, 'img-content')]")
         data = {}

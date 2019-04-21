@@ -96,7 +96,11 @@ class Settings():
 
         #sites
         self.URL_DEEPINEWS_10002_ARTICLE = "http://www.deepinews.com:10002/article/"
-        # self.URL_DEEPINEWS_10002_ARTICLE = 'http://192.168.163.26:8081/demo/'
+        # self.URL_DEEPINEWS_10002_ARTICLE = 'http://192.168.163.26:8081/article/'
+        # self.URL_DEEPINEWS_10002_IMAGE = 'http://192.168.163.26:8081/img/'
+
+        #images filter
+        self.FINISHED_IMAGE_ID = "finished:image_id"
 
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {
@@ -106,7 +110,8 @@ class Settings():
             'WORK_PATH_PRD1': "{0}//{1}".format(self.RSYNC_PRD1, SETTINGS_NAME),
             'WORK_PATH_PRD2': "{0}//sites//{1}".format(self.RSYNC_PRD2, SETTINGS_NAME),
             'FINISHED_TXT_PATH': "{0}//{1}//txt".format(self.RSYNC_PRD1, SETTINGS_NAME),
-            'FINISHED_HTML_PATH': "{0}//{1}//html".format(self.RSYNC_PRD1, SETTINGS_NAME),
+            'FINISHED_ORIGIN_HTML_PATH': "{0}//{1}//origin_html".format(self.RSYNC_PRD1, SETTINGS_NAME),
+            'FINISHED_PROCESSED_HTML_PATH': "{0}//{1}//processed_html".format(self.RSYNC_PRD1, SETTINGS_NAME),
             'FINISHED_IMG_PATH': "{0}//{1}//img".format(self.RSYNC_PRD1, SETTINGS_NAME),
             'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(self.RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
             'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(self.RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),

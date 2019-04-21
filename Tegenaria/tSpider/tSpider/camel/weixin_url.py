@@ -70,6 +70,9 @@ class Weixin():
                 if bad in url:
                     valid = False
             if valid:
+                if 'signature' not in url:
+                    print "No signature in url {0}".format(url)
+                    continue
                 short_url_parts = re.split(r'[., /, _, %, ", -, =, ?]', url)
                 id = ''.join(short_url_parts[short_url_parts.index('signature') + 1:]).strip()
                 publish_time = datetime.datetime.fromtimestamp(int(short_url_parts[short_url_parts.index('timestamp') + 1])).strftime("%Y-%m-%d")
