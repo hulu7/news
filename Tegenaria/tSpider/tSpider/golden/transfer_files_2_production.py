@@ -40,7 +40,7 @@ class TransferToProduction():
         self.finished_processed_html_path = settings_name['FINISHED_PROCESSED_HTML_PATH']
         self.temp_folder_html = self.settings.TEMP_FOLDER_HTML
         self.temp_folder_img = self.settings.TEMP_FOLDER_IMG
-        self.log_path = self.settings.LOG_PATH_PRD2
+        self.log_path = self.settings.LOG_PATH
         self.today = self.settings.TODAY
 
     def start_transfer(self):
