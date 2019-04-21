@@ -121,9 +121,12 @@ class Doraemon():
         print 'Start to read ids'
         isContentPathExit = os.path.exists(content_path)
         new_ids = []
+        id_list = []
         if isContentPathExit is True:
             ids = np.array(self.file.readColsFromCSV(content_path, ['id']))
-            new_ids = self.imageFilter(filter, ids)
+            for id in ids:
+                id_list.append(id[0])
+            new_ids = self.imageFilter(filter, id_list)
         return new_ids
 
     def downloadImage(self, image_url, store_path):

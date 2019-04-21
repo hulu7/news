@@ -56,8 +56,7 @@ class WeixinSalticidae():
             print 'No new image id for {0}'.format(self.name)
             return
         self.doraemon.createFilePath(self.finished_processed_html_path)
-        for item in new_ids:
-            id = item[0]
+        for id in new_ids:
             print 'Start to remove pictures in: {0}'.format(id)
             html_file = self.file.readFromHtml("{0}//{1}.html".format(self.finished_origin_html_path, id))
             img_list = re.findall(self.regx_img, html_file)
@@ -74,6 +73,7 @@ class WeixinSalticidae():
                 new_html = html_file.replace(img_content, "")
                 html_file = new_html
             self.doraemon.storeHtml(id, new_html, self.finished_processed_html_path)
+            self.doraemon.storeFinished(self.doraemon.bf_finished_image_id, id)
 
 if __name__ == '__main__':
     WeixinSalticidae=WeixinSalticidae()
