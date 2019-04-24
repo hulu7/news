@@ -96,6 +96,7 @@ class Settings():
 
         #sites
         self.URL_DEEPINEWS_10002_ARTICLE = "http://www.deepinews.com:10002/article/"
+        self.URL_DEEPINEWS_10002_IMAGE = 'http://www.deepinews.com:10002/img/'
         # self.URL_DEEPINEWS_10002_ARTICLE = 'http://192.168.163.26:8081/article/'
         # self.URL_DEEPINEWS_10002_IMAGE = 'http://192.168.163.26:8081/img/'
 

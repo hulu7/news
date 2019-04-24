@@ -10,6 +10,7 @@ import numpy as np
 import time
 from datetime import datetime
 from datetime import timedelta
+import PIL.Image as Image
 import redis
 import hashlib
 import urllib
@@ -225,3 +226,29 @@ class Doraemon():
     def getMD5(self, content):
         self.md5.update(content.encode('utf-8'))
         return self.md5.hexdigest()
+
+    def compressImage(self, origin_image_path, destination_image_path, multiplier):
+        try:
+            sImg = Image.open(origin_image_path)
+            w, h = sImg.size
+            dImg = sImg.resize((int(w / multiplier), int(h / multiplier)), Image.ANTIALIAS)
+            os.remove(origin_image_path)
+            dImg.save(destination_image_path)
+            print "Compress picture {0} success!".format(destination_image_path)
+        except Exception, e:
+            print"Compress picture {0} failed for {1}".format(destination_image_path, e)
+
+    def getSizeOfImage(self, image_path):
+        try:
+            img = Image.open(image_path)
+            return img.size
+        except Exception, e:
+            print"Exception to open picture {0}".format(image_path)
+
+    def getFileSize(self, file_path):
+        try:
+            fsize = os.path.getsize(file_path)
+            fsize = fsize / float(1024)
+            return round(fsize, 2)
+        except Exception, e:
+            print"Exception to get file size of {0}".format(file_path)
