@@ -37,6 +37,7 @@ class TransferToProduction():
         self.mongo = settings_name['MONGO_URLS']
         self.name = settings_name['NAME']
         self.finished_content_path = settings_name['FINISHED_CONTENT_PATH']
+        self.finished_img_path = settings_name['FINISHED_IMG_PATH']
         self.finished_processed_html_path = settings_name['FINISHED_PROCESSED_HTML_PATH']
         self.temp_folder_html = self.settings.TEMP_FOLDER_HTML
         self.temp_folder_img = self.settings.TEMP_FOLDER_IMG
@@ -47,7 +48,22 @@ class TransferToProduction():
         print 'Start {0} transfer'.format(self.name)
         new_ids = self.doraemon.readNewImageIds(self.doraemon.bf_finished_temp_weixin, self.finished_content_path)
         for id in new_ids:
-            self.file.logger(self.log_path, 'Start transfer: {0}'.format(id))
+            self.file.logger(self.log_path, 'Start transfer image: {0}'.format(id))
+            regx_img_file = re.compile(id)
+            for f in os.listdir(self.finished_img_path):
+                isValidImage = regx_img_file.match(f)
+                if isValidImage is None:
+                    print 'Invalid image for not match: {0}'.format(f)
+                    continue
+                from_img_path = "{0}//{1}".format(self.finished_img_path, f)
+                to_img_path = "{0}{1}".format(self.temp_folder_img, f)
+                is_from_path_exists = os.path.exists(from_img_path)
+                if is_from_path_exists is False:
+                    self.file.logger(self.log_path, 'img of {0} not exits.'.format(f))
+                    continue
+                copyfile(from_img_path, to_img_path)
+                print 'Finished to transfer image {0}'.format(f)
+            self.file.logger(self.log_path, 'Start transfer html: {0}'.format(id))
             from_path = "{0}//{1}.html".format(self.finished_processed_html_path, id)
             to_path = "{0}{1}.html".format(self.temp_folder_html, id)
             is_from_path_exists = os.path.exists(from_path)
@@ -55,6 +71,7 @@ class TransferToProduction():
                 self.file.logger(self.log_path, 'html of {0} not exits.'.format(id))
                 continue
             copyfile(from_path, to_path)
+            print 'Finished to transfer html {0}'.format(id)
             self.doraemon.storeFinished(self.doraemon.bf_finished_temp_weixin, id)
             print 'Finished to transfer {0}'.format(id)
 
