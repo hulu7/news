@@ -39,24 +39,23 @@ class Cyzone():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
+        self.regx = re.compile("//www.cyzone.cn/article/[0-9]{0,}.html")
 
     def parse(self, response):
-        current_url = response.url.encode('gbk')
+        current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
-        hjson = json.loads(response.read())
-
-        b = hjson['data']
-
-        if len(hjson['data']) == 0:
-            return
-
-        for item in hjson['data']:
-            href_url = item['url'].encode('gbk')
-            hasId = str(filter(str.isdigit, href_url))
-            if len(hasId) == 0:
-                print 'Invalid url for no id: {0}'.format(href_url)
-                continue
+        html = etree.HTML(response['response'].page_source)
+        href_items = html.xpath(".//a")
+        for item in href_items:
+            href = item.xpath("@href")
             valid = True
+            if len(href) == 0:
+                continue
+            href_url = href[0]
+            isValidUrl = self.regx.match(href_url)
+            if isValidUrl is None:
+                print 'Invalid url for not match: {0}'.format(href_url)
+                continue
             for good in self.goodkeys:
                 if valid == True:
                     continue
@@ -68,9 +67,14 @@ class Cyzone():
                 if bad in href_url:
                     valid = False
             if valid:
-                id = str(item['content_id'])
+                short_url_parts = re.split(r'[., /, _, %, "]', href_url)
+                id = short_url_parts[short_url_parts.index('article') + 1]
                 url = urlparse.urljoin(current_url, href_url)
-                title = str(item['title'])
+                title = ""
+                title_list1 = item.xpath(".//text()")
+                if len(title_list1) > 0:
+                    title = ''.join(title_list1).strip()
+                    print title
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
                     data = {
@@ -94,7 +98,7 @@ class Cyzone():
             else:
                 self.file.logger(self.log_path, 'Invalid {0}'.format(href_url))
                 print 'Invalid {0}'.format(href_url)
-        print 'End to parse {0}'.format(href_url)
+        print 'End to parse {0}'.format(current_url)
 
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
@@ -110,21 +114,16 @@ class Cyzone():
 
         for url in url_content:
             if self.doraemon.isEmpty(url) is False:
-                new_urls.append(url)
+                new_urls.append([url, ''])
 
         if len(new_urls) == 0:
             print 'No url.'
             return
 
-        for url in new_urls:
-            response = urllib2.urlopen(url)
-            if response.code != 200:
-                print 'status: ' + response.status_code
-                continue
-            self.parse(response)
-
-        self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(new_urls)), self.name))
-        print 'End for {0} requests of {1}.'.format(str(len(new_urls)), self.name)
+        request = BrowserRequest()
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
+        self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
+        print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
 if __name__ == '__main__':
     cyzone=Cyzone()
