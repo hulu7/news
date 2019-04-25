@@ -58,8 +58,6 @@ class WeixinSalticidae():
             print 'Other type: {0}'.format(image_type)
 
     def start_requests(self):
-        if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval * 0.1) is False:
-            return
         self.file.logger(self.log_path, 'Start dowload images for: {0} '.format(self.name))
         print 'Start dowload images for: {0} '.format(self.name)
         new_ids = self.doraemon.readNewImageIds(self.doraemon.bf_finished_image_id, self.finished_content_path)
