@@ -33,5 +33,5 @@ do
       }
       expect eof"
     echo 'y' | rm ${FROMIMGPATH}/${file}
-    echo "${TIME}: Finish to upload html file ${file} and delete it." >> ${LOGPATH}/${LOG_DATE}_log.log
+    echo "${TIME}: Finish to upload img file ${file} and delete it." >> ${LOGPATH}/${LOG_DATE}_log.log
 done
