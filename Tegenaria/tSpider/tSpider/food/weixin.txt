@@ -53,7 +53,6 @@ CVCapital
 cychuangye
 dadatime
 dandureading
-darkinsider
 datablog163
 deep_focus
 deepinsightapp
@@ -195,7 +194,6 @@ passagegroup
 people_rmw
 phoenixweekly
 pic163
-pic17th
 python_shequ
 QbitAI
 qianheikeji
@@ -218,7 +216,6 @@ since20161228
 smartman163
 spenserandhk
 SquirrelClub
-steamforkids
 S-Tech1014
 story_fm
 sunbushu123
