@@ -89,6 +89,6 @@ class FileIOMiddleware():
         local_time = time.localtime(time.time())
         today = time.strftime('%Y-%m-%d', local_time)
         current_time = time.strftime('%Y-%m-%d %H:%M:%S', local_time)
-        self.writeToTxtAdd(file_path + '//' + today + '_log.log', str(current_time + ": " + content))
+        self.writeToTxtAdd('{0}//{1}_log.log '.format(file_path, today), str(current_time + ": " + content))
         del local_time, today, current_time
         gc.collect()

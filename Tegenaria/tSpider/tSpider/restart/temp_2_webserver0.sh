@@ -1,6 +1,6 @@
 #!/bin/bash
-FILE_DATE=$(date "+%Y%m%d")
-LOG_DATE=$(date "+%Y%m%d")
+FILE_DATE=$(date "+%Y-%m-%d")
+LOG_DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")
 FROMROOTPATH=/home/dev/Data/Production/data4deepinews
 TOROOTPATH=/home/dev/Data/Production
