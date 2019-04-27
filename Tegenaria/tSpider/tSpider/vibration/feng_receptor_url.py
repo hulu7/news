@@ -6,14 +6,8 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-from lxml import etree
-import urlparse
-import re
-import requests
 import time
-import codecs
-import jsonpath
-import json
+
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from Tegenaria.tSpider.tSpider.browserRequest import BrowserRequest
 from Tegenaria.tSpider.tSpider.settings import Settings

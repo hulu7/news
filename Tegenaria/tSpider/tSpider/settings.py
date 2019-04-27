@@ -104,9 +104,18 @@ class Settings():
         self.FINISHED_IMAGE_ID = "finished:image_id"
 
         #temp folder for html and img
-        self.TEMP_FOLDER_HTML = "//home//dev//Data//Production//data4deepinews//html//"
-        self.TEMP_FOLDER_IMG = "//home//dev//Data//Production//data4deepinews//img//"
+        self.TEMP_FOLDER_HTML = "//home//dev//Data//Production//data4deepinews//html"
+        self.TEMP_FOLDER_IMG = "//home//dev//Data//Production//data4deepinews//img"
         self.FINISHED_TEMP_WEIXIN = "finished:temp_weixin"
+
+        #remove server information
+        self.HOST_NAME = '223.111.139.227'
+        self.USER_NAME = 'root'
+        self.PASSWORD = 'rerr48779'
+        self.PORT = 22
+        self.REMOTE_IMG_PATH = '//home//dev//Data//Production//img'
+        self.REMOTE_HTML_PATH = '//home//dev//Data//Production//article'
+        self.MAX_UPLOAD_PROCESS = 20
 
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {

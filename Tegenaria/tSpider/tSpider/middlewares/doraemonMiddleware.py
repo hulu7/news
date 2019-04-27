@@ -252,3 +252,10 @@ class Doraemon():
             return round(fsize, 2)
         except Exception, e:
             print"Exception to get file size of {0}".format(file_path)
+
+    def getFileList(self, diractory):
+        file_list = []
+        isFilePathExists = os.path.exists(diractory)
+        if isFilePathExists is True:
+            file_list = os.listdir(diractory)
+        return file_list
