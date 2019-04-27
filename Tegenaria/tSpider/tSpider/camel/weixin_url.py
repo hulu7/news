@@ -75,11 +75,17 @@ class Weixin():
                     continue
                 short_url_parts = re.split(r'[., /, _, %, ", -, =, ?]', url)
                 id = ''.join(short_url_parts[short_url_parts.index('signature') + 1:]).strip()
-                publish_time = datetime.datetime.fromtimestamp(int(short_url_parts[short_url_parts.index('timestamp') + 1])).strftime("%Y-%m-%d")
+                p_time = item['article_publish_time']
+                is_p_time_missing = False
+                if self.doraemon.isEmpty(str(p_time)):
+                    is_p_time_missing = True
+                    self.file.logger(self.log_path, 'publish time missing for {0}'.format(current_url))
+                    p_time = int(short_url_parts[short_url_parts.index('timestamp') + 1])
+                publish_time = datetime.datetime.fromtimestamp(p_time).strftime("%Y-%m-%d")
                 title = item['article_title'].strip()
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_weixin_url, title) is False):
-                    if self.doraemon.isFinished(self.doraemon.bf_weixin_id, weixinId) is False:
+                    if self.doraemon.isFinished(self.doraemon.bf_weixin_id, weixinId) is False and is_p_time_missing is False and publish_time == self.today:
                         self.doraemon.storeFinished(self.doraemon.bf_weixin_id, weixinId)
                     data = {
                         'title': title,
