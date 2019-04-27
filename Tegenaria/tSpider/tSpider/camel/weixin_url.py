@@ -39,11 +39,11 @@ class Weixin():
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
 
-    def parse(self, response, url_title):
-        weixinId = url_title[1]
-        current_url = response.url.encode('gbk')
+    def parse(self, response):
+        weixinId = response['request_title'].encode('gbk')
+        current_url = response['response'].url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
-        content = json.loads(response.content)
+        content = json.loads(response['response'].content)
         if content['error_code'] != 0:
             print 'No content for weixin id: {0}'.format(weixinId)
             self.file.logger(self.log_path, 'No content for weixin id: {0}'.format(weixinId))
@@ -129,14 +129,8 @@ class Weixin():
             return
         self.file.logger(self.log_path, 'There is {0} weixin requests to do.'.format(str(len(new_urls))))
         host = 'shenjian.io'
-        for url_title in new_urls:
-            print 'Start to parse weixing: {0}'.format(url_title[1])
-            response = self.request.requests_request(url_title[0], None, host, url_title[0])
-            if response.status_code != 200:
-                print 'status: {0}'.format(response.status_code)
-                continue
-            self.parse(response, url_title)
 
+        self.request.start_requests(new_urls, self.max_pool_size, self.log_path, None, host, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(new_urls)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 

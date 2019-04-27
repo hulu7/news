@@ -29,4 +29,4 @@ woshipm,人人都是产品经理,60,2,False
 qdaily,好奇心日报,30,2,False
 donews,DoNews,60,2,False
 anyv,微信阅读,120,2,False
-weixin,微信,60,2,False
+weixin,微信,60,4,False

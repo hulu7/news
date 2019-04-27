@@ -6,6 +6,8 @@ import requests
 import random
 import sys
 reload(sys)
+import gc
+from multiprocessing.pool import ThreadPool as Pool
 sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from settings import Settings
@@ -41,3 +43,34 @@ class RequestsMiddleware():
             return res
         except Exception, e:
             self.file.logger(self.settings.LOG_PATH, 'Requests Timeout: {0}'.format(str(e)))
+
+    def run_task(self, url_title=[], callback=callable, headers=None, host=None):
+        self.file.logger(self.log_path, 'Start: {0}'.format(url_title[0]))
+        print 'Start: {0}'.format(url_title[0])
+        response = self.requests_request(url_title[0], headers, host, url_title[0])
+        try:
+            callback({'response': response, 'request_url': url_title[0], 'request_title': url_title[1]})
+        except Exception, e:
+            self.file.logger(self.log_path, 'Exception: {0} for {1}'.format(e, url_title[0]))
+            print 'Exception: {0} for {1}'.format(e, url_title[0])
+            del response, self.requests_request
+            gc.collect()
+        self.file.logger(self.log_path, 'End: {0}'.format(response.url))
+        print 'End: {0}'.format(response.url)
+        del response, self.requests_request
+        gc.collect()
+
+    def start_requests(self, url_titles, processes, log_path, headers, host, proxy, callback=callable):
+        self.file = FileIOMiddleware()
+        self.content = []
+        self.log_path = log_path
+        self.proxy = proxy
+        process = Pool(processes)
+        for url_title in url_titles:
+            process.apply_async(self.run_task, args=(url_title, callback, headers, host))
+        process.close()
+        process.join()
+        self.file.logger(self.log_path, 'Done')
+        print 'Done'
+        del self.file, process
+        gc.collect()
