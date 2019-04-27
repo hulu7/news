@@ -1,6 +1,8 @@
 #coding:utf-8
 #------requirement------
-#paramiko-2.1.1
+#paramiko-2.4.2
+#pyOpenSSL-0.13.1
+#cryptography-1.7.2
 #------requirement------
 import os
 import sys
@@ -8,6 +10,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 import gc
 import paramiko
+import logging
 from multiprocessing.pool import ThreadPool as Pool
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from settings import Settings
@@ -16,6 +19,7 @@ class FileTransferMiddleware():
     def __init__(self):
         self.settings = Settings()
         self.settings.CreateCommonSettings()
+        logging.raiseExceptions = False
 
     def singleUpload(self, local_file_path, remote_file_path, host_name, user_name, password, port):
         connect_port = paramiko.Transport((host_name, port))
