@@ -118,7 +118,7 @@ class Settings():
         self.MAX_UPLOAD_PROCESS = 20
 
         #refresh the redis interval
-        self.REFRESH_REDIS_INTERVAL = 1
+        self.REFRESH_REDIS_INTERVAL = 1440
 
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {
