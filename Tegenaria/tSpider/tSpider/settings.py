@@ -117,6 +117,9 @@ class Settings():
         self.REMOTE_HTML_PATH = '//home//dev//Data//Production//article'
         self.MAX_UPLOAD_PROCESS = 20
 
+        #refresh the redis interval
+        self.REFRESH_REDIS_INTERVAL = 1
+
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {
             'NAME': SETTINGS_NAME,
@@ -131,6 +134,7 @@ class Settings():
             'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(self.RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
             'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(self.RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
             'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(self.RSYNC_PRD2, SETTINGS_NAME),
+            'REDIS_REFRESH_PATH': "{0}//sites//{1}//redis_refresh.txt".format(self.RSYNC_PRD2, SETTINGS_NAME),
             'RESTART_INTERVAL': int(RESTART_INTERVAL),
             'MAX_POOL_SIZE': int(MAX_POOL_SIZE),
             'URLS': "{0}//{1}.txt".format(self.CAMEL_FOOD, SETTINGS_NAME),
