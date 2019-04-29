@@ -110,6 +110,7 @@ class Weixin():
                 self.file.logger(self.log_path, 'Invalid {0}'.format(current_url))
                 print 'Invalid {0}'.format(current_url)
         print 'End to parse {0}'.format(current_url)
+        return
 
     def start_requests(self):
         # if True is True:

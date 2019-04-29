@@ -35,6 +35,7 @@ class BrowserRequest():
         response.quit()
         del response, request
         gc.collect()
+        return
 
     def start_chrome(self, url_titles, processes, log_path, proxy, callback=callable):
         self.file = FileIOMiddleware()

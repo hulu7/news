@@ -43,6 +43,7 @@ class RequestsMiddleware():
             return res
         except Exception, e:
             self.file.logger(self.settings.LOG_PATH, 'Requests Timeout: {0}'.format(str(e)))
+        return
 
     def run_task(self, url_title=[], callback=callable, headers=None, host=None):
         self.file.logger(self.log_path, 'Start: {0}'.format(url_title[0]))
@@ -59,6 +60,7 @@ class RequestsMiddleware():
         print 'End: {0}'.format(response.url)
         del response, self.requests_request
         gc.collect()
+        return
 
     def start_requests(self, url_titles, processes, log_path, headers, host, proxy, callback=callable):
         self.file = FileIOMiddleware()
@@ -74,3 +76,4 @@ class RequestsMiddleware():
         print 'Done'
         del self.file, process
         gc.collect()
+        return
