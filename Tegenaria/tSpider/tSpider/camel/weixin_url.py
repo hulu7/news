@@ -6,10 +6,12 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+from lxml import etree
 import re
 import datetime
 import json
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
+from browserRequest import BrowserRequest
 from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
@@ -40,10 +42,16 @@ class Weixin():
         self.today = self.settings.TODAY
 
     def parse(self, response):
+        current_url = response['response'].current_url.encode('gbk')
         weixinId = response['request_title'].encode('gbk')
-        current_url = response['response'].url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
-        content = json.loads(response['response'].content)
+        html = etree.HTML(response['response'].page_source)
+        json_content_list = html.xpath(".//pre/text()")
+        if len(json_content_list) == 0:
+            print 'There is no data for weixin: {0}'.format(weixinId)
+            self.file.logger(self.log_path, 'There is no data for weixin: {0}'.format(weixinId))
+            return
+        content = json.loads(json_content_list[0])
         if content['error_code'] != 0:
             print 'No content for weixin id: {0}'.format(weixinId)
             self.file.logger(self.log_path, 'No content for weixin id: {0}'.format(weixinId))
@@ -135,10 +143,10 @@ class Weixin():
             print 'No url.'
             return
         self.file.logger(self.log_path, 'There is {0} weixin requests to do.'.format(str(len(new_urls))))
-        host = 'shenjian.io'
 
-        self.request.start_requests(new_urls, self.max_pool_size, self.log_path, None, host, None, callback=self.parse)
-        self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(new_urls)), self.name))
+        request = BrowserRequest()
+        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
+        self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
 if __name__ == '__main__':
