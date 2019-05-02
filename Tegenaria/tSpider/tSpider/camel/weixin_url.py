@@ -26,7 +26,7 @@ class Weixin():
         self.request = RequestsMiddleware()
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd2)
-        self.doraemon.createFilePath(self.settings.LOG_PATH)
+        self.doraemon.createFilePath(self.log_path)
 
     def getSettings(self):
         settings_name = self.settings.CreateSettings('weixin')
