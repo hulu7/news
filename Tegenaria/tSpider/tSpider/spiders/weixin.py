@@ -66,6 +66,7 @@ class Weixin():
                 author_name0_1 = self.name
                 time0_1 = html.xpath(".//*[contains(@id, 'publish_time')]/text()")
                 content0_1 = html.xpath(".//*[contains(@class, 'rich_media_content')]//p/text()")
+                content0_2 = html.xpath(".//*[contains(@class, 'rich_media_content')]//span/text()")
 
                 url = "{0}{1}.html".format(self.url_deepinews_10002_article, current_id)
                 id = current_id
@@ -78,6 +79,8 @@ class Weixin():
                     time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
+                if self.doraemon.isEmpty(content0_2) is False:
+                    content = ''.join(content0_2).strip()
 
                 data = {
                     'url': url,
