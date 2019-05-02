@@ -37,6 +37,7 @@ class Iyiou():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
+        self.regx = re.compile("^(?:http)s?://www.iyiou.com/p/[0-9]{0,}.html")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -49,9 +50,9 @@ class Iyiou():
             if len(href) == 0:
                 continue
             href_url = str(href[0])
-            hasId = str(filter(str.isdigit, href_url))
-            if len(hasId) == 0:
-                print 'Invalid url for no id: {0}'.format(href_url)
+            isValidUrl = self.regx.match(href_url)
+            if isValidUrl is None:
+                print 'Invalid url for not match: {0}'.format(href_url)
                 continue
             for good in self.goodkeys:
                 if valid == True:
