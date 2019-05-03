@@ -19,7 +19,7 @@ class CommitData():
     def __init__(self):
         self.rconn = redis.Redis('127.0.0.1', 6379)
         self.bf_huxiu = BloomFilter(self.rconn, 'supplier:commit_huxiu')
-        self.today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+        self.today = time.strftime('%Y%m%d', time.localtime(time.time()))
         self.class_finished_path = '/home/dev/Data/Production/catalogs'
         self.log_path = '/home/dev/Data/Production/log/{0}_log.log'.format(self.today)
         self.customer_info_path = '/home/dev/Data/Production/customerInfo/customers.xlsx'

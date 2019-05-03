@@ -74,13 +74,13 @@ echo "******************************install pip upgrade"
 pip install --upgrade pip
 echo "******************************install pyOpenSSL"
 echo 'y' | pip uninstall pyOpenSSL
-pip install pyOpenSSL
+pip install pyOpenSSL==0.13.1
 echo "******************************install setuptools"
 pip install setuptools==21.0.0
 echo "******************************install requests"
-pip install requests
+pip install requests==2.6.0
 echo "******************************install Beautifulsoup4"
-pip install beautifulsoup4
+pip install beautifulsoup4==4.7.1
 echo "******************************install lxml"
 pip install lxml==3.2.1
 echo "******************************install html5lib"
@@ -92,6 +92,8 @@ pip install zope.interface==4.5.0
 echo "******************************install Twisted"
 echo 'y' | yum install python-devel
 pip install Twisted==16.4.1
+echo "******************************install libevent-devel"
+echo 'y' | yum install libevent-devel
 echo "******************************install Scrapy"
 pip install Scrapy==1.5.1
 echo "******************************install scrapy-crawlera"
@@ -122,6 +124,16 @@ echo "******************************install psutil"
 pip install psutil==5.4.8
 echo "******************************install Flask"
 pip install Flask==1.0.2
+echo "******************************install Cython"
+pip install Cython==0.29.7
+echo "******************************install fasttext"
+pip install fasttext==0.8.3
+echo "******************************install gevent"
+pip install gevent==1.4.0
+echo "******************************install jieba"
+pip install jieba==0.39
+echo "******************************install xlrd"
+pip install xlrd==1.2.0
 echo "******************************install Chromedriver"
 cd '/opt/'
 wget http://chromedriver.storage.googleapis.com/70.0.3538.16/chromedriver_linux64.zip
