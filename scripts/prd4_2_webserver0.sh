@@ -1,5 +1,5 @@
 #!/bin/bash
-FILE_DATE=$(date "+%Y-%m-%d")
+FILE_DATE=$(date "+%Y%m%d")
 LOG_DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")
 OUTPATH=/home/dev/Data/Production/data4deepinews
