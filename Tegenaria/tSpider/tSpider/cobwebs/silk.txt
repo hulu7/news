@@ -1,7 +1,7 @@
 huxiu,虎嗅,30,2,False
 cankaoxiaoxi,参考消息,10,2,False
 ce,中国经济网,20,2,False
-chuansongme,微信-传送门,120,5,True
+chuansongme,微信-传送门,120,2,True
 cyzone,创业邦,60,2,False
 eeo,经济观察网,30,2,False
 guancha,观察者网,5,2,False
@@ -16,12 +16,12 @@ stcn,证券时报网,30,2,False
 yicai,第一财经,30,2,False
 wallstreetcn,华尔街见闻,20,2,False
 i36kr,36氪,30,2,False
-baijia,百家号,30,4,False
+baijia,百家号,60,2,False
 iceo,中国企业家,120,2,False
 gelonghui,格隆汇,60,2,False
 sohump,搜狐号,60,2,False
 i52rkl,我爱热可乐,60,2,False
-xueqiu,雪球网,30,4,False
+xueqiu,雪球网,30,2,False
 niaogebiji,鸟哥笔记,30,2,False
 tmtpost,钛媒体,30,2,False
 songshuhui,学科松鼠会,60,2,False
@@ -30,3 +30,4 @@ qdaily,好奇心日报,30,2,False
 donews,DoNews,60,2,False
 anyv,微信阅读,120,2,False
 weixin,微信,60,2,False
+toutiao,今日头条,60,2,False

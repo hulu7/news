@@ -15,7 +15,7 @@ from settings import Settings
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.doraemonMiddleware import Doraemon
 
-class Iyiou():
+class Toutiao():
 
     def __init__(self):
         self.settings = Settings()
@@ -26,7 +26,7 @@ class Iyiou():
         self.doraemon.createFilePath(self.settings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('iyiou')
+        settings_name = self.settings.CreateSettings('toutiao')
         self.source = settings_name['SOURCE_NAME']
         self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
         self.mongo = settings_name['MONGO_URLS']
@@ -37,7 +37,7 @@ class Iyiou():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
-        self.regx = re.compile("^(?:http)s?://www.iyiou.com/p/[0-9]{0,}.html")
+        self.regx = re.compile("/item/[0-9]{0,}/")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -49,7 +49,7 @@ class Iyiou():
             valid = True
             if len(href) == 0:
                 continue
-            href_url = str(href[0])
+            href_url = href[0]
             isValidUrl = self.regx.match(href_url)
             if isValidUrl is None:
                 print 'Invalid url for not match: {0}'.format(href_url)
@@ -65,22 +65,14 @@ class Iyiou():
                 if bad in href_url:
                     valid = False
             if valid:
-                short_url_parts = re.split(r'[., /, _]', href_url)
-                id = short_url_parts[len(short_url_parts) - 2]
+                short_url_parts = re.split(r'[., /, _, %, "]', href_url)
+                id = short_url_parts[len(short_url_parts) - 1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
-                title_list1 = item.xpath("@title")
-                title_list2 = item.xpath(".//text()")
+                title_list1 = item.xpath(".//text()")
                 if len(title_list1) > 0:
-                    title_tmp = ''.join(title_list1).strip()
-                    if self.doraemon.isEmpty(title_tmp) is False:
-                        title = title_tmp
-                        print title
-                if len(title_list2) > 0:
-                    title_tmp = ''.join(title_list2).strip()
-                    if self.doraemon.isEmpty(title_tmp) is False:
-                        title = title_tmp
-                        print title
+                    title = ''.join(title_list1).strip()
+                    print title
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
                     data = {
@@ -104,7 +96,7 @@ class Iyiou():
             else:
                 self.file.logger(self.log_path, 'Invalid {0}'.format(href_url))
                 print 'Invalid {0}'.format(href_url)
-        print 'End to parse {0}'.format(href_url)
+        print 'End to parse {0}'.format(current_url)
 
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
@@ -132,5 +124,5 @@ class Iyiou():
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
 if __name__ == '__main__':
-    iyiou=Iyiou()
-    iyiou.start_requests()
+    Toutiao=Toutiao()
+    Toutiao.start_requests()
