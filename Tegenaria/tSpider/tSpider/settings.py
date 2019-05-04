@@ -15,7 +15,7 @@ class Settings():
         self.CAMEL_FOOD = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//food"
         self.COBWEBS = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs/silk.txt"
 
-        self.SELENIUM_TIMEOUT = 300
+        self.SELENIUM_TIMEOUT = 120
         self.CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
 
         self.USER_AGENTS = [
