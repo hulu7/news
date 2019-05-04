@@ -10,6 +10,7 @@ from lxml import etree
 import re
 import datetime
 import json
+import gc
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest
 from settings import Settings
@@ -118,11 +119,11 @@ class Weixin():
                 self.file.logger(self.log_path, 'Invalid {0}'.format(current_url))
                 print 'Invalid {0}'.format(current_url)
         print 'End to parse {0}'.format(current_url)
-        return
+
+        del current_url, html, title, url, id, data, short_url_parts
+        gc.collect()
 
     def start_requests(self):
-        # if True is True:
-        #     return
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
         self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
@@ -148,6 +149,9 @@ class Weixin():
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
+
+        del new_urls, content, id_list, request
+        gc.collect()
 
 if __name__ == '__main__':
     Weixin=Weixin()

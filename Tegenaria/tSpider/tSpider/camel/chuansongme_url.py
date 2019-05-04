@@ -8,9 +8,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 from lxml import etree
 import urlparse
-import re
-import requests
-import time
+import gc
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest
 from settings import Settings
@@ -95,6 +93,9 @@ class Chuansongme():
                 print 'Invalid {0}'.format(href_url)
         print 'End to parse {0}'.format(href_url)
 
+        del current_url, html, title, url, href_url, id, data, href_items
+        gc.collect()
+
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
@@ -120,6 +121,9 @@ class Chuansongme():
         request = BrowserRequest()
         request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for requests of {0}.'.format(self.name))
+
+        del new_urls, content, url_list, request
+        gc.collect()
 
 if __name__ == '__main__':
     Chuansongme=Chuansongme()

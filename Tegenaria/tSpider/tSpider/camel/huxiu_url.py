@@ -8,7 +8,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 from lxml import etree
 import urlparse
-import re
+import gc
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest
 from settings import Settings
@@ -82,6 +82,9 @@ class Huxiu():
                 print 'Invalid {0}'.format(url)
         print 'End to parse: {0}'.format(current_url)
 
+        del current_url, html, title, url, id, data, href_items
+        gc.collect()
+
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
@@ -107,6 +110,9 @@ class Huxiu():
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
+
+        del new_urls, content, url_list, request
+        gc.collect()
 
 if __name__ == '__main__':
     huxiu=Huxiu()
