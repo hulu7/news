@@ -45,7 +45,9 @@ class SeleniumMiddleware(object):
             self.browser.get(url)
             return self.browser
         except TimeoutException:
-            browser = self.browser
             self.file.logger(log_path, 'Chrome timeout for: {0}'.format(url))
             self.close()
-            return browser
+            return self.browser
+        finally:
+            self.close()
+            return self.browser
