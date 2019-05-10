@@ -167,6 +167,7 @@ class Doraemon():
         regx_time4 = re.compile("[0-9]{1,}-[0-9]{1,}-[0-9]{1,} [0-9]{1,}:[0-9]{1,}:[0-9]{1,}")
         regx_time5 = re.compile("[0-9]{1,}:[0-9]{1,}:[0-9]{1,}")
         regx_time6 = re.compile("[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,} [0-9]{1,}:[0-9]{1,}:[0-9]{1,}")
+        regx_time7 = re.compile("[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,}")
 
         isValidTime0 = regx_time0.match(string_date)
         isValidTime1 = regx_time1.match(string_date)
@@ -175,6 +176,7 @@ class Doraemon():
         isValidTime4 = regx_time4.match(string_date)
         isValidTime5 = regx_time5.match(string_date)
         isValidTime6 = regx_time6.match(string_date)
+        isValidTime7 = regx_time7.match(string_date)
 
         if "今天" in string_date or "秒前" in string_date or "分钟前" in string_date or "小时前" in string_date:
             return self.getDateOfDaysBefore(0)
@@ -219,6 +221,9 @@ class Doraemon():
             data = time.strftime('%Y-%m-%d', time.localtime(time.time()))
             return data
         if isValidTime6 is not None:
+            data = re.split(r'[/, ' ']', string_date)
+            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
+        if isValidTime7 is not None:
             data = re.split(r'[/, ' ']', string_date)
             return "{0}-{1}-{2}".format(data[0], data[1], data[2])
         return string_date
