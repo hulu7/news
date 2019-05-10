@@ -15,6 +15,7 @@ import redis
 import hashlib
 import urllib
 import re
+import tarfile
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.mongodbMiddleware import MongoMiddleware
 from settings import Settings
@@ -264,3 +265,34 @@ class Doraemon():
         if isFilePathExists is True:
             file_list = os.listdir(diractory)
         return file_list
+
+    def isFileExists(self, file_path):
+        return os.path.exists(file_path)
+
+    def deleteFile(self, file_path):
+        try:
+            print "Start to delete file: {0}".format(file_path)
+            os.remove(file_path)
+            print "Finished to delete file: {0}".format(file_path)
+        except Exception, e:
+            print "Exception to delete file: {0} for : {1}".format(file_path, e)
+
+    def tar(self, directory):
+        file_list = os.listdir(directory)
+        if len(file_list) == 0:
+            print"There is no file to compress for: {0}".format(directory)
+            return
+        try:
+            print "Start to compress directory: {0}".format(directory)
+            t = tarfile.open(directory + ".tar.gz", "w:gz")
+            for root, dir, files in os.walk(directory):
+                for file in files:
+                    fullpath = os.path.join(root, file)
+                    t.add(fullpath)
+            t.close()
+            print "Finished to compress directory: {0}".format(directory)
+            for file in files:
+                fullpath = os.path.join(root, file)
+                self.deleteFile(fullpath)
+        except Exception, e:
+            print "Exception to compress directory: {0} for :{1}".format(directory, e)

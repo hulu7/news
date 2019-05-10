@@ -37,38 +37,54 @@ class WeixinTalk():
         self.temp_img_path = self.settings.TEMP_FOLDER_IMG
 
     def start_upload(self):
-        html_files = self.doraemon.getFileList(self.temp_html_path)
-        if len(html_files) > 0:
-            if len(html_files) < 10:
-                html_upload_process = 1
-            else:
-                html_upload_process = len(html_files) / 10
-            print 'The process number for html is {0}'.format(html_upload_process)
-            if html_upload_process > self.max_upload_process:
-                html_upload_process = self.max_upload_process
-            self.file.logger(self.log_path, 'Start upload html for: {0} '.format(self.name))
-            print 'Start upload html for: {0} '.format(self.name)
-            self.transer.startUpload(self.temp_html_path, self.remote_html_path, html_upload_process, self.host_name, self.user_name, self.password, self.port)
-            self.file.logger(self.log_path, 'Finished upload html for: {0} '.format(self.name))
-            print 'Finished upload html for: {0} '.format(self.name)
+        try:
+            self.file.logger(self.log_path, 'Start to compress html and img')
+            print 'Start to compress html and img'
+            self.doraemon.tar(self.temp_html_path)
+            self.doraemon.tar(self.temp_img_path)
+            self.file.logger(self.log_path, 'Finish to compress html and img')
+            print 'Finish to compress html'
+        except Exception, e:
+            self.file.logger(self.log_path, 'Exception to compress html and img: {0}'.format(e))
+            print 'Exception to compress html and img: {0}'.format(e)
+
+        local_html_tmp_file = "{0}.tar.gz".format(self.temp_html_path)
+        remote_html_tmp_file = "{0}//html.tar.gz".format(self.remote_html_path)
+        local_img_tmp_file = "{0}.tar.gz".format(self.temp_img_path)
+        remote_img_tmp_file = "{0}//img.tar.gz".format(self.remote_img_path)
+        if self.doraemon.isFileExists(local_html_tmp_file):
+            try:
+                self.file.logger(self.log_path, 'Start upload html for: {0} '.format(self.name))
+                print 'Start upload html for: {0} '.format(self.name)
+                self.transer.singleUpload(local_html_tmp_file,
+                                          remote_html_tmp_file,
+                                          self.host_name,
+                                          self.user_name,
+                                          self.password,
+                                          self.port)
+                self.file.logger(self.log_path, 'Finished upload html for: {0} '.format(self.name))
+                print 'Finished upload html for: {0} '.format(self.name)
+            except Exception, e:
+                self.file.logger(self.log_path, 'Exception to upload html: {0}'.format(e))
+                print 'Exception to upload html: {0}'.format(e)
         else:
             print 'No html to upload'
 
-        image_files = self.doraemon.getFileList(self.temp_img_path)
-        if len(image_files) > 0:
-            if len(image_files) < 20:
-                image_upload_process = 1
-            else:
-                image_upload_process = len(image_files) / 20
-            print 'The process number for image is {0}'.format(image_upload_process)
-            if image_upload_process > self.max_upload_process:
-                image_upload_process = self.max_upload_process
-            self.file.logger(self.log_path, 'Start upload image for: {0} '.format(self.name))
-            print 'Start upload image for: {0} '.format(self.name)
-            self.transer.startUpload(self.temp_img_path, self.remote_img_path, image_upload_process, self.host_name,
-                                     self.user_name, self.password, self.port)
-            self.file.logger(self.log_path, 'Finished upload image for: {0} '.format(self.name))
-            print 'Finished upload image for: {0} '.format(self.name)
+        if self.doraemon.isFileExists(local_img_tmp_file):
+            try:
+                self.file.logger(self.log_path, 'Start upload image for: {0} '.format(self.name))
+                print 'Start upload image for: {0} '.format(self.name)
+                self.transer.singleUpload(local_img_tmp_file,
+                                          remote_img_tmp_file,
+                                          self.host_name,
+                                          self.user_name,
+                                          self.password,
+                                          self.port)
+                self.file.logger(self.log_path, 'Finished upload image for: {0} '.format(self.name))
+                print 'Finished upload image for: {0} '.format(self.name)
+            except Exception, e:
+                self.file.logger(self.log_path, 'Exception to upload img: {0}'.format(e))
+                print 'Exception to upload img: {0}'.format(e)
         else:
             print 'No image to upload'
 

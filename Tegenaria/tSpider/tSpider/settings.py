@@ -113,8 +113,8 @@ class Settings():
         self.USER_NAME = 'root'
         self.PASSWORD = 'rerr48779'
         self.PORT = 22
-        self.REMOTE_IMG_PATH = '//home//dev//Data//Production//img'
-        self.REMOTE_HTML_PATH = '//home//dev//Data//Production//article'
+        self.REMOTE_IMG_PATH = '//home//dev//Data//Production//img_tmp'
+        self.REMOTE_HTML_PATH = '//home//dev//Data//Production//html_tmp'
         self.MAX_UPLOAD_PROCESS = 20
 
         #refresh the redis interval
