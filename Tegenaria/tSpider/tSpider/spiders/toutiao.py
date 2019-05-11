@@ -71,7 +71,7 @@ class Toutiao():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False and len(time0_1) > 1:
-                    time = ''.join(time0_1[1]).strip()
+                    time = ''.join(time0_1[len(time0_1) - 1]).strip()
                     time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
