@@ -124,6 +124,10 @@ class Weixin():
         gc.collect()
 
     def start_requests(self):
+        if self.doraemon.isAfterHour('17'):
+            self.file.logger(self.log_path, 'After time 18:00 and stop connecting with weixin')
+            print 'After time 18:00 and stop connecting with weixin'
+            return
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
         self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))

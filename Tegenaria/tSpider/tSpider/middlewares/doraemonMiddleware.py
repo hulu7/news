@@ -296,3 +296,14 @@ class Doraemon():
                 self.deleteFile(fullpath)
         except Exception, e:
             print "Exception to compress directory: {0} for :{1}".format(directory, e)
+
+    def isAfterHour(self, hour):
+        if self.isEmpty(hour):
+            print 'input hour is empty.'
+            return
+        current_time = time.strftime('%H', time.localtime(time.time()))
+        if int(hour) < int(current_time):
+            return True
+        else:
+            return False
+
