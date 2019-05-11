@@ -44,9 +44,9 @@ class Toutiao():
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
-        href_items = html.xpath(".//a")
+        href_items = html.xpath(".//*[contains(@class, 'title-box')]")
         for item in href_items:
-            href = item.xpath("@href")
+            href = item.xpath(".//*[contains(@class, 'title')]/@href")
             valid = True
             if len(href) == 0:
                 continue
@@ -67,7 +67,7 @@ class Toutiao():
                     valid = False
             if valid:
                 short_url_parts = re.split(r'[., /, _, %, "]', href_url)
-                id = short_url_parts[len(short_url_parts) - 1]
+                id = short_url_parts[short_url_parts.index('item') + 1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
                 title_list1 = item.xpath(".//text()")
