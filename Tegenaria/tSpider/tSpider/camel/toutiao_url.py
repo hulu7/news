@@ -10,6 +10,7 @@ from lxml import etree
 import urlparse
 import re
 import gc
+import time
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest
 from settings import Settings
@@ -43,6 +44,7 @@ class Toutiao():
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
+        time.sleep(2)
         html = etree.HTML(response['response'].page_source)
         href_items = html.xpath(".//*[contains(@class, 'title-box')]")
         for item in href_items:

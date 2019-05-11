@@ -36,7 +36,7 @@ class Toutiao():
         self.max_pool_size = settings_name['MAX_POOL_SIZE']
         self.log_path = self.settings.LOG_PATH
         self.today = self.settings.TODAY
-        self.regx = re.compile("^(?:http)s?://www.toutiao.com/item/[0-9]{0,}/")
+        self.regx = re.compile("^(?:http)s?://www.toutiao.com/i[0-9]{0,}/")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -48,7 +48,7 @@ class Toutiao():
             return
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _, %, "]', current_url)
-        current_id = short_url_parts[len(short_url_parts) - 2]
+        current_id = short_url_parts[short_url_parts.index('toutiao') + 2]
         html = etree.HTML(response['response'].page_source)
         article_content = html.xpath(".//*[contains(@class,'article-box')]")
         data = {}
@@ -101,7 +101,7 @@ class Toutiao():
                 self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
                 self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
 
-        del current_url, valid,  current_id, html, article_content, data
+        del current_url, current_id, html, article_content, data
         gc.collect()
 
     def start_requests(self):
