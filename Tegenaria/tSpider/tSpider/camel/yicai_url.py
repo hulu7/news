@@ -102,7 +102,7 @@ class Yicai():
                         print 'Empty title for {0}'.format(url)
         print 'End to parse: {0}'.format(current_url)
 
-        del current_url, html, title, url, href_url, id, data, href_items, short_url_parts
+        del current_url, html, title, url, href_url, id, href_items, short_url_parts
         gc.collect()
 
     def start_requests(self):

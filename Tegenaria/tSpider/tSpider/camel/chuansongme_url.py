@@ -92,8 +92,7 @@ class Chuansongme():
                 self.file.logger(self.log_path, 'Invalid {0}'.format(href_url))
                 print 'Invalid {0}'.format(href_url)
         print 'End to parse {0}'.format(href_url)
-
-        del current_url, html, title, url, href_url, id, data, href_items
+        del current_url, html, title, url, href_url, id, href_items
         gc.collect()
 
     def start_requests(self):

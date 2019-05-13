@@ -120,7 +120,7 @@ class Weixin():
                 print 'Invalid {0}'.format(current_url)
         print 'End to parse {0}'.format(current_url)
 
-        del current_url, html, title, url, id, data, short_url_parts
+        del current_url, html, title, url, id, short_url_parts
         gc.collect()
 
     def start_requests(self):

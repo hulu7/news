@@ -99,7 +99,7 @@ class Anyv():
                 print 'Invalid {0}'.format(href_url)
         print 'End to parse {0}'.format(current_url)
 
-        del current_url, valid,  href_items, html, href_url, isValidUrl, data, short_url_parts, id, url, title, title_list1
+        del current_url, valid,  href_items, html, href_url, isValidUrl, short_url_parts, id, url, title, title_list1
         gc.collect()
 
     def start_requests(self):

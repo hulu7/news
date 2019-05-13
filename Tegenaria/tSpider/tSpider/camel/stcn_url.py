@@ -87,7 +87,7 @@ class Stcn():
 
         print 'End to parse: {0}'.format(current_url)
 
-        del current_url, html, title, url, id, data, href_items, short_url_parts
+        del current_url, html, title, url, id, href_items, short_url_parts
         gc.collect()
 
     def start_requests(self):

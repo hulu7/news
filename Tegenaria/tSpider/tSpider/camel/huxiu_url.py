@@ -82,7 +82,7 @@ class Huxiu():
                 print 'Invalid {0}'.format(url)
         print 'End to parse: {0}'.format(current_url)
 
-        del current_url, html, title, url, id, data, href_items
+        del current_url, html, title, url, id, href_items
         gc.collect()
 
     def start_requests(self):
