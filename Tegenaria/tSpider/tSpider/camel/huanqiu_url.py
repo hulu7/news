@@ -103,9 +103,9 @@ class Huanqiu():
         gc.collect()
 
     def start_requests(self):
-        if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
-            return
         if self.doraemon.isConcurrencyAllowToRun() is False:
+            return
+        if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
         self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
         print 'Start {0} requests'.format(self.name)
