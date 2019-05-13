@@ -20,7 +20,7 @@ class Settings():
 
         #concurrency
         self.REFRESH_CONCURRENCY_INTERVAL = 360
-        self.MAX_CONCURRENCY = 8
+        self.MAX_CONCURRENCY = 10
         self.CONCURRENCY_FILE = "//home//dev//Data//rsyncData//prd3//max_concurrency.txt"
         self.CONCURRENCY_REFRESH_FILE = "//home//dev//Data//rsyncData//prd3//concurrency_refresh.txt"
 

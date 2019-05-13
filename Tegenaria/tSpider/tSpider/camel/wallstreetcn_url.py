@@ -102,6 +102,7 @@ class Wallstreetcn():
         if self.doraemon.isConcurrencyAllowToRun() is False:
             return
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
+            self.doraemon.recoveryConcurrency()
             return
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start request: {0}'.format(self.name)
