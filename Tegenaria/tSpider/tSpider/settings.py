@@ -13,10 +13,16 @@ class Settings():
         self.RSYNC_PRD1 = "//home//dev//Data//rsyncData//prd4"
         self.RSYNC_PRD2 = "//home//dev//Data//rsyncData//prd3"
         self.CAMEL_FOOD = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//food"
-        self.COBWEBS = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs/silk.txt"
+        self.COBWEBS = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs//silk.txt"
 
         self.SELENIUM_TIMEOUT = 120
         self.CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
+
+        #concurrency
+        self.REFRESH_CONCURRENCY_INTERVAL = 360
+        self.MAX_CONCURRENCY = 5
+        self.CONCURRENCY_FILE = "//home//dev//Data//rsyncData//prd3//max_concurrency.txt"
+        self.CONCURRENCY_REFRESH_FILE = "//home//dev//Data//rsyncData//prd3//concurrency_refresh.txt"
 
         self.USER_AGENTS = [
             "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",

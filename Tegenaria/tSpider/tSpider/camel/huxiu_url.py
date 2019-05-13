@@ -88,6 +88,8 @@ class Huxiu():
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
+        if self.doraemon.isConcurrencyAllowToRun() is False:
+            return
         self.file.logger(self.log_path, 'Start requests: {0}'.format(self.name))
         print 'Start requests: {0}'.format(self.name)
 
@@ -108,6 +110,7 @@ class Huxiu():
 
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
+        self.doraemon.recoveryConcurrency()
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 

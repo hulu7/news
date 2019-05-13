@@ -37,6 +37,10 @@ class Doraemon():
         self.bf_finished_image_id = BloomFilter(self.rconn, settings.FINISHED_IMAGE_ID)
         self.bf_finished_temp_weixin = BloomFilter(self.rconn, settings.FINISHED_TEMP_WEIXIN)
         self.md5 = hashlib.md5()
+        self.max_concurrency = settings.MAX_CONCURRENCY
+        self.concurrency_file = settings.CONCURRENCY_FILE
+        self.concurrency_refresh_file = settings.CONCURRENCY_REFRESH_FILE
+        self.refresh_concurrency_interval = settings.REFRESH_CONCURRENCY_INTERVAL
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)
@@ -307,3 +311,42 @@ class Doraemon():
         else:
             return False
 
+    def isConcurrencyAllowToRun(self):
+        self.updateConcurrencyFile()
+        isFilePathExists = os.path.exists(self.concurrency_file)
+        if isFilePathExists is False:
+            print 'concurrency file not exists and create an new one with max concurrency: {0}'.format(str(self.max_concurrency))
+            self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))
+        concurrency_available = int(self.file.readFromTxt(self.concurrency_file).strip())
+        print 'concurrency file exists : {0}'.format(str(concurrency_available))
+        if int(concurrency_available) > 0:
+            print 'app is able to run.'
+            new_concurrency_available = concurrency_available - 1
+            print 'new concurrency is : {0}'.format(str(new_concurrency_available))
+            self.file.writeToTxtCover(self.concurrency_file, str(new_concurrency_available))
+            return True
+        else:
+            print 'app is not able to run for no available concurrency.'
+            return False
+
+    def recoveryConcurrency(self):
+        isFilePathExists = os.path.exists(self.concurrency_file)
+        if isFilePathExists is False:
+            print 'concurrency file not exists and create an new one with max concurrency: {0}'.format(str(self.max_concurrency))
+            self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))
+            return
+        concurrency_available = int(self.file.readFromTxt(self.concurrency_file).strip())
+        print 'concurrency file exists and start to recovery: {0}'.format(str(concurrency_available))
+        if int(concurrency_available) < self.max_concurrency:
+            print 'start to recovery concurrenct.'
+            new_concurrency_available = concurrency_available + 1
+            print 'new concurrency is : {0}'.format(str(new_concurrency_available))
+            self.file.writeToTxtCover(self.concurrency_file, str(new_concurrency_available))
+        else:
+            print 'concurrency is not normal and write max concurrency to it.'
+            self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))
+
+    def updateConcurrencyFile(self):
+        if self.isExceedRestartInterval(self.concurrency_refresh_file, self.refresh_concurrency_interval) is True:
+            print 'refresh concurrency file: {0}'.format(str(self.max_concurrency))
+            self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))

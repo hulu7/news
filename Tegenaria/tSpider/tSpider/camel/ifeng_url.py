@@ -109,6 +109,8 @@ class Ifeng():
     def start_requests(self):
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
             return
+        if self.doraemon.isConcurrencyAllowToRun() is False:
+            return
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start request: {0}'.format(self.name)
         self.badkeys = []
@@ -129,6 +131,7 @@ class Ifeng():
         request = BrowserRequest()
         # new_urls = [['https://ipit.ifeng.com/', 'TEST']]
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
+        self.doraemon.recoveryConcurrency()
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
