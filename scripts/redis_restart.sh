@@ -1,6 +1,8 @@
-sm=`ps -fe |grep "./redis-server" |grep -v "grep" |wc -l`
+sm=`ps -fe |grep "*:6379" |grep -v "grep" |wc -l`
 if [ $sm -eq 0 ]; then
-    /usr/local/redis/src/redis-server
+   echo "start redis"
+   export PATH=/root/perl5/bin:/usr/lib64/qt-3.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:$PATH;
+   redis-server &
 else
-  echo "redis started"
+   echo "redis started"
 fi
