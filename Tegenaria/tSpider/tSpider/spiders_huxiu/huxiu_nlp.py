@@ -117,7 +117,7 @@ class Huxiu():
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start ' + self.name + ' requests'
         new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf_huxiu_nlp, self.url_path)
-        # new_url_titles = [['https://www.huxiu.com/article/40699.html', '【早报】停不下来！去哪儿第二季巨亏4.22亿元，同比扩大超10倍']]
+        # new_url_titles = [['https://www.huxiu.com/article/34576.html', '交通部新规会如何影响滴滴、快的们？']]
         if len(new_url_titles) == 0:
             self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
             print 'No new url for: {0}'.format(self.name)
