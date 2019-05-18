@@ -9,4 +9,5 @@ ps aux | grep "mongoRestart" |grep -v grep| cut -c 9-15 | xargs kill -9 >> ${scr
 ps aux | grep "redis_restart" |grep -v grep| cut -c 9-15 | xargs kill -9 >> ${scriptDir}/${DATE}_log.log
 redis-cli -h 127.0.0.1 -p 6379 shutdown >> ${scriptDir}/${DATE}_log.log
 service mongod stop >> ${scriptDir}/${DATE}_log.log
+echo 'y' | rm /home/dev/Data/mongodb/data/mongod.lock >> ${scriptDir}/${DATE}_log.log
 reboot >> ${scriptDir}/${DATE}_log.log
