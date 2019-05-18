@@ -15,7 +15,7 @@ class UpdateMongoDeepNews():
     def __init__(self):
         self.MONGO_URI = 'mongodb://127.0.0.1:27017'
         self.DATABASE = 'DeepNewsDatabase'
-        self.today = time.strftime('%Y%m%d', time.localtime(time.time()))
+        self.today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         self.path = '/home/dev/Data/Production/data4deepinews/{0}.csv'.format(self.today)
 
     def readFromCSV(self, filePath):

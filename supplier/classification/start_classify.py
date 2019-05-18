@@ -19,6 +19,7 @@ class UpdateProductionClass():
     def __init__(self):
         self.rconn = redis.Redis('127.0.0.1', 6379)
         self.bf = BloomFilter(self.rconn, 'supplier:classification')
+        self.today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
     def isDuplicated(self, title):
         title_encode = str(title).encode("utf-8")
@@ -124,8 +125,8 @@ class UpdateProductionClass():
                 os.mkdir(catalog_cache_file_path)
             if isCatalogTxtFilePathExists is False:
                 os.mkdir(catalog_txt_file_path)
-            catalog_path = '{0}/{1}/{2}.csv'.format(self.class_finished_path, catalog, catalog)
-            catalog_cache_path = '{0}/{1}/cache/{2}_cache.csv'.format(self.class_finished_path, catalog, name)
+            catalog_path = '{0}/{1}/{2}_{3}.csv'.format(self.class_finished_path, catalog, self.today, catalog)
+            catalog_cache_path = '{0}/{1}/cache/{2}_{3}_cache.csv'.format(self.class_finished_path, catalog, self.today, name)
             isCatalogFileExists = os.path.exists(catalog_path)
             isCatalogCacheFileExists = os.path.exists(catalog_cache_path)
             if isCatalogCacheFileExists is True:
@@ -165,8 +166,8 @@ class UpdateProductionClass():
                 if len(str(deep)) == 0:
                     self.writeToTxt(log_path, "{0}: empty {1}".format(str(update.getCurrntTime()), file))
                     continue
-                catalog_cache_path = '{0}/{1}/cache/{2}_cache.csv'.format(self.class_finished_path, catalog, name)
-                catalog_path = '{0}/{1}/{2}.csv'.format(self.class_finished_path, catalog, catalog)
+                catalog_cache_path = '{0}/{1}/cache/{2}_{3}_cache.csv'.format(self.class_finished_path, catalog, self.today, name)
+                catalog_path = '{0}/{1}/{2}_{3}.csv'.format(self.class_finished_path, catalog, self.today, catalog)
                 YMD = self.extractTime(time_)
                 self.writeToCSVWithoutHeader(catalog_cache_path, [id])
                 self.finishedIds.append(id)
@@ -184,7 +185,7 @@ class UpdateProductionClass():
         print 'classify done! in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)
 
 if __name__ == "__main__":
-    today = time.strftime('%Y%m%d', time.localtime(time.time()))
+
     catalogs = ['agriculture','astrology','baby','buddhism','car','career',
                 'comic','culture','design','digital','edu','emotion','collect',
                 'entertainment','fashion','festival','finance','food','funny',
@@ -207,7 +208,7 @@ if __name__ == "__main__":
         txt_path = '{0}/{1}/txt'.format(base_path, file)
         content_path = '{0}/{1}/{2}_content.csv'.format(base_path, file, file)
         class_finished_path = '{0}/catalogs'.format(production_path)
-        log_path = '{0}/log/{1}.log'.format(production_path, today)
+        log_path = '{0}/log/{1}_log.log'.format(production_path, update.today)
         name = file
         update.writeToTxt(log_path, '{0}: start classify: {1}'.format(str(update.getCurrntTime()), file))
         print 'start classify: {0}'.format(file)

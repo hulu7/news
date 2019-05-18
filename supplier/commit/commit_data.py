@@ -19,8 +19,8 @@ class CommitData():
     def __init__(self):
         self.rconn = redis.Redis('127.0.0.1', 6379)
         self.bf_huxiu = BloomFilter(self.rconn, 'supplier:commit_huxiu')
-        self.today = time.strftime('%Y%m%d', time.localtime(time.time()))
         self.class_finished_path = '/home/dev/Data/Production/catalogs'
+        self.today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         self.log_path = '/home/dev/Data/Production/log/{0}_log.log'.format(self.today)
         self.customer_info_path = '/home/dev/Data/Production/customerInfo/customers.xlsx'
         self.data4customers_path = '/home/dev/Data/Production/data4customers'
@@ -131,15 +131,14 @@ class CommitData():
         else:
             return False
 
-
     def commitSingleCatalogSource(self, customer_id, catalog_name, source_name, customer_data_folder, customer_data_folder_txt):
-        catalog_file_path = '{0}/{1}/{2}.csv'.format(self.class_finished_path, catalog_name, catalog_name)
+        catalog_file_path = '{0}/{1}/{2}_{3}.csv'.format(self.class_finished_path, catalog_name, self.today, catalog_name)
         catalog_exists = os.path.exists(catalog_file_path)
         if catalog_exists is False:
             return
         commit_csv_path = '{0}/{1}.csv'.format(customer_data_folder, self.today)
         current_catalog_data = self.readFromCSV(catalog_file_path)
-        today_int = int(self.today)
+        today_int = int(str(self.today).replace('-', ''))
         commit_csv_exists = os.path.exists(commit_csv_path)
         if commit_csv_exists is False:
             self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source'])

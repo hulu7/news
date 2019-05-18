@@ -19,6 +19,7 @@ class ProductionMerge():
         self.bf = BloomFilter(self.rconn, 'supplier:merge')
         self.filein = '/home/dev/Data/Production/data4customers'
         self.fileout = '/home/dev/Data/Production/data4deepinews'
+        self.today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
     def isDuplicated(self, title):
         title_encode = str(title).encode("utf-8")
@@ -117,14 +118,13 @@ class ProductionMerge():
         }
 
     def Merge(self):
-        today = time.strftime('%Y%m%d', time.localtime(time.time()))
         catalog = self.getCatalog()
         users = os.listdir(self.filein)
-        out_csv_file = "{0}/{1}.csv".format(self.fileout, today)
+        out_csv_file = "{0}/{1}.csv".format(self.fileout, self.today)
         output_content = []
         finished_titles = []
         for user in users:
-            in_csv_file = "{0}/{1}/{2}/{3}.csv".format(self.filein, user, today, today)
+            in_csv_file = "{0}/{1}/{2}/{3}.csv".format(self.filein, user, self.today, self.today)
             isCsvExists = os.path.exists(in_csv_file)
             if isCsvExists is False:
                 continue
@@ -147,7 +147,7 @@ class ProductionMerge():
                 if item[5] == '':
                     continue
                 if item[3] == '':
-                    item[3] = today
+                    item[3] = str(self.today).replace('-', '')
                 output_content.append([item[1], item[2], item[3], catalog[item[4]], user, item[7]])
                 self.storeFinished(item[1])
 
