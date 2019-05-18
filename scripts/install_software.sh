@@ -134,6 +134,8 @@ echo "******************************install jieba"
 pip install jieba==0.39
 echo "******************************install xlrd"
 pip install xlrd==1.2.0
+echo "******************************install gensim"
+pip install gensim==3.7.3
 echo "******************************install Chromedriver"
 cd '/opt/'
 wget http://chromedriver.storage.googleapis.com/70.0.3538.16/chromedriver_linux64.zip

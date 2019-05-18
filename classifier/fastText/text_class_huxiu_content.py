@@ -12,18 +12,18 @@ modle_dir = "{0}model_data/".format(base_dir)
 raw_dir = "{0}raw_data/".format(base_dir)
 ctrain = 0.80
 
-ftrain = open("{0}news_fasttext_train_huxiu_content.txt".format(train_dir), "w")
-# ftest = open("{0}news_fasttext_test_huxiu_content.txt".format(test_dir), "w")
-
-source_files = [
-     "{0}huxiu_washed/".format(raw_dir),
-     "{0}ifeng_washed/".format(raw_dir)
-]
+# ftrain = open("{0}news_fasttext_train_huxiu_content.txt".format(train_dir), "w")
+ftest = open("{0}news_fasttext_test_huxiu_content.txt".format(test_dir), "w")
 
 # source_files = [
-#      "{0}huxiu_washed_test/".format(raw_dir),
-#      "{0}ifeng_washed_test/".format(raw_dir)
+#      "{0}huxiu_washed/".format(raw_dir),
+#      "{0}ifeng_washed/".format(raw_dir)
 # ]
+
+source_files = [
+     "{0}huxiu_washed_test/".format(raw_dir),
+     "{0}ifeng_washed_test/".format(raw_dir)
+]
 
 def readFromCSV(filePath):
     content = []
@@ -53,16 +53,16 @@ for source in source_files:
             outline = outline.encode("utf-8") + "\t__label__Y\n"
         else:
             outline = outline.encode("utf-8") + "\t__label__N\n"
-        ftrain.write(outline)
-        ftrain.flush()
-        # ftest.write(outline)
-        # ftest.flush()
+        # ftrain.write(outline)
+        # ftrain.flush()
+        ftest.write(outline)
+        ftest.flush()
         continue
     time_elapsed = time.time() - since
     print('process done for' + file + ' Complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
 
-ftrain.close()
-# ftest.close()
+# ftrain.close()
+ftest.close()
 print "done!"
 time_elapsed = time.time() - since
 print('Complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
