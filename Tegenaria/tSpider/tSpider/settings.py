@@ -15,11 +15,11 @@ class Settings():
         self.CAMEL_FOOD = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//food"
         self.COBWEBS = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs//silk.txt"
 
-        self.SELENIUM_TIMEOUT = 120
+        self.SELENIUM_TIMEOUT = 120 #second
         self.CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
 
         #concurrency
-        self.REFRESH_CONCURRENCY_INTERVAL = 360
+        self.REFRESH_CONCURRENCY_INTERVAL = 60 #minute
         self.MAX_CONCURRENCY = 10
         self.CONCURRENCY_FILE = "//home//dev//Data//rsyncData//prd3//max_concurrency.txt"
         self.CONCURRENCY_REFRESH_FILE = "//home//dev//Data//rsyncData//prd3//concurrency_refresh.txt"
