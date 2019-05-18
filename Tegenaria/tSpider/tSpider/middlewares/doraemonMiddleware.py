@@ -41,6 +41,7 @@ class Doraemon():
         self.concurrency_file = settings.CONCURRENCY_FILE
         self.concurrency_refresh_file = settings.CONCURRENCY_REFRESH_FILE
         self.refresh_concurrency_interval = settings.REFRESH_CONCURRENCY_INTERVAL
+        self.bf_huxiu_nlp = BloomFilter(self.rconn, settings.FINISHED_HUXIU_NLP)
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)

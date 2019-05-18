@@ -19,7 +19,7 @@ class Settings():
         self.CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
 
         #concurrency
-        self.REFRESH_CONCURRENCY_INTERVAL = 60 #minute
+        self.REFRESH_CONCURRENCY_INTERVAL = 360 #minute
         self.MAX_CONCURRENCY = 10
         self.CONCURRENCY_FILE = "//home//dev//Data//rsyncData//prd3//max_concurrency.txt"
         self.CONCURRENCY_REFRESH_FILE = "//home//dev//Data//rsyncData//prd3//concurrency_refresh.txt"
@@ -125,6 +125,9 @@ class Settings():
 
         #refresh the redis interval
         self.REFRESH_REDIS_INTERVAL = 1440
+
+        #huxiu_nlp
+        self.FINISHED_HUXIU_NLP = "finished:huxiu_nlp"
 
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {
