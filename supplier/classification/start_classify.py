@@ -205,7 +205,7 @@ if __name__ == "__main__":
     file_list = os.listdir(base_path)
     file_list.remove('log')
     for file in file_list:
-        txt_path = '{0}/{1}/txt'.format(base_path, file)
+        txt_path = '{0}/{1}/txt/{2}'.format(base_path, file, update.today)
         content_path = '{0}/{1}/{2}_content.csv'.format(base_path, file, file)
         class_finished_path = '{0}/catalogs'.format(production_path)
         log_path = '{0}/log/{1}_log.log'.format(production_path, update.today)
