@@ -99,6 +99,7 @@ class Wallstreetcn():
         gc.collect()
 
     def start_requests(self):
+        return
         if self.doraemon.isConcurrencyAllowToRun() is False:
             return
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:

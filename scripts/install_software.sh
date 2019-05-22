@@ -3,6 +3,8 @@ echo "******************************install net-tools"
 echo 'y' | yum -y install net-tools
 echo "******************************install wget"
 echo 'y' | yum install wget
+echo "******************************install vim"
+echo 'y' | yum install vim
 echo "******************************install epel-release"
 echo 'y' | yum -y install epel-release
 echo "******************************install python-pip"
@@ -77,8 +79,6 @@ echo 'y' | pip uninstall pyOpenSSL
 pip install pyOpenSSL==0.13.1
 echo "******************************install setuptools"
 pip install setuptools==21.0.0
-echo "******************************install requests"
-pip install requests==2.6.0
 echo "******************************install Beautifulsoup4"
 pip install beautifulsoup4==4.7.1
 echo "******************************install lxml"
@@ -136,6 +136,8 @@ echo "******************************install xlrd"
 pip install xlrd==1.2.0
 echo "******************************install gensim"
 pip install gensim==3.7.3
+echo "******************************install requests"
+pip install requests==2.6.0
 echo "******************************install Chromedriver"
 cd '/opt/'
 wget http://chromedriver.storage.googleapis.com/70.0.3538.16/chromedriver_linux64.zip
