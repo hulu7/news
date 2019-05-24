@@ -18,7 +18,4 @@ redis-cli -h 127.0.0.1 -p 6379 shutdown >> ${scriptDir}/${DATE}_log.log
 echo "${TIME}: stop mongodb"
 service mongod stop >> ${scriptDir}/${DATE}_log.log
 echo 'y' | rm /home/dev/Data/mongodb/data/mongod.lock >> ${scriptDir}/${DATE}_log.log
-echo "${TIME}: rm dump.rdb"
-cd ~
-echo 'y' | rm dump.rdb >> ${scriptDir}/${DATE}_log.log
 reboot >> ${scriptDir}/${DATE}_log.log
