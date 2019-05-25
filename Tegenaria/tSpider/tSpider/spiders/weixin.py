@@ -70,7 +70,7 @@ class Weixin():
                 url = "{0}{1}.html".format(self.url_deepinews_10002_article, current_id)
                 id = current_id
                 if self.doraemon.isEmpty(title0_1) is False:
-                    title = ''.join(title0_1).strip().replace('\n', '').replace('\n', '').replace('  ', '')
+                    title = ''.join(title0_1[0]).strip().replace('\n', '').replace('\n', '').replace('  ', '')
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(time0_1) is False:
