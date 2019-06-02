@@ -112,6 +112,7 @@ class Weixin():
         print 'Start requests: {0} '.format(self.name)
         new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf_weixin_content, self.url_path)
         if len(new_url_titles) == 0:
+            self.doraemon.recoveryConcurrency()
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
             return
