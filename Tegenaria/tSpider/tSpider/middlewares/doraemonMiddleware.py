@@ -312,6 +312,16 @@ class Doraemon():
         else:
             return False
 
+    def isBeforeHour(self, hour):
+        if self.isEmpty(hour):
+            print 'input hour is empty.'
+            return
+        current_time = time.strftime('%H', time.localtime(time.time()))
+        if int(hour) > int(current_time):
+            return True
+        else:
+            return False
+
     def isConcurrencyAllowToRun(self):
         self.updateConcurrencyFile()
         isFilePathExists = os.path.exists(self.concurrency_file)
