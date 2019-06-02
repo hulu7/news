@@ -65,6 +65,24 @@ echo "******************************install python-paramiko"
 echo 'y' | yum install -y python-paramiko
 echo "******************************install git"
 echo 'y' | yum install git
+echo "******************************install php-mysqlnd"
+echo 'y' | yum install php-mysqlnd
+echo "******************************install php-pcntl"
+echo 'y' | yum install php-pcntl
+echo "******************************install mariadb-bench"
+echo 'y' | yum install mariadb-bench
+echo "******************************install mariadb-devel"
+echo 'y' | yum install mariadb-devel
+echo "******************************install mariadb-embedded"
+echo 'y' | yum install mariadb-embedded
+echo "******************************install mariadb-libs"
+echo 'y' | yum install mariadb-libs
+echo "******************************install mariadb-server"
+echo 'y' | yum install mariadb-server
+echo "******************************install percona-xtrabackup"
+echo 'y' | yum install percona-xtrabackup
+echo "******************************install mariadb"
+echo 'y' | yum install mariadb
 echo "******************************install pip source"
 cd ~
 mkdir .pip

@@ -108,6 +108,8 @@ class Chuansongme():
         gc.collect()
 
     def start_requests(self):
+        if self.doraemon.isConcurrencyAllowToRun() is False:
+            return
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
         new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf, self.url_path)
@@ -125,6 +127,7 @@ class Chuansongme():
                 print 'status: ' + response.status_code
                 continue
             self.parse(response, url_title[1])
+        self.doraemon.recoveryConcurrency()
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(new_url_titles))))
         print 'End requests for {0}'.format(str(len(new_url_titles)))
         del self.request, response

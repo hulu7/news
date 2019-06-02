@@ -105,6 +105,8 @@ class Toutiao():
         gc.collect()
 
     def start_requests(self):
+        if self.doraemon.isConcurrencyAllowToRun() is False:
+            return
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
         new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf, self.url_path)
@@ -114,6 +116,7 @@ class Toutiao():
             return
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
+        self.doraemon.recoveryConcurrency()
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))
         print 'End requests for {0}'.format(str(len(content)))
         del content, new_url_titles, request

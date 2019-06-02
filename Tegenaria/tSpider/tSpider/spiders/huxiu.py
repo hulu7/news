@@ -114,6 +114,8 @@ class Huxiu():
         gc.collect()
 
     def start_requests(self):
+        if self.doraemon.isConcurrencyAllowToRun() is False:
+            return
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start ' + self.name + ' requests'
         new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf, self.url_path)
@@ -123,6 +125,7 @@ class Huxiu():
             return
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
+        self.doraemon.recoveryConcurrency()
         self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
         print 'End requests: {0}'.format(str(len(content)))
         del new_url_titles, request, content

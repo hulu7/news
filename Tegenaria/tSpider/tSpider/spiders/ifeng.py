@@ -101,6 +101,8 @@ class Ifeng():
                 self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
 
     def start_requests(self):
+        if self.doraemon.isConcurrencyAllowToRun() is False:
+            return
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start request: {0}'.format(self.name)
         self.badkeys = ['#']
@@ -111,6 +113,7 @@ class Ifeng():
             return
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
+        self.doraemon.recoveryConcurrency()
         self.file.logger(self.log_path, 'End requests: {0}'.format(str(len(content))))
         print 'End requests: {0}'.format(str(len(content)))
 
