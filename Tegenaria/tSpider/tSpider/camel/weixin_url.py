@@ -124,6 +124,7 @@ class Weixin():
         gc.collect()
 
     def start_requests(self):
+        return
         if self.doraemon.isAfterHour('17') or self.doraemon.isBeforeHour('7'):
             self.file.logger(self.log_path, 'After time 18:00 and stop connecting with weixin')
             print 'After time 18:00 and stop connecting with weixin'
