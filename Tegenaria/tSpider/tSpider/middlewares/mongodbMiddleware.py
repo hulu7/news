@@ -17,8 +17,8 @@ class MongoMiddleware():
 
     def insert(self, database, data):
         client = pymongo.MongoClient(self.settings.MONGO_URI)
-        db = client[database]
-        db['contentInfo'].insert(data)
+        db = client[self.settings.SPIDERDB]
+        db[database].insert(data)
         client.close()
         del client, db
         gc.collect()

@@ -26,6 +26,7 @@ class BaiJia():
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd2)
         self.doraemon.createFilePath(self.settings.LOG_PATH)
+        self.regx = re.compile("^(?:http)s?://baijiahao.baidu.com/s\?id=[0-9]{0,}")
 
     def getSettings(self):
         settings_name = self.settings.CreateSettings('baijia')
@@ -45,16 +46,16 @@ class BaiJia():
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
-        href_items = html.xpath(".//a")
+        href_items = html.xpath(".//*[contains(@type, 'news')]")
         for item in href_items:
-            href = item.xpath("@href")
+            href = item.xpath("@url")
             valid = True
             if len(href) == 0:
                 continue
             href_url = href[0]
-            hasId = str(filter(str.isdigit, href_url))
-            if len(hasId) == 0:
-                print 'Invalid url for no id: {0}'.format(href_url)
+            isValidUrl = self.regx.match(href_url)
+            if isValidUrl is None:
+                print 'Invalid url for not match: {0}'.format(href_url)
                 continue
             for good in self.goodkeys:
                 if valid == True:
@@ -67,16 +68,16 @@ class BaiJia():
                 if bad in href_url:
                     valid = False
             if valid:
-                short_url_parts = re.split(r'[., /, _, %, "]', href_url)
-                id = short_url_parts[short_url_parts.index('22news') + 1]
+                short_url_parts = re.split(r'[., /, _, %, ", ?, =]', href_url)
+                id = short_url_parts[short_url_parts.index('id') + 1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
-                title_list1 = item.xpath(".//*[contains(@class, 'text')]/h2/text()")
+                title_list1 = item.xpath("@title")
                 if len(title_list1) > 0:
                     title = ''.join(title_list1).strip()
                     print title
                 is_title_empty = self.doraemon.isEmpty(title)
-                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
+                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_urls, title) is False):
                     data = {
                         'title': title.strip(),
                         'url': url.strip(),

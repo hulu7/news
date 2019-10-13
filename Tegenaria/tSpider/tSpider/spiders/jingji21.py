@@ -88,7 +88,7 @@ class Jingji21():
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:
-                self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+                self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
                 self.file.logger(self.log_path, 'Empty data: {0}'.format(current_url))
                 print 'Empty data: {0}'.format(current_url)
             else:
@@ -98,16 +98,16 @@ class Jingji21():
                 self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
                 print 'End to store mongo {0}'.format(data['url'])
                 self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
-                self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+                self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
         else:
-            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
         del current_url, current_id, html, not_fnd, data
         gc.collect()
 
     def start_requests(self):
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start request: {0}'.format(self.name)
-        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf, self.url_path)
+        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf_content, self.url_path)
         if len(new_url_titles) == 0:
             self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
             print 'No new url for: {0}'.format(self.name)

@@ -38,6 +38,7 @@ class Huanqiu():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
+        self.regx = re.compile("/article/[0-9]{0,}[a-z]{0,}[A-Z]{0,}")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -50,7 +51,9 @@ class Huanqiu():
             if len(href) == 0:
                 continue
             href_url = href[0]
-            if '/r/' not in href_url:
+            isValidUrl = self.regx.match(href_url)
+            if isValidUrl is None:
+                print 'Invalid url for not match: {0}'.format(href_url)
                 continue
 
             for good in self.goodkeys:
@@ -65,21 +68,24 @@ class Huanqiu():
                     valid = False
             if valid:
                 short_url_parts = re.split(r'[., /, _, ?]', href_url)
-                id = short_url_parts[short_url_parts.index('r') + 1]
-                url = urlparse.urljoin(current_url, href_url)
+                id = short_url_parts[short_url_parts.index('article') + 1].strip()
+                url = urlparse.urljoin(current_url, href_url).strip()
                 title = ''
                 title0_1 = item.xpath(".//*[contains(@class, 'news-title')]/text()")
                 title0_2 = item.xpath(".//*[contains(@class, 'lunbo-title')]/text()")
+                title0_3 = item.xpath(".//text()")
                 if self.doraemon.isEmpty(title0_1) is False:
-                    title = ''.join(title0_1)
+                    title = ''.join(title0_1).strip()
                 if self.doraemon.isEmpty(title0_2) is False:
-                    title = ''.join(title0_2)
+                    title = ''.join(title0_2).strip()
+                if self.doraemon.isEmpty(title0_3) is False:
+                    title = ''.join(title0_3).strip()
                 is_title_empty = self.doraemon.isEmpty(title)
-                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
+                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_urls, title) is False):
                     data = {
-                        'title': title.strip(),
-                        'url': url.strip(),
-                        'id': id.strip(),
+                        'title': title,
+                        'url': url,
+                        'id': id,
                         'download_time': self.today,
                         'source': self.source
                     }
@@ -103,7 +109,6 @@ class Huanqiu():
         gc.collect()
 
     def start_requests(self):
-        return
         if self.doraemon.isConcurrencyAllowToRun() is False:
             return
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:

@@ -76,7 +76,8 @@ class Settings():
         self.REDIS_HOST = '127.0.0.1'
         self.REDIS_PORT = 6379
 
-        self.BLOOMFILTER_NAME = "tegenaria:dupefilter"
+        self.BLOOMFILTER_URLS = "tegenaria:urls"
+        self.BLOOMFILTER_CONTENT = "tegenaria:content"
 
         self.TODAY = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
@@ -128,6 +129,9 @@ class Settings():
 
         #huxiu_nlp
         self.FINISHED_HUXIU_NLP = "finished:huxiu_nlp"
+
+        #mongodb
+        self.SPIDERDB = "SPIDERS"
 
     def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
         return {

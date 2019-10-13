@@ -9,6 +9,7 @@ sys.setdefaultencoding('utf8')
 from lxml import etree
 import urlparse
 import gc
+import re
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest
 from settings import Settings
@@ -37,17 +38,26 @@ class Huxiu():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
+        self.regx = re.compile("/article/[0-9]{0,}.html")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
-        href_items = html.xpath(".//*[contains(@class,'transition msubstr-row2')]")
+        href_items = html.xpath(".//a")
         for item in href_items:
-            short_url = item.xpath("@href")[0]
+            href = item.xpath("@href")
+            valid = True
+            if len(href) == 0:
+                continue
+            href_url = href[0]
+            isValidUrl = self.regx.match(href_url)
+            if isValidUrl is None:
+                print 'Invalid url for not match: {0}'.format(href_url)
+                continue
+            short_url = href[0]
             id = str(filter(str.isdigit, short_url.encode('gbk')))
             url = urlparse.urljoin(current_url, short_url)
-            valid = True
             for good in self.goodkeys:
                 if valid == True:
                     continue
@@ -59,9 +69,13 @@ class Huxiu():
                 if bad in url:
                     valid = False
             if valid:
-                title = item.text
+                title = ''
+                title_list1 = item.xpath(".//*[contains(@class, 'multi-line-overflow')]//text()")
+                if len(title_list1) > 0:
+                    title = ''.join(title_list1).strip()
+                    print title
                 is_title_empty = self.doraemon.isEmpty(title)
-                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
+                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_urls, title) is False):
                     data = {
                         'title': title.strip(),
                         'url': url.strip(),

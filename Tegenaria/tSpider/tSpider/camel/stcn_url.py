@@ -68,7 +68,7 @@ class Stcn():
                 continue
             title = title[0]
             is_title_empty = self.doraemon.isEmpty(title)
-            if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
+            if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_urls, title) is False):
                 data = {
                     'title': title.strip(),
                     'url': url.strip(),
@@ -91,7 +91,6 @@ class Stcn():
         gc.collect()
 
     def start_requests(self):
-        return
         if self.doraemon.isConcurrencyAllowToRun() is False:
             return
         if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:

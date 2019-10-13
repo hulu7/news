@@ -41,15 +41,15 @@ class Baijia():
         current_url = response['response'].current_url.encode('gbk')
         valid = str(filter(str.isdigit, current_url))
         if len(valid) == 0:
-            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
             self.file.logger(self.log_path, 'Invalid url: {0}'.format(current_url))
             print 'Invalid url: {0}'.format(current_url)
             return
         print 'Start to parse: {0}'.format(current_url)
-        short_url_parts = re.split(r'[., /, _, %, "]', current_url)
-        current_id = short_url_parts[short_url_parts.index('22news') + 1]
+        short_url_parts = re.split(r'[., /, _, %, ?, ="]', current_url)
+        current_id = short_url_parts[short_url_parts.index('id') + 1]
         html = etree.HTML(response['response'].page_source)
-        article_content = html.xpath(".//*[contains(@id,'content_wrapper')]")
+        article_content = html.xpath(".//*[contains(@class,'article-content')]")
         data = {}
         url = ""
         content = ""
@@ -58,27 +58,24 @@ class Baijia():
         title = ""
         id = ""
         if len(article_content) > 0:
-            article_0 = html.xpath(".//*[contains(@id,'content_wrapper')]")
+            article_0 = html.xpath(".//*[contains(@class,'article-content')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'mainContent')]//span/text()")
-                time0_1 = html.xpath(".//*[contains(@class, 'infoSet')]/span/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'article-content')]//*/text()")
+                time0_1 = html.xpath(".//*[contains(@class, 'time')]/text()")
                 author_name0_1 = self.name
-                title0_1 = html.xpath(".//*[contains(@class,'titleTxt')]/text()")
-                title0_2 = html.xpath(".//*[contains(@class, 'titleSize')]/text()")
+                title0_1 = html.xpath(".//*[contains(@class,'article-title')]//text()")
 
                 url = current_url
                 id = current_id
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = ''.join(time0_1).strip()
+                    time = ''.join(time0_1[0]).strip()
                     time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = ''.join(title0_1).strip()
-                if self.doraemon.isEmpty(title0_2) is False:
-                    title = ''.join(title0_2).strip()
 
                 data = {
                     'url': url,
@@ -92,7 +89,7 @@ class Baijia():
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:
-                self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+                self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
                 print 'No data for {0}'.format(response['request_title'])
             else:
                 self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
@@ -101,7 +98,7 @@ class Baijia():
                 self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
                 print 'End to store mongo {0}'.format(data['url'])
                 self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
-                self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+                self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
 
         del current_url, valid,  current_id, html, article_content, data
         gc.collect()
@@ -109,7 +106,7 @@ class Baijia():
     def start_requests(self):
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
-        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf, self.url_path)
+        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf_content, self.url_path)
         if len(new_url_titles) == 0:
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)

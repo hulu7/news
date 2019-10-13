@@ -42,7 +42,7 @@ class Toutiao():
         current_url = response['response'].current_url.encode('gbk')
         isValidUrl = self.regx.match(current_url)
         if isValidUrl is None:
-            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
             self.file.logger(self.log_path, 'Invalid url: {0}'.format(current_url))
             print 'Invalid url: {0}'.format(current_url)
             return
@@ -90,7 +90,7 @@ class Toutiao():
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:
-                self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+                self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
                 print 'No data for {0}'.format(response['request_title'])
             else:
                 self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
@@ -99,7 +99,7 @@ class Toutiao():
                 self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
                 print 'End to store mongo {0}'.format(data['url'])
                 self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
-                self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+                self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
 
         del current_url, current_id, html, article_content, data
         gc.collect()
@@ -107,7 +107,7 @@ class Toutiao():
     def start_requests(self):
         self.file.logger(self.log_path, 'Start requests: {0} '.format(self.name))
         print 'Start requests: {0} '.format(self.name)
-        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf, self.url_path)
+        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf_content, self.url_path)
         if len(new_url_titles) == 0:
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)

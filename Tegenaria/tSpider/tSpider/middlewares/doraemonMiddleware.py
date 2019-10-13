@@ -29,7 +29,8 @@ class Doraemon():
         settings.CreateCommonSettings()
         self.file = FileIOMiddleware()
         self.rconn = redis.Redis(settings.REDIS_HOST, settings.REDIS_PORT)
-        self.bf = BloomFilter(self.rconn, settings.BLOOMFILTER_NAME)
+        self.bf_urls = BloomFilter(self.rconn, settings.BLOOMFILTER_URLS)
+        self.bf_content = BloomFilter(self.rconn, settings.BLOOMFILTER_CONTENT)
         self.disable_restart_interval = settings.DISABLE_RESTART_INTERVAL
         self.bf_weixin_url = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_URL_ARTICLE)
         self.bf_weixin_content = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_CONTENT_ARTICLE)

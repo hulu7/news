@@ -74,7 +74,7 @@ class Wallstreetcn():
                 else:
                     title = ""
                 is_title_empty = title == None or self.doraemon.isEmpty(title)
-                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
+                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_urls, title) is False):
                     data = {
                         'title': title,
                         'url': url,

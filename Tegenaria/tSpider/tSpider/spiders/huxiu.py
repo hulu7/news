@@ -57,23 +57,14 @@ class Huxiu():
 
         url = current_url
         id = str(filter(str.isdigit, current_url.encode('gbk')))
-        title1 = html.xpath(".//*[contains(@class,'t-h1')]/text()")
-        comment_number1 = html.xpath(".//*[contains(@class, 'article-pl pull-left')]/text()")
-        share_number1 = html.xpath(".//*[contains(@class, 'article-share pull-left')]/text()")
-        image_url1 = html.xpath(".//*[contains(@class, 'article-img-box')]/img/@src")
-        content1 = html.xpath(".//div[contains(@class, 'article-content-wrap')]//*/text()")
-        time1 = html.xpath(".//*[contains(@class, 'article-time')]/text()")
-        author_url1 = html.xpath(".//*[contains(@class, 'author-name')]/a/@href")
+        title1 = html.xpath(".//*[contains(@class,'article__title')]/text()")
+        content1 = html.xpath(".//div[contains(@class, 'article__content')]//*/text()")
+        time1 = html.xpath(".//*[contains(@class, 'article__time')]/text()")
+        author_url1 = html.xpath(".//*[contains(@class, 'author-info__username')]//text()")
         author_name1 = self.name
 
         if self.doraemon.isEmpty(title1) is False:
             title = title1[0].strip()
-        if self.doraemon.isEmpty(comment_number1) is False:
-            comment_number = str(filter(str.isdigit, comment_number1[0].encode('gbk'))).strip()
-        if self.doraemon.isEmpty(share_number1) is False:
-            share_number = str(filter(str.isdigit, share_number1[0].encode('gbk'))).strip()
-        if self.doraemon.isEmpty(image_url1) is False:
-            image_url = image_url1[0].strip()
         if self.doraemon.isEmpty(content1) is False:
             content = ''.join(content1).strip()
             valid = True
@@ -81,15 +72,12 @@ class Huxiu():
             time = ''.join(time1).strip()
             time = self.doraemon.getDateFromString(time)
         if self.doraemon.isEmpty(author_url1) is False:
-            author_url = urlparse.urljoin(current_url, author_url1[0].strip())
+            author_url = author_url1[0].strip()
         if self.doraemon.isEmpty(author_name1) is False:
             author_name = author_name1
 
         data = {
             'title': title,
-            'comment_number': comment_number,
-            'share_number': share_number,
-            'image_url': image_url,
             'url': url,
             'public_time': time,
             'author_url': author_url,
@@ -107,16 +95,16 @@ class Huxiu():
             self.file.logger(self.log_path, 'End to store mongo {0}'.format(data['url']))
             print 'End to store mongo {0}'.format(data['url'])
             self.doraemon.storeTxt(id, content, self.finished_txt_path, self.name)
-            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
         else:
-            self.doraemon.storeFinished(self.doraemon.bf, response['request_title'])
+            self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
         del current_url, html, title, comment_number, share_number, image_url, url, content, time, author_url, author_name, id, data
         gc.collect()
 
     def start_requests(self):
         self.file.logger(self.log_path, 'Start request: {0}'.format(self.name))
         print 'Start ' + self.name + ' requests'
-        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf, self.url_path)
+        new_url_titles = self.doraemon.readNewUrls(self.doraemon.bf_content, self.url_path)
         if len(new_url_titles) == 0:
             self.file.logger(self.log_path, 'No new url for: {0}'.format(self.name))
             print 'No new url for: {0}'.format(self.name)

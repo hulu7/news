@@ -184,8 +184,8 @@ cd 'node-v10.13.0'
 make && make install
 echo "******************************install Redis"
 cd '/usr/local/'
-wget http://distfiles.macports.org/redis/redis-4.0.11.tar.gz
-tar -zxvf redis-4.0.11.tar.gz
+wget https://github.com/antirez/redis/archive/4.0.11.tar.gz
+tar -zxvf 4.0.11.tar.gz
 mv redis-4.0.11 redis
 cd '/usr/local/redis'
 make

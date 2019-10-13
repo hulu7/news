@@ -38,7 +38,7 @@ class Anyv():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
-        self.regx = re.compile("^(?:http)s?://www.anyv.net/index.php/article-[0-9]{0,}")
+        self.regx = re.compile("^(?:http)s?://web.anyv.net/index.php/article-[0-9]{0,}")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -75,7 +75,7 @@ class Anyv():
                     title = ''.join(title_list1).strip()
                     print title
                 is_title_empty = self.doraemon.isEmpty(title)
-                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf, title) is False):
+                if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_urls, title) is False):
                     data = {
                         'title': title.strip(),
                         'url': url.strip(),
