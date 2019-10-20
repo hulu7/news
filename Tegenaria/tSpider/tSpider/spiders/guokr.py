@@ -58,22 +58,17 @@ class Guokr():
         title = ""
         id = ""
         if len(not_fnd) > 0:
-            article_0 = html.xpath(".//*[contains(@class,'content')]")
+            article_0 = html.xpath(".//*[contains(@class,'Article__StyleWrapper-sc-1dunux7-2')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'document')]//p//text()")
-                time0_1 = html.xpath(".//*[contains(@class, 'content-th-info')]/span/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'styled__ArticleContent-sc-1ctyfcr-4')]//*//text()")
+                time = self.doraemon.getCurrentDate()
                 author_name0_1 = self.name
-                title0_1 = html.xpath(".//*[contains(@id,'articleTitle')]/text()")
+                title0_1 = html.xpath(".//*[contains(@class,'styled__ArticleTitle-sc-1ctyfcr-0')]/text()")
 
                 url = current_url
                 id = current_id
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
-                if self.doraemon.isEmpty(time0_1) is False:
-                    time = ''.join(time0_1).strip()
-                    time = re.sub(r'[^\x00-\x7F]+', ' ', time).strip()
-                    time = re.sub(r'[^\x00-\x7f]', ' ', time).strip()
-                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
