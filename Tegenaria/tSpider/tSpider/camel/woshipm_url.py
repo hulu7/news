@@ -38,7 +38,19 @@ class Woshipm():
         self.restart_path = settings_name['RESTART_PATH']
         self.restart_interval = settings_name['RESTART_INTERVAL']
         self.today = self.settings.TODAY
-        self.regx = re.compile("^(?:http)s?://www.woshipm.com/it/[0-9]{0,}.html")
+
+    def getCatagoryKey(self, url):
+        try:
+            for key in self.catagories:
+                regx = re.compile("^(?:http)s?://www.woshipm.com/" + key + "/[0-9]{0,}.html")
+                isMatched = regx.match(url)
+                if isMatched is not None:
+                    return key
+            return None
+        except Exception as e:
+            print ("Exception to match: {0} for {1}".format(url, e))
+            return None
+
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -51,8 +63,8 @@ class Woshipm():
             if len(href) == 0:
                 continue
             href_url = href[0]
-            isValidUrl = self.regx.match(href_url)
-            if isValidUrl is None:
+            matchedKey = self.getCatagoryKey(href_url)
+            if matchedKey is None:
                 print 'Invalid url for not match: {0}'.format(href_url)
                 continue
             for good in self.goodkeys:
@@ -67,7 +79,7 @@ class Woshipm():
                     valid = False
             if valid:
                 short_url_parts = re.split(r'[., /, _, %, "]', href_url)
-                id = short_url_parts[short_url_parts.index('it') + 1]
+                id = short_url_parts[short_url_parts.index(matchedKey) + 1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
                 title_list1 = item.xpath(".//text()")
@@ -112,6 +124,8 @@ class Woshipm():
         print 'Start {0} requests'.format(self.name)
         self.badkeys = []
         self.goodkeys = []
+        self.catagories = ['ucd', 'it', 'pmd', 'pd', 'operate', 'rp',
+                           'evaluating', 'zhichang', 'chuangye', 'marketing', 'ai', 'blockchain']
 
         new_urls = []
         content = self.file.readFromTxt(self.urls)
