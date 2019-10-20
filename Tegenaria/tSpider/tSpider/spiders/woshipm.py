@@ -47,7 +47,7 @@ class Woshipm():
             return
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _, %, "]', current_url)
-        current_id = short_url_parts[short_url_parts.index('it') + 1]
+        current_id = short_url_parts[short_url_parts.index('html') - 1]
         html = etree.HTML(response['response'].page_source)
         article_content = html.xpath(".//*[contains(@class, 'article-wrapper')]")
         data = {}
