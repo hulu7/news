@@ -58,7 +58,7 @@ class Huxiu():
         url = current_url
         id = str(filter(str.isdigit, current_url.encode('gbk')))
         title1 = html.xpath(".//*[contains(@class,'article__title')]/text()")
-        content1 = html.xpath(".//div[contains(@class, 'article__content')]//*/text()")
+        content1 = html.xpath(".//div[contains(@class, 'article__content')]//*//text()")
         time1 = html.xpath(".//*[contains(@class, 'article__time')]/text()")
         author_url1 = html.xpath(".//*[contains(@class, 'author-info__username')]//text()")
         author_name1 = self.name

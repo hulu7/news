@@ -60,7 +60,7 @@ class Sohump():
         if len(article_content) > 0:
             article_0 = html.xpath(".//*[contains(@data-spm,'content')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'article')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'article')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@id, 'news-time')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'text-title')]/h1/text()")

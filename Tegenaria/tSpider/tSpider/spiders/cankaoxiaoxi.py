@@ -62,7 +62,7 @@ class Cankaoxiaoxi():
             title0_1 = html.xpath(".//article/h1/text()")
             author_name0_1 = html.xpath(".//*[contains(@class, 'cor666 mar-r-10 lh-36')]/text()")
             time0_1 = html.xpath(".//*[contains(@class, 'time')]/span/text()")
-            content0_1 = html.xpath(".//div[contains(@class, 'content')]/p/text()")
+            content0_1 = html.xpath(".//div[contains(@class, 'content')]//p//text()")
 
             url = current_url
             id = current_id

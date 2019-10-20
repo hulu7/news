@@ -60,7 +60,7 @@ class Iresearch():
         if len(not_fnd) > 0:
             article_0 = html.xpath(".//*[contains(@class,'m-cont-hd')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'm-article')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'm-article')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'origin')]/em/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'title')]/h1/text()")

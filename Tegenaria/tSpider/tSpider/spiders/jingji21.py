@@ -56,7 +56,7 @@ class Jingji21():
         if len(not_fnd) > 0:
             article_0 = html.xpath(".//*[contains(@class,'content')]")
             if len(article_0) > 0:
-                content0_1 = ''.join(html.xpath(".//div[contains(@class, 'txtContent')]/p/text()"))
+                content0_1 = ''.join(html.xpath(".//div[contains(@class, 'txtContent')]//p//text()"))
                 time0_1 = ''.join(html.xpath(".//*[contains(@class, 'newsDate')]/text()"))
                 author_name0_1 = self.name
                 title0_1 = ''.join(html.xpath(".//*[contains(@class,'titleHead')]/h1/text()"))

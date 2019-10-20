@@ -63,7 +63,7 @@ class Songshuhui():
                 title0_1 = html.xpath(".//*[contains(@class,'contenttitle')]/a/text()")
                 author_name0_1 = self.name
                 time0_1 = html.xpath(".//*[contains(@class,'metax_single')]/text()")
-                content0_1 = html.xpath(".//*[contains(@class, 'entry')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'entry')]//p//text()")
 
                 url = current_url
                 id = current_id

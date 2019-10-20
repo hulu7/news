@@ -60,8 +60,7 @@ class Gelonghui():
         if len(article_content) > 0:
             article_0 = html.xpath(".//*[contains(@class,'article-detail')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'article-with-html')]//p/text()")
-                content0_2 = html.xpath(".//*[contains(@class, 'article-with-html')]//span/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'article-with-html')]//*//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'date')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'article-detail')]/h1/text()")
@@ -70,8 +69,6 @@ class Gelonghui():
                 id = current_id
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
-                if self.doraemon.isEmpty(content0_2) is False:
-                    content = ''.join(content0_2).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
                     time = ''.join(time0_1).strip()
                     time = self.doraemon.getDateFromString(time)
@@ -114,6 +111,7 @@ class Gelonghui():
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
             return
+        new_url_titles = [['https://www.gelonghui.com/p/80402', '奥运圣坛上的祭品与真正的大国自信']]
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))

@@ -166,74 +166,101 @@ class Doraemon():
     def getDateOfDaysBefore(self, days):
         return (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
 
+    def getCurrentYear(self):
+        return time.strftime('%Y', time.localtime(time.time()))
+
+    def getCurrentDate(self):
+        return time.strftime('%Y-%m-%d', time.localtime(time.time()))
+
+    def getDateTime(self, string, dateFormat, pattern, isMatchDate):
+        try:
+            match = re.search(dateFormat, string)
+            strp = datetime.strptime(match.group(), pattern)
+            if isMatchDate:
+                return strp.date()
+            else:
+                return strp.date()
+        except:
+            print("'Match date fail")
+            return None
+
+    def getDateFromChinese(self, string):
+        year = self.getCurrentYear()
+        try:
+            if "今天" in string or "秒前" in string or "分钟前" in string or "小时前" in string:
+                return self.getDateOfDaysBefore(0)
+            if "昨天" in string:
+                return self.getDateOfDaysBefore(1)
+            if "前天" in string:
+                return self.getDateOfDaysBefore(2)
+            if "3天前" in string:
+                return self.getDateOfDaysBefore(3)
+            if "4天前" in string:
+                return self.getDateOfDaysBefore(4)
+            if "5天前" in string:
+                return self.getDateOfDaysBefore(5)
+            if "6天前" in string:
+                return self.getDateOfDaysBefore(6)
+            if "1周前" in string:
+                return self.getDateOfDaysBefore(7)
+            if "年" not in string and "月" in string and "日" in string:
+                data = re.split(",", string.replace('月', ',').replace('日', ''))
+                return "{0}-{1}-{2}".format(year, data[0], data[1])
+            if "年" in string and "月" in string and "日" in string:
+                data = re.split(",", string.replace('年', ',').replace('月', ',').replace('日', ','))
+                return "{0}-{1}-{2}".format(data[0], data[1], data[2])
+        except:
+            print ("Fail to match date from Chinese.")
+            return None
+
+    def getFinalDate(self, year, month, day):
+            return "{0}-{1}-{2}".format(year, month, day)
+
     def getDateFromString(self, string_date):
-        regx_time0 = re.compile("[0-9]{1,}-[0-9]{1,} [0-9]{1,}:[0-9]{1,}")
-        regx_time1 = re.compile("[0-9]{1,}-[0-9]{1,}-[0-9]{1,} [0-9]{1,}:[0-9]{1,}")
-        regx_time2 = re.compile("[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}")
-        regx_time3 = re.compile("[0-9]{1,}-[0-9]{1,}-[0-9]{1,}")
-        regx_time4 = re.compile("[0-9]{1,}-[0-9]{1,}-[0-9]{1,} [0-9]{1,}:[0-9]{1,}:[0-9]{1,}")
-        regx_time5 = re.compile("[0-9]{1,}:[0-9]{1,}:[0-9]{1,}")
-        regx_time6 = re.compile("[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,} [0-9]{1,}:[0-9]{1,}:[0-9]{1,}")
-        regx_time7 = re.compile("[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,}")
+        _date_chinese = self.getDateFromChinese(string_date)
+        if _date_chinese is not None:
+            return _date_chinese
 
-        isValidTime0 = regx_time0.match(string_date)
-        isValidTime1 = regx_time1.match(string_date)
-        isValidTime2 = regx_time2.match(string_date)
-        isValidTime3 = regx_time3.match(string_date)
-        isValidTime4 = regx_time4.match(string_date)
-        isValidTime5 = regx_time5.match(string_date)
-        isValidTime6 = regx_time6.match(string_date)
-        isValidTime7 = regx_time7.match(string_date)
+        _date_year_month_day_crossing = self.getDateTime(string_date, r'\d{4}-\d{1,2}-\d{1,2}', '%Y-%m-%d', True)
+        _date_month_day_crossing = self.getDateTime(string_date, r'\d{1,2}-\d{1,2}', '%m-%d', True)
+        _date_year_month_day_dot = self.getDateTime(string_date, r'\d{4}.\d{1,2}.\d{1,2}', '%Y.%m.%d', True)
+        _date_month_day_dot = self.getDateTime(string_date, r'\d{1,2}.\d{1,2}', '%m.%d', True)
+        _date_year_month_day_slash = self.getDateTime(string_date, r'\d{4}\/\d{1,2}\/\d{1,2}', '%Y/%m/%d', True)
+        _date_month_day_slash = self.getDateTime(string_date, r'\d{1,2}\/\d{1,2}', '%m/%d', True)
+        _time_hour_minute_second = self.getDateTime(string_date, r'\d{1,2}:\d{1,2}:\d{1,2}', '%H:%M:%S', False)
+        _time_hour_minute = self.getDateTime(string_date, r'\d{1,2}:\d{1,2}', '%H:%M', False)
 
-        if "今天" in string_date or "秒前" in string_date or "分钟前" in string_date or "小时前" in string_date:
-            return self.getDateOfDaysBefore(0)
-        if "昨天" in string_date:
-            return self.getDateOfDaysBefore(1)
-        if "前天" in string_date:
-            return self.getDateOfDaysBefore(2)
-        if "3天前" in string_date:
-            return self.getDateOfDaysBefore(3)
-        if "4天前" in string_date:
-            return self.getDateOfDaysBefore(4)
-        if "5天前" in string_date:
-            return self.getDateOfDaysBefore(5)
-        if "6天前" in string_date:
-            return self.getDateOfDaysBefore(6)
-        if "1周前" in string_date:
-            return self.getDateOfDaysBefore(7)
-        if "年" not in string_date and "月" in string_date and "日" in string_date:
-            year = time.strftime('%Y',time.localtime(time.time()))
-            data = re.split(",", string_date.replace('月', ',').replace('日', ''))
-            return "{0}-{1}-{2}".format(year, data[0], data[1])
-        if "年" in string_date and "月" in string_date and "日" in string_date:
-            data = re.split(",", string_date.replace('年', ',').replace('月', ',').replace('日', ','))
-            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
-        if isValidTime0 is not None:
-            data = re.split(r'[-, ' ']', string_date)
-            year = time.strftime('%Y', time.localtime(time.time()))
-            return "{0}-{1}-{2}".format(year, data[0], data[1])
-        if isValidTime1 is not None:
-            data = re.split(r'[-, ' ']', string_date)
-            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
-        if isValidTime2 is not None:
-            data = re.split(r'[., ' ']', string_date)
-            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
-        if isValidTime3 is not None:
-            data = re.split(r'[-]', string_date)
-            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
-        if isValidTime4 is not None:
-            data = re.split(r'[-, ' ']', string_date)
-            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
-        if isValidTime5 is not None:
-            data = time.strftime('%Y-%m-%d', time.localtime(time.time()))
-            return data
-        if isValidTime6 is not None:
-            data = re.split(r'[/, ' ']', string_date)
-            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
-        if isValidTime7 is not None:
-            data = re.split(r'[/, ' ']', string_date)
-            return "{0}-{1}-{2}".format(data[0], data[1], data[2])
-        return string_date
+        year = self.getCurrentYear()
+
+        if _date_year_month_day_crossing is not None:
+            return self.getFinalDate(_date_year_month_day_crossing.year,
+                                     _date_year_month_day_crossing.month,
+                                     _date_year_month_day_crossing.day)
+        if _date_year_month_day_crossing is None and _date_month_day_crossing is not None:
+            return self.getFinalDate(year,
+                                     _date_month_day_crossing.month,
+                                     _date_month_day_crossing.day)
+
+        if _date_year_month_day_dot is not None:
+            return self.getFinalDate(_date_year_month_day_dot.year,
+                                     _date_year_month_day_dot.month,
+                                     _date_year_month_day_dot.day)
+        if _date_year_month_day_dot is None and _date_month_day_dot is not None:
+            return self.getFinalDate(year,
+                                     _date_month_day_dot.month,
+                                     _date_month_day_dot.day)
+
+        if _date_year_month_day_slash is not None:
+            return self.getFinalDate(_date_year_month_day_slash.year,
+                                     _date_year_month_day_slash.month,
+                                     _date_year_month_day_slash.day)
+        if _date_year_month_day_slash is None and _date_month_day_slash is not None:
+            return self.getFinalDate(year,
+                                     _date_month_day_slash.month,
+                                     _date_month_day_slash.day)
+
+        if _time_hour_minute_second is not None or _time_hour_minute is not None:
+            return self.getCurrentDate()
 
     def getMD5(self, content):
         self.md5.update(content.encode('utf-8'))

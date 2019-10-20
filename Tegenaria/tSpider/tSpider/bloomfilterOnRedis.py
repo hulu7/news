@@ -47,7 +47,7 @@ class BloomFilter(object):
 
 if __name__ == '__main__':
     import redis
-    text = u'要安全，不要自拍 俄将禁止执勤军人用智能手机'
+    text = u''
     rconn = redis.Redis('127.0.0.1', 6379)
     bf = BloomFilter(rconn, 'test:dupefilter')
     if bf.isContains(text.encode("utf-8")):

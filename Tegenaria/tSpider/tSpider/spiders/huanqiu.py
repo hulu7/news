@@ -62,7 +62,7 @@ class Huanqiu():
             title0_1 = html.xpath(".//*[contains(@class, 'conText')]/h1/text()")
             author_name0_1 = self.name
             time0_1 = html.xpath(".//*[contains(@class, 'timeSummary')]/text()")
-            content0_1 = html.xpath(".//div[contains(@class, 'text')]/p/text()")
+            content0_1 = html.xpath(".//div[contains(@class, 'text')]//p//text()")
 
             url = current_url
             id = current_id

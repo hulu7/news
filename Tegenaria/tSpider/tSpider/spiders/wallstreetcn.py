@@ -63,7 +63,7 @@ class Stcn():
             article_1 = html.xpath(".//*[contains(@class,'xiangxi')]")
             article_2 = html.xpath(".//*[contains(@class,'main')]")
             if len(article_0) > 0 and len(article_1) == 0:
-                content0_1 = html.xpath(".//div[contains(@class, 'txt_con')]/p/text()")
+                content0_1 = html.xpath(".//div[contains(@class, 'txt_con')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'info')]/text()")
                 title0_1 = html.xpath(".//*[contains(@class,'intal_tit')]/h2/text()")
                 author_name0_1 = self.name

@@ -60,7 +60,7 @@ class Qdaily():
         if len(article_content) > 0:
             article_0 = html.xpath(".//*[contains(@class, 'main')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'detail')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'detail')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'date smart-date')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class, 'media-title')]/h2/text()")

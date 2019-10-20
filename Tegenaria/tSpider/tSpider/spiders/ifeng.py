@@ -60,7 +60,7 @@ class Ifeng():
         if len(article_content) > 0:
             article_0 = html.xpath(".//*[contains(@class,'container-2ItVJon-')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'text-3zQ3cZD4')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'text-3zQ3cZD4')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'titleLine-gY7DniPB')]/p/span/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'titleLine-gY7DniPB')]/h1/text()")

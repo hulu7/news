@@ -60,7 +60,7 @@ class I52rkl():
         if len(article_content) > 0:
             article_0 = html.xpath(".//*[contains(@class,'article-container')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'article-content')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'article-content')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'article-meta')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'article-title')]/text()")

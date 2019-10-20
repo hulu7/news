@@ -66,7 +66,7 @@ class Guancha():
             article_0 = html.xpath(".//*[contains(@class,'textPageCont')]")
             article_1 = html.xpath(".//*[contains(@class,'article-content')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'textPageContInner')]/p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'textPageContInner')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'time')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'textPageContInner')]/h1/text()")
@@ -95,7 +95,7 @@ class Guancha():
                 }
 
             if len(article_1) > 0:
-                content0_1 = html.xpath(".//div[contains(@class, 'article-txt-content')]/p/text()")
+                content0_1 = html.xpath(".//div[contains(@class, 'article-txt-content')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'time1')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'article-content')]/h1/text()")

@@ -60,7 +60,7 @@ class Ce():
         if len(not_fnd) > 0:
             article_0 = html.xpath(".//*[contains(@class,'news_module mtnone')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//div[contains(@class, 'TRS_Editor')]/p/text()")
+                content0_1 = html.xpath(".//div[contains(@class, 'TRS_Editor')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'time')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'mtnone')]/h2/text()")
@@ -111,6 +111,7 @@ class Ce():
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
             return
+        # new_url_titles = [['http://m.ce.cn/qc/gd/201910/18/t20191018_33374778.shtml', '涛涛不绝：凯迪拉克再领跑 二线高档迎来收官季']]
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))

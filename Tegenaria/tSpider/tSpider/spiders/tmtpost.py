@@ -60,7 +60,7 @@ class Tmtpost():
         if len(article_content) > 0:
             article_0 = html.xpath(".//article")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'inner')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'inner')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'time ')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//article/h1/text()")

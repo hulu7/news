@@ -131,7 +131,7 @@ class Cyzone():
         self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
         print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
 
-        del new_urls, content, new_urls, request
+        del new_urls, content, request
         gc.collect()
 
 if __name__ == '__main__':

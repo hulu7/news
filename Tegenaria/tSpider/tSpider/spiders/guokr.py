@@ -60,7 +60,7 @@ class Guokr():
         if len(not_fnd) > 0:
             article_0 = html.xpath(".//*[contains(@class,'content')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'document')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'document')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'content-th-info')]/span/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@id,'articleTitle')]/text()")

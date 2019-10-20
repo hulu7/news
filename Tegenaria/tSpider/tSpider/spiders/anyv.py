@@ -60,7 +60,7 @@ class Anyv():
         if len(article_content) > 0:
             article_0 = html.xpath(".//*[contains(@class, 'product-details')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'rich_media_content')]//p/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'rich_media_content')]//p//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'cor666')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class, 'desc')]/h1/text()")
@@ -111,6 +111,7 @@ class Anyv():
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
             return
+        # new_url_titles = [['http://web.anyv.net/index.php/article-3703339', '折戟海南的地产商']]
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))

@@ -121,10 +121,15 @@ class Chuansongme():
             host = us[2]
             referer = url_title[0]
             response = self.request.requests_request(url_title[0], None, host, referer)
-            if response.status_code != 200:
-                print 'status: ' + response.status_code
+            try:
+                if response.status_code != 200:
+                    print 'status: ' + response.status_code
+                    continue
+                self.parse(response, url_title[1])
+            except Exception as e:
+                print("Exception: {0} for {1}".format(e, url_title[0]))
+                self.file.logger(self.log_path, "Exception: {0} for {1}".format(e, url_title[0]))
                 continue
-            self.parse(response, url_title[1])
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(new_url_titles))))
         print 'End requests for {0}'.format(str(len(new_url_titles)))
         del self.request, response
