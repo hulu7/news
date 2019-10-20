@@ -59,19 +59,19 @@ class Yicai():
         title = ""
         id = ""
         if len(not_fnd) > 0:
-            article_0 = html.xpath(".//*[@id='multi-text']")
+            article_0 = html.xpath(".//*[contains(@class, 'm-list7')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@id, 'articlecontent')]//p//text()")
-                time0_1 = html.xpath(".//*[contains(@class, 'f-fs24 f-tac')]/span/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'txt')]//text()")
+                time0_1 = html.xpath(".//h3[contains(@class, 'f-cb')]//text()")
                 author_name0_1 = self.name
-                title0_1 = html.xpath(".//*[contains(@class,'f-fs42')]/text()")
+                title0_1 = html.xpath(".//*[contains(@class,'m-list7')]/h1/text()")
 
                 url = current_url
                 id = current_id
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
                 if self.doraemon.isEmpty(time0_1) is False:
-                    time = ''.join(time0_1[1]).strip()
+                    time = ''.join(time0_1).strip()
                     time = self.doraemon.getDateFromString(time)
                     print "----------: {0}".format(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:

@@ -58,7 +58,7 @@ class Xueqiu():
         title = ""
         id = ""
         if len(article_content) > 0:
-            article_0 = html.xpath(".//*[contains(@class,'article__bd')]")
+            article_0 = html.xpath(".//*[contains(@class,'article__container')]")
             if len(article_0) > 0:
                 content0_1 = html.xpath(".//*[contains(@class, 'article__bd__detail')]//text()")
                 time0_1 = html.xpath(".//*[contains(@class, 'time')]/text()")

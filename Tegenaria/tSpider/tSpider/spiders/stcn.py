@@ -95,7 +95,7 @@ class Stcn():
                 }
 
             if len(article_1) > 0:
-                content1_1 = html.xpath(".//div[contains(@class, 'txt_con')]/p/text()")
+                content1_1 = html.xpath(".//div[contains(@class, 'txt_con')]//p//text()")
                 time1_1 = html.xpath(".//div[contains(@class, 'xiangxi')]/h2/span/text()")
                 author_name1_1= self.name
                 title1_1 = html.xpath(".//*[contains(@class,'xiangxi')]/h2/text()")
@@ -128,7 +128,7 @@ class Stcn():
                 }
 
             if len(article_2) > 0:
-                content2_1 = html.xpath(".//div[contains(@class, 'left_txt')]/p/text()")
+                content2_1 = html.xpath(".//div[contains(@class, 'left_txt')]//p//text()")
                 time2_1 = html.xpath(".//div[contains(@class, 'box_r')]/h2/span/text()")
                 author_name2_1= self.name
                 title2_1 = html.xpath(".//*[contains(@class,'box_r')]/h2/text()")
