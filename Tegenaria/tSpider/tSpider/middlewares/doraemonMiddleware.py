@@ -216,6 +216,9 @@ class Doraemon():
     def getFinalDate(self, year, month, day):
             return "{0}-{1}-{2}".format(year, month, day)
 
+    def formateMonthDay(self, MD):
+        return '{:02d}'.format(MD)
+
     def getDateFromString(self, string_date):
         _date_chinese = self.getDateFromChinese(string_date)
         if _date_chinese is not None:
@@ -234,30 +237,30 @@ class Doraemon():
 
         if _date_year_month_day_crossing is not None:
             return self.getFinalDate(_date_year_month_day_crossing.year,
-                                     _date_year_month_day_crossing.month,
-                                     _date_year_month_day_crossing.day)
+                                     self.formateMonthDay(_date_year_month_day_crossing.month),
+                                     self.formateMonthDay(_date_year_month_day_crossing.day))
         if _date_year_month_day_crossing is None and _date_month_day_crossing is not None:
             return self.getFinalDate(year,
-                                     _date_month_day_crossing.month,
-                                     _date_month_day_crossing.day)
+                                     self.formateMonthDay(_date_month_day_crossing.month),
+                                     self.formateMonthDay(_date_month_day_crossing.day))
 
         if _date_year_month_day_dot is not None:
             return self.getFinalDate(_date_year_month_day_dot.year,
-                                     _date_year_month_day_dot.month,
-                                     _date_year_month_day_dot.day)
+                                     self.formateMonthDay(_date_year_month_day_dot.month),
+                                     self.formateMonthDay(_date_year_month_day_dot.day))
         if _date_year_month_day_dot is None and _date_month_day_dot is not None:
             return self.getFinalDate(year,
-                                     _date_month_day_dot.month,
-                                     _date_month_day_dot.day)
+                                     self.formateMonthDay(_date_month_day_dot.month),
+                                     self.formateMonthDay(_date_month_day_dot.day))
 
         if _date_year_month_day_slash is not None:
             return self.getFinalDate(_date_year_month_day_slash.year,
-                                     _date_year_month_day_slash.month,
-                                     _date_year_month_day_slash.day)
+                                     self.formateMonthDay(_date_year_month_day_slash.month),
+                                     self.formateMonthDay(_date_year_month_day_slash.day))
         if _date_year_month_day_slash is None and _date_month_day_slash is not None:
             return self.getFinalDate(year,
-                                     _date_month_day_slash.month,
-                                     _date_month_day_slash.day)
+                                     self.formateMonthDay(_date_month_day_slash.month),
+                                     self.formateMonthDay(_date_month_day_slash.day))
 
         if _time_hour_minute_second is not None or _time_hour_minute is not None:
             return self.getCurrentDate()
