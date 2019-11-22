@@ -166,7 +166,7 @@ class CommitData():
                     if len(content_txt) == 0:
                         continue
                     content = content_txt[0]
-                    if customer_id == 'dn201949100':
+                    if customer_id in ['dn201949100', 'dn201900001']:
                         if self.isDuplicated(title, self.bf_huxiu) is False and self.isContentForRightCatalog(content, title) is True and self.isTitleForRightCatalog(title) is True:
                             self.storeFinished(title, self.bf_huxiu)
                         else:
