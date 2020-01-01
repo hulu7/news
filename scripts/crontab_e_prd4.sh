@@ -15,3 +15,4 @@
 */7 * * * * sh /home/dev/Repository/news/scripts/production_merge.sh
 */13 * * * * sh /home/dev/Repository/news/scripts/prd4_2_webserver0.sh
 */5 * * * * sh /home/dev/Repository/news/scripts/redis_restart.sh
+02 * * * * sh /home/dev/Repository/news/scripts/backup/run.sh prd4.txt

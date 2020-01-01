@@ -8,3 +8,4 @@
 */1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/refresh_redis.sh
 */1 * * * * sh /home/dev/Repository/news/scripts/redis_restart.sh
 */1 * * * * sh /home/dev/Repository/news/scripts/adminMongo_restart.sh
+02 * * * * sh /home/dev/Repository/news/scripts/backup/run.sh prd3.txt

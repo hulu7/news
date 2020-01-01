@@ -35,3 +35,8 @@
             port:10001 serverManagement
             port:10002 adminMongo
 
+192.168.1.11 prd5
+            port:10001 serverManagement
+            port:10002 adminMongo
+
+

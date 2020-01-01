@@ -1,0 +1,2 @@
+/home/dev/Data:/home/dev/Backup/dev_centos7
+/home/dev/Repository:/home/dev/Backup/dev_centos7
