@@ -2,6 +2,7 @@
 DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")
 logDir=/home/dev/Data/rsyncData/backuplog
+scriptDir=/home/dev/Repository/news/scripts/backup
 echo "${TIME}: read files"
 echo "${TIME}: read files"  >> ${logDir}/${DATE}_log.log
 if [ -n "$1" ]; then
@@ -14,7 +15,7 @@ if [ -n "$1" ]; then
             array=(${line//:/ })
             fromPath=${array[0]}
             toPath=${array[1]}
-            ./backup.sh ${fromPath} ${toPath}
+            ${scriptDir}/backup.sh ${fromPath} ${toPath}
     done
 else
     echo "${TIME}: error"
