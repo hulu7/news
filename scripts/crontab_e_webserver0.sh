@@ -15,3 +15,4 @@
 */5 * * * * sh /home/dev/Repository/news/supplier/classification/start_classify.sh
 */5 * * * * sh /home/dev/Repository/news/supplier/commit/start_commit.sh
 */7 * * * * sh /home/dev/Repository/news/scripts/production_merge_and_update.sh
+*/120 * * * * sh /home/dev/Repository/news/scripts/backup/run.sh /home/dev/Repository/news/scripts/backup/dev_centos7.txt
