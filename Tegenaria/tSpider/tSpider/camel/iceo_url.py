@@ -19,25 +19,24 @@ from middlewares.doraemonMiddleware import Doraemon
 class Iceo():
 
     def __init__(self):
-        self.settings = Settings()
+        self.globalSettings = Settings()
         self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd2)
-        self.doraemon.createFilePath(self.settings.LOG_PATH)
+        self.doraemon.createFilePath(self.globalSettings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('iceo')
-        self.source = settings_name['SOURCE_NAME']
-        self.work_path_prd2 = settings_name['WORK_PATH_PRD2']
-        self.mongo = settings_name['MONGO_URLS']
-        self.name = settings_name['NAME']
-        self.max_pool_size = settings_name['MAX_POOL_SIZE']
-        self.log_path = self.settings.LOG_PATH_PRD2
-        self.urls = settings_name['URLS']
-        self.restart_path = settings_name['RESTART_PATH']
-        self.restart_interval = settings_name['RESTART_INTERVAL']
-        self.today = self.settings.TODAY
+        self.settings = self.globalSettings.CreateSettings('iceo')
+        self.log_path = self.globalSettings.LOG_PATH_PRD2
+        self.today = self.globalSettings.TODAY
+
+        self.source = self.settings.SOURCE_NAME
+        self.work_path_prd2 = self.settings.WORK_PATH_PRD2
+        self.mongo = self.settings.MONGO_URLS
+        self.name = self.settings.NAME
+        self.max_pool_size = self.settings.MAX_POOL_SIZE
+        self.urls = self.settings.URLS
         self.regx = re.compile("^(?:http)s?://www.iceo.com.cn/[a-z]{0,}[0-9]{0,}/?[0-9]{0,}/[0-9]{0,}/[0-9]{0,}/[0-9]{0,}.shtml")
 
     def parse(self, response):
@@ -103,10 +102,9 @@ class Iceo():
         gc.collect()
 
     def start_requests(self):
-        if self.doraemon.isConcurrencyAllowToRun() is False:
-            return
-        if self.doraemon.isExceedRestartInterval(self.restart_path, self.restart_interval) is False:
-            self.doraemon.recoveryConcurrency()
+        if self.doraemon.isCamelReadyToRun(self.settings) is False:
+            self.file.logger(self.log_path, 'It is not ready to run for {0}'.format(self.name))
+            print 'It is not ready to run for {0}'.format(self.name)
             return
         self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
         print 'Start {0} requests'.format(self.name)

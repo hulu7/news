@@ -64,6 +64,10 @@ class Baijia():
                 time0_1 = html.xpath(".//*[contains(@class, 'date')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'article-title')]//text()")
+                images0_1 = html.xpath(".//*[contains(@class, 'img-container')]//img//@src")
+                images0_2 = html.xpath(".//p//img//@src")
+                images0_3 = html.xpath(".//*[contains(@class, 'bjh-img-container')]//img//@src")
+                images0_4 = html.xpath(".//*[contains(@class, 'article-content')]//img//@src")
 
                 url = current_url
                 id = current_id
@@ -76,6 +80,7 @@ class Baijia():
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = ''.join(title0_1).strip()
+                images = images0_1 + images0_2 + images0_3 + images0_4
 
                 data = {
                     'url': url,
@@ -84,7 +89,8 @@ class Baijia():
                     'title': title,
                     'id': id,
                     'download_time': self.today,
-                    'source': self.source
+                    'source': self.source,
+                    'images': images
                 }
 
             print 'End to parse: {0}'.format(current_url)
@@ -111,6 +117,7 @@ class Baijia():
             self.file.logger(self.log_path, 'No new url for {0}'.format(self.name))
             print 'No new url for {0}'.format(self.name)
             return
+        new_url_titles = [['http://baijiahao.baidu.com/s?id=1655225684599327593', 'test']]
         request = BrowserRequest()
         content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.file.logger(self.log_path, 'End requests for {0}'.format(str(len(content))))

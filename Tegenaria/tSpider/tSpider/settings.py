@@ -133,27 +133,21 @@ class Settings():
         #mongodb
         self.SPIDERDB = "SPIDERS"
 
-    def SettingsFormat(self, SETTINGS_NAME, SOURCE_NAME, RESTART_INTERVAL, MAX_POOL_SIZE, IS_OPEN_CACHE):
-        return {
-            'NAME': SETTINGS_NAME,
-            'MONGO': SETTINGS_NAME,
-            'MONGO_URLS': "{0}_urls".format(SETTINGS_NAME),
-            'WORK_PATH_PRD1': "{0}//{1}".format(self.RSYNC_PRD1, SETTINGS_NAME),
-            'WORK_PATH_PRD2': "{0}//sites//{1}".format(self.RSYNC_PRD2, SETTINGS_NAME),
-            'FINISHED_TXT_PATH': "{0}//{1}//txt//{2}".format(self.RSYNC_PRD1, SETTINGS_NAME, self.TODAY),
-            'FINISHED_ORIGIN_HTML_PATH': "{0}//{1}//origin_html//{2}".format(self.RSYNC_PRD1, SETTINGS_NAME, self.TODAY),
-            'FINISHED_PROCESSED_HTML_PATH': "{0}//{1}//processed_html//{2}".format(self.RSYNC_PRD1, SETTINGS_NAME, self.TODAY),
-            'FINISHED_IMG_PATH': "{0}//{1}//img//{2}".format(self.RSYNC_PRD1, SETTINGS_NAME, self.TODAY),
-            'FINISHED_CONTENT_PATH': "{0}//{1}//{2}_content.csv".format(self.RSYNC_PRD1, SETTINGS_NAME, SETTINGS_NAME),
-            'URL_PATH': "{0}//sites//{1}//{2}_urls.csv".format(self.RSYNC_PRD2, SETTINGS_NAME, SETTINGS_NAME),
-            'RESTART_PATH': "{0}//sites//{1}//restart.txt".format(self.RSYNC_PRD2, SETTINGS_NAME),
-            'REDIS_REFRESH_PATH': "{0}//sites//{1}//redis_refresh.txt".format(self.RSYNC_PRD2, SETTINGS_NAME),
-            'RESTART_INTERVAL': int(RESTART_INTERVAL),
-            'MAX_POOL_SIZE': int(MAX_POOL_SIZE),
-            'URLS': "{0}//{1}.txt".format(self.CAMEL_FOOD, SETTINGS_NAME),
-            'IS_OPEN_CACHE': str(IS_OPEN_CACHE) == "True",
-            'SOURCE_NAME': SOURCE_NAME
-        }
+    def SettingsFormat(self,
+                       SETTINGS_NAME,
+                       SOURCE_NAME,
+                       RESTART_INTERVAL,
+                       MAX_POOL_SIZE,
+                       IS_OPEN_CACHE,
+                       START_TIME,
+                       END_TIME):
+        return settingsSpec(SETTINGS_NAME,
+                            SOURCE_NAME,
+                            RESTART_INTERVAL,
+                            MAX_POOL_SIZE,
+                            IS_OPEN_CACHE,
+                            START_TIME,
+                            END_TIME)
 
     def CreateSettings(self, NAME):
         content = self.file.readFromTxt(self.COBWEBS)
@@ -162,8 +156,55 @@ class Settings():
             if NAME in config:
                 print "Find the :{0}".format(NAME)
                 data = config.split(',')
-                return self.SettingsFormat(data[0], data[1], data[2], data[3], data[4])
+                return self.SettingsFormat(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
         print "Cannot find the :{0}".format(NAME)
 
     def CreateCommonSettings(self):
-        return self.SettingsFormat('0', '0', '0', '0','0')
+        return self.SettingsFormat('0', '0', '0', '0', '0', '0', '0')
+
+class settingsSpec():
+    def __init__(self,
+                 SETTINGS_NAME=None,
+                 SOURCE_NAME=None,
+                 RESTART_INTERVAL=None,
+                 MAX_POOL_SIZE=None,
+                 IS_OPEN_CACHE=None,
+                 START_TIME=None,
+                 END_TIME=None):
+        settings = Settings()
+        self.NAME = SETTINGS_NAME
+        self.MONGO = SETTINGS_NAME
+        self.MONGO_URLS = "{0}_urls".format(SETTINGS_NAME)
+        self.WORK_PATH_PRD1 = "{0}//{1}".format(settings.RSYNC_PRD1,
+                                                SETTINGS_NAME)
+        self.WORK_PATH_PRD2 = "{0}//sites//{1}".format(settings.RSYNC_PRD2,
+                                                       SETTINGS_NAME)
+        self.FINISHED_TXT_PATH = "{0}//{1}//txt//{2}".format(settings.RSYNC_PRD1,
+                                                             SETTINGS_NAME,
+                                                             settings.TODAY)
+        self.FINISHED_ORIGIN_HTML_PATH = "{0}//{1}//origin_html//{2}".format(settings.RSYNC_PRD1,
+                                                                             SETTINGS_NAME,
+                                                                             settings.TODAY)
+        self.FINISHED_PROCESSED_HTML_PATH = "{0}//{1}//processed_html//{2}".format(settings.RSYNC_PRD1,
+                                                                                   SETTINGS_NAME,
+                                                                                   settings.TODAY)
+        self.FINISHED_IMG_PATH = "{0}//{1}//img//{2}".format(settings.RSYNC_PRD1,
+                                                             SETTINGS_NAME,
+                                                             settings.TODAY)
+        self.FINISHED_CONTENT_PATH = "{0}//{1}//{2}_content.csv".format(settings.RSYNC_PRD1,
+                                                                        SETTINGS_NAME,
+                                                                        SETTINGS_NAME)
+        self.URL_PATH = "{0}//sites//{1}//{2}_urls.csv".format(settings.RSYNC_PRD2,
+                                                               SETTINGS_NAME,
+                                                               SETTINGS_NAME)
+        self.RESTART_PATH = "{0}//sites//{1}//restart.txt".format(settings.RSYNC_PRD2,
+                                                                  SETTINGS_NAME)
+        self.REDIS_REFRESH_PATH = "{0}//sites//{1}//redis_refresh.txt".format(settings.RSYNC_PRD2,
+                                                                              SETTINGS_NAME)
+        self.RESTART_INTERVAL = int(RESTART_INTERVAL)
+        self.MAX_POOL_SIZE = int(MAX_POOL_SIZE)
+        self.URLS = "{0}//{1}.txt".format(settings.CAMEL_FOOD, SETTINGS_NAME)
+        self.IS_OPEN_CACHE = str(IS_OPEN_CACHE) == "True"
+        self.SOURCE_NAME = SOURCE_NAME
+        self.START_TIME = START_TIME
+        self.END_TIME = END_TIME

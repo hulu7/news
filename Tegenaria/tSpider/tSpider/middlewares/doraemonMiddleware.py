@@ -52,13 +52,17 @@ class Doraemon():
     def isExceedRestartInterval(self, path, restart_interval):
         isRestartPathExists = os.path.exists(path)
         if isRestartPathExists is False:
+            print 'restart file does not exit and create an new one'
             self.file.writeToTxtCover(path, time.time())
             return True
         past = float(self.file.readFromTxt(path))
         now = time.time()
         isExceed = ((now - past) // 60 >= restart_interval) or (self.disable_restart_interval is True)
         if isExceed is True:
+            print 'exceeds the restart interval and restart'
             self.file.writeToTxtCover(path, time.time())
+        else:
+            print 'does not exceed the restart interval and stop'
         return isExceed
 
     def isEmpty(self, item_list):
@@ -332,6 +336,30 @@ class Doraemon():
                 self.deleteFile(fullpath)
         except Exception, e:
             print "Exception to compress directory: {0} for :{1}".format(directory, e)
+
+    def isCamelReadyToRun(self, settings):
+        if self.isWorkTime(settings.START_TIME, settings.END_TIME) is False:
+            return False
+        if self.isConcurrencyAllowToRun() is False:
+            return False
+        if self.isExceedRestartInterval(settings.RESTART_PATH, settings.RESTART_INTERVAL) is False:
+            self.recoveryConcurrency()
+            return False
+        return True
+
+    def isWorkTime(self, start_time, end_time):
+        if self.isEmpty(start_time):
+            print 'start time is empty'
+            return False
+        if self.isEmpty(end_time):
+            print 'end time is empty'
+            return False
+        if self.isAfterHour(start_time) and self.isBeforeHour(end_time):
+            print 'it is work time'
+            return True
+        else:
+            print 'it is not work time before {0} or after {1}'.format(start_time, end_time)
+            return False
 
     def isAfterHour(self, hour):
         if self.isEmpty(hour):
