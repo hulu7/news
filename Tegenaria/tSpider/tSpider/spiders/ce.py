@@ -18,24 +18,26 @@ from middlewares.doraemonMiddleware import Doraemon
 class Ce():
 
     def __init__(self):
-        self.settings = Settings()
+        self.globalSettings = Settings()
         self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd1)
-        self.doraemon.createFilePath(self.settings.LOG_PATH)
+        self.doraemon.createFilePath(self.globalSettings.LOG_PATH)
 
     def getSettings(self):
-        settings_name = self.settings.CreateSettings('ce')
-        self.source = settings_name['SOURCE_NAME']
-        self.work_path_prd1 = settings_name['WORK_PATH_PRD1']
-        self.finished_txt_path = settings_name['FINISHED_TXT_PATH']
-        self.url_path = settings_name['URL_PATH']
-        self.mongo = settings_name['MONGO']
-        self.name = settings_name['NAME']
-        self.max_pool_size = settings_name['MAX_POOL_SIZE']
-        self.log_path = self.settings.LOG_PATH
-        self.today = self.settings.TODAY
+        self.settings = self.globalSettings.CreateSettings('ce')
+        self.log_path = self.globalSettings.LOG_PATH
+        self.today = self.globalSettings.TODAY
+
+        self.source = self.settings.SOURCE_NAME
+        self.work_path_prd1 = self.settings.WORK_PATH_PRD1
+        self.finished_txt_path = self.settings.FINISHED_TXT_PATH
+        self.url_path = self.settings.URL_PATH
+        self.mongo = self.settings.MONGO
+        self.name = self.settings.NAME
+        self.max_pool_size = self.settings.MAX_POOL_SIZE
+        self.is_open_cache = self.settings.IS_OPEN_CACHE
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -64,6 +66,7 @@ class Ce():
                 time0_1 = html.xpath(".//*[contains(@class, 'time')]/text()")
                 author_name0_1 = self.name
                 title0_1 = html.xpath(".//*[contains(@class,'mtnone')]/h2/text()")
+                images0_1 = html.xpath(".//*[contains(@class,'news_module mtnone')]//img//@src")
 
                 url = current_url
                 id = current_id
@@ -76,16 +79,18 @@ class Ce():
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = title0_1[0].strip()
+                images = []
+                self.doraemon.updateImages(images, images0_1)
 
-                data = {
-                    'url': url,
-                    'public_time': time,
-                    'author_name': author_name,
-                    'title': title,
-                    'id': id,
-                    'download_time': self.today,
-                    'source': self.source
-                }
+                data = self.doraemon.createSpidersData(url.strip(),
+                                                       time.strip(),
+                                                       author_name.strip(),
+                                                       title.strip(),
+                                                       id.strip(),
+                                                       self.today,
+                                                       self.source,
+                                                       images,
+                                                       self.is_open_cache)
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:

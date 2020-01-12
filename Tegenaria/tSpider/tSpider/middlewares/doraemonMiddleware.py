@@ -16,6 +16,7 @@ import hashlib
 import urllib
 import re
 import tarfile
+import urlparse
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.mongodbMiddleware import MongoMiddleware
 from settings import Settings
@@ -181,8 +182,10 @@ class Doraemon():
             match = re.search(dateFormat, string)
             strp = datetime.strptime(match.group(), pattern)
             if isMatchDate:
+                print "'Match date success: {0}".format(strp.date())
                 return strp.date()
             else:
+                print "'Match date success: {0}".format(strp.date())
                 return strp.date()
         except:
             print("'Match date fail")
@@ -229,6 +232,7 @@ class Doraemon():
             return _date_chinese
 
         _date_year_month_day_crossing = self.getDateTime(string_date, r'\d{4}-\d{1,2}-\d{1,2}', '%Y-%m-%d', True)
+        _date_year2_month_day_crossing = self.getDateTime(string_date, r'\d{2}-\d{1,2}-\d{1,2}', '%y-%m-%d', True)
         _date_month_day_crossing = self.getDateTime(string_date, r'\d{1,2}-\d{1,2}', '%m-%d', True)
         _date_year_month_day_dot = self.getDateTime(string_date, r'\d{4}.\d{1,2}.\d{1,2}', '%Y.%m.%d', True)
         _date_month_day_dot = self.getDateTime(string_date, r'\d{1,2}.\d{1,2}', '%m.%d', True)
@@ -243,6 +247,10 @@ class Doraemon():
             return self.getFinalDate(_date_year_month_day_crossing.year,
                                      self.formateMonthDay(_date_year_month_day_crossing.month),
                                      self.formateMonthDay(_date_year_month_day_crossing.day))
+        if _date_year2_month_day_crossing is not None:
+            return self.getFinalDate(_date_year2_month_day_crossing.year,
+                                     self.formateMonthDay(_date_year2_month_day_crossing.month),
+                                     self.formateMonthDay(_date_year2_month_day_crossing.day))
         if _date_year_month_day_crossing is None and _date_month_day_crossing is not None:
             return self.getFinalDate(year,
                                      self.formateMonthDay(_date_month_day_crossing.month),
@@ -420,3 +428,40 @@ class Doraemon():
         if self.isExceedRestartInterval(self.concurrency_refresh_file, self.refresh_concurrency_interval) is True:
             print 'refresh concurrency file: {0}'.format(str(self.max_concurrency))
             self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))
+
+    def createCamelData(self, title, url, id, download_time, source):
+        return {
+            'title': title,
+            'url': url,
+            'id': id,
+            'download_time': download_time,
+            'source': source
+        }
+
+    def createSpidersData(self, url, time, author_name, title, id, download_time, source, images, is_open_cache):
+        return {
+            'url': url,
+            'public_time': time,
+            'author_name': author_name,
+            'title': title,
+            'id': id,
+            'download_time': download_time,
+            'source': source,
+            'images': images,
+            'is_open_cache': is_open_cache
+        }
+
+    def updateImages(self, images, newImages):
+        for image in newImages:
+            data = image.strip()
+            if self.isEmpty(data) is False and data not in images:
+                images.append(data)
+
+    def completeImageUrls(self, newImages, current_url):
+        result = []
+        if len(newImages) == 0:
+            print 'No images urls to process'
+            return result
+        for url in newImages:
+            result.append(urlparse.urljoin(current_url, url).strip())
+        return result

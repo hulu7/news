@@ -95,14 +95,11 @@ class Weixin():
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_weixin_url, title) is False):
                     if self.doraemon.isFinished(self.doraemon.bf_weixin_id, weixinId) is False and is_p_time_missing is False and publish_time == self.today:
                         self.doraemon.storeFinished(self.doraemon.bf_weixin_id, weixinId)
-                    data = {
-                        'title': title,
-                        'url': url,
-                        'id': id,
-                        'download_time': self.today,
-                        'publish_time': publish_time,
-                        'source': self.source
-                    }
+                    data = self.doraemon.createCamelData(title.strip(),
+                                                         url.strip(),
+                                                         id.strip(),
+                                                         self.today,
+                                                         self.source)
                     self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
                     print 'Start to store mongo {0}'.format(data['url'])
                     self.doraemon.storeMongodb(self.mongo, data)

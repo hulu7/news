@@ -81,13 +81,11 @@ class Cankaoxiaoxi():
                     title = ''.join(title0_3)
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_urls, title) is False):
-                    data = {
-                        'title': title.strip(),
-                        'url': url.strip(),
-                        'id': id.strip(),
-                        'download_time': self.today,
-                        'source': self.source
-                    }
+                    data = self.doraemon.createCamelData(title.strip(),
+                                                         url.strip(),
+                                                         id.strip(),
+                                                         self.today,
+                                                         self.source)
                     self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
                     print 'Start to store mongo {0}'.format(data['url'])
                     self.doraemon.storeMongodb(self.mongo, data)
@@ -104,7 +102,7 @@ class Cankaoxiaoxi():
                 print 'Invalid {0}'.format(href_url)
         print 'End to parse {0}'.format(href_url)
 
-        del current_url, html, title, url, href_url, id, href_items, short_url_parts
+        del current_url, html, url, href_url, id, href_items, short_url_parts
         gc.collect()
 
     def start_requests(self):

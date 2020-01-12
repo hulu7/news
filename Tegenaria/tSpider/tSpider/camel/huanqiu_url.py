@@ -37,7 +37,7 @@ class Huanqiu():
         self.name = self.settings.NAME
         self.max_pool_size = self.settings.MAX_POOL_SIZE
         self.urls = self.settings.URLS
-        self.regx = re.compile("/article/[0-9]{0,}[a-z]{0,}[A-Z]{0,}")
+        self.regx = re.compile("//[a-z]{0,}[A-Z]{0,}.huanqiu.com/article/[0-9]{0,}[a-z]{0,}[A-Z]{0,}")
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -81,13 +81,11 @@ class Huanqiu():
                     title = ''.join(title0_3).strip()
                 is_title_empty = self.doraemon.isEmpty(title)
                 if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_urls, title) is False):
-                    data = {
-                        'title': title,
-                        'url': url,
-                        'id': id,
-                        'download_time': self.today,
-                        'source': self.source
-                    }
+                    data = self.doraemon.createCamelData(title.strip(),
+                                                         url.strip(),
+                                                         id.strip(),
+                                                         self.today,
+                                                         self.source)
                     self.file.logger(self.log_path, 'Start to store mongo {0}'.format(data['url']))
                     print 'Start to store mongo {0}'.format(data['url'])
                     self.doraemon.storeMongodb(self.mongo, data)
