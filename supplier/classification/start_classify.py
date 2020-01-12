@@ -136,7 +136,7 @@ class UpdateProductionClass():
             else:
                 self.writeToCSVWithoutHeader(catalog_cache_path, ['id'])
             if isCatalogFileExists is False:
-                self.writeToCSVWithoutHeader(catalog_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source', 'author_name'])
+                self.writeToCSVWithoutHeader(catalog_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source', 'author_name', 'images'])
         total = '0'
         for item in content:
             if content.index(item) == 0:
@@ -147,6 +147,7 @@ class UpdateProductionClass():
                 self.is_open_cache = item.index('is_open_cache')
                 self.source = item.index('source')
                 self.author_name = item.index('author_name')
+                self.images = item.index('images')
                 continue
             id = item[self.id_index]
             title = item[self.title_index]
@@ -155,6 +156,7 @@ class UpdateProductionClass():
             is_open_cache = item[self.is_open_cache]
             source = item[self.source]
             author_name = item[self.author_name]
+            images = item[self.images]
             if len(title) == 0 or len(url) == 0 or len(time_) == 0:
                 self.finishedIds.append(id)
                 continue
@@ -172,7 +174,7 @@ class UpdateProductionClass():
                 self.writeToCSVWithoutHeader(catalog_cache_path, [id])
                 self.finishedIds.append(id)
                 self.storeFinished(title)
-                self.writeToCSVWithoutHeader(catalog_path, [id, title, url, YMD, catalog, deep, is_open_cache, source, author_name])
+                self.writeToCSVWithoutHeader(catalog_path, [id, title, url, YMD, catalog, deep, is_open_cache, source, author_name, images])
                 origin_txt_path = '{0}/{1}'.format(self.txt_path, file)
                 classed_txt_path = '{0}/{1}/txt/{2}'.format(self.class_finished_path, catalog, file)
                 copyfile(origin_txt_path, classed_txt_path)

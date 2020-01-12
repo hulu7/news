@@ -11,7 +11,7 @@ do
         domain_name=${camel%_*}
         syncDir=${prd4Path}/${domain_name}
         echo "${TIME}: Start to exprot ${domain_name}..." >> ${LOGPATH}/${DATE}_log.log
-        mongoexport -d 'SPIDERS' -c ${domain_name} --type=csv -f id,title,url,author_name,public_time,download_time,is_open_cache,source -q "{'public_time': '${DATE}'}" -o ${tmpDir}/${domain_name}_content_tmp.csv
+        mongoexport -d 'SPIDERS' -c ${domain_name} --type=csv -f id,title,url,author_name,public_time,download_time,is_open_cache,source,images -q "{'public_time': '${DATE}'}" -o ${tmpDir}/${domain_name}_content_tmp.csv
         mv ${tmpDir}/${domain_name}_content_tmp.csv ${syncDir}/${domain_name}_content.csv
         chmod 777 ${syncDir}/${domain_name}_content.csv
     fi

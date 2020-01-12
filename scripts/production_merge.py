@@ -134,7 +134,7 @@ class ProductionMerge():
 
             isOutputPathExists = os.path.exists(out_csv_file)
             if isOutputPathExists is False:
-                self.writeToCSVWithoutHeader(out_csv_file, ['title', 'url', 'time', 'catalog', 'user', 'source'])
+                self.writeToCSVWithoutHeader(out_csv_file, ['title', 'url', 'time', 'catalog', 'user', 'source', 'images'])
 
             for item in csv_content[1:]:
                 if self.isDuplicated(item[1]) is True:
@@ -148,7 +148,7 @@ class ProductionMerge():
                     continue
                 if item[3] == '':
                     item[3] = str(self.today).replace('-', '')
-                output_content.append([item[1], item[2], item[3], catalog[item[4]], user, item[7]])
+                output_content.append([item[1], item[2], item[3], catalog[item[4]], user, item[7], item[9]])
                 self.storeFinished(item[1])
 
         for content in output_content:

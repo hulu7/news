@@ -49,6 +49,7 @@ class UpdateMongoDeepNews():
 
     def formatData(self, data):
         title = self.cutTitle(data[0])
+        images = data[6].replace(']', '').replace('[', '').replace('"','').split(",")
         format_data = {
                    'title': title,
                    'isActive': 'true',
@@ -58,7 +59,7 @@ class UpdateMongoDeepNews():
                    'author': data[5],
                    'clickVolume': '',
                    'forceUrl': data[1],
-                   'articleCover': 'images/image.jpg',
+                   'articleCover': images,
                    'published': parser.parse(data[2]),
                    'articleBrief': '',
                    'articleContent': '',

@@ -141,7 +141,7 @@ class CommitData():
         today_int = int(str(self.today).replace('-', ''))
         commit_csv_exists = os.path.exists(commit_csv_path)
         if commit_csv_exists is False:
-            self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source'])
+            self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source', 'author_name', 'images'])
 
         for data in current_catalog_data:
             if current_catalog_data.index(data) == 0:
