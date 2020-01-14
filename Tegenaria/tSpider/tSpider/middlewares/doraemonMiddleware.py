@@ -429,26 +429,58 @@ class Doraemon():
             print 'refresh concurrency file: {0}'.format(str(self.max_concurrency))
             self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))
 
-    def createCamelData(self, title, url, id, download_time, source):
+    def createCamelData(self,
+                        title,
+                        url,
+                        id,
+                        download_time,
+                        source):
+        return camelDto(title,
+                        url,
+                        id,
+                        download_time,
+                        source)
+
+    def createCamelMongoJson(self, camelDto):
         return {
-            'title': title,
-            'url': url,
-            'id': id,
-            'download_time': download_time,
-            'source': source
+            'title': camelDto.title,
+            'url': camelDto.url,
+            'id': camelDto.id,
+            'download_time': camelDto.download_time,
+            'source': camelDto.source
         }
 
-    def createSpidersData(self, url, time, author_name, title, id, download_time, source, images, is_open_cache):
+    def createSpiderData(self,
+                          url,
+                          time,
+                          author_name,
+                          title,
+                          id,
+                          download_time,
+                          source,
+                          images,
+                          is_open_cache):
+        return spiderDto(url,
+                         time,
+                         author_name,
+                         title,
+                         id,
+                         download_time,
+                         source,
+                         images,
+                         is_open_cache)
+
+    def createSpiderMongoJson(self, spiderDto):
         return {
-            'url': url,
-            'public_time': time,
-            'author_name': author_name,
-            'title': title,
-            'id': id,
-            'download_time': download_time,
-            'source': source,
-            'images': images,
-            'is_open_cache': is_open_cache
+            'url': spiderDto.url,
+            'time': spiderDto.time,
+            'author_name': spiderDto.author_name,
+            'title': spiderDto.title,
+            'id': spiderDto.id,
+            'download_time': spiderDto.download_time,
+            'source': spiderDto.source,
+            'images': spiderDto.images,
+            'is_open_cache': spiderDto.is_open_cache
         }
 
     def updateImages(self, images, newImages):
@@ -465,3 +497,37 @@ class Doraemon():
         for url in newImages:
             result.append(urlparse.urljoin(current_url, url).strip())
         return result
+
+class camelDto():
+    def __init__(self,
+                 title,
+                 url,
+                 id,
+                 download_time,
+                 source):
+        self.title = title
+        self.url = url
+        self.id = id
+        self.download_time = download_time
+        self.source = source
+
+class spiderDto():
+    def __init__(self,
+                 url,
+                 time,
+                 author_name,
+                 title,
+                 id,
+                 download_time,
+                 source,
+                 images,
+                 is_open_cache):
+        self.url = url
+        self.time = time
+        self.author_name = author_name
+        self.title = title
+        self.id = id
+        self.download_time = download_time
+        self.source = source
+        self.images = images
+        self.is_open_cache = is_open_cache

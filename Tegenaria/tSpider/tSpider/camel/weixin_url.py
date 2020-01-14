@@ -11,14 +11,13 @@ import re
 import datetime
 import json
 import gc
-sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
-from browserRequest import BrowserRequest
-from settings import Settings
-from middlewares.fileIOMiddleware import FileIOMiddleware
-from middlewares.doraemonMiddleware import Doraemon
-from middlewares.requestsMiddleware import RequestsMiddleware
+from Tegenaria.tSpider.tSpider.browserRequest import BrowserRequest
+from Tegenaria.tSpider.tSpider.settings import Settings
+from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
+from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
+from Tegenaria.tSpider.tSpider.middlewares.requestsMiddleware import RequestsMiddleware
 
-class Weixin():
+class Camel():
 
     def __init__(self):
         self.request = RequestsMiddleware()
@@ -154,5 +153,5 @@ class Weixin():
         gc.collect()
 
 if __name__ == '__main__':
-    Weixin=Weixin()
-    Weixin.start_requests()
+    camel = Camel()
+    camel.start_requests()
