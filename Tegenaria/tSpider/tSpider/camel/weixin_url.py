@@ -6,6 +6,7 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+sys.path.append("/home/dev/Repository/news/")
 from lxml import etree
 import re
 import datetime

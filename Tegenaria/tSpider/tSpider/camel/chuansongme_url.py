@@ -6,6 +6,7 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+sys.path.append("/home/dev/Repository/news/")
 import urlparse
 from Tegenaria.tSpider.tSpider.middlewares.camelBone import CamelBone
 from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon

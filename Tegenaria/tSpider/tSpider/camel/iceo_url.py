@@ -6,7 +6,7 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-from lxml import etree
+sys.path.append("/home/dev/Repository/news/")
 import urlparse
 import re
 from Tegenaria.tSpider.tSpider.middlewares.camelBone import CamelBone

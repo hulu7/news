@@ -5,7 +5,9 @@
 #------requirement------
 import sys
 reload(sys)
+sys.path.append("..")
 sys.setdefaultencoding('utf8')
+sys.path.append("/home/dev/Repository/news/")
 import urlparse
 import re
 import time
