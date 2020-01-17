@@ -450,6 +450,41 @@ class Doraemon():
             'source': camelDto.source
         }
 
+    def createSpiderMongoJson(self, spiderDto):
+        return {
+            'url': spiderDto.url,
+            'time': spiderDto.time,
+            'author_name': spiderDto.author_name,
+            'title': spiderDto.title,
+            'id': spiderDto.id,
+            'download_time': spiderDto.download_time,
+            'source': spiderDto.source,
+            'images': spiderDto.images,
+            'is_open_cache': spiderDto.is_open_cache
+        }
+
+    def createSpiderMongoData(self,
+                              url,
+                              time,
+                              author_name,
+                              title,
+                              id,
+                              download_time,
+                              source,
+                              images,
+                              is_open_cache):
+        return {
+            'url': url,
+            'time': time,
+            'author_name': author_name,
+            'title': title,
+            'id': id,
+            'download_time': download_time,
+            'source': source,
+            'images': images,
+            'is_open_cache': is_open_cache
+        }
+
     def createSpiderData(self,
                           url,
                           time,

@@ -81,15 +81,15 @@ class Weixin():
                 if self.doraemon.isEmpty(content0_1) is False:
                     content = ''.join(content0_1).strip()
 
-                data = {
-                    'url': url,
-                    'public_time': time,
-                    'author_name': author_name,
-                    'title': title,
-                    'id': id,
-                    'download_time': self.today,
-                    'source': self.source
-                }
+                data = self.doraemon.createSpiderMongoData(url.strip(),
+                                                           time.strip(),
+                                                           author_name.strip(),
+                                                           title.strip(),
+                                                           id.strip(),
+                                                           self.today,
+                                                           self.source,
+                                                           images,
+                                                           self.is_open_cache)
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:

@@ -85,15 +85,15 @@ class Donews():
                 self.doraemon.updateImages(images, images0_1)
                 self.doraemon.updateImages(images, images0_2)
 
-                data = self.doraemon.createSpidersData(url.strip(),
-                                                       time.strip(),
-                                                       author_name.strip(),
-                                                       title.strip(),
-                                                       id.strip(),
-                                                       self.today,
-                                                       self.source,
-                                                       images,
-                                                       self.is_open_cache)
+                data = self.doraemon.createSpiderMongoData(url.strip(),
+                                                           time.strip(),
+                                                           author_name.strip(),
+                                                           title.strip(),
+                                                           id.strip(),
+                                                           self.today,
+                                                           self.source,
+                                                           images,
+                                                           self.is_open_cache)
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:

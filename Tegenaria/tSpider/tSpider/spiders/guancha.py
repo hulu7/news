@@ -88,15 +88,15 @@ class Guancha():
                 images = []
                 self.doraemon.updateImages(images, images0_1)
 
-                data = self.doraemon.createSpidersData(url.strip(),
-                                                       time.strip(),
-                                                       author_name.strip(),
-                                                       title.strip(),
-                                                       id.strip(),
-                                                       self.today,
-                                                       self.source,
-                                                       images,
-                                                       self.is_open_cache)
+                data = self.doraemon.createSpiderMongoData(url.strip(),
+                                                           time.strip(),
+                                                           author_name.strip(),
+                                                           title.strip(),
+                                                           id.strip(),
+                                                           self.today,
+                                                           self.source,
+                                                           images,
+                                                           self.is_open_cache)
 
             if len(article_1) > 0:
                 content0_1 = html.xpath(".//div[contains(@class, 'article-txt-content')]//p//text()")
@@ -116,16 +116,15 @@ class Guancha():
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = title0_1[0].strip()
 
-                data = {
-                    'url': url,
-                    'time': time,
-                    'author_name': author_name,
-                    'title': title,
-                    'id': id,
-                    'download_time': self.today,
-                    'is_open_cache': self.is_open_cache,
-                    'source': self.source
-                }
+                data = self.doraemon.createSpiderMongoData(url.strip(),
+                                                           time.strip(),
+                                                           author_name.strip(),
+                                                           title.strip(),
+                                                           id.strip(),
+                                                           self.today,
+                                                           self.source,
+                                                           images,
+                                                           self.is_open_cache)
 
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0:

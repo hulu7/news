@@ -84,16 +84,15 @@ class Stcn():
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = title0_1[0].strip()
 
-                data = {
-                    'url': url,
-                    'public_time': time,
-                    'author_name': author_name,
-                    'title': title,
-                    'id': id,
-                    'download_time': self.today,
-                    'is_open_cache': self.is_open_cache,
-                    'source': self.source
-                }
+                data = self.doraemon.createSpiderMongoData(url.strip(),
+                                                           time.strip(),
+                                                           author_name.strip(),
+                                                           title.strip(),
+                                                           id.strip(),
+                                                           self.today,
+                                                           self.source,
+                                                           images,
+                                                           self.is_open_cache)
 
             if len(article_1) > 0:
                 content1_1 = html.xpath(".//div[contains(@class, 'txt_con')]/p/text()")
@@ -114,16 +113,15 @@ class Stcn():
                 if self.doraemon.isEmpty(title1_1) is False:
                     title = title1_1[0].strip()
 
-                data = {
-                    'url': url,
-                    'public_time': time,
-                    'author_name': author_name,
-                    'title': title,
-                    'id': id,
-                    'download_time': self.today,
-                    'is_open_cache': self.is_open_cache,
-                    'source': self.source
-                }
+                data = self.doraemon.createSpiderMongoData(url.strip(),
+                                                           time.strip(),
+                                                           author_name.strip(),
+                                                           title.strip(),
+                                                           id.strip(),
+                                                           self.today,
+                                                           self.source,
+                                                           images,
+                                                           self.is_open_cache)
 
             if len(article_2) > 0:
                 time2_1 = html.xpath(".//*[contains(@class, 'meta-item time')]/text()")
@@ -144,16 +142,15 @@ class Stcn():
                 if self.doraemon.isEmpty(title2_1) is False:
                     title = title2_1[0].strip()
 
-                data = {
-                    'url': url,
-                    'public_time': time,
-                    'author_name': author_name,
-                    'title': title,
-                    'id': id,
-                    'download_time': self.today,
-                    'is_open_cache': self.is_open_cache,
-                    'source': self.source
-                }
+                data = self.doraemon.createSpiderMongoData(url.strip(),
+                                                           time.strip(),
+                                                           author_name.strip(),
+                                                           title.strip(),
+                                                           id.strip(),
+                                                           self.today,
+                                                           self.source,
+                                                           images,
+                                                           self.is_open_cache)
             print 'End to parse: {0}'.format(current_url)
             if len(data) == 0 or self.doraemon.isEmpty(content) is True:
                 self.doraemon.storeFinished(self.doraemon.bf_content, response['request_title'])
