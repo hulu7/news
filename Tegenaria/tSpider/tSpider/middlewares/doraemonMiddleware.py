@@ -453,7 +453,7 @@ class Doraemon():
     def createSpiderMongoJson(self, spiderDto):
         return {
             'url': spiderDto.url,
-            'time': spiderDto.time,
+            'public_time': spiderDto.public_time,
             'author_name': spiderDto.author_name,
             'title': spiderDto.title,
             'id': spiderDto.id,
@@ -465,7 +465,7 @@ class Doraemon():
 
     def createSpiderMongoData(self,
                               url,
-                              time,
+                              public_time,
                               author_name,
                               title,
                               id,
@@ -475,7 +475,7 @@ class Doraemon():
                               is_open_cache):
         return {
             'url': url,
-            'time': time,
+            'public_time': public_time,
             'author_name': author_name,
             'title': title,
             'id': id,
@@ -487,7 +487,7 @@ class Doraemon():
 
     def createSpiderData(self,
                           url,
-                          time,
+                          public_time,
                           author_name,
                           title,
                           id,
@@ -496,7 +496,7 @@ class Doraemon():
                           images,
                           is_open_cache):
         return spiderDto(url,
-                         time,
+                         public_time,
                          author_name,
                          title,
                          id,
@@ -508,7 +508,7 @@ class Doraemon():
     def createSpiderMongoJson(self, spiderDto):
         return {
             'url': spiderDto.url,
-            'time': spiderDto.time,
+            'public_time': spiderDto.public_time,
             'author_name': spiderDto.author_name,
             'title': spiderDto.title,
             'id': spiderDto.id,
@@ -549,7 +549,7 @@ class camelDto():
 class spiderDto():
     def __init__(self,
                  url,
-                 time,
+                 public_time,
                  author_name,
                  title,
                  id,
@@ -558,7 +558,7 @@ class spiderDto():
                  images,
                  is_open_cache):
         self.url = url
-        self.time = time
+        self.public_time = public_time
         self.author_name = author_name
         self.title = title
         self.id = id
