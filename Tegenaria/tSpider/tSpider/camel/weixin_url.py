@@ -1,22 +1,18 @@
 #coding:utf-8
-#------requirement------
-#lxml-3.2.1
-#numpy-1.15.2
-#------requirement------
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-sys.path.append("/home/dev/Repository/news/")
+sys.path.append('../')
 from lxml import etree
 import re
 import datetime
 import json
 import gc
-from Tegenaria.tSpider.tSpider.browserRequest import BrowserRequest
-from Tegenaria.tSpider.tSpider.settings import Settings
-from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
-from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
-from Tegenaria.tSpider.tSpider.middlewares.requestsMiddleware import RequestsMiddleware
+from browserRequest import BrowserRequest
+from settings import Settings
+from middlewares.fileIOMiddleware import FileIOMiddleware
+from middlewares.doraemonMiddleware import Doraemon
+from middlewares.requestsMiddleware import RequestsMiddleware
 
 class Camel():
 

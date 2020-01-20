@@ -91,7 +91,7 @@ echo '[global]
 index-url=http://pypi.douban.com/simple
 trusted-host = pypi.douban.com' >> pip.conf
 echo "******************************install pip upgrade"
-pip install --upgrade pip
+echo "pip install --upgrade pip"
 echo "******************************install pyOpenSSL"
 echo 'y' | pip uninstall pyOpenSSL
 pip install pyOpenSSL==0.13.1
@@ -170,7 +170,7 @@ echo "******************************install Mongodb"
 echo '[mongodb-org-4.0]
 name=MongoDB Repository
 baseurl=https://repo.mongodb.org/yum/redhat/7Server/mongodb-org/4.0/x86_64/
-gpgcheck=1
+gpgcheck=0
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-4.0.asc
 ' >> '/etc/yum.repos.d/MongoDB.repo'

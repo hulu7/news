@@ -1,17 +1,13 @@
 #coding:utf-8
-#------requirement------
-#lxml-3.2.1
-#numpy-1.15.2
-#------requirement------
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-sys.path.append("/home/dev/Repository/news/")
+sys.path.append('../')
 import urlparse
 import re
 import time
-from Tegenaria.tSpider.tSpider.middlewares.camelBone import CamelBone
-from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
+from middlewares.camelBone import CamelBone
+from middlewares.doraemonMiddleware import Doraemon
 
 class Camel():
     def __init__(self):
