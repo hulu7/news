@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
-#------requirement------
-#lxml-3.2.1
-#numpy-1.15.2
-#------requirement------
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 from lxml import etree
-import re
 import gc
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from browserRequest import BrowserRequest

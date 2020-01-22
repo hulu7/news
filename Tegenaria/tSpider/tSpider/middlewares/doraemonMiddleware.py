@@ -17,11 +17,11 @@ import urllib
 import re
 import tarfile
 import urlparse
-sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
-from middlewares.mongodbMiddleware import MongoMiddleware
-from settings import Settings
-from middlewares.fileIOMiddleware import FileIOMiddleware
-from bloomfilterOnRedis import BloomFilter
+sys.path.append("/home/dev/Repository/news/")
+from Tegenaria.tSpider.tSpider.middlewares.mongodbMiddleware import MongoMiddleware
+from Tegenaria.tSpider.tSpider.settings import Settings
+from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
+from Tegenaria.tSpider.tSpider.bloomfilterOnRedis import BloomFilter
 
 class Doraemon():
 
@@ -43,6 +43,10 @@ class Doraemon():
         self.concurrency_file = settings.CONCURRENCY_FILE
         self.concurrency_refresh_file = settings.CONCURRENCY_REFRESH_FILE
         self.refresh_concurrency_interval = settings.REFRESH_CONCURRENCY_INTERVAL
+        self.max_concurrency_spider = settings.MAX_CONCURRENCY_SPIDER
+        self.concurrency_file_spider = settings.CONCURRENCY_FILE_SPIDER
+        self.concurrency_refresh_file_spider = settings.CONCURRENCY_REFRESH_FILE_SPIDER
+        self.refresh_concurrency_interval_spider = settings.REFRESH_CONCURRENCY_INTERVAL_SPIDER
         self.bf_huxiu_nlp = BloomFilter(self.rconn, settings.FINISHED_HUXIU_NLP)
 
     def createFilePath(self, path):
@@ -348,12 +352,21 @@ class Doraemon():
     def isCamelReadyToRun(self, settings):
         if self.isWorkTime(settings.START_TIME, settings.END_TIME) is False:
             return False
-        if self.isConcurrencyAllowToRun() is False:
+        if self.isConcurrencyAllowToRun(self.concurrency_refresh_file,
+                                        self.refresh_concurrency_interval,
+                                        self.concurrency_file,
+                                        self.max_concurrency) is False:
             return False
         if self.isExceedRestartInterval(settings.RESTART_PATH, settings.RESTART_INTERVAL) is False:
-            self.recoveryConcurrency()
+            self.recoveryConcurrency(self.concurrency_file, self.max_concurrency)
             return False
         return True
+
+    def isSpiderReadyToRun(self):
+        return self.isConcurrencyAllowToRun(self.concurrency_refresh_file_spider,
+                                            self.refresh_concurrency_interval_spider,
+                                            self.concurrency_file_spider,
+                                            self.max_concurrency_spider)
 
     def isWorkTime(self, start_time, end_time):
         if self.isEmpty(start_time):
@@ -389,45 +402,59 @@ class Doraemon():
         else:
             return False
 
-    def isConcurrencyAllowToRun(self):
-        self.updateConcurrencyFile()
-        isFilePathExists = os.path.exists(self.concurrency_file)
+    def isConcurrencyAllowToRun(self,
+                                concurrency_refresh_file,
+                                refresh_concurrency_interval,
+                                concurrency_file,
+                                max_concurrency):
+        self.updateConcurrencyFile(concurrency_refresh_file,
+                                   refresh_concurrency_interval,
+                                   concurrency_file,
+                                   max_concurrency)
+        isFilePathExists = os.path.exists(concurrency_file)
         if isFilePathExists is False:
-            print 'concurrency file not exists and create an new one with max concurrency: {0}'.format(str(self.max_concurrency))
-            self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))
-        concurrency_available = int(self.file.readFromTxt(self.concurrency_file).strip())
+            print 'concurrency file not exists and create an new one with max concurrency: {0}'.format(str(max_concurrency))
+            self.file.writeToTxtCover(concurrency_file, str(max_concurrency))
+        concurrency_available = int(self.file.readFromTxt(concurrency_file).strip())
         print 'concurrency file exists : {0}'.format(str(concurrency_available))
         if int(concurrency_available) > 0:
             print 'app is able to run.'
             new_concurrency_available = concurrency_available - 1
             print 'new concurrency is : {0}'.format(str(new_concurrency_available))
-            self.file.writeToTxtCover(self.concurrency_file, str(new_concurrency_available))
+            self.file.writeToTxtCover(concurrency_file, str(new_concurrency_available))
             return True
         else:
             print 'app is not able to run for no available concurrency.'
             return False
+        return True
 
-    def recoveryConcurrency(self):
-        isFilePathExists = os.path.exists(self.concurrency_file)
+    def recoveryConcurrency(self,
+                            concurrency_file,
+                            max_concurrency):
+        isFilePathExists = os.path.exists(concurrency_file)
         if isFilePathExists is False:
-            print 'concurrency file not exists and create an new one with max concurrency: {0}'.format(str(self.max_concurrency))
-            self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))
+            print 'concurrency file not exists and create an new one with max concurrency: {0}'.format(str(max_concurrency))
+            self.file.writeToTxtCover(concurrency_file, str(max_concurrency))
             return
-        concurrency_available = int(self.file.readFromTxt(self.concurrency_file).strip())
+        concurrency_available = int(self.file.readFromTxt(concurrency_file).strip())
         print 'concurrency file exists and start to recovery: {0}'.format(str(concurrency_available))
-        if int(concurrency_available) < self.max_concurrency:
+        if int(concurrency_available) < max_concurrency:
             print 'start to recovery concurrenct.'
             new_concurrency_available = concurrency_available + 1
             print 'new concurrency is : {0}'.format(str(new_concurrency_available))
-            self.file.writeToTxtCover(self.concurrency_file, str(new_concurrency_available))
+            self.file.writeToTxtCover(concurrency_file, str(new_concurrency_available))
         else:
             print 'concurrency is not normal and write max concurrency to it.'
-            self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))
+            self.file.writeToTxtCover(concurrency_file, str(max_concurrency))
 
-    def updateConcurrencyFile(self):
-        if self.isExceedRestartInterval(self.concurrency_refresh_file, self.refresh_concurrency_interval) is True:
-            print 'refresh concurrency file: {0}'.format(str(self.max_concurrency))
-            self.file.writeToTxtCover(self.concurrency_file, str(self.max_concurrency))
+    def updateConcurrencyFile(self,
+                              concurrency_refresh_file,
+                              refresh_concurrency_interval,
+                              concurrency_file,
+                              max_concurrency):
+        if self.isExceedRestartInterval(concurrency_refresh_file, refresh_concurrency_interval) is True:
+            print 'refresh concurrency file: {0}'.format(str(max_concurrency))
+            self.file.writeToTxtCover(concurrency_file, str(max_concurrency))
 
     def createCamelData(self,
                         title,
@@ -450,41 +477,6 @@ class Doraemon():
             'source': camelDto.source
         }
 
-    def createSpiderMongoJson(self, spiderDto):
-        return {
-            'url': spiderDto.url,
-            'public_time': spiderDto.public_time,
-            'author_name': spiderDto.author_name,
-            'title': spiderDto.title,
-            'id': spiderDto.id,
-            'download_time': spiderDto.download_time,
-            'source': spiderDto.source,
-            'images': spiderDto.images,
-            'is_open_cache': spiderDto.is_open_cache
-        }
-
-    def createSpiderMongoData(self,
-                              url,
-                              public_time,
-                              author_name,
-                              title,
-                              id,
-                              download_time,
-                              source,
-                              images,
-                              is_open_cache):
-        return {
-            'url': url,
-            'public_time': public_time,
-            'author_name': author_name,
-            'title': title,
-            'id': id,
-            'download_time': download_time,
-            'source': source,
-            'images': images,
-            'is_open_cache': is_open_cache
-        }
-
     def createSpiderData(self,
                           url,
                           public_time,
@@ -494,7 +486,8 @@ class Doraemon():
                           download_time,
                           source,
                           images,
-                          is_open_cache):
+                          is_open_cache,
+                          content):
         return spiderDto(url,
                          public_time,
                          author_name,
@@ -503,7 +496,8 @@ class Doraemon():
                          download_time,
                          source,
                          images,
-                         is_open_cache)
+                         is_open_cache,
+                         content)
 
     def createSpiderMongoJson(self, spiderDto):
         return {
@@ -556,7 +550,8 @@ class spiderDto():
                  download_time,
                  source,
                  images,
-                 is_open_cache):
+                 is_open_cache,
+                 content):
         self.url = url
         self.public_time = public_time
         self.author_name = author_name
@@ -566,3 +561,4 @@ class spiderDto():
         self.source = source
         self.images = images
         self.is_open_cache = is_open_cache
+        self.content = content

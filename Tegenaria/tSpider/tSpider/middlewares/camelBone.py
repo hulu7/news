@@ -1,8 +1,4 @@
 #coding:utf-8
-#------requirement------
-#lxml-3.2.1
-#numpy-1.15.2
-#------requirement------
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -24,7 +20,7 @@ class CamelBone():
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd2)
-        self.doraemon.createFilePath(self.globalSettings.LOG_PATH)
+        self.doraemon.createFilePath(self.log_path)
 
     def getSettings(self):
         self.settings = self.globalSettings.CreateSettings(self.settingName)
@@ -36,7 +32,8 @@ class CamelBone():
         self.name = self.settings.NAME
         self.max_pool_size = self.settings.MAX_POOL_SIZE
         self.urls = self.settings.URLS
-
+        self.max_concurrency = self.globalSettings.MAX_CONCURRENCY
+        self.concurrency_file = self.globalSettings.CONCURRENCY_FILE
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
@@ -44,21 +41,25 @@ class CamelBone():
         html = etree.HTML(response['response'].page_source)
         results = self.callBack(current_url, html)
         if len(results) == 0:
-            self.file.logger(self.log_path, 'No url for page: {0}'.format(current_url))
-            print 'No url for page: {0}'.format(current_url)
+            message1 = 'No url for page: {0}'.format(current_url)
+            self.file.logger(self.log_path, message1)
+            print message1
         for item in results:
             is_title_empty = self.doraemon.isEmpty(item.title)
             if (is_title_empty is False) and (self.doraemon.isDuplicated(self.doraemon.bf_urls, item.title) is False):
-                self.file.logger(self.log_path, 'Start to store mongo {0}'.format(item.url))
-                print 'Start to store mongo {0}'.format(item.url)
+                message2 = 'Start to store mongo {0}'.format(item.url)
+                self.file.logger(self.log_path, message2)
+                print message2
                 self.doraemon.storeMongodb(self.mongo, self.doraemon.createCamelMongoJson(item))
-                self.file.logger(self.log_path, 'End to store mongo {0}'.format(item.url))
-                print 'End to store mongo {0}'.format(item.url)
+                message3 = 'End to store mongo {0}'.format(item.url)
+                self.file.logger(self.log_path, message3)
+                print message3
                 self.file.logger(self.log_path, 'Done for {0}'.format(item.url))
             else:
                 if is_title_empty is True:
-                    self.file.logger(self.log_path, 'Empty title for {0}'.format(item.url))
-                    print 'Empty title for {0}'.format(item.url)
+                    message4 = 'Empty title for {0}'.format(item.url)
+                    self.file.logger(self.log_path, message4)
+                    print message4
                 print 'Finished or Empty title for {0}'.format(item.url)
         print 'End to parse {0}'.format(current_url)
 
@@ -67,11 +68,13 @@ class CamelBone():
 
     def start(self):
         if self.doraemon.isCamelReadyToRun(self.settings) is False:
-            self.file.logger(self.log_path, 'It is not ready to run for {0}'.format(self.name))
-            print 'It is not ready to run for {0}'.format(self.name)
+            message5 = 'It is not ready to run for {0}'.format(self.name)
+            self.file.logger(self.log_path, message5)
+            print message5
             return
-        self.file.logger(self.log_path, 'Start {0} requests'.format(self.name))
-        print 'Start {0} requests'.format(self.name)
+        message6 = 'Start {0} requests'.format(self.name)
+        self.file.logger(self.log_path, message6)
+        print message6
 
         new_urls = []
         content = self.file.readFromTxt(self.urls)
@@ -86,9 +89,10 @@ class CamelBone():
             return
         request = BrowserRequest()
         content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
-        self.doraemon.recoveryConcurrency()
-        self.file.logger(self.log_path, 'End for {0} requests of {1}.'.format(str(len(content)), self.name))
-        print 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
+        self.doraemon.recoveryConcurrency(self.concurrency_file, self.max_concurrency)
+        message7 = 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
+        self.file.logger(self.log_path, message7)
+        print message7
 
         del new_urls, content, url_list, request
         gc.collect()

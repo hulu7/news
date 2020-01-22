@@ -133,10 +133,10 @@ class ExtractGongzhonghao():
 
 if __name__ == '__main__':
     extractGongzhonghao = ExtractGongzhonghao()
-    from_path = '/home/dev/Data/rsyncData/prd4/huxiu/txt'
-    to_path = '/home/dev/Data/rsyncData/prd4/huxiu/gongzhonghao.csv'
-    from_dup = '/home/dev/Data/rsyncData/prd4/huxiu/dup.csv'
-    to_dup = '/home/dev/Data/rsyncData/prd4/huxiu/dup_result.csv'
+    from_path = '/home/dev/Data/rsyncData/prd4/sites/huxiu/txt'
+    to_path = '/home/dev/Data/rsyncData/prd4/sites/huxiu/gongzhonghao.csv'
+    from_dup = '/home/dev/Data/rsyncData/prd4/sites/huxiu/dup.csv'
+    to_dup = '/home/dev/Data/rsyncData/prd4/sites/huxiu/dup_result.csv'
     to_path_exists = os.path.exists(to_path)
     if to_path_exists is False:
         extractGongzhonghao.writeToCSVWithoutHeader(to_path,['name', 'id'])

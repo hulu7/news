@@ -7,7 +7,6 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 import fcntl
 import time
-import codecs
 import csv
 import gc
 import pandas as pd

@@ -195,7 +195,7 @@ if __name__ == "__main__":
                 'pet', 'photography', 'politics', 'psychology', 'society', 'sports',
                 'story', 'tech', 'technique', 'travel', 'house', 'life', 'wedding']
 
-    base_path = '/home/dev/Data/rsyncData/prd4'
+    base_path = '/home/dev/Data/rsyncData/prd4/sites'
     production_path = '/home/dev/Data/Production'
     model_path = '/home/dev/Data/npl/classifier/fastText/model_data/news_fasttext.model.bin'
 
@@ -205,7 +205,6 @@ if __name__ == "__main__":
     update.loadModel(model_path)
 
     file_list = os.listdir(base_path)
-    file_list.remove('log')
     for file in file_list:
         txt_path = '{0}/{1}/txt/{2}'.format(base_path, file, update.today)
         content_path = '{0}/{1}/{2}_content.csv'.format(base_path, file, file)

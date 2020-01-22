@@ -1,8 +1,4 @@
 #coding:utf-8
-#------requirement------
-#lxml-3.2.1
-#numpy-1.15.2
-#------requirement------
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')

@@ -5,7 +5,6 @@ sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.fileIOMiddleware import FileIOMiddleware
 import time
-import datetime
 class Settings():
 
     def __init__(self):
@@ -19,10 +18,15 @@ class Settings():
         self.CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
 
         #concurrency
-        self.REFRESH_CONCURRENCY_INTERVAL = 360 #minute
+        self.REFRESH_CONCURRENCY_INTERVAL = 360  #minute
         self.MAX_CONCURRENCY = 10
-        self.CONCURRENCY_FILE = "//home//dev//Data//rsyncData//prd3//max_concurrency.txt"
-        self.CONCURRENCY_REFRESH_FILE = "//home//dev//Data//rsyncData//prd3//concurrency_refresh.txt"
+        self.CONCURRENCY_FILE = "{0}//max_concurrency.txt".format(self.RSYNC_PRD2)
+        self.CONCURRENCY_REFRESH_FILE = "{0}//concurrency_refresh.txt".format(self.RSYNC_PRD2)
+
+        self.REFRESH_CONCURRENCY_INTERVAL_SPIDER = 360  # minute
+        self.MAX_CONCURRENCY_SPIDER = 10
+        self.CONCURRENCY_FILE_SPIDER = "{0}//max_concurrency.txt".format(self.RSYNC_PRD1)
+        self.CONCURRENCY_REFRESH_FILE_SPIDER = "{0}//concurrency_refresh.txt".format(self.RSYNC_PRD1)
 
         self.USER_AGENTS = [
             "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
@@ -154,10 +158,10 @@ class Settings():
         config_list = content.split('\n')
         for config in config_list:
             if NAME in config:
-                print "Find the :{0}".format(NAME)
+                print "Find setting: {0}".format(NAME)
                 data = config.split(',')
                 return self.SettingsFormat(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
-        print "Cannot find the :{0}".format(NAME)
+        print "Cannot find setting: {0}".format(NAME)
 
     def CreateCommonSettings(self):
         return self.SettingsFormat('0', '0', '0', '0', '0', '0', '0')
@@ -175,25 +179,25 @@ class settingsSpec():
         self.NAME = SETTINGS_NAME
         self.MONGO = SETTINGS_NAME
         self.MONGO_URLS = "{0}_urls".format(SETTINGS_NAME)
-        self.WORK_PATH_PRD1 = "{0}//{1}".format(settings.RSYNC_PRD1,
-                                                SETTINGS_NAME)
+        self.WORK_PATH_PRD1 = "{0}//sites//{1}".format(settings.RSYNC_PRD1,
+                                                       SETTINGS_NAME)
         self.WORK_PATH_PRD2 = "{0}//sites//{1}".format(settings.RSYNC_PRD2,
                                                        SETTINGS_NAME)
-        self.FINISHED_TXT_PATH = "{0}//{1}//txt//{2}".format(settings.RSYNC_PRD1,
+        self.FINISHED_TXT_PATH = "{0}//sites//{1}//txt//{2}".format(settings.RSYNC_PRD1,
                                                              SETTINGS_NAME,
                                                              settings.TODAY)
-        self.FINISHED_ORIGIN_HTML_PATH = "{0}//{1}//origin_html//{2}".format(settings.RSYNC_PRD1,
-                                                                             SETTINGS_NAME,
-                                                                             settings.TODAY)
-        self.FINISHED_PROCESSED_HTML_PATH = "{0}//{1}//processed_html//{2}".format(settings.RSYNC_PRD1,
-                                                                                   SETTINGS_NAME,
-                                                                                   settings.TODAY)
-        self.FINISHED_IMG_PATH = "{0}//{1}//img//{2}".format(settings.RSYNC_PRD1,
-                                                             SETTINGS_NAME,
-                                                             settings.TODAY)
-        self.FINISHED_CONTENT_PATH = "{0}//{1}//{2}_content.csv".format(settings.RSYNC_PRD1,
-                                                                        SETTINGS_NAME,
-                                                                        SETTINGS_NAME)
+        self.FINISHED_ORIGIN_HTML_PATH = "{0}//sites//{1}//origin_html//{2}".format(settings.RSYNC_PRD1,
+                                                                                    SETTINGS_NAME,
+                                                                                    settings.TODAY)
+        self.FINISHED_PROCESSED_HTML_PATH = "{0}//sites//{1}//processed_html//{2}".format(settings.RSYNC_PRD1,
+                                                                                          SETTINGS_NAME,
+                                                                                          settings.TODAY)
+        self.FINISHED_IMG_PATH = "{0}//sites//{1}//img//{2}".format(settings.RSYNC_PRD1,
+                                                                    SETTINGS_NAME,
+                                                                    settings.TODAY)
+        self.FINISHED_CONTENT_PATH = "{0}//sites//{1}//{2}_content.csv".format(settings.RSYNC_PRD1,
+                                                                               SETTINGS_NAME,
+                                                                               SETTINGS_NAME)
         self.URL_PATH = "{0}//sites//{1}//{2}_urls.csv".format(settings.RSYNC_PRD2,
                                                                SETTINGS_NAME,
                                                                SETTINGS_NAME)
