@@ -91,7 +91,7 @@ echo '[global]
 index-url=http://pypi.douban.com/simple
 trusted-host = pypi.douban.com' >> pip.conf
 echo "******************************install pip upgrade"
-pip install --upgrade pip
+echo 'pip install --upgrade pip'
 echo "******************************install pyOpenSSL"
 echo 'y' | pip uninstall pyOpenSSL
 pip install pyOpenSSL==0.13.1

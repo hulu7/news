@@ -23,7 +23,7 @@ class Settings():
         self.CONCURRENCY_FILE = "{0}//max_concurrency.txt".format(self.RSYNC_PRD2)
         self.CONCURRENCY_REFRESH_FILE = "{0}//concurrency_refresh.txt".format(self.RSYNC_PRD2)
 
-        self.REFRESH_CONCURRENCY_INTERVAL_SPIDER = 360  # minute
+        self.REFRESH_CONCURRENCY_INTERVAL_SPIDER = 30  # minute
         self.MAX_CONCURRENCY_SPIDER = 10
         self.CONCURRENCY_FILE_SPIDER = "{0}//max_concurrency.txt".format(self.RSYNC_PRD1)
         self.CONCURRENCY_REFRESH_FILE_SPIDER = "{0}//concurrency_refresh.txt".format(self.RSYNC_PRD1)
