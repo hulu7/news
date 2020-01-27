@@ -21,12 +21,8 @@ class Camel():
         self.noNameDto = noNameDto('', [])
         self.noNameBone = NoNameBone('sspai', callback=self.parseAuthors)
         self.author_regx = re.compile("/u/[0-9]{0,}[a-z]{0,}[A-Z]{0,}")
-        self.isReadyToParseAuthore = False
 
     def parseAuthors(self):
-        if self.isReadyToParseAuthore == False:
-            print 'Not ready to parse author for {0}'.format('sspai')
-            return
         href_items = self.html.xpath(".//*[contains(@class, 'pic_box')]//a")
         self.noNameDto.page_url = self.current_url
         for item in href_items:
@@ -44,7 +40,6 @@ class Camel():
         return self.noNameDto
 
     def parse(self, current_url, html):
-        self.isReadyToParseAuthore = True
         results = []
         href_items = html.xpath(".//*[contains(@class, 'pc_card')]")
         self.current_url = current_url
@@ -85,9 +80,13 @@ class Camel():
                     self.camelBone.today,
                     self.camelBone.source
                 ))
+        try:
+            self.noNameBone.store()
+        except Exception as e:
+            print 'Exception for author in url: {0}.'.format(current_url)
+            return results
         return results
 
 if __name__ == '__main__':
     camel = Camel()
     camel.camelBone.start()
-    camel.noNameBone.store()
