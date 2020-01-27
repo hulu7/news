@@ -52,7 +52,7 @@ class NoNameBone():
                     message5 = 'Duplicated author for {0}'.format(result.page_url)
                     self.file.logger(self.log_path, message5)
                     print message5
-        print 'End to store author: {0} for page: {1}.'.format(item, result.page_url)
+        print 'End to store author for page: {0}.'.format(result.page_url)
         del result
         gc.collect()
 
