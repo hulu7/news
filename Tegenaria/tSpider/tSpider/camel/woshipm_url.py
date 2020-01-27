@@ -26,7 +26,7 @@ class Camel():
                     return key
             return None
         except Exception as e:
-            print ("Exception to match: {0} for {1}".format(url, e))
+            print ("Exception to match: {0} for {1}".format(url, e.message))
             return None
 
     def parse(self, current_url, html):

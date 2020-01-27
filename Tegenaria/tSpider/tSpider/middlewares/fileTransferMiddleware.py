@@ -33,8 +33,8 @@ class FileTransferMiddleware():
             print 'start to delete: {0}'.format(local_file_path)
             os.remove(local_file_path)
             print 'finished to delete: {0}'.format(local_file_path)
-        except Exception, e:
-            print 'Exception to transfer: {0} for {1}'.format(local_file_path, e)
+        except Exception as e:
+            print 'Exception to transfer: {0} for {1}'.format(local_file_path, e.message)
         del connect_port, sftp
         gc.collect()
 

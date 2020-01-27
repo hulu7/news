@@ -41,8 +41,8 @@ class RequestsMiddleware():
             self.file.logger(self.settings.LOG_PATH, 'Starting Requests')
             res = self.requests.get(url=url, headers=self.headers)
             return res
-        except Exception, e:
-            self.file.logger(self.settings.LOG_PATH, 'Requests Timeout: {0}'.format(str(e)))
+        except Exception as e:
+            self.file.logger(self.settings.LOG_PATH, 'Requests Timeout: {0}'.format(str(e.message)))
 
     def run_task(self, url_title=[], callback=callable, headers=None, host=None):
         self.file.logger(self.log_path, 'Start: {0}'.format(url_title[0]))
@@ -50,9 +50,9 @@ class RequestsMiddleware():
         response = self.requests_request(url_title[0], headers, host, url_title[0])
         try:
             callback({'response': response, 'request_url': url_title[0], 'request_title': url_title[1]})
-        except Exception, e:
-            self.file.logger(self.log_path, 'Exception: {0} for {1}'.format(e, url_title[0]))
-            print 'Exception: {0} for {1}'.format(e, url_title[0])
+        except Exception as e:
+            self.file.logger(self.log_path, 'Exception: {0} for {1}'.format(e.message, url_title[0]))
+            print 'Exception: {0} for {1}'.format(e.message, url_title[0])
             del response, self.requests_request
             gc.collect()
         self.file.logger(self.log_path, 'End: {0}'.format(response.url))

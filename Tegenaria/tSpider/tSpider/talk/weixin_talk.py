@@ -44,9 +44,9 @@ class WeixinTalk():
             self.doraemon.tar(self.temp_img_path)
             self.file.logger(self.log_path, 'Finish to compress html and img')
             print 'Finish to compress html'
-        except Exception, e:
-            self.file.logger(self.log_path, 'Exception to compress html and img: {0}'.format(e))
-            print 'Exception to compress html and img: {0}'.format(e)
+        except Exception as e:
+            self.file.logger(self.log_path, 'Exception to compress html and img: {0}'.format(e.message))
+            print 'Exception to compress html and img: {0}'.format(e.message)
 
         local_html_tmp_file = "{0}.tar.gz".format(self.temp_html_path)
         remote_html_tmp_file = "{0}//html.tar.gz".format(self.remote_html_path)
@@ -64,9 +64,9 @@ class WeixinTalk():
                                           self.port)
                 self.file.logger(self.log_path, 'Finished upload html for: {0} '.format(self.name))
                 print 'Finished upload html for: {0} '.format(self.name)
-            except Exception, e:
-                self.file.logger(self.log_path, 'Exception to upload html: {0}'.format(e))
-                print 'Exception to upload html: {0}'.format(e)
+            except Exception as e:
+                self.file.logger(self.log_path, 'Exception to upload html: {0}'.format(e.message))
+                print 'Exception to upload html: {0}'.format(e.message)
         else:
             print 'No html to upload'
 
@@ -82,9 +82,9 @@ class WeixinTalk():
                                           self.port)
                 self.file.logger(self.log_path, 'Finished upload image for: {0} '.format(self.name))
                 print 'Finished upload image for: {0} '.format(self.name)
-            except Exception, e:
-                self.file.logger(self.log_path, 'Exception to upload img: {0}'.format(e))
-                print 'Exception to upload img: {0}'.format(e)
+            except Exception as e:
+                self.file.logger(self.log_path, 'Exception to upload img: {0}'.format(e.message))
+                print 'Exception to upload img: {0}'.format(e.message)
         else:
             print 'No image to upload'
 

@@ -31,3 +31,4 @@ donews,DoNews,60,2,False,6,23
 anyv,微信阅读,120,2,False,6,23
 weixin,微信,120,2,False,0,0
 toutiao,今日头条,60,2,False,0,0
+sspai,少数派,120,2,False,6,23

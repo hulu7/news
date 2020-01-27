@@ -58,9 +58,9 @@ class SogoAccount():
                 print "Proxy: {0} is available.".format(ip)
                 try:
                     self.doraemon.hashSet(self.valid_proxy_pool_sogo_account, ip, ip)
-                except Exception, e:
-                    print "Exception to set redis for available sogo account of ip: {0}: {1}.".format(ip,e)
-                    self.file.logger(self.log_path, "Exception to set redis for available sogo account of ip: {0}: {1}.".format(ip,e))
+                except Exception as e:
+                    print "Exception to set redis for available sogo account of ip: {0}: {1}.".format(ip, e.message)
+                    self.file.logger(self.log_path, "Exception to set redis for available sogo account of ip: {0}: {1}.".format(ip, e.message))
             else:
                 self.file.logger(self.log_path, 'Fail to get proxy for sogo account.')
                 print "Fail to get proxy for sogo account."
@@ -103,8 +103,8 @@ class SogoAccount():
 
         try:
             self.getProxy()
-        except Exception, e:
-            self.file.logger(self.settings.LOG_PATH, 'Exception to get proxy: {0}'.format(str(e)))
+        except Exception as e:
+            self.file.logger(self.settings.LOG_PATH, 'Exception to get proxy: {0}'.format(str(e.message)))
 
         all_finished_id = list(self.doraemon.getAllHasSet(self.finished_sogo_account))
         all_valid_proxy = list(self.doraemon.getAllHasSet(self.valid_proxy_pool_sogo_account))

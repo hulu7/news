@@ -82,6 +82,7 @@ class Settings():
 
         self.BLOOMFILTER_URLS = "tegenaria:urls"
         self.BLOOMFILTER_CONTENT = "tegenaria:content"
+        self.BLOOMFILTER_AUTHORS = "tegenaria:authors"
 
         self.TODAY = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
@@ -201,6 +202,8 @@ class settingsSpec():
         self.URL_PATH = "{0}//sites//{1}//{2}_urls.csv".format(settings.RSYNC_PRD2,
                                                                SETTINGS_NAME,
                                                                SETTINGS_NAME)
+        self.AUTHORS_PATH = "{0}//sites//{1}".format(settings.RSYNC_PRD2,
+                                                     SETTINGS_NAME)
         self.RESTART_PATH = "{0}//sites//{1}//restart.txt".format(settings.RSYNC_PRD2,
                                                                   SETTINGS_NAME)
         self.REDIS_REFRESH_PATH = "{0}//sites//{1}//redis_refresh.txt".format(settings.RSYNC_PRD2,

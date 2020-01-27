@@ -10,7 +10,7 @@ from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
 class Spider():
     def __init__(self):
         self.doraemon = Doraemon()
-        self.spiderBone = SpiderBone('baijia', callback=self.parse)
+        self.spiderBone = SpiderBone('sspai', callback=self.parse)
 
     def parse(self, current_url, html):
         data = None
@@ -20,8 +20,8 @@ class Spider():
             return data
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _, %, ?, ="]', current_url)
-        current_id = short_url_parts[short_url_parts.index('id') + 1]
-        article_content = html.xpath(".//*[contains(@class,'article-content')]")
+        current_id = short_url_parts[short_url_parts.index('post') + 1]
+        article_content = html.xpath(".//*[contains(@class,'article-detail')]")
         url = ""
         content = ""
         time = ""
@@ -29,16 +29,13 @@ class Spider():
         title = ""
         id = ""
         if len(article_content) > 0:
-            article_0 = html.xpath(".//*[contains(@class,'article-content')]")
+            article_0 = html.xpath(".//*[contains(@class,'article-detail')]")
             if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@class, 'article-content')]//*//text()")
-                time0_1 = html.xpath(".//*[contains(@class, 'date')]/text()")
+                content0_1 = html.xpath(".//*[contains(@class, 'content wangEditor-txt minHeight')]//*//text()")
+                time0_1 = html.xpath(".//*[contains(@class, 'timer')]/text()")
                 author_name0_1 = self.spiderBone.name
-                title0_1 = html.xpath(".//*[contains(@class,'article-title')]//text()")
-                images0_1 = html.xpath(".//*[contains(@class, 'img-container')]//img//@src")
-                images0_2 = html.xpath(".//p//img//@src")
-                images0_3 = html.xpath(".//*[contains(@class, 'bjh-img-container')]//img//@src")
-                images0_4 = html.xpath(".//*[contains(@class, 'article-content')]//img//@src")
+                title0_1 = html.xpath(".//*[contains(@id,'article-title')]//text()")
+                images0_1 = html.xpath(".//*[contains(@class, 'ss-img-wrapper')]//img//@src")
 
                 url = current_url
                 id = current_id
@@ -53,9 +50,6 @@ class Spider():
                     title = ''.join(title0_1).strip()
                 images = []
                 self.doraemon.updateImages(images, images0_1)
-                self.doraemon.updateImages(images, images0_2)
-                self.doraemon.updateImages(images, images0_3)
-                self.doraemon.updateImages(images, images0_4)
 
                 data = self.doraemon.createSpiderData(url.strip(),
                                                       time.strip(),
@@ -64,7 +58,7 @@ class Spider():
                                                       id.strip(),
                                                       self.spiderBone.today,
                                                       self.spiderBone.source,
-                                                      [],
+                                                      images,
                                                       self.spiderBone.is_open_cache,
                                                       content)
         return data

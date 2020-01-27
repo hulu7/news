@@ -32,6 +32,7 @@ class Doraemon():
         self.rconn = redis.Redis(settings.REDIS_HOST, settings.REDIS_PORT)
         self.bf_urls = BloomFilter(self.rconn, settings.BLOOMFILTER_URLS)
         self.bf_content = BloomFilter(self.rconn, settings.BLOOMFILTER_CONTENT)
+        self.bf_authors = BloomFilter(self.rconn, settings.BLOOMFILTER_AUTHORS)
         self.disable_restart_interval = settings.DISABLE_RESTART_INTERVAL
         self.bf_weixin_url = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_URL_ARTICLE)
         self.bf_weixin_content = BloomFilter(self.rconn, settings.FINISHED_WEIXIN_CONTENT_ARTICLE)
@@ -106,6 +107,15 @@ class Doraemon():
         self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(finished_txt_path, name, id), content)
         print 'End to store txt: {0}'.format(id)
 
+    def storeTxtAdd(self, author_txt_path, author_name, settingName):
+        self.createFilePath(author_txt_path)
+        try:
+            print 'Start to store txt: {0}'.format(author_name)
+            self.file.writeToTxtAdd('{0}//{1}_authors.txt'.format(author_txt_path, settingName), author_name)
+        except Exception as e:
+            print 'Exception to store txt: {0} , for {1}'.format(author_name, e.strerror)
+        print 'End to store txt: {0}'.format(author_name)
+
     def storeHtml(self, id, content, finished_html_path):
         self.createFilePath(finished_html_path)
         print 'Start to store html: {0}'.format(id)
@@ -151,8 +161,8 @@ class Doraemon():
         try:
             print 'start to download image: {0}'.format(image_url)
             urllib.urlretrieve(image_url, store_path)
-        except Exception, e:
-            print 'exception to download image: {0} for {1}'.format(image_url, e)
+        except Exception as e:
+            print 'exception to download image: {0} for {1}'.format(image_url, e.message)
 
     def hashSet(self, name, key, value):
         self.rconn.hset(name, key, value)
@@ -293,23 +303,23 @@ class Doraemon():
             os.remove(origin_image_path)
             dImg.save(destination_image_path)
             print "Compress picture {0} success!".format(destination_image_path)
-        except Exception, e:
-            print"Compress picture {0} failed for {1}".format(destination_image_path, e)
+        except Exception as e:
+            print"Compress picture {0} failed for {1}".format(destination_image_path, e.message)
 
     def getSizeOfImage(self, image_path):
         try:
             img = Image.open(image_path)
             return img.size
-        except Exception, e:
-            print"Exception to open picture {0}".format(image_path)
+        except Exception as e:
+            print"Exception to open picture {0}, for {1}.".format(image_path, e.message)
 
     def getFileSize(self, file_path):
         try:
             fsize = os.path.getsize(file_path)
             fsize = fsize / float(1024)
             return round(fsize, 2)
-        except Exception, e:
-            print"Exception to get file size of {0}".format(file_path)
+        except Exception as e:
+            print"Exception to get file size of {0}, for {1}.".format(file_path, e.message)
 
     def getFileList(self, diractory):
         file_list = []
@@ -326,8 +336,8 @@ class Doraemon():
             print "Start to delete file: {0}".format(file_path)
             os.remove(file_path)
             print "Finished to delete file: {0}".format(file_path)
-        except Exception, e:
-            print "Exception to delete file: {0} for : {1}".format(file_path, e)
+        except Exception as e:
+            print "Exception to delete file: {0} for : {1}".format(file_path, e.message)
 
     def tar(self, directory):
         file_list = os.listdir(directory)
@@ -346,8 +356,8 @@ class Doraemon():
             for file in files:
                 fullpath = os.path.join(root, file)
                 self.deleteFile(fullpath)
-        except Exception, e:
-            print "Exception to compress directory: {0} for :{1}".format(directory, e)
+        except Exception as e:
+            print "Exception to compress directory: {0} for :{1}".format(directory, e.message)
 
     def isCamelReadyToRun(self, settings):
         if self.isWorkTime(settings.START_TIME, settings.END_TIME) is False:
@@ -562,3 +572,11 @@ class spiderDto():
         self.images = images
         self.is_open_cache = is_open_cache
         self.content = content
+
+class noNameDto():
+    def __init__(self,
+                 page_url,
+                 authors):
+        self.page_url = page_url
+        self.authors = authors
+

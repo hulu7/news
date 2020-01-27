@@ -46,8 +46,8 @@ def run_task(url):
         #     title = article.xpath(".//*[@id='artical_topic']").xpath('string(.)').extract()[0].strip()
         print title[0].encode('utf8')
         browser.close()
-    except Exception, e:
-        print e
+    except Exception as e:
+        print e.message
     return 'url:%s ---> finished' % url
 
 if __name__ == '__main__':

@@ -40,9 +40,9 @@ class BrowserRequest():
             response = request.browser
         try:
             callback({'response': response, 'request_url': url_title[0], 'request_title': url_title[1]})
-        except Exception, e:
-            self.file.logger(self.log_path, 'Exception: {0} for {1}'.format(e, url_title[0]))
-            print 'Exception: {0} for {1}'.format(e, url_title[0])
+        except Exception as e:
+            self.file.logger(self.log_path, 'Exception: {0} for {1}'.format(e.message, url_title[0]))
+            print 'Exception: {0} for {1}'.format(e.message, url_title[0])
             request.browser.close()
             request.browser.quit()
             del request
