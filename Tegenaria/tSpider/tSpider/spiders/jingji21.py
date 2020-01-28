@@ -31,6 +31,7 @@ class Spider():
             if len(article_0) > 0:
                 content0_1 = ''.join(html.xpath(".//*[contains(@class, 'txtContent')]//p//text()"))
                 time0_1 = ''.join(html.xpath(".//*[contains(@class, 'newsDate')]/text()"))
+                time0_2 = ''.join(html.xpath(".//*[contains(@class, 'author-infos')]/span/text()"))
                 author_name0_1 = self.spiderBone.name
                 title0_1 = ''.join(html.xpath(".//*[contains(@class,'titleHead')]/h1/text()"))
                 images0_1 = html.xpath(".//*[contains(@class, 'txtContent')]//p//img//@src")
@@ -43,7 +44,9 @@ class Spider():
                 if self.doraemon.isEmpty(time0_1) is False:
                     time = ''.join(time0_1).strip()
                     time = self.doraemon.getDateFromString(time)
-                    print "----------: {0}".format(time)
+                if self.doraemon.isEmpty(time0_2) is False:
+                    time = ''.join(time0_2).strip()
+                    time = self.doraemon.getDateFromString(time)
                 if self.doraemon.isEmpty(author_name0_1) is False:
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:

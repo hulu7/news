@@ -12,7 +12,7 @@ class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('anyv', callback=self.parse)
-        self.regx = re.compile("^(?:http)s?://web.anyv.net/index.php/article-[0-9]{0,}")
+        self.regx = re.compile("^(?:http)s?:\/\/web\.anyv\.net\/index\.php\/article-[0-9]{0,}")
         self.badkeys = []
         self.goodkeys = []
 

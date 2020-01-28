@@ -14,7 +14,7 @@ class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('baijia', callback=self.parse)
-        self.regx = re.compile("^(?:http)s?://baijiahao.baidu.com/s\?id=[0-9]{0,}")
+        self.regx = re.compile("^(?:http)s?:\/\/baijiahao\.baidu\.com\/s\?id=[0-9]{0,}")
         self.badkeys = []
         self.goodkeys = []
 

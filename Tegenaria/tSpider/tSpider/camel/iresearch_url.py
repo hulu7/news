@@ -12,21 +12,22 @@ class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('iresearch', callback=self.parse)
+        self.regx = re.compile("(http(s?):)?\/\/[a-z]{0,}\.iresearch\.cn\/(content?|a|b)\/[0-9]{0,}\/([0-9]{0,}\/)?[0-9]{0,}\.shtml")
         self.badkeys = []
-        self.goodkeys = ['content', '/a/', '/b/']
+        self.goodkeys = []
 
     def parse(self, current_url, html):
         results = []
         href_items = html.xpath(".//a")
         for item in href_items:
             href = item.xpath("@href")
-            valid = False
+            valid = True
             if len(href) == 0:
                 continue
-            href_url = str(href[0])
-            hasId = str(filter(str.isdigit, href_url))
-            if len(hasId) == 0:
-                print 'Invalid url for no id: {0}'.format(href_url)
+            href_url = href[0]
+            isValidUrl = self.regx.match(href_url)
+            if isValidUrl is None:
+                print 'Invalid url for not match: {0}'.format(href_url)
                 continue
             for good in self.goodkeys:
                 if valid == True:

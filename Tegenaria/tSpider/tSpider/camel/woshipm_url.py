@@ -20,7 +20,7 @@ class Camel():
     def getCatagoryKey(self, url):
         try:
             for key in self.catagories:
-                regx = re.compile("^(?:http)s?://www.woshipm.com/" + key + "/[0-9]{0,}.html")
+                regx = re.compile("^(?:http)s?:\/\/www\.woshipm\.com\/" + key + "\/[0-9]{0,}\.html")
                 isMatched = regx.match(url)
                 if isMatched is not None:
                     return key

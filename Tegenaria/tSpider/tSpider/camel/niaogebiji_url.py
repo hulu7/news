@@ -12,7 +12,7 @@ class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('niaogebiji', callback=self.parse)
-        self.regx = re.compile("/article-[0-9]{1,}-[0-9]{1,}.html")
+        self.regx = re.compile("\/article-[0-9]{1,}-[0-9]{1,}\.html")
         self.badkeys = []
         self.goodkeys = []
 

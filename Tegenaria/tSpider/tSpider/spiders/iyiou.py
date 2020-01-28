@@ -21,7 +21,7 @@ class Spider():
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _]', current_url)
         current_id = short_url_parts[len(short_url_parts) - 2]
-        not_fnd = html.xpath(".//*[contains(@id,'post_content')]")
+        article_0 = html.xpath(".//*[contains(@id,'post_description')]")
 
         url = ""
         content = ""
@@ -29,41 +29,50 @@ class Spider():
         author_name = ""
         title = ""
         id = ""
-        if len(not_fnd) > 0:
-            article_0 = html.xpath(".//*[contains(@id,'post_content')]")
-            if len(article_0) > 0:
-                content0_1 = html.xpath(".//*[contains(@id, 'post_description')]//p//text()")
-                time0_1 = html.xpath(".//*[contains(@class, 'hidden')]/text()")
-                author_name0_1 = self.spiderBone.name
-                title0_1 = html.xpath(".//*[contains(@id,'post_title')]/text()")
-                images0_1 = html.xpath(".//*[contains(@id,'post_content')]//*//img//@src")
+        if len(article_0) > 0:
+            content0_1 = html.xpath(".//*[contains(@id, 'post_description')]//*//text()")
+            time0_1 = html.xpath(".//*[contains(@class, 'post_date')]/text()")
+            time0_2 = html.xpath(".//*[contains(@class, 'hidden')]/text()")
+            author_name0_1 = self.spiderBone.name
+            title0_1 = html.xpath(".//*[contains(@id,'post_title')]/text()")
+            title0_2 = html.xpath(".//*[contains(@class,'title_one')]/text()")
+            images0_1 = html.xpath(".//*[contains(@id,'post_content')]//*//img//@src")
+            images0_2 = html.xpath(".//*[contains(@id,'post_description')]//*//img//@src")
 
-                url = current_url
-                id = current_id
-                if self.doraemon.isEmpty(content0_1) is False:
-                    content = ''.join(content0_1).strip()
-                if self.doraemon.isEmpty(time0_1) is False:
-                    time = ''.join(time0_1).strip()
-                    time = self.doraemon.getDateFromString(time)
-                if self.doraemon.isEmpty(author_name0_1) is False:
-                    author_name = author_name0_1
-                if self.doraemon.isEmpty(title0_1) is False:
-                    title = title0_1[0].strip()
+            url = current_url
+            id = current_id
+            if self.doraemon.isEmpty(content0_1) is False:
+                content = ''.join(content0_1).strip()
+            if self.doraemon.isEmpty(time0_1) is False:
+                time = ''.join(time0_1[0]).strip()
+                time = self.doraemon.getDateFromString(time)
+            if self.doraemon.isEmpty(time0_2) is False:
+                time = ''.join(time0_2[0]).strip()
+                time = self.doraemon.getDateFromString(time)
+            if self.doraemon.isEmpty(author_name0_1) is False:
+                author_name = author_name0_1
+            if self.doraemon.isEmpty(title0_1) is False:
+                title = ''.join(title0_1).strip()
+            if self.doraemon.isEmpty(title0_2) is False:
+                title = ''.join(title0_2).strip()
 
-                images = []
-                images0_1 = self.doraemon.completeImageUrls(images0_1, url)
-                self.doraemon.updateImages(images, images0_1)
+            images = []
+            images0_1 = self.doraemon.completeImageUrls(images0_1, url)
+            images0_2 = self.doraemon.completeImageUrls(images0_2, url)
+            self.doraemon.updateImages(images, images0_1)
+            self.doraemon.updateImages(images, images0_2)
 
-                data = self.doraemon.createSpiderData(url.strip(),
-                                                      time.strip(),
-                                                      author_name.strip(),
-                                                      title.strip(),
-                                                      id.strip(),
-                                                      self.spiderBone.today,
-                                                      self.spiderBone.source,
-                                                      images,
-                                                      self.spiderBone.is_open_cache,
-                                                      content)
+            data = self.doraemon.createSpiderData(url.strip(),
+                                                  time.strip(),
+                                                  author_name.strip(),
+                                                  title.strip(),
+                                                  id.strip(),
+                                                  self.spiderBone.today,
+                                                  self.spiderBone.source,
+                                                  images,
+                                                  self.spiderBone.is_open_cache,
+                                                  content)
+
         return data
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('iyiou', callback=self.parse)
-        self.regx = re.compile("^(?:http)s?://www.iyiou.com/p/[0-9]{0,}.html")
+        self.regx = re.compile("^(?:http)s?:\/\/www\.iyiou\.com\/(p?|breaking|intelligence)\/[a-z0-9]{0,}\.html")
         self.badkeys = []
         self.goodkeys = []
 
@@ -45,16 +45,25 @@ class Camel():
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
                 title_list1 = item.xpath("@title")
-                title_list2 = item.xpath(".//text()")
+                title_list2 = item.xpath(".//h2//text()")
+                title_list3 = item.xpath(".//p//text()")
                 if len(title_list1) > 0:
                     title_tmp = ''.join(title_list1).strip()
                     if self.doraemon.isEmpty(title_tmp) is False:
                         title = title_tmp
+                        title.strip()
                         print title
                 if len(title_list2) > 0:
                     title_tmp = ''.join(title_list2).strip()
                     if self.doraemon.isEmpty(title_tmp) is False:
                         title = title_tmp
+                        title.strip()
+                        print title
+                if len(title_list3) > 0:
+                    title_tmp = ''.join(title_list3).strip()
+                    if self.doraemon.isEmpty(title_tmp) is False:
+                        title = title_tmp
+                        title.strip()
                         print title
                 results.append(self.doraemon.createCamelData(
                     title.strip(),

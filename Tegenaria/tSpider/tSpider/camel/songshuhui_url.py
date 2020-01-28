@@ -12,7 +12,7 @@ class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('songshuhui', callback=self.parse)
-        self.regx = re.compile("^(?:http)s?://songshuhui.net/archives/[0-9]{0,}")
+        self.regx = re.compile("^(?:http)s?:\/\/songshuhui\.net\/archives\/[0-9]{0,}")
         self.badkeys = []
         self.goodkeys = []
 

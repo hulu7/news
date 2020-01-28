@@ -12,8 +12,8 @@ class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('cyzone', callback=self.parse)
-        self.regx = re.compile("//www.cyzone.cn/article/[0-9]{0,}.html")
-        self.badkeys = []
+        self.regx = re.compile("\/\/www\.cyzone\.cn\/article\/[0-9]{0,}\.html")
+        self.badkeys = ['#cyzone-comments-main']
         self.goodkeys = []
 
     def parse(self, current_url, html):

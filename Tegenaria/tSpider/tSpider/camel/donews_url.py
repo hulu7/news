@@ -12,7 +12,7 @@ class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('donews', callback=self.parse)
-        self.regx = re.compile("^(?:http)s?://www.donews.com/article/detail/[0-9]{0,}/[0-9]{0,}.html")
+        self.regx = re.compile("^(?:http)s?:\/\/www\.donews\.com\/[a-zA-Z]{0,}\/detail\/[0-9]{0,}\/[0-9]{0,}\.html")
         self.badkeys = []
         self.goodkeys = []
 
@@ -41,7 +41,7 @@ class Camel():
                     valid = False
             if valid:
                 short_url_parts = re.split(r'[., /, _, %, "]', href_url)
-                id = short_url_parts[short_url_parts.index('article') + 3]
+                id = short_url_parts[short_url_parts.index('detail') + 2]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
                 title_list1 = item.xpath(".//text()")

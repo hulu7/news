@@ -20,7 +20,7 @@ class Spider():
             return
         print 'Start to parse: {0}'.format(current_url)
         short_url_parts = re.split(r'[., /, _, %, "]', current_url)
-        current_id = short_url_parts[short_url_parts.index('article') + 3]
+        current_id = short_url_parts[short_url_parts.index('detail') + 2]
         article_content = html.xpath(".//*[contains(@class, 'contentbox')]")
         url = ""
         content = ""
@@ -35,6 +35,7 @@ class Spider():
                 time0_1 = html.xpath(".//*[contains(@class, 'fl')]/span/text()")
                 author_name0_1 = self.spiderBone.name
                 title0_1 = html.xpath(".//*[contains(@class, 'contentbox')]/h2/text()")
+                title0_2 = html.xpath(".//*[contains(@class, 'contentbox')]/h1/text()")
                 images0_1 = html.xpath(".//*[contains(@class, 'contentbox')]//center//img//@src")
                 images0_2 = html.xpath(".//*[contains(@class, 'contentbox')]//p//img//@src")
 
@@ -49,6 +50,8 @@ class Spider():
                     author_name = author_name0_1
                 if self.doraemon.isEmpty(title0_1) is False:
                     title = ''.join(title0_1).strip()
+                if self.doraemon.isEmpty(title0_2) is False:
+                    title = ''.join(title0_2).strip()
 
                 images = []
                 self.doraemon.updateImages(images, images0_1)
