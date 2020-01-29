@@ -18,9 +18,18 @@ class Camel():
 
     def parse(self, current_url, html):
         results = []
-        href_items = html.xpath(".//*[contains(@class, 'timeline__item__content')]")
+        href_items = []
+        href_items0_1 = html.xpath(".//*[contains(@class, 'timeline__item__content')]//a")
+        href_items0_2 = html.xpath(".//*[contains(@class, 'home__timeline__item')]//a")
+        href_items0_3 = html.xpath(".//*[contains(@class, 'AnonymousHome_home__timeline__item_3vU')]//a")
+        if len(href_items0_1) > 0 :
+            href_items += href_items0_1
+        if len(href_items0_2) > 0:
+            href_items += href_items0_2
+        if len(href_items0_3) > 0:
+            href_items += href_items0_3
         for item in href_items:
-            href = item.xpath(".//a/@href")
+            href = item.xpath("@href")
             valid = True
             if len(href) == 0:
                 continue
@@ -44,10 +53,13 @@ class Camel():
                 id = short_url_parts[len(short_url_parts) - 1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
-                title_list1 = item.xpath(".//*[contains(@class, 'timeline__item__title')]/span/text()")
+                title_list1 = item.xpath(".//text()")
                 if len(title_list1) > 0:
                     title = ''.join(title_list1).strip()
                     print title
+                if self.doraemon.isEmpty(title):
+                    print 'Empty title for: {0}'.format(url)
+                    continue
                 results.append(self.doraemon.createCamelData(
                     title.strip(),
                     url.strip(),

@@ -1,7 +1,6 @@
 huxiu,虎嗅,30,2,False,6,23
 cankaoxiaoxi,参考消息,10,2,False,6,23
 ce,中国经济网,20,2,False,6,23
-chuansongme,微信-传送门,720,2,True,6,23
 cyzone,创业邦,60,2,False,6,23
 eeo,经济观察网,30,2,False,6,23
 guancha,观察者网,5,2,False,6,23
@@ -13,10 +12,7 @@ iresearch,艾瑞网,120,2,False,6,23
 iyiou,亿欧网,60,2,False,6,23
 jingji21,21经济网,60,2,False,6,23
 stcn,证券时报网,30,2,False,6,23
-yicai,第一财经,30,2,False,6,23
-wallstreetcn,华尔街见闻,20,2,False,6,23
 i36kr,36氪,30,2,False,6,23
-baijia,百家号,60,2,False,6,23
 iceo,中国企业家,120,2,False,6,23
 gelonghui,格隆汇,60,2,False,6,23
 sohump,搜狐号,60,2,False,6,23
@@ -29,6 +25,4 @@ woshipm,人人都是产品经理,60,2,False,6,23
 qdaily,好奇心日报,30,2,False,6,23
 donews,DoNews,60,2,False,6,23
 anyv,微信阅读,120,2,False,6,23
-weixin,微信,120,2,False,0,0
-toutiao,今日头条,60,2,False,0,0
 sspai,少数派,120,2,False,6,23
