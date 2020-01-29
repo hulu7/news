@@ -8,3 +8,5 @@ https://www.36kr.com/information/web_zhichang
 https://www.36kr.com/information/travel
 https://www.36kr.com/information/other
 https://www.36kr.com/information/real_estate
+https://www.36kr.com/information/enterpriseservice
+https://www.36kr.com/information/innovate
