@@ -5,6 +5,7 @@ sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/")
 from lxml import etree
 import gc
+import time
 from Tegenaria.tSpider.tSpider.browserRequest import BrowserRequest
 from Tegenaria.tSpider.tSpider.settings import Settings
 from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
@@ -36,6 +37,7 @@ class CamelBone():
         self.concurrency_file = self.globalSettings.CONCURRENCY_FILE
 
     def parse(self, response):
+        time.sleep(1)
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
@@ -60,7 +62,8 @@ class CamelBone():
                     message4 = 'Empty title for {0}'.format(item.url)
                     self.file.logger(self.log_path, message4)
                     print message4
-                print 'Finished or Empty title for {0}'.format(item.url)
+                else:
+                    print 'Finished title for {0}'.format(item.url)
         print 'End to parse {0}'.format(current_url)
 
         del current_url, results, html

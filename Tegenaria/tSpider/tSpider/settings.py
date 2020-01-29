@@ -18,7 +18,7 @@ class Settings():
         self.CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
 
         #concurrency
-        self.REFRESH_CONCURRENCY_INTERVAL = 360  #minute
+        self.REFRESH_CONCURRENCY_INTERVAL = 30  #minute
         self.MAX_CONCURRENCY = 10
         self.CONCURRENCY_FILE = "{0}//max_concurrency.txt".format(self.RSYNC_PRD2)
         self.CONCURRENCY_REFRESH_FILE = "{0}//concurrency_refresh.txt".format(self.RSYNC_PRD2)

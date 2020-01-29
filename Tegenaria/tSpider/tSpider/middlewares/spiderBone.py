@@ -5,6 +5,7 @@ sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/")
 from lxml import etree
 import gc
+import time
 from Tegenaria.tSpider.tSpider.browserRequest import BrowserRequest
 from Tegenaria.tSpider.tSpider.settings import Settings
 from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
@@ -37,6 +38,7 @@ class SpiderBone():
         self.concurrency_file_spider = self.globalSettings.CONCURRENCY_FILE_SPIDER
 
     def parse(self, response):
+        time.sleep(1)
         current_url = response['response'].current_url.encode('gbk')
         request_title = response['request_title']
         print 'Start to parse: {0}'.format(current_url)

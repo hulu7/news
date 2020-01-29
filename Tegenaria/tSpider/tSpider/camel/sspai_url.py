@@ -16,7 +16,7 @@ class Camel():
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('sspai', callback=self.parse)
         self.regx = re.compile("\/post\/[0-9]{0,}")
-        self.badkeys = ['37739', '']
+        self.badkeys = ['37793', '37739']
         self.goodkeys = []
         self.noNameDto = noNameDto('', [])
         self.noNameBone = NoNameBone('sspai', callback=self.parseAuthors)
@@ -45,12 +45,18 @@ class Camel():
         href_items = []
         href_items0_1 = html.xpath(".//*[contains(@class, 'pc_card')]")
         href_items0_2 = html.xpath(".//*[contains(@class, 'article-card')]")
+        href_items0_3 = html.xpath(".//*[contains(@class, 'card_content')]/a")
+        href_items0_4 = html.xpath(".//a")
         self.current_url = current_url
         self.html = html
-        if len(href_items0_1) > 0:
+        if len(href_items0_1) > 0 and len(href_items0_3) == 0:
             href_items += href_items0_1
         if len(href_items0_2) > 0:
             href_items += href_items0_2
+        if len(href_items0_3) > 0:
+            href_items += href_items0_3
+        if len(href_items0_4) > 0:
+            href_items += href_items0_4
         for item in href_items:
             href = item.xpath("@href")
             valid = True
@@ -84,6 +90,9 @@ class Camel():
                 if len(title0_2) > 0:
                     title = ''.join(title0_2).strip()
                     print title
+                if self.doraemon.isEmpty(title):
+                    print 'Empty title for: {0}.'.format(url)
+                    continue
                 results.append(self.doraemon.createCamelData(
                     title.strip(),
                     url.strip(),
@@ -91,11 +100,6 @@ class Camel():
                     self.camelBone.today,
                     self.camelBone.source
                 ))
-        try:
-            self.noNameBone.store()
-        except Exception as e:
-            print 'Exception for author in url: {0}.'.format(current_url)
-            return results
         return results
 
 if __name__ == '__main__':
