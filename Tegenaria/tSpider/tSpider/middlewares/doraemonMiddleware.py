@@ -72,7 +72,31 @@ class Doraemon():
         return isExceed
 
     def isEmpty(self, item_list):
-        return len([item for item in item_list if item.strip()]) == 0
+        return item_list !=None and len([item for item in item_list if item.strip()]) == 0
+
+    def isTitleEmpty(self, title, url):
+        if self.isEmpty(title):
+            print 'Empty title for: {0}'.format(url)
+            return True
+        return False
+
+    def isUrlValid(self, url, good_keys, bad_keys, regx_match_result, valid):
+        if regx_match_result == None:
+            print 'Invalid url for not match: {0}'.format(url)
+            return False
+        for good in good_keys:
+            if valid == True:
+                continue
+            if good in url:
+                print 'Match good key: {0}'.format(good)
+                valid = True
+        for bad in bad_keys:
+            if valid == False:
+                continue
+            if bad in url:
+                print 'Match bad key: {0}'.format(bad)
+                valid = False
+        return valid
 
     def isDuplicated(self, filter, content):
         content_encode = str(content).encode("utf-8")

@@ -11,8 +11,9 @@ from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
 class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
-        self.camelBone = CamelBone('cankaoxiaoxi', callback=self.parse)
-        self.badkeys = ['mid', 'about', 'photo', 'index']
+        self.camelBone = CamelBone('jiemian', callback=self.parse)
+        self.regx = re.compile("(http(s?):)?\/\/www\.jiemian\.com\/article\/[0-9]{0,}.html")
+        self.badkeys = []
         self.goodkeys = []
 
     def parse(self, current_url, html):
@@ -24,29 +25,20 @@ class Camel():
             if len(href) == 0:
                 continue
             href_url = href[0]
-            if 'html' not in href_url:
-                continue
             valid = self.doraemon.isUrlValid(href_url,
                                              self.goodkeys,
                                              self.badkeys,
-                                             True,
+                                             self.regx.match(href_url),
                                              valid)
             if valid:
-                short_url_parts = re.split(r'[., /, _, ?, #]', href_url)
-                if len(short_url_parts) < 2:
-                    continue
-                id = short_url_parts[len(short_url_parts) - 2]
+                short_url_parts = re.split(r'[., /, _, %, "]', href_url)
+                id = short_url_parts[short_url_parts.index("article") + 1]
                 url = urlparse.urljoin(current_url, href_url)
-                title = ''
-                title0_1 = item.xpath(".//div/h3/text()")
-                title0_2 = item.xpath(".//h3/text()")
-                title0_3 = item.xpath("@title")
-                if self.doraemon.isEmpty(title0_1) is False:
-                    title = ''.join(title0_1)
-                if self.doraemon.isEmpty(title0_2) is False:
-                    title = ''.join(title0_2)
-                if self.doraemon.isEmpty(title0_3) is False:
-                    title = ''.join(title0_3)
+                title = ""
+                title_list1 = item.xpath(".//text()")
+                if len(title_list1) > 0:
+                    title = ''.join(title_list1).strip()
+                    print title
                 if self.doraemon.isTitleEmpty(title, url):
                     continue
                 results.append(self.doraemon.createCamelData(

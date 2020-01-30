@@ -39,6 +39,8 @@ class Camel():
             if len(title) == 0:
                 continue
             title = title[0]
+            if self.doraemon.isTitleEmpty(title, url):
+                continue
             results.append(self.doraemon.createCamelData(
                 title.strip(),
                 url.strip(),

@@ -24,20 +24,11 @@ class Camel():
             if len(href) == 0:
                 continue
             href_url = href[0]
-            hasId = str(filter(str.isdigit, href_url))
-            if len(hasId) == 0:
-                print 'Invalid url for no id: {0}'.format(href_url)
-                continue
-            for good in self.goodkeys:
-                if valid == True:
-                    continue
-                if good in href_url:
-                    valid = True
-            for bad in self.badkeys:
-                if valid == False:
-                    continue
-                if bad in href_url:
-                    valid = False
+            valid = self.doraemon.isUrlValid(href_url,
+                                             self.goodkeys,
+                                             self.badkeys,
+                                             True,
+                                             valid)
             if valid:
                 short_url_parts = re.split(r'[., /, _]', href_url)
                 id = short_url_parts[short_url_parts.index('a') + 1]
@@ -47,6 +38,8 @@ class Camel():
                 if len(title_list1) > 0:
                     title = ''.join(title_list1).strip()
                     print title
+                if self.doraemon.isTitleEmpty(title, url):
+                    continue
                 results.append(self.doraemon.createCamelData(
                     title.strip(),
                     url.strip(),

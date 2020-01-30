@@ -50,6 +50,8 @@ class Camel():
                 if len(title_list1) > 0:
                     title = ''.join(title_list1).strip()
                     print title
+                if self.doraemon.isTitleEmpty(title, url):
+                    continue
                 results.append(self.doraemon.createCamelData(
                     title.strip(),
                     url.strip(),

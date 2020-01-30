@@ -26,21 +26,18 @@ class Camel():
             href_url = href[0]
             if 'html' not in href_url:
                 continue
-            for good in self.goodkeys:
-                if valid == True:
-                    continue
-                if good in href_url:
-                    valid = True
-            for bad in self.badkeys:
-                if valid == False:
-                    continue
-                if bad in href_url:
-                    valid = False
+            valid = self.doraemon.isUrlValid(href_url,
+                                             self.goodkeys,
+                                             self.badkeys,
+                                             True,
+                                             valid)
             if valid:
                 short_url_parts = re.split(r'[., /, _]', href_url)
                 id = short_url_parts[len(short_url_parts) - 2]
                 url = urlparse.urljoin(current_url, href_url)
                 title = item.text
+            if self.doraemon.isTitleEmpty(title, url):
+                continue
             results.append(self.doraemon.createCamelData(
                 title.strip(),
                 url.strip(),
