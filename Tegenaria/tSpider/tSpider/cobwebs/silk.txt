@@ -27,3 +27,4 @@ donews,DoNews,60,2,False,6,23
 anyv,微信阅读,120,2,False,6,23
 sspai,少数派,120,2,False,6,23
 jiemian,界面新闻,60,2,False,6,23
+yunyingpai,运营派,120,2,False,6,23
