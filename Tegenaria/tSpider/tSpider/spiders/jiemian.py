@@ -2,6 +2,7 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+import urlparse
 import re
 sys.path.append("/home/dev/Repository/news/")
 from Tegenaria.tSpider.tSpider.middlewares.spiderBone import SpiderBone
@@ -52,6 +53,9 @@ class Spider():
 
                 images = []
                 self.doraemon.updateImages(images, images0_1)
+                images_src = []
+                for image in images:
+                    images_src.append(urlparse.urljoin(current_url, image))
 
                 data = self.doraemon.createSpiderData(url.strip(),
                                                       time.strip(),
@@ -60,7 +64,7 @@ class Spider():
                                                       id.strip(),
                                                       self.spiderBone.today,
                                                       self.spiderBone.source,
-                                                      images,
+                                                      images_src,
                                                       self.spiderBone.is_open_cache,
                                                       content)
         return data
