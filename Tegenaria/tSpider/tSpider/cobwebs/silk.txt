@@ -28,3 +28,4 @@ sspai,少数派,120,2,False,6,23
 jiemian,界面新闻,60,2,False,6,23
 yunyingpai,运营派,120,2,False,6,23
 leiphone,雷锋网,120,2,False,6,23
+meihua,梅花网,120,1,False,6,23
