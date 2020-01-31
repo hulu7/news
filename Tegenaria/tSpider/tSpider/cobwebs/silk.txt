@@ -30,3 +30,4 @@ yunyingpai,运营派,120,2,False,6,23
 leiphone,雷锋网,120,2,False,6,23
 meihua,梅花网,120,1,False,6,23
 adquan,广告门,120,1,False,6,20
+8btc,巴比特,120,1,False,6,23
