@@ -32,3 +32,6 @@ meihua,梅花网,120,1,False,6,23
 adquan,广告门,120,1,False,6,20
 8btc,巴比特,120,1,False,6,23
 bishijie,币世界,60,1,False,6,23
+chainfor,链向财经,120,1,False,6,22
+jinse,金色财经,120,1,False,6,22
+btc798,比特币之家,120,1,False,6,22
