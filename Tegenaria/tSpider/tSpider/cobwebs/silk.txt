@@ -7,10 +7,10 @@ guancha,观察者网,60,2,False,6,23
 guokr,果壳网,60,2,False,6,23
 huanqiu,环球网,30,2,False,6,23
 ifeng,凤凰网,30,2,False,6,23
-iheima,黑马网,120,2,False,6,23
-iresearch,艾瑞网,120,2,False,6,23
-iyiou,亿欧网,60,2,False,6,23
-jingji21,21经济网,60,2,False,6,23
+iheima,黑马网,120,1,False,6,23
+iresearch,艾瑞网,120,1,False,6,23
+iyiou,亿欧网,60,1,False,6,23
+jingji21,21经济网,60,1,False,6,23
 stcn,证券时报网,30,2,False,6,23
 i36kr,36氪,30,2,False,6,23
 iceo,中国企业家,120,2,False,6,23
@@ -23,7 +23,7 @@ tmtpost,钛媒体,60,2,False,6,23
 songshuhui,学科松鼠会,60,2,False,6,23
 woshipm,人人都是产品经理,60,2,False,6,23
 qdaily,好奇心日报,30,2,False,6,23
-donews,DoNews,60,2,False,6,23
+donews,DoNews,60,1,False,6,23
 sspai,少数派,120,2,False,6,23
 jiemian,界面新闻,60,2,False,6,23
 yunyingpai,运营派,120,2,False,6,23
@@ -35,3 +35,4 @@ bishijie,币世界,60,1,False,6,23
 chainfor,链向财经,120,1,False,6,22
 jinse,金色财经,120,1,False,6,22
 btc798,比特币之家,120,1,False,6,22
+myzaker,ZAKER,60,2,False,6,23
