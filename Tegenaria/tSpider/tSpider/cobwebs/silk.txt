@@ -37,3 +37,5 @@ jinse,金色财经,120,1,False,6,22
 btc798,比特币之家,120,1,False,6,22
 myzaker,ZAKER,60,2,False,6,23
 geekpark,极客公园,120,1,False,6,18
+ithome,IT之家,60,2,False,6,23
+ifanr,爱范儿,120,1,False,6,23
