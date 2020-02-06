@@ -40,3 +40,6 @@ geekpark,极客公园,120,1,False,6,18
 ithome,IT之家,60,2,False,6,23
 ifanr,爱范儿,120,1,False,6,23
 dgtle,数字尾巴,120,1,False,6,23
+chanpin100,产品壹佰,120,1,False,6,20
+pmcaff,PMCAFF资讯,120,1,False,6,23
+inneed,inNeed资讯,120,1,False,6,20

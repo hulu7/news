@@ -234,9 +234,9 @@ class Doraemon():
         try:
             if "今天" in string or "秒前" in string or "分钟前" in string or "小时前" in string:
                 return self.getDateOfDaysBefore(0)
-            if "昨天" in string:
+            if "昨天" in string or "1天前" in string:
                 return self.getDateOfDaysBefore(1)
-            if "前天" in string:
+            if "前天" in string or "2天前" in string:
                 return self.getDateOfDaysBefore(2)
             if "3天前" in string:
                 return self.getDateOfDaysBefore(3)
