@@ -48,3 +48,4 @@ cbndata,第一财经商业数据中心,120,1,False,6,23
 mbalib,MBA智库资讯,120,2,False,6,23
 awtmt,全天候科技,120,1,False,6,23
 techweb,TechWeb,60,2,False,6,23
+jiqizhixin,机器之心,120,1,False,6,23
