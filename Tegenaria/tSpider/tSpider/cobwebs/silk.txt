@@ -43,3 +43,6 @@ dgtle,数字尾巴,120,1,False,6,23
 chanpin100,产品壹佰,120,1,False,6,20
 pmcaff,PMCAFF资讯,120,1,False,6,23
 inneed,inNeed资讯,120,1,False,6,20
+odaily,Odaily星球日报,120,1,False,6,23
+cbndata,第一财经商业数据中心,120,1,False,6,23
+mbalib,MBA智库资讯,120,2,False,6,23
