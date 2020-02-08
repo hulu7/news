@@ -250,13 +250,20 @@ class Doraemon():
                 return self.getDateOfDaysBefore(7)
             if "年" not in string and "月" in string and "日" in string:
                 data = re.split(",", string.replace('月', ',').replace('日', ''))
-                return "{0}-{1}-{2}".format(year, data[0], data[1])
+                return "{0}-{1}-{2}".format(year,
+                                            self.getNumberFromString(data[0]),
+                                            self.getNumberFromString(data[1]))
             if "年" in string and "月" in string and "日" in string:
                 data = re.split(",", string.replace('年', ',').replace('月', ',').replace('日', ','))
-                return "{0}-{1}-{2}".format(data[0], data[1], data[2])
+                return "{0}-{1}-{2}".format(self.getNumberFromString(data[0]),
+                                            self.getNumberFromString(data[1]),
+                                            self.getNumberFromString(data[2]))
         except:
             print ("Fail to match date from Chinese.")
             return None
+
+    def getNumberFromString(self, string):
+        return ''.join(re.findall(r'\d+', string)).strip()
 
     def getFinalDate(self, year, month, day):
             return "{0}-{1}-{2}".format(year, month, day)
