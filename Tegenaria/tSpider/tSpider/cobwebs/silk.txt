@@ -51,3 +51,4 @@ techweb,TechWeb,60,2,False,6,23
 jiqizhixin,机器之心,120,1,False,6,23
 yixieshi,互联网的一些事,120,1,False,6,23
 iyunying,爱运营,120,2,False,6,20
+pintu360,品途商业评论,120,1,False,6,20
