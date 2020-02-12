@@ -10,8 +10,8 @@ from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
 class Spider():
     def __init__(self):
         self.doraemon = Doraemon()
-        self.spiderBone = SpiderBone('techweb', callback=self.parse)
-        self.regx = re.compile("(http(s?):)?\/\/[0-9a-zA-Z]{0,}\.techweb\.com\.cn\/[0-9a-zA-Z]{0,}\/[0-9]{0,}-[0-9]{0,}-[0-9]{0,}\/[0-9]{0,}.shtml")
+        self.spiderBone = SpiderBone('engadget', callback=self.parse)
+        self.regx = re.compile("(http(s?):)?\/\/cn\.engadget\.com\/cn\-[0-9a-z\-]{0,}\.html")
 
     def parse(self, current_url, html):
         data = None
@@ -20,21 +20,21 @@ class Spider():
             print 'Invalid url: {0}'.format(current_url)
             return data
         print 'Start to parse: {0}'.format(current_url)
-        short_url_parts = re.split(r'[., /, _, %, ?, ="]', current_url)
-        current_id = short_url_parts[len(short_url_parts) - 2]
+        short_url_parts = re.split(r'[., /, _, %, ?, =, &"]', current_url)
+        current_id = short_url_parts[short_url_parts.index('engadget') + 2]
         url = ""
         content = ""
         time = ""
         author_name = ""
         title = ""
         id = ""
-        article_0 = html.xpath(".//*[contains(@class, 'main_c')]")
+        article_0 = html.xpath(".//*[contains(@class, 'rwd-inner-container W(1235px) W(980px)--lg W(100%)--md Mx(20px)--md D(f) Ai(st) My(40px) Miw(0)')]")
         if len(article_0) > 0:
-            content0_1 = article_0[0].xpath(".//*[contains(@id, 'content')]//*//text()")
-            time0_1 = article_0[0].xpath(".//*[contains(@class, 'infos')]//*[contains(@class, 'time')]//text()")
+            content0_1 = article_0[0].xpath(".//*[contains(@data-testid, 'PostContentContainer')]//div//text()")
+            time0_1 = article_0[0].xpath(".//*[contains(@class, 'Mt(5px) C(engadgetFontLightGray)')]//text()")
             author_name0_1 = self.spiderBone.name
-            title0_1 = article_0[0].xpath(".//h1//text()")
-            images0_1 = article_0[0].xpath(".//*[contains(@id, 'content')]//img/@src")
+            title0_1 = article_0[0].xpath(".//*[contains(@class, 'Ff($ff-primary) M(0) C(engadgetBlack) Fw(400) Fz(36px) Mt(10px) Fz(48px)! Lh(55px) Fz(24px)!--sm Lh(n)--sm')]//text()")
+            images0_1 = article_0[0].xpath(".//*[contains(@data-testid, 'PostContentContainer')]//img/@src")
 
             url = current_url
             id = current_id

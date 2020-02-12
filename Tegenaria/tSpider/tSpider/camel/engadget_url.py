@@ -12,8 +12,8 @@ from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
 class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
-        self.camelBone = CamelBone('techweb', callback=self.parse)
-        self.regx = re.compile("(http(s?):)?\/\/[0-9a-zA-Z]{0,}\.techweb\.com\.cn\/[0-9a-zA-Z]{0,}\/[0-9]{0,}-[0-9]{0,}-[0-9]{0,}\/[0-9]{0,}.shtml")
+        self.camelBone = CamelBone('engadget', callback=self.parse)
+        self.regx = re.compile("\/cn\-[0-9a-z\-]{0,}\.html")
         self.badkeys = []
         self.goodkeys = []
 
@@ -37,8 +37,8 @@ class Camel():
                                              self.regx.match(href_url),
                                              valid)
             if valid:
-                short_url_parts = re.split(r'[., /, _, %, ", ?, =]', href_url)
-                id = short_url_parts[len(short_url_parts) - 2]
+                short_url_parts = re.split(r'[., /, _, %, ", ?, =, &]', href_url)
+                id = short_url_parts[1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
                 title0_1 = item.xpath(".//text()")
