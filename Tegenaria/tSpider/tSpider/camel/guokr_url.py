@@ -1,6 +1,7 @@
 #coding:utf-8
 import sys
 reload(sys)
+sys.path.append("..")
 sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/")
 import urlparse
@@ -12,35 +13,41 @@ class Camel():
     def __init__(self):
         self.doraemon = Doraemon()
         self.camelBone = CamelBone('guokr', callback=self.parse)
+        self.regx = re.compile("\/article\/[0-9]{0,}")
         self.badkeys = []
         self.goodkeys = []
 
     def parse(self, current_url, html):
         results = []
-        href_items = html.xpath(".//a")
+        href_items = []
+        href_items0_1 = html.xpath(".//a")
+        self.current_url = current_url
+        self.html = html
+        if len(href_items0_1) > 0:
+            href_items += href_items0_1
         for item in href_items:
             href = item.xpath("@href")
             valid = True
             if len(href) == 0:
                 continue
             href_url = href[0]
-            isArticle = 'article' in href_url
-            if isArticle is False:
-                print 'Invalid url for: {0}'.format(href_url)
-                continue
             valid = self.doraemon.isUrlValid(href_url,
                                              self.goodkeys,
                                              self.badkeys,
-                                             True,
+                                             self.regx.match(href_url),
                                              valid)
             if valid:
-                short_url_parts = re.split(r'[., /, _, -]', href_url)
+                short_url_parts = re.split(r'[., /, _, %, ", ?, =, &]', href_url)
                 id = short_url_parts[short_url_parts.index('article') + 1]
                 url = urlparse.urljoin(current_url, href_url)
                 title = ""
-                title_list1 = item.xpath(".//text()")
-                if len(title_list1) > 0:
-                    title = ''.join(title_list1).strip()
+                title0_1 = item.xpath(".//*[contains(@class, 'InfoTitile')]//text()")
+                title0_2 = item.xpath(".//*[contains(@class, 'MaskTitle')]//text()")
+                if len(title0_1) > 0:
+                    title = ''.join(title0_1).strip()
+                    print title
+                if len(title0_2) > 0:
+                    title = ''.join(title0_2).strip()
                     print title
                 if self.doraemon.isTitleEmpty(title, url):
                     continue
