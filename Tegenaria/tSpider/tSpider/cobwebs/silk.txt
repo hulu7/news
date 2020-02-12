@@ -53,3 +53,4 @@ iyunying,爱运营,120,2,False,6,20
 pintu360,品途商业评论,120,1,False,6,20
 engadget,Engadget(瘾科技),120,2,False,6,23
 pingwest,品玩PINGWEST,120,1,False,6,23
+mcnjigou,MCN机构,120,1,False,6,23

@@ -1,0 +1,8 @@
+http://www.mcnjigou.com/
+http://www.mcnjigou.com/?cate=2
+http://www.mcnjigou.com/?cate=3
+http://www.mcnjigou.com/?cate=1
+http://www.mcnjigou.com/?tags=2
+http://www.mcnjigou.com/?tags=5
+http://www.mcnjigou.com/?tags=1
+http://www.mcnjigou.com/?tags=4
