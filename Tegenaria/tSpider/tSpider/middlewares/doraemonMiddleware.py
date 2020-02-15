@@ -49,6 +49,8 @@ class Doraemon():
         self.concurrency_refresh_file_spider = settings.CONCURRENCY_REFRESH_FILE_SPIDER
         self.refresh_concurrency_interval_spider = settings.REFRESH_CONCURRENCY_INTERVAL_SPIDER
         self.bf_huxiu_nlp = BloomFilter(self.rconn, settings.FINISHED_HUXIU_NLP)
+        self.sites_info = settings.SITES_INFO
+        self.sites_debug = settings.SITES_DEBUG
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)
@@ -71,8 +73,18 @@ class Doraemon():
             print 'does not exceed the restart interval and stop'
         return isExceed
 
-    def isEmpty(self, item_list):
-        return item_list !=None and len([item for item in item_list if item.strip()]) == 0
+    def isEmpty(self, obj=None):
+        if isinstance(obj, str):
+            return len([obj for i in obj if i.strip()]) == 0
+        elif isinstance(obj, int) or isinstance(obj, float):
+            return False
+        elif isinstance(obj, list) or isinstance(obj, dict) or isinstance(obj, tuple) or isinstance(obj, set):
+            return len(obj) == 0
+        else:
+            return obj == None
+
+    def isNumber(self, item):
+        return isinstance(item, int) or isinstance(item, float)
 
     def isTitleEmpty(self, title, url):
         if self.isEmpty(title):
@@ -80,8 +92,12 @@ class Doraemon():
             return True
         return False
 
-    def isUrlValid(self, url, good_keys, bad_keys, regx_match_result, valid):
-        if regx_match_result == None:
+    def isUrlValid(self, url, good_keys, bad_keys, regx, valid):
+        is_match = False
+        for regx_item in regx:
+            if regx_item.match(url) != None:
+                is_match = True
+        if is_match == False:
             print 'Invalid url for not match: {0}'.format(url)
             return False
         for good in good_keys:
@@ -410,10 +426,10 @@ class Doraemon():
                                             self.max_concurrency_spider)
 
     def isWorkTime(self, start_time, end_time):
-        if self.isEmpty(start_time):
+        if self.isNumber(start_time) is False:
             print 'start time is empty'
             return False
-        if self.isEmpty(end_time):
+        if self.isNumber(end_time) is False:
             print 'end time is empty'
             return False
         if self.isAfterHour(start_time) and self.isBeforeHour(end_time):
@@ -424,7 +440,7 @@ class Doraemon():
             return False
 
     def isAfterHour(self, hour):
-        if self.isEmpty(hour):
+        if self.isNumber(hour) is False:
             print 'input hour is empty.'
             return
         current_time = time.strftime('%H', time.localtime(time.time()))
@@ -434,7 +450,7 @@ class Doraemon():
             return False
 
     def isBeforeHour(self, hour):
-        if self.isEmpty(hour):
+        if self.isNumber(hour) is False:
             print 'input hour is empty.'
             return
         current_time = time.strftime('%H', time.localtime(time.time()))
@@ -568,6 +584,141 @@ class Doraemon():
             result.append(urlparse.urljoin(current_url, url).strip())
         return result
 
+    def getSitesInfo(self, isdebug=False):
+        if isdebug:
+            site_info_path = self.sites_debug
+        else:
+            site_info_path = self.sites_info
+        content = self.file.readFromTxt(site_info_path)
+        if self.isEmpty(content):
+            print 'sites info is empty'
+            return None
+        sitesInfo = content.split('[SITE]')
+        results = []
+        for site in sitesInfo:
+            if self.isEmpty(site):
+                continue
+            results.append(self.extractSiteInfo(site))
+        return results
+
+    def extractSiteInfo(self, siteInfo):
+        items = siteInfo.split('\n')
+        siteInfo = siteInfoDto()
+        for item in items:
+            if self.isEmpty(item):
+                continue
+            content = item.split('==')
+            key = ''.join(content[0]).strip()
+            value = ''.join(content[1]).strip()
+            if key == 'DOMAIN':
+                siteInfo.domain = value
+                continue
+            if key == 'NAME':
+                siteInfo.name = value
+                continue
+            if key == 'RESTARTINTERVAL':
+                siteInfo.restart_interval = int(value)
+                continue
+            if key == 'URLPARALLELNUMBER':
+                siteInfo.url_parallel_number = int(value)
+                continue
+            if key == 'CONTENTPARALLELNUMBER':
+                siteInfo.content_parallel_number = int(value)
+                continue
+            if key == 'ISOPENCACHE':
+                siteInfo.is_open_cache = bool(value)
+                continue
+            if key == 'WORKTIMESTART':
+                siteInfo.work_time_start = int(value)
+                continue
+            if key == 'WORKTIMEEND':
+                siteInfo.work_time_end = int(value)
+                continue
+            if key == 'GOODKEYS':
+                if self.isEmpty(value) is False:
+                    siteInfo.good_keys.append(value)
+                continue
+            if key == 'BADKEYS':
+                if self.isEmpty(value) is False:
+                    siteInfo.bad_keys.append(value)
+                continue
+            if key == 'URLMATCH':
+                if self.isEmpty(value) is False:
+                    siteInfo.url_match.append(self.extractRegxRule(value))
+                continue
+            if key == 'URLTITLEMATCH':
+                if self.isEmpty(value) is False:
+                    siteInfo.url_title_match.append(self.extractHtmlTag(value))
+                continue
+            if key == 'URLIDTAG':
+                if self.isEmpty(value) is False:
+                    siteInfo.url_id_tag.append(self.extractHtmlTag(value))
+                continue
+            if key == 'CONTENTURLMATCH':
+                if self.isEmpty(value) is False:
+                    siteInfo.content_url_match.append(self.extractRegxRule(value))
+                continue
+            if key == 'CONTENTIDTAG':
+                if self.isEmpty(value) is False:
+                    siteInfo.content_id_tag.append(self.extractHtmlTag(value))
+                continue
+            if key == 'HREFITEMS':
+                if self.isEmpty(value) is False:
+                    siteInfo.href_items.append(self.extractHtmlTag(value))
+                continue
+            if key == 'HREF':
+                if self.isEmpty(value) is False:
+                    siteInfo.href.append(self.extractHtmlTag(value))
+                continue
+            if key == 'ARTICLEMATCH':
+                if self.isEmpty(value) is False:
+                    siteInfo.article_match.append(self.extractHtmlTag(value))
+                continue
+            if key == 'CONTENTMATCH':
+                if self.isEmpty(value) is False:
+                    siteInfo.content_match.append(self.extractHtmlTag(value))
+                continue
+            if key == 'CONTENTTITLEMATCH':
+                if self.isEmpty(value) is False:
+                    siteInfo.content_title_match.append(self.extractHtmlTag(value))
+                continue
+            if key == 'CONTENTIMAGEMATCH':
+                if self.isEmpty(value) is False:
+                    siteInfo.content_image_match.append(self.extractHtmlTag(value))
+                continue
+            if key == 'CONTENTTIMEMATCH':
+                if self.isEmpty(value) is False:
+                    siteInfo.content_time_match.append(self.extractHtmlTag(value))
+                continue
+        return siteInfo
+
+    def getUrlId(self, url, idTag):
+        id = None
+        for item in idTag:
+            matchItem = item.regx
+            if matchItem in url:
+                index = url.index(item.regx) + item.index
+                if len(url) <= index:
+                    continue
+                id = url[index]
+                if id == None:
+                    continue
+        return id
+
+    def extractRegxRule(self, regxMatch):
+        return re.compile(regxMatch)
+
+    def extractHtmlTag(self, regxMatch):
+        items = regxMatch.split('|')
+        id = ''.join(items[0]).strip()
+        index = int(items[1])
+        return regxMatchDto(id, index)
+
+    def getMatchContent(self, content, regx):
+        if regx.index == -1 or len(content) == 0:
+           return content
+        return content[regx.index]
+
 class camelDto():
     def __init__(self,
                  title,
@@ -611,3 +762,56 @@ class noNameDto():
         self.page_url = page_url
         self.authors = authors
 
+class siteInfoDto():
+    def __init__(self,
+                 domain=None,
+                 name=None,
+                 restart_interval=None,
+                 url_parallel_number=None,
+                 content_parallel_number=None,
+                 is_open_cache=None,
+                 work_time_start=None,
+                 work_time_end=None,
+                 good_keys=[],
+                 bad_keys=[],
+                 href_items=[],
+                 href=[],
+                 url_match=[],
+                 url_title_match=[],
+                 url_id_tag=[],
+                 content_match=[],
+                 content_url_match=[],
+                 content_id_tag=[],
+                 article_match=[],
+                 content_title_match=[],
+                 content_image_match=[],
+                 content_time_match=[]):
+        self.domain = domain
+        self.name = name
+        self.restart_interval = restart_interval
+        self.url_parallel_number = url_parallel_number
+        self.content_parallel_number = content_parallel_number
+        self.is_open_cache = is_open_cache
+        self.work_time_start = work_time_start
+        self.work_time_end = work_time_end
+        self.good_keys = good_keys
+        self.bad_keys = bad_keys
+        self.href_items = href_items
+        self.href = href
+        self.url_match = url_match
+        self.url_title_match = url_title_match
+        self.url_id_tag = url_id_tag
+        self.content_match = content_match
+        self.content_url_match = content_url_match
+        self.content_id_tag = content_id_tag
+        self.article_match = article_match
+        self.content_title_match = content_title_match
+        self.content_image_match = content_image_match
+        self.content_time_match = content_time_match
+
+class regxMatchDto():
+    def __init__(self,
+                 regx=None,
+                 index=None):
+        self.regx = regx
+        self.index = index

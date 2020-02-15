@@ -13,8 +13,8 @@ from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
 
 class CamelBone():
 
-    def __init__(self, settingName, callback=callable):
-        self.settingName = settingName
+    def __init__(self, siteinfo=None, callback=callable):
+        self.siteinfo = siteinfo
         self.callBack = callback
         self.globalSettings = Settings()
         self.getSettings()
@@ -24,14 +24,14 @@ class CamelBone():
         self.doraemon.createFilePath(self.log_path)
 
     def getSettings(self):
-        self.settings = self.globalSettings.CreateSettings(self.settingName)
+        self.settings = self.globalSettings.CreateSettings(self.siteinfo)
         self.log_path = self.globalSettings.LOG_PATH_PRD2
         self.today = self.globalSettings.TODAY
         self.source = self.settings.SOURCE_NAME
         self.work_path_prd2 = self.settings.WORK_PATH_PRD2
         self.mongo = self.settings.MONGO_URLS
         self.name = self.settings.NAME
-        self.max_pool_size = self.settings.MAX_POOL_SIZE
+        self.max_pool_size = self.settings.MAX_POOL_SIZE_URL
         self.urls = self.settings.URLS
         self.max_concurrency = self.globalSettings.MAX_CONCURRENCY
         self.concurrency_file = self.globalSettings.CONCURRENCY_FILE
@@ -72,7 +72,6 @@ class CamelBone():
     def start(self):
         if self.doraemon.isCamelReadyToRun(self.settings) is False:
             message5 = 'It is not ready to run for {0}'.format(self.name)
-            self.file.logger(self.log_path, message5)
             print message5
             return
         message6 = 'Start {0} requests'.format(self.name)

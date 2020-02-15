@@ -1,0 +1,27 @@
+
+[SITE]
+DOMAIN==yunyingpai
+NAME==运营派
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.yunyingpai\.com\/[a-z]{0,}\/[0-9]{0,}.html
+URLIDTAG==yunyingpai|3
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.yunyingpai\.com\/[a-z]{0,}\/[0-9]{0,}.html
+CONTENTIDTAG==yunyingpai|3
+
+ARTICLEMATCH==.//*[contains(@class,'postArticle')]|0
+CONTENTMATCH==.//*[contains(@class, 'grap')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'title--leading')]//text()|-1
+CONTENTTIMEMATCH==|-2
+CONTENTIMAGEMATCH==.//*[contains(@class, 'grap')]//img//@src|-1

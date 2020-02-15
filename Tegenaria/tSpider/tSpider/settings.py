@@ -12,7 +12,8 @@ class Settings():
         self.RSYNC_PRD1 = "//home//dev//Data//rsyncData//prd4"
         self.RSYNC_PRD2 = "//home//dev//Data//rsyncData//prd3"
         self.CAMEL_FOOD = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//food"
-        self.COBWEBS = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs//silk.txt"
+        self.SITES_INFO = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs//sites_info.txt"
+        self.SITES_DEBUG = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs//sites_debug.txt"
 
         self.SELENIUM_TIMEOUT = 120 #second
         self.CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
@@ -142,37 +143,41 @@ class Settings():
                        SETTINGS_NAME,
                        SOURCE_NAME,
                        RESTART_INTERVAL,
-                       MAX_POOL_SIZE,
+                       MAX_POOL_SIZE_URL,
+                       MAX_POOL_SIZE_CONTENT,
                        IS_OPEN_CACHE,
                        START_TIME,
                        END_TIME):
         return settingsSpec(SETTINGS_NAME,
                             SOURCE_NAME,
                             RESTART_INTERVAL,
-                            MAX_POOL_SIZE,
+                            MAX_POOL_SIZE_URL,
+                            MAX_POOL_SIZE_CONTENT,
                             IS_OPEN_CACHE,
                             START_TIME,
                             END_TIME)
 
-    def CreateSettings(self, NAME):
-        content = self.file.readFromTxt(self.COBWEBS)
-        config_list = content.split('\n')
-        for config in config_list:
-            if NAME in config:
-                print "Find setting: {0}".format(NAME)
-                data = config.split(',')
-                return self.SettingsFormat(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
-        print "Cannot find setting: {0}".format(NAME)
+    def CreateSettings(self, siteinfo=None):
+        print "Create setting for: {0}".format(siteinfo.domain)
+        return self.SettingsFormat(siteinfo.domain,
+                                   siteinfo.name,
+                                   siteinfo.restart_interval,
+                                   siteinfo.url_parallel_number,
+                                   siteinfo.content_parallel_number,
+                                   siteinfo.is_open_cache,
+                                   siteinfo.work_time_start,
+                                   siteinfo.work_time_end)
 
     def CreateCommonSettings(self):
-        return self.SettingsFormat('0', '0', '0', '0', '0', '0', '0')
+        return self.SettingsFormat('0', '0', '0', '0', '0', '0', '0', '0')
 
 class settingsSpec():
     def __init__(self,
                  SETTINGS_NAME=None,
                  SOURCE_NAME=None,
                  RESTART_INTERVAL=None,
-                 MAX_POOL_SIZE=None,
+                 MAX_POOL_SIZE_URL=None,
+                 MAX_POOL_SIZE_CONTENT=None,
                  IS_OPEN_CACHE=None,
                  START_TIME=None,
                  END_TIME=None):
@@ -209,7 +214,8 @@ class settingsSpec():
         self.REDIS_REFRESH_PATH = "{0}//sites//{1}//redis_refresh.txt".format(settings.RSYNC_PRD2,
                                                                               SETTINGS_NAME)
         self.RESTART_INTERVAL = int(RESTART_INTERVAL)
-        self.MAX_POOL_SIZE = int(MAX_POOL_SIZE)
+        self.MAX_POOL_SIZE_URL = int(MAX_POOL_SIZE_URL)
+        self.MAX_POOL_SIZE_CONTENT = int(MAX_POOL_SIZE_CONTENT)
         self.URLS = "{0}//{1}.txt".format(settings.CAMEL_FOOD, SETTINGS_NAME)
         self.IS_OPEN_CACHE = str(IS_OPEN_CACHE) == "True"
         self.SOURCE_NAME = SOURCE_NAME

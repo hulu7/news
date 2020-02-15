@@ -3,16 +3,11 @@ DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")
 LOGPATH=/home/dev/Data/rsyncData/prd4/log
 SPIDERPATH=/home/dev/Repository/news/Tegenaria/tSpider/tSpider/spiders
-for spider in $(ls ${SPIDERPATH})
-do
-    if [ "${spider}" != "__init__.py" ]; then
-        spiderExists=`ps -fe |grep "${spider}" |grep -v "grep" |wc -l`
-        if [ ${spiderExists} -eq 0 ]; then
-           echo "${TIME}: Restart ${spider} content spider ..." >> ${LOGPATH}/${DATE}_log.log
-           python ${SPIDERPATH}/${spider}
-        else
-           echo "${TIME}: ${spider} content is running" >> ${LOGPATH}/${DATE}_log.log
-        fi
-    fi
-done
+isSpiderRun=`ps -fe |grep "spider_run.py" |grep -v "grep" |wc -l`
+if [ ${isSpiderRun} -eq 0 ]; then
+   echo "${TIME}: Restart content spider ..." >> ${LOGPATH}/${DATE}_log.log
+   python ${SPIDERPATH}/spider_run.py
+else
+   echo "${TIME}: spider is running" >> ${LOGPATH}/${DATE}_log.log
+fi
 chmod 777 ${LOGPATH}/${DATE}_log.log

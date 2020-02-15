@@ -12,8 +12,8 @@ from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddlew
 from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
 
 class SpiderBone():
-    def __init__(self, settingName, callback=callable):
-        self.settingName = settingName
+    def __init__(self, siteinfo=None, callback=callable):
+        self.siteinfo = siteinfo
         self.callBack = callback
         self.globalSettings = Settings()
         self.getSettings()
@@ -23,7 +23,7 @@ class SpiderBone():
         self.doraemon.createFilePath(self.log_path)
 
     def getSettings(self):
-        self.settings = self.globalSettings.CreateSettings(self.settingName)
+        self.settings = self.globalSettings.CreateSettings(self.siteinfo)
         self.log_path = self.globalSettings.LOG_PATH
         self.today = self.globalSettings.TODAY
         self.source = self.settings.SOURCE_NAME
@@ -31,7 +31,7 @@ class SpiderBone():
         self.finished_txt_path = self.settings.FINISHED_TXT_PATH
         self.mongo = self.settings.MONGO
         self.name = self.settings.NAME
-        self.max_pool_size = self.settings.MAX_POOL_SIZE
+        self.max_pool_size = self.settings.MAX_POOL_SIZE_CONTENT
         self.url_path = self.settings.URL_PATH
         self.is_open_cache = self.settings.IS_OPEN_CACHE
         self.max_concurrency_spider = self.globalSettings.MAX_CONCURRENCY_SPIDER
@@ -69,7 +69,6 @@ class SpiderBone():
     def start(self):
         if self.doraemon.isSpiderReadyToRun() is False:
             message4 = 'It is not ready to run spider: {0}'.format(self.name)
-            self.file.logger(self.log_path, message4)
             print message4
             return
         message5 = 'Start {0} requests'.format(self.name)

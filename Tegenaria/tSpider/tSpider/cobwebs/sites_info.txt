@@ -1,0 +1,1401 @@
+[SITE]
+DOMAIN==huxiu
+NAME==虎嗅
+RESTARTINTERVAL==30
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/article\/[0-9]{0,}\.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==article|1
+URLTITLEMATCH==.//*[contains(@class, 'multi-line-overflow')]//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.huxiu\.com\/article\/[0-9]{0,}\.html
+CONTENTIDTAG==article|1
+ARTICLEMATCH==.//*[contains(@class, 'article-wrapper')]|0
+CONTENTMATCH==.//*[contains(@class, 'article__content')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article__title')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class,'top-img')]//img//@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class,'img-center-box')]//img//@src|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'article__time')]/text()|-1
+
+[SITE]
+DOMAIN==8btc
+NAME==巴比特
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/article\/[0-9]{0,}
+URLMATCH==\/media\/[0-9]{0,}
+URLMATCH==\/business\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==article|1
+URLIDTAG==media|1
+URLIDTAG==business|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.8btc\.com\/(article|media|business)\/[0-9]{0,}
+CONTENTIDTAG==article|1
+CONTENTIDTAG==media|1
+CONTENTIDTAG==business|1
+ARTICLEMATCH==.//*[contains(@class,'main bbt-main')]|0
+CONTENTMATCH==.//*[contains(@class, 'bbt-html')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'bbt-container')]/h1/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'bbt-html')]//img/@src|-1
+CONTENTTIMEMATCH==.//time//text()|-1
+
+[SITE]
+DOMAIN==adquan
+NAME==广告门
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==20
+
+URLMATCH==\/post-[0-9]{0,}-[0-9]{0,}\.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.adquan\.com\/post-[0-9]{0,}-[0-9]{0,}\.html
+CONTENTIDTAG==adquan|2
+ARTICLEMATCH==.//*[contains(@class,'txt_box')]|0
+CONTENTMATCH==.//*[contains(@class, 'con_Text')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'text_title')]//text()|0
+CONTENTIMAGEMATCH==.//*[contains(@class, 'con_Text')]//img/@src|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'text_time2')]//*//text()|-1
+
+[SITE]
+DOMAIN==awtmt
+NAME==全天候科技
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/articles\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a[contains(@class, 'article-title')]|-1
+HREF==@href|-1
+URLIDTAG==articles|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/awtmt\.com\/articles\/[0-9]{0,}
+CONTENTIDTAG==articles|1
+ARTICLEMATCH==.//*[contains(@class, 'article-wrap')]|0
+CONTENTMATCH==.//*[contains(@class, 'article-text')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'article-title')]//text()|0
+CONTENTIMAGEMATCH==.//*[contains(@class, 'image-zoom-content')]//img/@src|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'article-time')]//text()|-1
+
+[SITE]
+DOMAIN==bishijie
+NAME==币世界
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.bishijie\.com\/shendu\/[0-9]{0,}.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==bishijie|3
+URLTITLEMATCH==.//*[contains(@class,'articles-title')]//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.bishijie\.com\/shendu\/[0-9]{0,}.html
+CONTENTIDTAG==bishijie|3
+ARTICLEMATCH==.//*[contains(@class,'articles-detail-wrap')]|0
+CONTENTMATCH==.//*[contains(@class, 'article-text')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'detail-title')]//text()|0
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article-text')]//img/@src|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'articles-info-time')]//text()|-1
+
+[SITE]
+DOMAIN==btc798
+NAME==比特币之家
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==22
+
+URLMATCH==\/articles\/[0-9]{0,}.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a[@class='mar']|0
+HREF==@href|-1
+URLIDTAG==articles|1
+URLTITLEMATCH==./text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.btc798\.com\/articles\/[0-9]{0,}.html
+CONTENTIDTAG==articles|1
+ARTICLEMATCH==.//*[contains(@class,'summit')]|0
+CONTENTMATCH==.//*[contains(@class, 'summs')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'summi')]/h1/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'summi')]//ul//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'summs')]//img/@src|-1
+
+[SITE]
+DOMAIN==cbndata
+NAME==第一财经商业数据中心
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/information\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==information|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/cbndata\.com\/information\/[0-9]{0,}
+CONTENTIDTAG==information|1
+ARTICLEMATCH==.//*[contains(@class, 'detail-wrapper')]|0
+CONTENTMATCH==.//*[contains(@class, 'content')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'header')]//*[contains(@class, 'title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'date')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'content')]//img/@src|-1
+
+[SITE]
+DOMAIN==chainfor
+NAME==链向财经
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==22
+
+URLMATCH==\/news\/show\/[0-9]{0,}.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==show|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.chainfor\.com\/news\/show\/[0-9]{0,}.html
+CONTENTIDTAG==show|1
+ARTICLEMATCH==.//*[contains(@class,'m-i-article')]|0
+CONTENTMATCH==.//*[contains(@class, 'm-i-bd')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'m-i-title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'm-i-type-timer')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'm-i-bd')]//img/@src|-1
+
+[SITE]
+DOMAIN==ce
+NAME==中国经济网
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==([\.]{0,}\/)?([a-zA-Z]{0,}\/)?([a-zA-Z]{0,}\/)?[0-9]{0,}\/[0-9]{0,}\/[0-9a-zA-Z\_]{0,}.shtml
+GOODKEYS==
+BADKEYS==tu
+BADKEYS==index
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==shtml|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/m\.ce\.cn\/([a-zA-Z]{0,}\/)?([a-zA-Z]{0,}\/)?[0-9]{0,}\/[0-9]{0,}\/[0-9a-zA-Z\_]{0,}.shtml
+CONTENTIDTAG==shtml|-1
+ARTICLEMATCH==.//*[contains(@class,'news_module mtnone')]|0
+CONTENTMATCH==.//div[contains(@class, 'TRS_Editor')]//p//text()|-1
+CONTENTTITLEMATCH==.//h2/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'time')]/text()|-1
+CONTENTIMAGEMATCH==.//div[contains(@class, 'TRS_Editor')]//img/@src|-1
+
+[SITE]
+DOMAIN==chanpin100
+NAME==产品壹佰
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==20
+
+URLMATCH==\/article\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//*[contains(@class,'media-heading')]/a|-1
+HREF==@href|-1
+URLIDTAG==article|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.chanpin100\.com\/article\/[0-9]{0,}
+CONTENTIDTAG==article|1
+ARTICLEMATCH==.//*[contains(@class, 'article-detail')]|0
+CONTENTMATCH==.//*[contains(@class, 'article-content-container')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article-title')]//h2//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'date')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article-content-container')]//img/@src|-1
+
+[SITE]
+DOMAIN==cyzone
+NAME==创业邦
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/\/www\.cyzone\.cn\/article\/[0-9]{0,}\.html
+GOODKEYS==
+BADKEYS==#cyzone-comments-main
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==article|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.cyzone\.cn\/article\/[0-9]{0,}
+CONTENTIDTAG==article|1
+ARTICLEMATCH==.//*[contains(@id, 'article')]|0
+CONTENTMATCH==.//*[contains(@class, 'article-content-container')]//p//text()|-1
+CONTENTMATCH==.//*[contains(@class, 'article-content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article-title')]//h2//text()|0
+CONTENTTITLEMATCH==.//*[@class='article-tit']//text()|-1
+CONTENTTIMEMATCH==.//*[@class='date']//text()|-1
+CONTENTTIMEMATCH==.//*[@class='date-time']//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article-content-container')]//img/@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article-content')]//img/@src|-1
+
+[SITE]
+DOMAIN==dgtle
+NAME==数字尾巴
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/(article|news)-[0-9]{0,}-[0-9]{0,}.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==|1
+URLTITLEMATCH==.//h5[contains(@class,'title')]//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.dgtle\.com\/(article|news)-[0-9]{0,}-[0-9]{0,}.html
+CONTENTIDTAG==dgtle|2
+
+ARTICLEMATCH==.//article|0
+CONTENTMATCH==.//*[contains(@class, 'whale_news-detail-content-content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[@class='title']//text()|0
+CONTENTTIMEMATCH==.//time//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'whale_news-detail-content-content')]//img/@src|-1
+
+ARTICLEMATCH==.//*[contains(@class, 'detail-content-left-content')]|0
+CONTENTMATCH==.//*[contains(@class, 'forum-viewthread-article-box')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'title')]//text()|0
+CONTENTTIMEMATCH==.//time//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'forum-viewthread-article-box')]//img/@src|-1
+
+[SITE]
+DOMAIN==eeo
+NAME==经济观察网
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.eeo\.com\.cn\/[0-9]{0,}\/[0-9]{0,}\/[0-9]{0,}\.shtml
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==eeo|5
+URLTITLEMATCH==./text()|-1
+URLTITLEMATCH==@title|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.eeo\.com\.cn\/[0-9]{0,}\/[0-9]{0,}\/[0-9]{0,}\.shtml
+CONTENTIDTAG==eeo|5
+
+ARTICLEMATCH==.//*[contains(@class,'xd-b-left')]|0
+CONTENTMATCH==.//div[contains(@class, 'xx_boxsing')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'xd-b-b')]/h1/text()|-1
+CONTENTTIMEMATCH==.//div[contains(@class, 'xd-b-b')]/p/span/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'xd-xd-xd-newsimg')]//img//@src|-1
+
+[SITE]
+DOMAIN==engadget
+NAME==Engadget(瘾科技)
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/[0-9a-z\-]{0,}\.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/cn\.engadget\.com\/[0-9a-z\-]{0,}\.html
+CONTENTIDTAG==engadget|2
+
+ARTICLEMATCH==.//*[contains(@class, 'rwd-inner-container W(1235px) W(980px)--lg W(100%)--md Mx(20px)--md D(f) Ai(st) My(40px) Miw(0)')]|0
+CONTENTMATCH==.//*[@data-testid='PostContentContainer']//div//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'Ff($ff-primary) M(0) C(engadgetBlack) Fw(400) Fz(36px) Mt(10px) Fz(48px)! Lh(55px) Fz(24px)!--sm Lh(n)--sm')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'Mt(5px) C(engadgetFontLightGray)')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@data-testid, 'PostContentContainer')]//img/@src|-1
+
+[SITE]
+DOMAIN==geekpark
+NAME==极客公园
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==18
+
+URLMATCH==\/news\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==news|1
+URLTITLEMATCH==./h3//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.geekpark\.net\/news\/[0-9]{0,}
+CONTENTIDTAG==news|1
+
+ARTICLEMATCH==.//article|0
+CONTENTMATCH==.//*[contains(@class, 'article-content')]//p//text()|-1
+CONTENTTITLEMATCH==.//h1[contains(@class,'topic-title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'release-date')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'topic-cover')]//img/@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'image-desc')]//img/@src|-1
+
+[SITE]
+DOMAIN==gelonghui
+NAME==格隆汇
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(https:\/\/www\.gelonghui\.com)?\/p\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==p|1
+URLTITLEMATCH==.//h2/text()|-1
+
+CONTENTURLMATCH==(https:\/\/www\.gelonghui\.com)?\/p\/[0-9]{0,}
+CONTENTIDTAG==p|1
+
+ARTICLEMATCH==.//*[contains(@class,'article-detail')]|0
+CONTENTMATCH==.//*[contains(@class, 'article-with-html')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article-detail')]/h1/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'date')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class,'article-detail')]//p//img//@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class,'article-with-html')]//p//img//@src|-1
+
+[SITE]
+DOMAIN==guancha
+NAME==观察者网
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/[a-zA-Z]{0,}\/[0-9\_]{0,}.shtml
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==|5
+URLTITLEMATCH==.//h3/text()|0
+
+CONTENTURLMATCH==(https:\/\/m\.guancha\.cn)?\/[a-zA-Z]{0,}\/[0-9\_]{0,}.shtml
+CONTENTIDTAG==guancha|6
+
+ARTICLEMATCH==.//*[contains(@class,'textPageCont')]|0
+CONTENTMATCH==.//*[contains(@class, 'textPageContInner')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'textPageContInner')]/h1/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'time')]/text()|0
+CONTENTIMAGEMATCH==.//*[contains(@class, 'textPageContInner')]//p//img//@src|-1
+
+ARTICLEMATCH==.//*[contains(@class,'article-content')]|0
+CONTENTMATCH==.//div[contains(@class, 'article-txt-content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article-content')]/h1/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'time1')]/text()|0
+
+[SITE]
+DOMAIN==huanqiu
+NAME==环球网
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/[a-zA-Z]{0,}\.huanqiu\.com\/article\/[0-9a-zA-Z]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==article|1
+URLTITLEMATCH==.//*[contains(@class, 'news-title')]/text()|-1
+URLTITLEMATCH==.//*[contains(@class, 'lunbo-title')]/text()|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/[a-zA-Z]{0,}\.huanqiu\.com\/article\/[0-9a-zA-Z]{0,}
+CONTENTIDTAG==article|1
+
+ARTICLEMATCH==.//*[contains(@class, 'container-article')]|0
+CONTENTMATCH==.//*[contains(@class, 'content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'container-title')]/h3/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'time')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'content')]//p//img//@src|-1
+
+ARTICLEMATCH==.//*[@class='container']|0
+CONTENTMATCH==.//*[contains(@data-type, 'rtext')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 't-container-title')]/h3/text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'time')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@data-type, 'rtext')]//p//img//@src|-1
+
+[SITE]
+DOMAIN==i36kr
+NAME==36氪
+RESTARTINTERVAL==30
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/p\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a[contains(@class, 'article-item-title')]|-1
+HREF==@href|-1
+URLIDTAG==p|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.36kr\.com\/p\/[0-9]{0,}
+CONTENTIDTAG==p|1
+
+ARTICLEMATCH==.//*[contains(@class,'article-content')]|0
+CONTENTMATCH==.//*[contains(@class, 'articleDetailContent')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article-title')]/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'title-icon-item item-time')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'articleDetailContent')]//p//img//@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'articleDetailContent')]//a//@href|-1
+
+[SITE]
+DOMAIN==iceo
+NAME==中国企业家
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.iceo\.com\.cn\/[a-z0-9]{0,}\/?[0-9]{0,}\/[0-9]{0,}\/[0-9]{0,}\/[0-9]{0,}\.shtml
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==shtml|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.iceo\.com\.cn\/[a-z0-9]{0,}\/?[0-9]{0,}\/[0-9]{0,}\/[0-9]{0,}\/[0-9]{0,}\.shtml
+CONTENTIDTAG==shtml|-1
+
+ARTICLEMATCH==.//*[contains(@class, 'col-main1')]|0
+CONTENTMATCH==.//*[contains(@class, 'article-content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'titleh1')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'info')]/span/text()|0
+CONTENTIMAGEMATCH==|-2
+
+ARTICLEMATCH==.//*[contains(@class, 'col-main')]|0
+CONTENTMATCH==.//*[contains(@class, 'article_body')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'titleh1')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'info')]/span/text()|0
+CONTENTIMAGEMATCH==|-2
+
+[SITE]
+DOMAIN==ifanr
+NAME==爱范儿
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.ifanr\.com\/(app\/)?[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a[contains(@class,'js-title-transform')]|-1
+HREF==@href|-1
+URLIDTAG==ifanr|2
+URLIDTAG==ifanr|3
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.ifanr\.com\/(app\/)?[0-9]{0,}
+CONTENTIDTAG==ifanr|2
+CONTENTIDTAG==ifanr|3
+
+ARTICLEMATCH==.//*[contains(@id,'article-content-wrapper')]|0
+CONTENTMATCH==.//*[contains(@class, 'c-article-content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'c-single-normal__title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'c-article-header-meta__time')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'c-article-content')]//img/@src|-1
+
+[SITE]
+DOMAIN==ifeng
+NAME==凤凰网
+RESTARTINTERVAL==30
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/[a-z]{0,}\.ifeng\.com\/c\/[0-9a-zA-Z]{0,}
+GOODKEYS==
+BADKEYS==comment
+BADKEYS==special
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==ifeng|3
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/[a-z]{0,}\.ifeng\.com\/c\/[0-9a-zA-Z]{0,}
+CONTENTIDTAG==ifeng|3
+
+ARTICLEMATCH==.//*[contains(@class,'container-2ItVJon-')]|0
+CONTENTMATCH==.//*[contains(@class, 'text-3zQ3cZD4')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'titleLine-gY7DniPB')]/h1/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'titleLine-gY7DniPB')]/p/span/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'text-3zQ3cZD4')]//p//img//@src|-1
+
+ARTICLEMATCH==.//*[contains(@class,'artical-_Qk9Dp2t')]|0
+CONTENTMATCH==.//*[contains(@class, 'text-3zQ3cZD4')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'topic-3bY8Hw-9')]/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'time-hm3v7ddj')]//*//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'text-3zQ3cZD4')]//p/img/@src|-1
+
+ARTICLEMATCH==.//*[contains(@class,'artical-2gdTPy_p')]|0
+CONTENTMATCH==.//*[contains(@class, 'text-3zQ3cZD4')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'topic-1Q4xfaaR')]/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'date-2Z2fH9A1')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'text-3zQ3cZD4')]//p/img/@src|-1
+
+[SITE]
+DOMAIN==iheima
+NAME==黑马网
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/article\-[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//*[contains(@class, 'title')]|-1
+HREF==@href|-1
+URLIDTAG==|1
+URLTITLEMATCH==.//*[contains(@class, 'coltitle')]//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.iheima\.com\/article\-[0-9]{0,}
+CONTENTIDTAG==iheima|2
+
+ARTICLEMATCH==.//*[contains(@class,'main-content')]|0
+CONTENTMATCH==.//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'title')]/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'time fl')]/text()|-1
+CONTENTIMAGEMATCH==.//p//img//@src|-1
+
+[SITE]
+DOMAIN==inneed
+NAME==inNeed资讯
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==20
+
+URLMATCH==\/articles\/detail\/[0-9a-zA-Z]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==articles|2
+URLTITLEMATCH==.//*[contains(@class,'coltitle')]//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.inneed\.club\/articles\/detail\/[0-9a-zA-Z]{0,}
+CONTENTIDTAG==articles|2
+
+ARTICLEMATCH==.//*[contains(@class, 'resourcesDetail_box')]|0
+CONTENTMATCH==.//*[contains(@class, 'content_detail')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'header_item')]//*[contains(@class,'title')]//text()|0
+CONTENTTIMEMATCH==|-2
+CONTENTIMAGEMATCH==.//*[contains(@class, 'content_detail')]//img/@src|-1
+
+[SITE]
+DOMAIN==iresearch
+NAME==艾瑞网
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/[a-z]{0,}\.iresearch\.cn\/(content?|a|b)\/[0-9]{0,}\/([0-9]{0,}\/)?[0-9]{0,}\.shtml
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==shtml|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/[a-z]{0,}\.iresearch\.cn\/(content?|a|b)\/[0-9]{0,}\/([0-9]{0,}\/)?[0-9]{0,}\.shtml
+CONTENTIDTAG==shtml|-1
+
+ARTICLEMATCH==.//*[contains(@class,'g-content')]|0
+CONTENTMATCH==.//*[contains(@class, 'm-article')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'title')]/h1/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'origin')]/em/text()|0
+CONTENTIMAGEMATCH==.//*[contains(@class, 'm-article')]//p//img//@src|-1
+
+[SITE]
+DOMAIN==ithome
+NAME==IT之家
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/m\.ithome\.com\/html\/[0-9]{0,}.htm
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==ithome|3
+URLTITLEMATCH==.//*[contains(@class,'plc-title')]//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/m\.ithome\.com\/html\/[0-9]{0,}.htm
+CONTENTIDTAG==ithome|3
+
+ARTICLEMATCH==.//*[contains(@role,'article')]|0
+CONTENTMATCH==.//*[contains(@class, 'news-content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'news-time')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'news-content')]//img/@data-original|-1
+
+[SITE]
+DOMAIN==iyiou
+NAME==亿欧网
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.iyiou\.com\/(p?|breaking|intelligence)\/[a-z0-9]{0,}\.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==iyiou|3
+URLTITLEMATCH==@title|-1
+URLTITLEMATCH==.//h2//text()|-1
+URLTITLEMATCH==.//p//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.iyiou\.com\/(p?|breaking|intelligence)\/[a-z0-9]{0,}\.html
+CONTENTIDTAG==iyiou|3
+
+ARTICLEMATCH==.//*[contains(@id,'post_content')]|0
+CONTENTMATCH==.//*[contains(@id, 'post_description')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@id,'post_title')]/text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'title_one')]/text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'post_date')]/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'hidden')]/text()|0
+CONTENTIMAGEMATCH==.//*[contains(@id,'post_content')]//*//img//@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@id,'post_description')]//*//img//@src|-1
+
+ARTICLEMATCH==.//*[@class='viewWrap']|0
+
+[SITE]
+DOMAIN==iyunying
+NAME==爱运营
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==20
+
+URLMATCH==(http(s?):)?\/\/www\.iyunying\.org\/([a-zA-Z]{0,}\/)?[a-zA-Z]{0,}\/[0-9]{0,}.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==html|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.iyunying\.org\/([a-zA-Z]{0,}\/)?[a-zA-Z]{0,}\/[0-9]{0,}.html
+CONTENTIDTAG==html|-1
+
+ARTICLEMATCH==.//article|0
+CONTENTMATCH==.//*[contains(@class, 'entry-content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'entry-title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'entry-info')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'entry-content')]//img/@src|-1
+
+[SITE]
+DOMAIN==jiemian
+NAME==界面新闻
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.jiemian\.com\/article\/[0-9]{0,}.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==article|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.jiemian\.com\/article\/[0-9]{0,}.html
+CONTENTIDTAG==article|1
+
+ARTICLEMATCH==.//*[contains(@class,'article-view')]|0
+CONTENTMATCH==.//*[contains(@class, 'article-main')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article-header')]/h1/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'article-info')]//*//span//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class,'article-main')]//*//img//@src|-1
+
+[SITE]
+DOMAIN==jingji21
+NAME==21经济网
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/m\.21jingji\.com\/article\/[0-9]{0,}\/herald\/[a-z0-9]{0,}\.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==article|3
+URLTITLEMATCH==.//*[contains(@class,'news_title')]/text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/m\.21jingji\.com\/article\/[0-9]{0,}\/herald\/[a-z0-9]{0,}\.html
+CONTENTIDTAG==article|3
+
+ARTICLEMATCH==.//*[contains(@class,'content')]|0
+CONTENTMATCH==.//*[contains(@class, 'txtContent')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'titleHead')]/h1/text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'newsDate')]/text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'author-infos')]/span/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'txtContent')]//p//img//@src|-1
+
+[SITE]
+DOMAIN==jinse
+NAME==金色财经
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==22
+
+URLMATCH==(http(s?):)?\/\/www\.jinse\.com\/(news\/)?blockchain\/[0-9]{0,}.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==html|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.jinse\.com\/(news\/)?blockchain\/[0-9]{0,}.html
+CONTENTIDTAG==html|-1
+
+ARTICLEMATCH==.//*[contains(@class,'js-left')]|0
+CONTENTMATCH==.//*[contains(@class,'js-article')]//p//text()|-1
+CONTENTTITLEMATCH==./h1/text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'js-article-author')]//span/text()|-1
+CONTENTIMAGEMATCH==.//p//img//@src|-1
+
+[SITE]
+DOMAIN==jiqizhixin
+NAME==机器之心
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/articles\/[0-9\-]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==articles|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.jiqizhixin\.com\/articles\/[0-9\-]{0,}
+CONTENTIDTAG==articles|1
+
+ARTICLEMATCH==.//*[contains(@class, 'article')]//*[contains(@class, 'u-min-height-container u-container')]|0
+CONTENTMATCH==.//*[contains(@class, 'article__content')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'article__title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'article__published')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article__content')]//img/@src|-1
+
+[SITE]
+DOMAIN==leiphone
+NAME==雷锋网
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.leiphone\.com\/news\/[0-9]{0,}\/[0-9a-zA-Z]{0,}.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==leiphone|4
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.leiphone\.com\/news\/[0-9]{0,}\/[0-9a-zA-Z]{0,}.html
+CONTENTIDTAG==leiphone|4
+
+ARTICLEMATCH==.//*[contains(@class,'article-template')]|0
+CONTENTMATCH==.//*[contains(@class, 'lph-article-comView')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'headTit')]//text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'time')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'lph-article-comView')]//p//img//@src|-1
+
+[SITE]
+DOMAIN==mbalib
+NAME==MBA智库资讯
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/story\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==story|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/news.mbalib\.com\/story\/[0-9]{0,}
+CONTENTIDTAG==story|1
+
+ARTICLEMATCH==.//*[contains(@class, 'single-post')]|0
+CONTENTMATCH==.//*[contains(@class, 'single-post-article')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'single-post-header')]//h1//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'time-ico')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'single-post-toppic')]//img/@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'single-post-article')]//img/@src|-1
+
+[SITE]
+DOMAIN==mcnjigou
+NAME==MCN机构
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.mcnjigou\.com\/\?id\=[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//*[contains(@class, 'article_body')]//h2//a|-1
+HREF==@href|-1
+URLIDTAG==id|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.mcnjigou\.com\/\?id\=[0-9]{0,}
+CONTENTIDTAG==id|1
+
+ARTICLEMATCH==.//*[contains(@class, 'mainbody')]|0
+CONTENTMATCH==.//*[contains(@class, 'article_content')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'title')]/h1//text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'title')]//span//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article_content')]//img/@src|-1
+
+[SITE]
+DOMAIN==meihua
+NAME==梅花网
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/article\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==article|1
+URLTITLEMATCH==./span/text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.meihua\.info\/article\/[0-9]{0,}
+CONTENTIDTAG==article|1
+
+ARTICLEMATCH==.//*[contains(@class,'article-content')]|0
+CONTENTMATCH==.//*[@class='content']//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article-detail')]//*[contains(@class,'title')]/text()|0
+CONTENTTIMEMATCH==.//*[@class='info-item']//*//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'content')]//img/@src|-1
+
+[SITE]
+DOMAIN==myzaker
+NAME==ZAKER
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.myzaker\.com\/article\/[0-9a-zA-Z]{0,}/
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==article|1
+URLTITLEMATCH==.//*[contains(@class,'article-title')]//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.myzaker\.com\/article\/[0-9a-zA-Z]{0,}/
+CONTENTIDTAG==article|1
+
+ARTICLEMATCH==.//*[@class='container']|0
+CONTENTMATCH==.//*[@id='content']//*//text()|-1
+CONTENTTITLEMATCH==.//h1[contains(@class,'article-title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'sub-line')]//*[contains(@class, 'time')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'content_img_div')]//img/@data-original|-1
+
+[SITE]
+DOMAIN==niaogebiji
+NAME==鸟哥笔记
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/article[0-9\-]{0,}\.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==|1
+URLTITLEMATCH==.//*[contains(@class, 'articleTitle')]/text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.niaogebiji\.com\/article[0-9\-]{0,}\.html
+CONTENTIDTAG==niaogebiji|2
+
+ARTICLEMATCH==.//*[contains(@class,'contentLeft')]|0
+CONTENTMATCH==.//*[contains(@class, 'article')]//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'fixed_module1 mobileHide')]/h1/text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'writeTime3')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class,'article')]//div//img//@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class,'article_img')]//@src|-1
+
+[SITE]
+DOMAIN==odaily
+NAME==Odaily星球日报
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/post\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==post|1
+URLTITLEMATCH==./h3//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.odaily\.com\/post\/[0-9]{0,}
+CONTENTIDTAG==post|1
+
+ARTICLEMATCH==.//article|0
+CONTENTMATCH==.//*[contains(@class, '_3739r7Mk')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@itemprop, 'headline')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@itemprop, 'dateCreated')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, '_3739r7Mk')]//img/@src|-1
+
+[SITE]
+DOMAIN==pingwest
+NAME==品玩PINGWEST
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/\/www\.pingwest\.com\/a\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//*[contains(@class, 'title')]/a|-1
+HREF==@href|-1
+URLIDTAG==pingwest|3
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.pingwest\.com\/a\/[0-9]{0,}
+CONTENTIDTAG==pingwest|3
+
+ARTICLEMATCH==.//*[contains(@class, 'article-row')]|0
+CONTENTMATCH==.//*[contains(@class, 'article-style')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'article-title')]//text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'publish-time')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article-style')]//img/@src|-1
+
+[SITE]
+DOMAIN==pintu360
+NAME==品途商业评论
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==20
+
+URLMATCH==[0-9a-zA-Z]{0,}.html\?s\=[0-9\,]{0,}\&o\=[0-9\,]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//*[contains(@class, 'article-title')]/a|-1
+HREF==@href|-1
+URLIDTAG==html|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.pintu360\.com\/[0-9a-zA-Z]{0,}.html\?s\=[0-9\,]{0,}\&o\=[0-9\,]{0,}
+CONTENTIDTAG==pintu360|2
+
+ARTICLEMATCH==.//*[contains(@class, 'article-body-wrap')]|0
+CONTENTMATCH==.//*[contains(@class, 'text')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'article-title-and-type')]//*[contains(@class, 'title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'article-date')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article-content')]//*[contains(@class, 'text')]//img/@src|-1
+
+[SITE]
+DOMAIN==pmcaff
+NAME==PMCAFF资讯
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/article\/[0-9a-zA-Z\_\=\?]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//*[contains(@class,'title')]/a|-1
+HREF==@href|-1
+URLIDTAG==article|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/coffee\.pmcaff\.com\/article\/[0-9a-zA-Z\_\=\?]{0,}
+CONTENTIDTAG==article|1
+
+ARTICLEMATCH==.//*[contains(@class, 'article')]|0
+CONTENTMATCH==.//*[contains(@class, 'content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'head')]//*[contains(@class,'title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'time')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'content')]//img/@src|-1
+
+[SITE]
+DOMAIN==qdaily
+NAME==好奇心日报
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/articles\/[0-9]{0,}\.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==articles|1
+URLTITLEMATCH==.//*[contains(@class, 'smart-dotdotdot')]/text()|-1
+URLTITLEMATCH==.//*[contains(@class, 'title')]/text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.qdaily\.com\/articles\/[0-9]{0,}\.html
+CONTENTIDTAG==articles|1
+
+ARTICLEMATCH==.//*[@class='main']|0
+ARTICLEMATCH==.//*[@class='main long-article']|0
+CONTENTMATCH==.//*[@class='detail']//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'media-title')]/h2/text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'category-title')]/h2/text()|-1
+CONTENTTITLEMATCH==.//*[@class='title']//text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'date smart-date')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'full-banner-bd imgcover')]//img//@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article-detail-hd')]//img//@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'detail')]//figure//img//@data-src|-1
+
+[SITE]
+DOMAIN==stcn
+NAME==证券时报网
+RESTARTINTERVAL==30
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/[a-zA-Z]{0,}\.stcn\.com\/[0-9]{0,}\/[0-9]{0,}\/[0-9]{0,}.shtml
+GOODKEYS==
+BADKEYS==certificate
+BADKEYS==pdf
+BADKEYS==video
+BADKEYS==filepublish
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==stcn|4
+URLTITLEMATCH==@title|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/[a-zA-Z]{0,}\.stcn\.com\/[0-9]{0,}\/[0-9]{0,}\/[0-9]{0,}.shtml
+CONTENTIDTAG==stcn|4
+
+ARTICLEMATCH==.//*[contains(@class,'box_left')]|0
+CONTENTMATCH==.//*[contains(@class, 'txt_con')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'intal_tit')]/h2/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'info')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'txt_con')]//p//img//@src|-1
+
+ARTICLEMATCH==.//*[contains(@class,'box_left3')]|0
+CONTENTMATCH==.//*[contains(@class, 'txt_con')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'xiangxi')]/h2/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'xiangxi')]/h2/span/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'txt_con')]//p//img//@src|-1
+
+ARTICLEMATCH==.//*[contains(@class,'box_left2')]|0
+CONTENTMATCH==.//*[contains(@class, 'left_txt')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'box_r')]/h2/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'box_r')]/h2/span/text()|0
+CONTENTIMAGEMATCH==.//*[contains(@class, 'left_txt')]//p//img//@src|-1
+
+[SITE]
+DOMAIN==tmtpost
+NAME==钛媒体
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/[0-9]{0,}\.html
+GOODKEYS==
+BADKEYS=='#'
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==|1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.tmtpost\.com\/[0-9]{0,}\.html
+CONTENTIDTAG==tmtpost|2
+
+ARTICLEMATCH==.//article|0
+CONTENTMATCH==.//*[contains(@class, 'inner')]//p//text()|-1
+CONTENTTITLEMATCH==.//h1/text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'time ')]/text()|0
+CONTENTIMAGEMATCH==.//*[contains(@class, 'inner')]//p//img//@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'inner')]//div//img//@src|-1
+
+[SITE]
+DOMAIN==woshipm
+NAME==人人都是产品经理
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.woshipm\.com\/[0-9a-zA-Z]{0,}\/[0-9]{0,}\.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==woshipm|3
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.woshipm\.com\/[0-9a-zA-Z]{0,}\/[0-9]{0,}\.html
+CONTENTIDTAG==woshipm|3
+
+ARTICLEMATCH==.//*[contains(@class, 'article-wrapper')]|0
+CONTENTMATCH==.//*[contains(@class, 'grap')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'article-title')]/text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'post-meta-item')]/text()|1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'grap')]//p//img//@src|-1
+
+[SITE]
+DOMAIN==xueqiu
+NAME==雪球网
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==\/[0-9]{0,}\/[0-9]{0,}
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//*[contains(@class, 'timeline__item__content')]//a|-1
+HREFITEMS==.//*[contains(@class, 'home__timeline__item')]//a|-1
+HREFITEMS==.//*[contains(@class, 'AnonymousHome_home__timeline__item_3vU')]//h3/a|-1
+HREF==@href|-1
+URLIDTAG==|2
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/xueqiu\.com\/[0-9]{0,}\/[0-9]{0,}
+CONTENTIDTAG==xueqiu|3
+
+ARTICLEMATCH==.//*[contains(@class,'article__container')]|0
+CONTENTMATCH==.//*[contains(@class, 'article__bd__detail')]//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article__bd__title')]//text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'time')]/text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article__bd__detail')]//p//img//@src|-1
+
+[SITE]
+DOMAIN==yixieshi
+NAME==互联网的一些事
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.yixieshi\.com\/[0-9\-]{0,}.html
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//*[contains(@class, 'col-md-8')]/h2//a|-1
+HREF==@href|-1
+URLIDTAG==yixieshi|2
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.yixieshi\.com\/[0-9\-]{0,}.html
+CONTENTIDTAG==yixieshi|2
+
+ARTICLEMATCH==.//*[contains(@class, 'post-main')]|0
+CONTENTMATCH==.//*[contains(@class, 'article-content')]//p//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class, 'post-title')]//text()|0
+CONTENTTIMEMATCH==.//*[contains(@class, 'article-meta')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'article-content')]//img/@src|-1
+
+[SITE]
+DOMAIN==yunyingpai
+NAME==运营派
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.yunyingpai\.com\/[a-z]{0,}\/[0-9]{0,}.html
+URLIDTAG==yunyingpai|3
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.yunyingpai\.com\/[a-z]{0,}\/[0-9]{0,}.html
+CONTENTIDTAG==yunyingpai|3
+
+ARTICLEMATCH==.//*[contains(@class,'postArticle')]|0
+CONTENTMATCH==.//*[contains(@class, 'grap')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'title--leading')]//text()|-1
+CONTENTTIMEMATCH==|-2
+CONTENTIMAGEMATCH==.//*[contains(@class, 'grap')]//img//@src|-1
