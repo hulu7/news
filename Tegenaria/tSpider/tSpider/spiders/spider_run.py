@@ -34,8 +34,7 @@ class SpiderRun():
             process.apply_async(self.runTask, args=(site,))
         process.close()
         process.join()
-        del process
-        gc.collect()
+        self.applyMultiRun()
 
     def start(self):
         if self.isDebug:
