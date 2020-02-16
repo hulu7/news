@@ -603,7 +603,28 @@ class Doraemon():
 
     def extractSiteInfo(self, siteInfo):
         items = siteInfo.split('\n')
-        siteInfo = siteInfoDto()
+        result = siteInfoDto(domain=None,
+                             name=None,
+                             restart_interval=None,
+                             url_parallel_number=None,
+                             content_parallel_number=None,
+                             is_open_cache=None,
+                             work_time_start=None,
+                             work_time_end=None,
+                             good_keys=[],
+                             bad_keys=[],
+                             href_items=[],
+                             href=[],
+                             url_match=[],
+                             url_title_match=[],
+                             url_id_tag=[],
+                             content_match=[],
+                             content_url_match=[],
+                             content_id_tag=[],
+                             article_match=[],
+                             content_title_match=[],
+                             content_image_match=[],
+                             content_time_match=[])
         for item in items:
             if self.isEmpty(item):
                 continue
@@ -611,86 +632,86 @@ class Doraemon():
             key = ''.join(content[0]).strip()
             value = ''.join(content[1]).strip()
             if key == 'DOMAIN':
-                siteInfo.domain = value
+                result.domain = value
                 continue
             if key == 'NAME':
-                siteInfo.name = value
+                result.name = value
                 continue
             if key == 'RESTARTINTERVAL':
-                siteInfo.restart_interval = int(value)
+                result.restart_interval = int(value)
                 continue
             if key == 'URLPARALLELNUMBER':
-                siteInfo.url_parallel_number = int(value)
+                result.url_parallel_number = int(value)
                 continue
             if key == 'CONTENTPARALLELNUMBER':
-                siteInfo.content_parallel_number = int(value)
+                result.content_parallel_number = int(value)
                 continue
             if key == 'ISOPENCACHE':
-                siteInfo.is_open_cache = bool(value)
+                result.is_open_cache = bool(value)
                 continue
             if key == 'WORKTIMESTART':
-                siteInfo.work_time_start = int(value)
+                result.work_time_start = int(value)
                 continue
             if key == 'WORKTIMEEND':
-                siteInfo.work_time_end = int(value)
+                result.work_time_end = int(value)
                 continue
             if key == 'GOODKEYS':
                 if self.isEmpty(value) is False:
-                    siteInfo.good_keys.append(value)
+                    result.good_keys.append(value)
                 continue
             if key == 'BADKEYS':
                 if self.isEmpty(value) is False:
-                    siteInfo.bad_keys.append(value)
+                    result.bad_keys.append(value)
                 continue
             if key == 'URLMATCH':
                 if self.isEmpty(value) is False:
-                    siteInfo.url_match.append(self.extractRegxRule(value))
+                    result.url_match.append(self.extractRegxRule(value))
                 continue
             if key == 'URLTITLEMATCH':
                 if self.isEmpty(value) is False:
-                    siteInfo.url_title_match.append(self.extractHtmlTag(value))
+                    result.url_title_match.append(self.extractHtmlTag(value))
                 continue
             if key == 'URLIDTAG':
                 if self.isEmpty(value) is False:
-                    siteInfo.url_id_tag.append(self.extractHtmlTag(value))
+                    result.url_id_tag.append(self.extractHtmlTag(value))
                 continue
             if key == 'CONTENTURLMATCH':
                 if self.isEmpty(value) is False:
-                    siteInfo.content_url_match.append(self.extractRegxRule(value))
+                    result.content_url_match.append(self.extractRegxRule(value))
                 continue
             if key == 'CONTENTIDTAG':
                 if self.isEmpty(value) is False:
-                    siteInfo.content_id_tag.append(self.extractHtmlTag(value))
+                    result.content_id_tag.append(self.extractHtmlTag(value))
                 continue
             if key == 'HREFITEMS':
                 if self.isEmpty(value) is False:
-                    siteInfo.href_items.append(self.extractHtmlTag(value))
+                    result.href_items.append(self.extractHtmlTag(value))
                 continue
             if key == 'HREF':
                 if self.isEmpty(value) is False:
-                    siteInfo.href.append(self.extractHtmlTag(value))
+                    result.href.append(self.extractHtmlTag(value))
                 continue
             if key == 'ARTICLEMATCH':
                 if self.isEmpty(value) is False:
-                    siteInfo.article_match.append(self.extractHtmlTag(value))
+                    result.article_match.append(self.extractHtmlTag(value))
                 continue
             if key == 'CONTENTMATCH':
                 if self.isEmpty(value) is False:
-                    siteInfo.content_match.append(self.extractHtmlTag(value))
+                    result.content_match.append(self.extractHtmlTag(value))
                 continue
             if key == 'CONTENTTITLEMATCH':
                 if self.isEmpty(value) is False:
-                    siteInfo.content_title_match.append(self.extractHtmlTag(value))
+                    result.content_title_match.append(self.extractHtmlTag(value))
                 continue
             if key == 'CONTENTIMAGEMATCH':
                 if self.isEmpty(value) is False:
-                    siteInfo.content_image_match.append(self.extractHtmlTag(value))
+                    result.content_image_match.append(self.extractHtmlTag(value))
                 continue
             if key == 'CONTENTTIMEMATCH':
                 if self.isEmpty(value) is False:
-                    siteInfo.content_time_match.append(self.extractHtmlTag(value))
+                    result.content_time_match.append(self.extractHtmlTag(value))
                 continue
-        return siteInfo
+        return result
 
     def getUrlId(self, url, idTag):
         id = None
