@@ -459,6 +459,16 @@ class Doraemon():
         else:
             return False
 
+    def readFile(self, file):
+        waiting = 0
+        data = self.file.readFromTxt(file).strip()
+        while self.isEmpty(data):
+            print 'file {0} is under update, waitting... {1} s'.format(file, waiting)
+            time.sleep(1)
+            waiting += 1
+            data = self.file.readFromTxt(file).strip()
+        return data
+
     def isConcurrencyAllowToRun(self,
                                 concurrency_refresh_file,
                                 refresh_concurrency_interval,
@@ -472,7 +482,7 @@ class Doraemon():
         if isFilePathExists is False:
             print 'concurrency file not exists and create an new one with max concurrency: {0}'.format(str(max_concurrency))
             self.file.writeToTxtCover(concurrency_file, str(max_concurrency))
-        concurrency_available = int(self.file.readFromTxt(concurrency_file).strip())
+        concurrency_available = int(self.readFile(concurrency_file))
         print 'concurrency file exists : {0}'.format(str(concurrency_available))
         if int(concurrency_available) > 0:
             print 'app is able to run.'
@@ -493,7 +503,7 @@ class Doraemon():
             print 'concurrency file not exists and create an new one with max concurrency: {0}'.format(str(max_concurrency))
             self.file.writeToTxtCover(concurrency_file, str(max_concurrency))
             return
-        concurrency_available = int(self.file.readFromTxt(concurrency_file).strip())
+        concurrency_available = int(self.readFile(concurrency_file))
         print 'concurrency file exists and start to recovery: {0}'.format(str(concurrency_available))
         if int(concurrency_available) < max_concurrency:
             print 'start to recovery concurrenct.'
