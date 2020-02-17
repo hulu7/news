@@ -629,6 +629,7 @@ class Doraemon():
                              url_title_match=[],
                              url_id_tag=[],
                              content_match=[],
+                             content_child_match=[],
                              content_url_match=[],
                              content_id_tag=[],
                              article_match=[],
@@ -708,6 +709,10 @@ class Doraemon():
             if key == 'CONTENTMATCH':
                 if self.isEmpty(value) is False:
                     result.content_match.append(self.extractHtmlTag(value))
+                continue
+            if key == 'CONTENTCHILDMATCH':
+                if self.isEmpty(value) is False:
+                    result.content_child_match.append(self.extractHtmlTag(value))
                 continue
             if key == 'CONTENTTITLEMATCH':
                 if self.isEmpty(value) is False:
@@ -811,6 +816,7 @@ class siteInfoDto():
                  url_title_match=[],
                  url_id_tag=[],
                  content_match=[],
+                 content_child_match=[],
                  content_url_match=[],
                  content_id_tag=[],
                  article_match=[],
@@ -833,6 +839,7 @@ class siteInfoDto():
         self.url_title_match = url_title_match
         self.url_id_tag = url_id_tag
         self.content_match = content_match
+        self.content_child_match = content_child_match
         self.content_url_match = content_url_match
         self.content_id_tag = content_id_tag
         self.article_match = article_match

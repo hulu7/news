@@ -34,7 +34,8 @@ class CamelRun():
             process.apply_async(self.runTask, args=(site,))
         process.close()
         process.join()
-        self.applyMultiRun()
+        if self.isDebug is False:
+            self.applyMultiRun()
 
     def start(self):
         if self.isDebug:

@@ -18,6 +18,7 @@ class Spider():
         self.content_id_tag = self.siteinfo.content_id_tag
         self.article_match = self.siteinfo.article_match
         self.content_match = self.siteinfo.content_match
+        self.content_child_match = self.siteinfo.content_child_match
         self.content_time_match = self.siteinfo.content_time_match
         self.content_title_match = self.siteinfo.content_title_match
         self.content_image_match = self.siteinfo.content_image_match
@@ -46,10 +47,20 @@ class Spider():
                 article_child = self.doraemon.getMatchContent(article, article_rule)
                 images = []
                 for content_rule in self.content_match:
-                    content_tmp = article_child.xpath('{0}'.format(content_rule.regx))
-                    content_child = self.doraemon.getMatchContent(content_tmp, content_rule)
-                    if self.doraemon.isEmpty(content_child) is False:
-                        content += ''.join(content_child).strip()
+                    content_tmp_second = article_child.xpath('{0}'.format(content_rule.regx))
+                    content_second = self.doraemon.getMatchContent(content_tmp_second, content_rule)
+                    has_content_child = False
+                    if self.doraemon.isEmpty(content_second) is False:
+                        if self.doraemon.isEmpty(self.content_child_match) is False:
+                            for content_child_rule in self.content_child_match:
+                                if content_child_rule.index != -2:
+                                    content_tmp_third = content_second.xpath('{0}'.format(content_child_rule.regx))
+                                    content_third = self.doraemon.getMatchContent(content_tmp_third, content_child_rule)
+                                    content += ''.join(content_third).strip()
+                                    has_content_child = True
+                                    break
+                        if has_content_child is False:
+                            content += ''.join(content_second).strip()
                         break
                 for time_rule in self.content_time_match:
                     if time_rule.index == -2:

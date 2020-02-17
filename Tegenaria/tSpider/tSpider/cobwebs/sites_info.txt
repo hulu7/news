@@ -1399,3 +1399,31 @@ CONTENTMATCH==.//*[contains(@class, 'grap')]//*//text()|-1
 CONTENTTITLEMATCH==.//*[contains(@class,'title--leading')]//text()|-1
 CONTENTTIMEMATCH==|-2
 CONTENTIMAGEMATCH==.//*[contains(@class, 'grap')]//img//@src|-1
+
+[SITE]
+DOMAIN==or123
+NAME==OR商业新媒体
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.or123\.top\/\?p\=[0-9]{0,}
+URLIDTAG==or123|4
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.or123\.top\/\?p\=[0-9]{0,}
+CONTENTIDTAG==or123|4
+
+ARTICLEMATCH==.//*[@data-animalename='qfyfadeInRight']|0
+CONTENTMATCH==.//*[@class='column_containter']//*[@qfyuuid='0']|0
+CONTENTCHILDMATCH==.//span//text()|-1
+CONTENTTITLEMATCH==.//*[@class='qfy_title left mobileleft']//*[@class='header_title']//text()|-1
+CONTENTTIMEMATCH==.//*[contains(@qfyuuid, 'qfy_column_text_view_pldre-c')]//text()|-1
+CONTENTIMAGEMATCH==.//*[@class='column_containter']//img//@src|-1
