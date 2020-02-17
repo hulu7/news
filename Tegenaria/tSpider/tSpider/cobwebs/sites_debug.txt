@@ -1,27 +1,26 @@
 
 [SITE]
-DOMAIN==huxiu
-NAME==虎嗅
-RESTARTINTERVAL==30
+DOMAIN==digitaling
+NAME==数英网 DIGITALING
+RESTARTINTERVAL==120
 URLPARALLELNUMBER==1
 CONTENTPARALLELNUMBER==1
 ISOPENCACHE==False
 WORKTIMESTART==6
 WORKTIMEEND==23
 
-URLMATCH==\/article\/[0-9]{0,}\.html
+URLMATCH==(http(s?):)?\/\/www\.digitaling\.com\/articles\/[0-9]{0,}\.html
 GOODKEYS==
 BADKEYS==
-HREFITEMS==.//a|-1
+HREFITEMS==.//*[@class='line_em font_msyh mg_b_10']//a|-1
 HREF==@href|-1
-URLIDTAG==article|1
-URLTITLEMATCH==.//*[contains(@class, 'multi-line-overflow')]//text()|-1
+URLIDTAG==articles|1
+URLTITLEMATCH==.//text()|-1
 
-CONTENTURLMATCH==(http(s?):)?\/\/www\.huxiu\.com\/article\/[0-9]{0,}\.html
-CONTENTIDTAG==article|1
-ARTICLEMATCH==.//*[contains(@class, 'article-wrapper')]|0
-CONTENTMATCH==.//*[contains(@class, 'article__content')]//*//text()|-1
-CONTENTTITLEMATCH==.//*[contains(@class,'article__title')]/text()|-1
-CONTENTIMAGEMATCH==.//*[contains(@class,'top-img')]//img//@src|-1
-CONTENTIMAGEMATCH==.//*[contains(@class,'img-center-box')]//img//@src|-1
-CONTENTTIMEMATCH==.//*[contains(@class, 'article__time')]/text()|-1
+CONTENTURLMATCH==(http(s?):)?\/\/www\.digitaling\.com\/articles\/[0-9]{0,}\.html
+CONTENTIDTAG==articles|1
+ARTICLEMATCH==.//*[@class='content']|0
+CONTENTMATCH==.//*[@class='article_con']//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'article_title')]/h2//text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'p_999 w_590 color_999 mg_t_10 clearfix')]//*[contains(@class, 'color_999 mg_r_10')]//text()|-1
+CONTENTIMAGEMATCH==|-2
