@@ -435,9 +435,8 @@ CONTENTIDTAG==p|1
 
 ARTICLEMATCH==.//*[contains(@class,'article-detail')]|0
 CONTENTMATCH==.//*[contains(@class, 'article-with-html')]//*//text()|-1
-CONTENTTITLEMATCH==.//*[contains(@class,'article-detail')]/h1/text()|0
+CONTENTTITLEMATCH==.//*[contains(@class,'article-title')]//text()|0
 CONTENTTIMEMATCH==.//*[contains(@class, 'date')]/text()|-1
-CONTENTIMAGEMATCH==.//*[contains(@class,'article-detail')]//p//img//@src|-1
 CONTENTIMAGEMATCH==.//*[contains(@class,'article-with-html')]//p//img//@src|-1
 
 [SITE]
