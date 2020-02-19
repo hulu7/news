@@ -8,7 +8,7 @@ import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-
+csv.field_size_limit(sys.maxsize)
 
 class SendEmail():
     def readFromCSV(self, filePath):
