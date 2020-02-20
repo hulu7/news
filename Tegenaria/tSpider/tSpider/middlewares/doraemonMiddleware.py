@@ -290,7 +290,7 @@ class Doraemon():
     def getDateFromString(self, string_date):
         _date_chinese = self.getDateFromChinese(string_date)
         if _date_chinese is not None:
-            return _date_chinese
+            string_date = _date_chinese
 
         _date_year_month_day_crossing = self.getDateTime(string_date, r'\d{4}-\d{1,2}-\d{1,2}', '%Y-%m-%d', True)
         _date_year2_month_day_crossing = self.getDateTime(string_date, r'\d{2}-\d{1,2}-\d{1,2}', '%y-%m-%d', True)
