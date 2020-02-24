@@ -1479,3 +1479,30 @@ CONTENTMATCH==.//*[@class='article']//*//text()|-1
 CONTENTTITLEMATCH==.//*[@class='single-post-header']/h1//text()|0
 CONTENTTIMEMATCH==.//*[@class='item']//text()|-1
 CONTENTIMAGEMATCH==.//*[@class='article']//*//img//@src|-1
+
+[SITE]
+DOMAIN==pedaily
+NAME==投资界
+RESTARTINTERVAL==60
+URLPARALLELNUMBER==2
+CONTENTPARALLELNUMBER==2
+ISOPENCACHE==False
+WORKTIMESTART==-1
+WORKTIMEEND==24
+
+URLMATCH==(http(s?):)?\/\/[0-9a-zA-Z]{0,}\.pedaily\.cn\/[0-9]{0,}\/[0-9]{0,}\.shtml
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==pedaily|3
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/[0-9a-zA-Z]{0,}\.pedaily\.cn\/[0-9]{0,}\/[0-9]{0,}\.shtml
+CONTENTIDTAG==pedaily|3
+
+ARTICLEMATCH==.//*[contains(@class, 'final-content')]|0
+CONTENTMATCH==.//*[contains(@class, 'news-content')]//*//text()|-1
+CONTENTTITLEMATCH==.//*[@id='newstitle']//text()|0
+CONTENTTIMEMATCH==.//*[@class='info']//*[@class='date']//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'news-content')]//img/@src|-1
