@@ -641,7 +641,7 @@ DOMAIN==iheima
 NAME==黑马网
 RESTARTINTERVAL==120
 URLPARALLELNUMBER==1
-CONTENTPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==2
 ISOPENCACHE==False
 WORKTIMESTART==6
 WORKTIMEEND==23
@@ -651,11 +651,11 @@ GOODKEYS==
 BADKEYS==
 HREFITEMS==.//*[contains(@class, 'title')]|-1
 HREF==@href|-1
-URLIDTAG==|1
-URLTITLEMATCH==.//*[contains(@class, 'coltitle')]//text()|-1
+URLIDTAG==article|1
+URLTITLEMATCH==.//text()|-1
 
 CONTENTURLMATCH==(http(s?):)?\/\/www\.iheima\.com\/article\-[0-9]{0,}
-CONTENTIDTAG==iheima|2
+CONTENTIDTAG==article|1
 
 ARTICLEMATCH==.//*[contains(@class,'main-content')]|0
 CONTENTMATCH==.//p//text()|-1

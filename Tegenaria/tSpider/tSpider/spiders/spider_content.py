@@ -34,7 +34,7 @@ class Spider():
             print 'Invalid url: {0}'.format(current_url)
             return data
         print 'Start to parse: {0}'.format(current_url)
-        short_url_parts = re.split(r'[., /, _, %, ?, =, &"]', current_url)
+        short_url_parts = re.split(r'[., /, _, %, ?, =, &, -]', current_url)
         id = self.doraemon.getUrlId(short_url_parts, self.content_id_tag)
         url = current_url
         author_name = self.spiderBone.name

@@ -44,7 +44,7 @@ class Camel():
                                                  self.regx,
                                                  valid)
                 if valid:
-                    short_url_parts = re.split(r'[., /, _, %, ", ?, =, &, #]', href_url)
+                    short_url_parts = re.split(r'[., /, _, %, ", ?, =, &, #, -]', href_url)
                     id = self.doraemon.getUrlId(short_url_parts, self.url_id_tag)
                     if id == None:
                         print 'Id is empty for url: {0}'.format(current_url)
