@@ -1541,3 +1541,30 @@ CONTENTMATCH==.//*[@class='article_infor']//*//text()|-1
 CONTENTTITLEMATCH==.//*[@class='article']/h1/text()|-1
 CONTENTTIMEMATCH==.//*[@class='infor']//*[@class='date']/text()|-1
 CONTENTIMAGEMATCH==.//*[contains(@class, 'article_infor')]//img/@src|-1
+
+[SITE]
+DOMAIN==duozhi
+NAME==多知网
+RESTARTINTERVAL==120
+URLPARALLELNUMBER==1
+CONTENTPARALLELNUMBER==1
+ISOPENCACHE==False
+WORKTIMESTART==6
+WORKTIMEEND==23
+
+URLMATCH==(http(s?):)?\/\/www\.duozhi\.com\/([0-9a-zA-Z]{0,}\/)?[0-9]{0,}\.shtml
+GOODKEYS==
+BADKEYS==
+HREFITEMS==.//a|-1
+HREF==@href|-1
+URLIDTAG==shtml|-1
+URLTITLEMATCH==.//text()|-1
+
+CONTENTURLMATCH==(http(s?):)?\/\/www\.duozhi\.com\/([0-9a-zA-Z]{0,}\/)?[0-9]{0,}\.shtml
+CONTENTIDTAG==shtml|-1
+ARTICLEMATCH==.//*[@class='subject']|0
+CONTENTMATCH==.//*[@class='subject-content']//*//text()|-1
+CONTENTTITLEMATCH==.//*[contains(@class,'subject-title')]//text()|-1
+CONTENTTIMEMATCH==.//*[contains(@class, 'subject-meta')]//text()|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'subject-banner')]//img/@src|-1
+CONTENTIMAGEMATCH==.//*[contains(@class, 'subject-content')]//img/@src|-1
