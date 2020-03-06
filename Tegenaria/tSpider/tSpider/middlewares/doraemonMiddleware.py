@@ -591,7 +591,9 @@ class Doraemon():
             print 'No images urls to process'
             return result
         for url in newImages:
-            result.append(urlparse.urljoin(current_url, url).strip())
+            entireUrl = urlparse.urljoin(current_url, url).strip()
+            if re.match('https', entireUrl) is not None:
+                result.append(entireUrl)
         return result
 
     def getSitesInfo(self, isdebug=False):
