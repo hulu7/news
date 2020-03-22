@@ -139,6 +139,24 @@ class Settings():
         #mongodb
         self.SPIDERDB = "SPIDERS"
 
+        #article url
+        self.ARTICLE_URL = "https://www.deepinews.com/article/"
+
+        #aliyun
+        self.ALI_DOMAIN = "oss-cn-beijing.aliyuncs.com"
+        self.ALI_BUCKET_NAME_DEEPINEWS = "deepinews"
+        self.ALI_BUCKET_NAME_DEEPINEWS_IMG = "img"
+
+        #webserver0
+        self.IP_WEBSERVER0 = "223.111.139.227"
+        self.PORT_WEBSERVER0 = 22
+        self.USER_ROOT_WEBSERVER0 = "root"
+        self.USER_ROOT_PASSWORD_WEBSERVER0 = "rerr48779"
+        self.HTML_WEBSERVER0 = "/home/dev/Data/Production/article"
+
+        #template
+        self.TEMPLATE_PATH = "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/storeHtml/template_1.html"
+
     def SettingsFormat(self,
                        SETTINGS_NAME,
                        SOURCE_NAME,
@@ -190,14 +208,11 @@ class settingsSpec():
         self.WORK_PATH_PRD2 = "{0}//sites//{1}".format(settings.RSYNC_PRD2,
                                                        SETTINGS_NAME)
         self.FINISHED_TXT_PATH = "{0}//sites//{1}//txt//{2}".format(settings.RSYNC_PRD1,
-                                                             SETTINGS_NAME,
-                                                             settings.TODAY)
-        self.FINISHED_ORIGIN_HTML_PATH = "{0}//sites//{1}//origin_html//{2}".format(settings.RSYNC_PRD1,
-                                                                                    SETTINGS_NAME,
-                                                                                    settings.TODAY)
-        self.FINISHED_PROCESSED_HTML_PATH = "{0}//sites//{1}//processed_html//{2}".format(settings.RSYNC_PRD1,
-                                                                                          SETTINGS_NAME,
-                                                                                          settings.TODAY)
+                                                                    SETTINGS_NAME,
+                                                                    settings.TODAY)
+        self.FINISHED_HTML_PATH = "{0}//sites//{1}//html//{2}".format(settings.RSYNC_PRD1,
+                                                                      SETTINGS_NAME,
+                                                                      settings.TODAY)
         self.FINISHED_IMG_PATH = "{0}//sites//{1}//img//{2}".format(settings.RSYNC_PRD1,
                                                                     SETTINGS_NAME,
                                                                     settings.TODAY)

@@ -74,6 +74,8 @@ class Doraemon():
         return isExceed
 
     def isEmpty(self, obj=None):
+        if isinstance(obj, unicode):
+            obj = obj.encode('utf-8')
         if isinstance(obj, str):
             return len([obj for i in obj if i.strip()]) == 0
         elif isinstance(obj, int) or isinstance(obj, float):
@@ -114,6 +116,17 @@ class Doraemon():
                 valid = False
         return valid
 
+    def getImageTypeFromUrl(self, url):
+        if 'jpeg' or '.jpg' in url:
+            return 'jpg'
+        if '.png' in url or 'png' in url:
+            return 'png'
+        if '.gif' in url or 'gif' in url:
+            return 'gif'
+        else:
+            print 'Other image type use default type'
+            return 'png'
+
     def isDuplicated(self, filter, content):
         content_encode = str(content).encode("utf-8")
         if filter.isContains(content_encode):
@@ -142,14 +155,18 @@ class Doraemon():
         mongo.insert(mongo_url, data)
 
     def storeTxt(self, id, content, finished_txt_path, name):
-        self.createFilePath(finished_txt_path)
-        print 'Start to store txt: {0}'.format(id)
-        self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(finished_txt_path, name, id), content)
-        print 'End to store txt: {0}'.format(id)
+        try:
+            self.createFilePath(finished_txt_path)
+            print 'Start to store txt: {0}'.format(id)
+            self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(finished_txt_path, name, id), content)
+            print 'End to store txt: {0}'.format(id)
+        except Exception as e:
+            print 'Exception {0} to store txt: {1}'.format(e.message, id)
+
 
     def storeTxtAdd(self, author_txt_path, author_name, settingName):
-        self.createFilePath(author_txt_path)
         try:
+            self.createFilePath(author_txt_path)
             print 'Start to store txt: {0}'.format(author_name)
             self.file.writeToTxtAdd('{0}//{1}_authors.txt'.format(author_txt_path, settingName), author_name)
         except Exception as e:
@@ -157,10 +174,15 @@ class Doraemon():
         print 'End to store txt: {0}'.format(author_name)
 
     def storeHtml(self, id, content, finished_html_path):
-        self.createFilePath(finished_html_path)
-        print 'Start to store html: {0}'.format(id)
-        self.file.writeToHtmlCover('{0}//{1}.html'.format(finished_html_path, id), content)
-        print 'End to store html: {0}'.format(id)
+        try:
+            self.createFilePath(finished_html_path)
+            print 'Start to store html: {0}'.format(id)
+            self.file.writeToHtmlCover('{0}//{1}.html'.format(finished_html_path, id), content)
+            print 'End to store html: {0}'.format(id)
+            return True
+        except Exception as e:
+            print 'Exception {0} to store html: {1}'.format(e.message, id)
+            return False
 
     def filter(self, filter, url_titles):
         new_url_titles = []
@@ -197,12 +219,15 @@ class Doraemon():
             new_ids = self.imageFilter(filter, id_list)
         return new_ids
 
-    def downloadImage(self, image_url, store_path):
+    def downloadImage(self, image_url, store_path, image_name):
         try:
+            self.createFilePath(store_path)
             print 'start to download image: {0}'.format(image_url)
-            urllib.urlretrieve(image_url, store_path)
+            urllib.urlretrieve(image_url, '{0}//{1}'.format(store_path, image_name))
+            return True
         except Exception as e:
             print 'exception to download image: {0} for {1}'.format(image_url, e.message)
+            return False
 
     def hashSet(self, name, key, value):
         self.rconn.hset(name, key, value)
@@ -546,6 +571,7 @@ class Doraemon():
 
     def createSpiderData(self,
                           url,
+                          origin_url,
                           public_time,
                           author_name,
                           title,
@@ -556,6 +582,7 @@ class Doraemon():
                           is_open_cache,
                           content):
         return spiderDto(url,
+                         origin_url,
                          public_time,
                          author_name,
                          title,
@@ -569,6 +596,7 @@ class Doraemon():
     def createSpiderMongoJson(self, spiderDto):
         return {
             'url': spiderDto.url,
+            'origin_url,': spiderDto.origin_url,
             'public_time': spiderDto.public_time,
             'author_name': spiderDto.author_name,
             'title': spiderDto.title,
@@ -637,7 +665,8 @@ class Doraemon():
                              article_match=[],
                              content_title_match=[],
                              content_image_match=[],
-                             content_time_match=[])
+                             content_time_match=[],
+                             need_self_image=None)
         for item in items:
             if self.isEmpty(item):
                 continue
@@ -728,6 +757,12 @@ class Doraemon():
                 if self.isEmpty(value) is False:
                     result.content_time_match.append(self.extractHtmlTag(value))
                 continue
+            if key == 'NEEDSELFIMAGE':
+                if self.isEmpty(value) is False:
+                    result.need_self_image = value == 'True'
+            if key == 'NEEDSELFHTML':
+                if self.isEmpty(value) is False:
+                    result.need_self_html = value == 'True'
         return result
 
     def getUrlId(self, url, idTag):
@@ -773,6 +808,7 @@ class camelDto():
 class spiderDto():
     def __init__(self,
                  url,
+                 origin_url,
                  public_time,
                  author_name,
                  title,
@@ -783,6 +819,7 @@ class spiderDto():
                  is_open_cache,
                  content):
         self.url = url
+        self.origin_url = origin_url
         self.public_time = public_time
         self.author_name = author_name
         self.title = title
@@ -824,7 +861,9 @@ class siteInfoDto():
                  article_match=[],
                  content_title_match=[],
                  content_image_match=[],
-                 content_time_match=[]):
+                 content_time_match=[],
+                 need_self_image=None,
+                 need_self_html=None):
         self.domain = domain
         self.name = name
         self.restart_interval = restart_interval
@@ -848,6 +887,8 @@ class siteInfoDto():
         self.content_title_match = content_title_match
         self.content_image_match = content_image_match
         self.content_time_match = content_time_match
+        self.need_self_image = need_self_image
+        self.need_self_html = need_self_html
 
 class regxMatchDto():
     def __init__(self,

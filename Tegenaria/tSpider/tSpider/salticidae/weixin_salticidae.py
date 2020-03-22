@@ -87,7 +87,9 @@ class WeixinSalticidae():
                 image_src = re.findall(self.regx_img_src, img)
                 image_type = ''.join(re.findall(self.regx_img_type, img)).strip()
                 image_post_fix = self.getPostFixOfImage(image_type)
-                if (self.doraemon.isEmpty(image_data_src) is True) or (self.doraemon.isEmpty(image_src) is True) or (self.doraemon.isEmpty(image_type) is True):
+                if (self.doraemon.isEmpty(image_data_src) is True) or \
+                   (self.doraemon.isEmpty(image_src) is True) or \
+                   (self.doraemon.isEmpty(image_type) is True):
                     continue
                 origin_image_path = "{0}//{1}.{2}".format(self.finished_img_path, image_id, image_post_fix)
                 print 'Start to download image: {0}'.format(image_data_src)

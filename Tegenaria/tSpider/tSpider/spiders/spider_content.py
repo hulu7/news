@@ -6,6 +6,7 @@ import re
 sys.path.append("/home/dev/Repository/news/")
 from Tegenaria.tSpider.tSpider.middlewares.spiderBone import SpiderBone
 from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
+from Tegenaria.tSpider.tSpider.storeHtml.storeFiles import StoreFiles
 
 class Spider():
     def __init__(self, siteinfo=None):
@@ -22,9 +23,24 @@ class Spider():
         self.content_time_match = self.siteinfo.content_time_match
         self.content_title_match = self.siteinfo.content_title_match
         self.content_image_match = self.siteinfo.content_image_match
+        self.store = StoreFiles(self.spiderBone.finished_html_path,
+                                self.spiderBone.finished_image_path,
+                                self.spiderBone.template_path,
+                                self.spiderBone.article_url,
+                                self.spiderBone.ali_domain,
+                                self.spiderBone.ali_domain_deepinews,
+                                self.spiderBone.ali_domain_deepinews_img,
+                                self.spiderBone.ip_webserver0,
+                                self.spiderBone.port_webserver0,
+                                self.spiderBone.user_root_webserver0,
+                                self.spiderBone.user_root_password_webserver0,
+                                self.spiderBone.html_webserver0,
+                                self.siteinfo.need_self_image,
+                                self.siteinfo.need_self_html)
 
-    def parse(self, current_url, html):
+    def parse(self, current_url, html, page_source):
         data = None
+        updatedData = None
         isValid = False
         for rule in self.regx:
             isValid = rule.match(current_url) != None
@@ -41,6 +57,9 @@ class Spider():
         content = ""
         time = ""
         title = ""
+        author = ""
+        url = ""
+        content_rule_work = ""
         for article_rule in self.article_match:
             article = html.xpath('{0}'.format(article_rule.regx))
             if self.doraemon.isEmpty(article) is False:
@@ -61,6 +80,7 @@ class Spider():
                                     break
                         if has_content_child is False:
                             content += ''.join(content_second).strip()
+                            content_rule_work = content_rule.regx
                         break
                 for time_rule in self.content_time_match:
                     if time_rule.index == -2:
@@ -86,17 +106,29 @@ class Spider():
                     if images_child != None:
                         self.doraemon.updateImages(images, images_child)
                 images = self.doraemon.completeImageUrls(images, current_url)
-                data = self.doraemon.createSpiderData(url.strip(),
-                                                      time.strip(),
-                                                      author_name.strip(),
-                                                      title.strip(),
-                                                      id.strip(),
+                url = current_url.strip()
+                time = time.strip()
+                author = author_name.strip()
+                title = title.strip()
+                id = id.strip()
+                data = self.doraemon.createSpiderData(url,
+                                                      url,
+                                                      time,
+                                                      author,
+                                                      title,
+                                                      id,
                                                       self.spiderBone.today,
                                                       self.spiderBone.source,
                                                       images,
                                                       self.spiderBone.is_open_cache,
                                                       content)
 
+        if data is not None:
+            updatedData = self.store.storeFiles(data,
+                                                page_source,
+                                                content_rule_work)
+        if updatedData != data:
+            data = updatedData
         return data
 
 if __name__ == '__main__':

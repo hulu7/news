@@ -29,6 +29,18 @@ class SpiderBone():
         self.source = self.settings.SOURCE_NAME
         self.work_path_prd1 = self.settings.WORK_PATH_PRD1
         self.finished_txt_path = self.settings.FINISHED_TXT_PATH
+        self.finished_html_path = self.settings.FINISHED_HTML_PATH
+        self.finished_image_path = self.settings.FINISHED_IMG_PATH
+        self.template_path = self.globalSettings.TEMPLATE_PATH
+        self.article_url = self.globalSettings.ARTICLE_URL
+        self.ali_domain = self.globalSettings.ALI_DOMAIN
+        self.ali_domain_deepinews = self.globalSettings.ALI_BUCKET_NAME_DEEPINEWS
+        self.ali_domain_deepinews_img = self.globalSettings.ALI_BUCKET_NAME_DEEPINEWS_IMG
+        self.ip_webserver0 = self.globalSettings.IP_WEBSERVER0
+        self.port_webserver0 = self.globalSettings.PORT_WEBSERVER0
+        self.user_root_webserver0 = self.globalSettings.USER_ROOT_WEBSERVER0
+        self.user_root_password_webserver0 = self.globalSettings.USER_ROOT_PASSWORD_WEBSERVER0
+        self.html_webserver0 = self.globalSettings.HTML_WEBSERVER0
         self.mongo = self.settings.MONGO
         self.name = self.settings.NAME
         self.max_pool_size = self.settings.MAX_POOL_SIZE_CONTENT
@@ -42,10 +54,16 @@ class SpiderBone():
         current_url = response['response'].current_url.encode('gbk')
         request_title = response['request_title']
         print 'Start to parse: {0}'.format(current_url)
-        html = etree.HTML(response['response'].page_source)
+        page_source = response['response'].page_source
+        html = etree.HTML(page_source)
         results = None
         try:
-            results = self.callBack(current_url, html)
+            results = self.callBack(current_url, html, page_source)
+            if results == None:
+                message1 = 'No content for: {0}'.format(current_url)
+                print message1
+                self.file.logger(self.log_path, message1)
+                return
             dataToMongo = self.doraemon.createSpiderMongoJson(results)
         except Exception as e:
             message1 = 'Exception when parse: {0} for {1}'.format(current_url, e.message)
