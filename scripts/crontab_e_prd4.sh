@@ -4,6 +4,7 @@
 */5 * * * * sh /home/dev/Repository/news/scripts/mongoExport_prd4.sh
 */1 * * * * sh /home/dev/Repository/news/scripts/mongoRestart_prd4.sh
 */1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/tegenaria_restart.sh
+*/1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/sshUpload_restart.sh
 */1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/salticidae_restart.sh
 */1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/restart_golden.sh
 */1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/temp_2_webserver0.sh

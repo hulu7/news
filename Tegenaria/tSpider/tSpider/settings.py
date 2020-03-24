@@ -153,6 +153,7 @@ class Settings():
         self.USER_ROOT_WEBSERVER0 = "root"
         self.USER_ROOT_PASSWORD_WEBSERVER0 = "rerr48779"
         self.HTML_WEBSERVER0 = "/home/dev/Data/Production/article"
+        self.RETRY_FILE = "{0}//retry.txt".format(self.RSYNC_PRD1)
 
         #template
         self.TEMPLATE_PATH = "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/storeHtml/template_1.html"
