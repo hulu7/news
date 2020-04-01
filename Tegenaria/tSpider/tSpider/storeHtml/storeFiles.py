@@ -335,6 +335,7 @@ class StoreFiles():
         if self.needselfhtml == False:
             return data
         try:
+            self.image_count = 0
             newData = copy.copy(data)
             newArticleId = self.doraemon.getMD5('{0}_{1}'.format(data.author_name, data.id))
             newData.url = '{0}{1}.html'.format(self.articleurl, newArticleId)

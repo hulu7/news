@@ -22,6 +22,7 @@ class CamelBone():
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd2)
         self.doraemon.createFilePath(self.log_path)
+        self.doraemon.createFilePath(self.url_backup_folder_path)
 
     def getSettings(self):
         self.settings = self.globalSettings.CreateSettings(self.siteinfo)
@@ -35,6 +36,7 @@ class CamelBone():
         self.urls = self.settings.URLS
         self.max_concurrency = self.globalSettings.MAX_CONCURRENCY
         self.concurrency_file = self.globalSettings.CONCURRENCY_FILE
+        self.url_backup_folder_path = self.settings.URL_BACKUP_FOLDER_PATH
 
     def parse(self, response):
         time.sleep(1)

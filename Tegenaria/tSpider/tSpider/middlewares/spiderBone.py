@@ -21,6 +21,7 @@ class SpiderBone():
         self.doraemon = Doraemon()
         self.doraemon.createFilePath(self.work_path_prd1)
         self.doraemon.createFilePath(self.log_path)
+        self.doraemon.createFilePath(self.finished_backup_folder_path)
 
     def getSettings(self):
         self.settings = self.globalSettings.CreateSettings(self.siteinfo)
@@ -46,6 +47,7 @@ class SpiderBone():
         self.max_pool_size = self.settings.MAX_POOL_SIZE_CONTENT
         self.url_path = self.settings.URL_PATH
         self.is_open_cache = self.settings.IS_OPEN_CACHE
+        self.finished_backup_folder_path = self.settings.FINISHED_BACKUP_FOLDER_PATH
         self.max_concurrency_spider = self.globalSettings.MAX_CONCURRENCY_SPIDER
         self.concurrency_file_spider = self.globalSettings.CONCURRENCY_FILE_SPIDER
 

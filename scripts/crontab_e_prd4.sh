@@ -8,7 +8,7 @@
 */1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/salticidae_restart.sh
 */1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/restart_golden.sh
 */1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/temp_2_webserver0.sh
-*/30 * * * * sh /home/dev/Repository/news/scripts/send_email_monitor_prd4.sh
+*/15 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/monitor_restart.sh
 */30 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/Chronus/chrous_restart.sh
 */5 * * * * sh /home/dev/Repository/news/supplier/classification/start_classify.sh
 */5 * * * * sh /home/dev/Repository/news/supplier/commit/start_commit.sh

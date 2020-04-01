@@ -8,7 +8,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 import gc
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
-from settings import Settings
+from Tegenaria.tSpider.tSpider.settings import Settings
 
 class MongoMiddleware():
     def __init__(self):

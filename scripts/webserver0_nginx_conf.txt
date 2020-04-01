@@ -62,6 +62,22 @@ http {
         try_files $uri &uri/ /index.html;
       }
 
+      location ~* /article/ {
+	root /home/dev/Data/Production/;
+      }
+
+      location ~* /assets/ {
+	root /home/dev/Data/Production/;
+      }
+
+      location ~* /spiders/ {
+         root /home/dev/Data/Production/statics/;
+      }
+
+      location ~* /sites/ {
+	 root /home/dev/Data/Production/statics/;
+      }
+
       location /api/ {
      	proxy_pass http://127.0.0.1:3000/;
       }

@@ -9,8 +9,10 @@ for site in $(ls ${SITESPATH})
 do
     domain=${site%.*}
     syncDir=${prd3Path}/sites/${domain}
+    backupDir=${prd3Path}/sites/${domain}/mongo/${DATE}
     echo "${TIME}: Start to exprot ${domain}..." >> ${LOGPATH}/${DATE}_log.log
     mongoexport -d 'SPIDERS' -c ${domain}_urls --type=csv -f id,url,title,download_time,source -q "{'download_time': '${DATE}'}" -o ${tmpDir}/${domain}_urls_tmp.csv
-    mv ${tmpDir}/${domain}_urls_tmp.csv ${syncDir}/${domain}_urls.csv
+    cp -r ${tmpDir}/${domain}_urls_tmp.csv ${syncDir}/${domain}_urls.csv
+    mv ${tmpDir}/${domain}_urls_tmp.csv ${backupDir}/${domain}_urls_bk.csv
     chmod 777 ${syncDir}/${domain}_urls.csv
 done

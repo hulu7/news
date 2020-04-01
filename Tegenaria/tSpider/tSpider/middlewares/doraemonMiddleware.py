@@ -256,6 +256,9 @@ class Doraemon():
     def getCurrentDate(self):
         return time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
+    def getCurrentLocalTime(self):
+        return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
     def getDateTime(self, string, dateFormat, pattern, isMatchDate):
         try:
             match = re.search(dateFormat, string)
@@ -273,21 +276,34 @@ class Doraemon():
     def getDateFromChinese(self, string):
         year = self.getCurrentYear()
         try:
-            if "今天" in string or "秒前" in string or "分钟前" in string or "小时前" in string:
+            if "今天" in string or \
+               "秒前" in string or \
+               "分钟前" in string or \
+               "小时前" in string or \
+               "Today" in string:
                 return self.getDateOfDaysBefore(0)
-            if "昨天" in string or "1天前" in string:
+            if "昨天" in string or \
+               "1天前" in string or \
+               "Yesterday" in string:
                 return self.getDateOfDaysBefore(1)
-            if "前天" in string or "2天前" in string:
+            if "前天" in string or \
+               "2天前" in string or \
+               "2 days ago" in string:
                 return self.getDateOfDaysBefore(2)
-            if "3天前" in string:
+            if "3天前" in string or \
+               "3 days ago" in string:
                 return self.getDateOfDaysBefore(3)
-            if "4天前" in string:
+            if "4天前" in string or \
+               "4 days ago" in string:
                 return self.getDateOfDaysBefore(4)
-            if "5天前" in string:
+            if "5天前" in string or \
+               "5 days ago" in string:
                 return self.getDateOfDaysBefore(5)
-            if "6天前" in string:
+            if "6天前" in string or \
+               "6 days ago" in string:
                 return self.getDateOfDaysBefore(6)
-            if "1周前" in string:
+            if "1周前" in string or \
+               "1 week ago" in string:
                 return self.getDateOfDaysBefore(7)
             if "年" not in string and "月" in string and "日" in string:
                 data = re.split(",", string.replace('月', ',').replace('日', ''))

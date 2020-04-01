@@ -4,6 +4,8 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
 from middlewares.fileIOMiddleware import FileIOMiddleware
+from datetime import timedelta
+from datetime import datetime
 import time
 class Settings():
 
@@ -86,6 +88,7 @@ class Settings():
         self.BLOOMFILTER_AUTHORS = "tegenaria:authors"
 
         self.TODAY = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+        self.YESTERDAY = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
         self.CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(self.RSYNC_PRD1)
 
@@ -154,9 +157,21 @@ class Settings():
         self.USER_ROOT_PASSWORD_WEBSERVER0 = "rerr48779"
         self.HTML_WEBSERVER0 = "/home/dev/Data/Production/article"
         self.RETRY_FILE = "{0}//retry.txt".format(self.RSYNC_PRD1)
+        self.MONITOR_SPIDERS_HTML_WEBSERVER0 = "/home/dev/Data/Production/statics/spiders"
+        self.MONITOR_SITE_HTML_WEBSERVER0 = "/home/dev/Data/Production/statics/sites"
 
         #template
         self.TEMPLATE_PATH = "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/storeHtml/template_1.html"
+        self.MONITOR_SPIDERS_TEMPLATE_PATH = \
+            "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/spiderMonitor/index.html"
+        self.MONITOR_SITE_TEMPLATE_PATH = \
+            "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/spiderMonitor/site.html"
+
+        self.STATICS_HTML_PATH = "{0}//index.html".format(self.RSYNC_PRD1)
+
+        #monitor url
+        self.MONITOR_SPIDERS_URL = "https://www.deepinews.com/spiders/index.html"
+        self.MONITOR_SITE_URL = "https://www.deepinews.com/sites/"
 
     def SettingsFormat(self,
                        SETTINGS_NAME,
@@ -220,9 +235,31 @@ class settingsSpec():
         self.FINISHED_CONTENT_PATH = "{0}//sites//{1}//{2}_content.csv".format(settings.RSYNC_PRD1,
                                                                                SETTINGS_NAME,
                                                                                SETTINGS_NAME)
+        self.FINISHED_BACKUP_FOLDER_PATH = "{0}//sites//{1}//mongo//{2}".format(settings.RSYNC_PRD1,
+                                                                                SETTINGS_NAME,
+                                                                                settings.TODAY)
+        self.FINISHED_BACKUP_PATH = "{0}//sites//{1}//mongo//{2}//{3}_content_bk.csv".format(settings.RSYNC_PRD1,
+                                                                                             SETTINGS_NAME,
+                                                                                             settings.TODAY,
+                                                                                             SETTINGS_NAME)
+        self.FINISHED_BACKUP_POST_PATH = "{0}//sites//{1}//mongo//{2}//{3}_content_bk.csv".format(settings.RSYNC_PRD1,
+                                                                                                  SETTINGS_NAME,
+                                                                                                  settings.YESTERDAY,
+                                                                                                  SETTINGS_NAME)
         self.URL_PATH = "{0}//sites//{1}//{2}_urls.csv".format(settings.RSYNC_PRD2,
                                                                SETTINGS_NAME,
                                                                SETTINGS_NAME)
+        self.URL_BACKUP_FOLDER_PATH = "{0}//sites//{1}//mongo//{2}".format(settings.RSYNC_PRD2,
+                                                                           SETTINGS_NAME,
+                                                                           settings.TODAY)
+        self.URL_BACKUP_PATH = "{0}//sites//{1}//mongo//{2}//{3}_urls_bk.csv".format(settings.RSYNC_PRD2,
+                                                                                     SETTINGS_NAME,
+                                                                                     settings.TODAY,
+                                                                                     SETTINGS_NAME)
+        self.URL_BACKUP_POST_PATH = "{0}//sites//{1}//mongo//{2}//{3}_urls_bk.csv".format(settings.RSYNC_PRD2,
+                                                                                          SETTINGS_NAME,
+                                                                                          settings.YESTERDAY,
+                                                                                          SETTINGS_NAME)
         self.AUTHORS_PATH = "{0}//sites//{1}".format(settings.RSYNC_PRD2,
                                                      SETTINGS_NAME)
         self.RESTART_PATH = "{0}//sites//{1}//restart.txt".format(settings.RSYNC_PRD2,
