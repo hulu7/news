@@ -69,7 +69,7 @@ class WeixinSalticidae():
         self.doraemon.createFilePath(self.finished_img_path)
         for id in new_ids:
             print 'Start to remove pictures in: {0}'.format(id)
-            html_file = self.file.readFromHtml("{0}//{1}.html".format(self.finished_origin_html_path, id))
+            html_file = self.file.readFromHtml("{0}/{1}.html".format(self.finished_origin_html_path, id))
             img_list = re.findall(self.regx_img, html_file)
             date_list = re.findall(self.regx_date, html_file)
             new_html = ''
@@ -91,7 +91,7 @@ class WeixinSalticidae():
                    (self.doraemon.isEmpty(image_src) is True) or \
                    (self.doraemon.isEmpty(image_type) is True):
                     continue
-                origin_image_path = "{0}//{1}.{2}".format(self.finished_img_path, image_id, image_post_fix)
+                origin_image_path = "{0}/{1}.{2}".format(self.finished_img_path, image_id, image_post_fix)
                 print 'Start to download image: {0}'.format(image_data_src)
                 self.doraemon.downloadImage(image_data_src, origin_image_path)
                 image_size = self.doraemon.getFileSize(origin_image_path)

@@ -49,9 +49,9 @@ class WeixinTalk():
             print 'Exception to compress html and img: {0}'.format(e.message)
 
         local_html_tmp_file = "{0}.tar.gz".format(self.temp_html_path)
-        remote_html_tmp_file = "{0}//html.tar.gz".format(self.remote_html_path)
+        remote_html_tmp_file = "{0}/html.tar.gz".format(self.remote_html_path)
         local_img_tmp_file = "{0}.tar.gz".format(self.temp_img_path)
-        remote_img_tmp_file = "{0}//img.tar.gz".format(self.remote_img_path)
+        remote_img_tmp_file = "{0}/img.tar.gz".format(self.remote_img_path)
         if self.doraemon.isFileExists(local_html_tmp_file):
             try:
                 self.file.logger(self.log_path, 'Start upload html for: {0} '.format(self.name))

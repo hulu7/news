@@ -55,8 +55,8 @@ class TransferToProduction():
                 if isValidImage is None:
                     print 'Invalid image for not match: {0}'.format(f)
                     continue
-                from_img_path = "{0}//{1}".format(self.finished_img_path, f)
-                to_img_path = "{0}//{1}".format(self.temp_folder_img, f)
+                from_img_path = "{0}/{1}".format(self.finished_img_path, f)
+                to_img_path = "{0}/{1}".format(self.temp_folder_img, f)
                 is_from_path_exists = os.path.exists(from_img_path)
                 if is_from_path_exists is False:
                     self.file.logger(self.log_path, 'img of {0} not exits.'.format(f))
@@ -64,8 +64,8 @@ class TransferToProduction():
                 copyfile(from_img_path, to_img_path)
                 print 'Finished to transfer image {0}'.format(f)
             self.file.logger(self.log_path, 'Start transfer html: {0}'.format(id))
-            from_path = "{0}//{1}.html".format(self.finished_processed_html_path, id)
-            to_path = "{0}//{1}.html".format(self.temp_folder_html, id)
+            from_path = "{0}/{1}.html".format(self.finished_processed_html_path, id)
+            to_path = "{0}/{1}.html".format(self.temp_folder_html, id)
             is_from_path_exists = os.path.exists(from_path)
             if is_from_path_exists is False:
                 self.file.logger(self.log_path, 'html of {0} not exits.'.format(id))

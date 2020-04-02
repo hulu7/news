@@ -16,12 +16,9 @@ class SpiderBone():
         self.siteinfo = siteinfo
         self.callBack = callback
         self.globalSettings = Settings()
-        self.getSettings()
         self.file = FileIOMiddleware()
         self.doraemon = Doraemon()
-        self.doraemon.createFilePath(self.work_path_prd1)
-        self.doraemon.createFilePath(self.log_path)
-        self.doraemon.createFilePath(self.finished_backup_folder_path)
+        self.getSettings()
 
     def getSettings(self):
         self.settings = self.globalSettings.CreateSettings(self.siteinfo)
@@ -50,6 +47,14 @@ class SpiderBone():
         self.finished_backup_folder_path = self.settings.FINISHED_BACKUP_FOLDER_PATH
         self.max_concurrency_spider = self.globalSettings.MAX_CONCURRENCY_SPIDER
         self.concurrency_file_spider = self.globalSettings.CONCURRENCY_FILE_SPIDER
+        self.monitor_upload_local = self.globalSettings.MONITOR_UPLOAD_LOCAL
+        self.createPath()
+
+    def createPath(self):
+        self.doraemon.createFilePath(self.work_path_prd1)
+        self.doraemon.createFilePath(self.log_path)
+        self.doraemon.createFilePath(self.finished_backup_folder_path)
+        self.doraemon.createFilePath(self.monitor_upload_local)
 
     def parse(self, response):
         time.sleep(1)

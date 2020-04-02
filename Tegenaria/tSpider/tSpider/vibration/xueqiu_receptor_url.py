@@ -24,10 +24,10 @@ class XueqiuReceptor():
         self.doraemon.createFilePath(self.work_path_prd2)
 
     def getSettings(self):
-        self.work_path_prd2 = "//home//dev//Data//rsyncData//test//"
+        self.work_path_prd2 = "/home/dev/Data/rsyncData/test/"
         self.mongo = "xueqiu_test"
         self.finished_ids = "xueqiu_test"
-        self.log_path = "//home//dev//Data//rsyncData//test//"
+        self.log_path = "/home/dev/Data/rsyncData/test/"
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')

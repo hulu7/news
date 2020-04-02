@@ -235,7 +235,7 @@ class StoreFiles():
                 if self.doraemon.downloadImage(updatedNode.imageOriginUrl,
                                                self.imagepath,
                                                newImageName):
-                    imageInfo = Image.open('{0}//{1}'.format(self.imagepath, newImageName))
+                    imageInfo = Image.open('{0}/{1}'.format(self.imagepath, newImageName))
                     if self.doraemon.isEmpty(imageInfo.width) is False:
                         img.width = imageInfo.width
                     if self.doraemon.isEmpty(imageInfo.height) is False:
@@ -381,13 +381,13 @@ class StoreFiles():
                                            data.url)
             if self.doraemon.storeHtml(newArticleId, template, self.htmlpath):
                 sshUpload = SSHUpload()
-                fromFile = '{0}//{1}.html'.format(self.htmlpath, newArticleId)
+                fromFile = '{0}/{1}.html'.format(self.htmlpath, newArticleId)
                 if sshUpload.start(self.ipwebserver0,
                                    self.portwebserver0,
                                    self.userrootwebserver0,
                                    self.userrootpasswordwebserver0,
                                    fromFile,
-                                   '{0}//{1}.html'.format(self.htmlwebserver0, newArticleId)) == False:
+                                   '{0}/{1}.html'.format(self.htmlwebserver0, newArticleId)) == False:
                     sshUpload.updateAddFile([fromFile])
             return newData
         except Exception as e:

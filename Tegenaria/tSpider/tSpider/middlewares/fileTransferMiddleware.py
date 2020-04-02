@@ -49,8 +49,8 @@ class FileTransferMiddleware():
             return
         process = Pool(processes)
         for file in files:
-            local_file_path = '{0}//{1}'.format(local_diractory, file)
-            remote_file_path = '{0}//{1}'.format(remote_diractory, file)
+            local_file_path = '{0}/{1}'.format(local_diractory, file)
+            remote_file_path = '{0}/{1}'.format(remote_diractory, file)
             process.apply_async(self.singleUpload, args=(local_file_path,
                                                          remote_file_path,
                                                          host_name,

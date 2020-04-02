@@ -20,16 +20,16 @@ class Dup():
         self.doraemon = Doraemon()
 
     def getSettings(self):
-        self.work_path = "//home//dev//Data//rsyncData//"
+        self.work_path = "/home/dev/Data/rsyncData/"
         self.finished_ids = "gongzhonghao_test"
 
     def startFilter(self):
-        in_file1 = "{0}//gongzhonghao_test.txt".format(self.work_path)
-        in_file2 = "{0}//gongzhonghao_available.txt".format(self.work_path)
-        in_file3 = "{0}//gongzhonghao_test.csv".format(self.work_path)
-        out_file1 = "{0}//gongzhonghao_uavailable.csv".format(self.work_path)
-        out_file2 = "{0}//gongzhonghao_available.csv".format(self.work_path)
-        dup_file = "{0}//dup_result.csv".format(self.work_path)
+        in_file1 = "{0}/gongzhonghao_test.txt".format(self.work_path)
+        in_file2 = "{0}/gongzhonghao_available.txt".format(self.work_path)
+        in_file3 = "{0}/gongzhonghao_test.csv".format(self.work_path)
+        out_file1 = "{0}/gongzhonghao_uavailable.csv".format(self.work_path)
+        out_file2 = "{0}/gongzhonghao_available.csv".format(self.work_path)
+        dup_file = "{0}/dup_result.csv".format(self.work_path)
         all_content_dup = self.file.readFromTxt(in_file1)
         available_content = self.file.readFromTxt(in_file2)
         dup_content = self.file.readFromCSV(dup_file)

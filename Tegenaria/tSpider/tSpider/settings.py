@@ -11,25 +11,25 @@ class Settings():
 
     def __init__(self):
         self.file = FileIOMiddleware()
-        self.RSYNC_PRD1 = "//home//dev//Data//rsyncData//prd4"
-        self.RSYNC_PRD2 = "//home//dev//Data//rsyncData//prd3"
-        self.CAMEL_FOOD = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//food"
-        self.SITES_INFO = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs//sites_info.txt"
-        self.SITES_DEBUG = "//home//dev//Repository//news//Tegenaria//tSpider//tSpider//cobwebs//sites_debug.txt"
+        self.RSYNC_PRD1 = "/home/dev/Data/rsyncData/prd4"
+        self.RSYNC_PRD2 = "/home/dev/Data/rsyncData/prd3"
+        self.CAMEL_FOOD = "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/food"
+        self.SITES_INFO = "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/cobwebs/sites_info.txt"
+        self.SITES_DEBUG = "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/cobwebs/sites_debug.txt"
 
         self.SELENIUM_TIMEOUT = 120 #second
-        self.CHROMEDRIVER_PATH = "//usr//bin//chromedriver"
+        self.CHROMEDRIVER_PATH = "/usr/bin/chromedriver"
 
         #concurrency
         self.REFRESH_CONCURRENCY_INTERVAL = 30  #minute
         self.MAX_CONCURRENCY = 10
-        self.CONCURRENCY_FILE = "{0}//max_concurrency.txt".format(self.RSYNC_PRD2)
-        self.CONCURRENCY_REFRESH_FILE = "{0}//concurrency_refresh.txt".format(self.RSYNC_PRD2)
+        self.CONCURRENCY_FILE = "{0}/max_concurrency.txt".format(self.RSYNC_PRD2)
+        self.CONCURRENCY_REFRESH_FILE = "{0}/concurrency_refresh.txt".format(self.RSYNC_PRD2)
 
         self.REFRESH_CONCURRENCY_INTERVAL_SPIDER = 30  # minute
         self.MAX_CONCURRENCY_SPIDER = 10
-        self.CONCURRENCY_FILE_SPIDER = "{0}//max_concurrency.txt".format(self.RSYNC_PRD1)
-        self.CONCURRENCY_REFRESH_FILE_SPIDER = "{0}//concurrency_refresh.txt".format(self.RSYNC_PRD1)
+        self.CONCURRENCY_FILE_SPIDER = "{0}/max_concurrency.txt".format(self.RSYNC_PRD1)
+        self.CONCURRENCY_REFRESH_FILE_SPIDER = "{0}/concurrency_refresh.txt".format(self.RSYNC_PRD1)
 
         self.USER_AGENTS = [
             "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
@@ -75,8 +75,8 @@ class Settings():
         self.PRAGMA = "no-cache"
         self.UPGRADE_INSECURE_REQUESTS = "1"
 
-        self.LOG_PATH = "{0}//log".format(self.RSYNC_PRD1)
-        self.LOG_PATH_PRD2 = "{0}//log".format(self.RSYNC_PRD2)
+        self.LOG_PATH = "{0}/log".format(self.RSYNC_PRD1)
+        self.LOG_PATH_PRD2 = "{0}/log".format(self.RSYNC_PRD2)
 
         self.MONGO_URI = 'mongodb://127.0.0.1:27017'
 
@@ -90,7 +90,7 @@ class Settings():
         self.TODAY = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         self.YESTERDAY = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
-        self.CHRONUS_SETTINGS = "{0}//log//chronus.csv".format(self.RSYNC_PRD1)
+        self.CHRONUS_SETTINGS = "{0}/log/chronus.csv".format(self.RSYNC_PRD1)
 
         self.DISABLE_RESTART_INTERVAL = False
 
@@ -120,8 +120,8 @@ class Settings():
         self.FINISHED_IMAGE_ID = "finished:image_id"
 
         #temp folder for html and img
-        self.TEMP_FOLDER_HTML = "//home//dev//Data//Production//data4deepinews//html"
-        self.TEMP_FOLDER_IMG = "//home//dev//Data//Production//data4deepinews//img"
+        self.TEMP_FOLDER_HTML = "/home/dev/Data/Production/data4deepinews/html"
+        self.TEMP_FOLDER_IMG = "/home/dev/Data/Production/data4deepinews/img"
         self.FINISHED_TEMP_WEIXIN = "finished:temp_weixin"
 
         #remove server information
@@ -129,8 +129,8 @@ class Settings():
         self.USER_NAME = 'root'
         self.PASSWORD = 'rerr48779'
         self.PORT = 22
-        self.REMOTE_IMG_PATH = '//home//dev//Data//Production//img_tmp'
-        self.REMOTE_HTML_PATH = '//home//dev//Data//Production//html_tmp'
+        self.REMOTE_IMG_PATH = '/home/dev/Data/Production/img_tmp'
+        self.REMOTE_HTML_PATH = '/home/dev/Data/Production/html_tmp'
         self.MAX_UPLOAD_PROCESS = 20
 
         #refresh the redis interval
@@ -156,22 +156,21 @@ class Settings():
         self.USER_ROOT_WEBSERVER0 = "root"
         self.USER_ROOT_PASSWORD_WEBSERVER0 = "rerr48779"
         self.HTML_WEBSERVER0 = "/home/dev/Data/Production/article"
-        self.RETRY_FILE = "{0}//retry.txt".format(self.RSYNC_PRD1)
-        self.MONITOR_SPIDERS_HTML_WEBSERVER0 = "/home/dev/Data/Production/statics/spiders"
-        self.MONITOR_SITE_HTML_WEBSERVER0 = "/home/dev/Data/Production/statics/sites"
+        self.RETRY_FILE = "{0}/retry.txt".format(self.RSYNC_PRD1)
 
         #template
         self.TEMPLATE_PATH = "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/storeHtml/template_1.html"
+
+        #monitor
+        self.MONITOR_SPIDERS_URL = "https://www.deepinews.com/sites/index.html"
+        self.MONITOR_SITE_URL = "https://www.deepinews.com/sites/"
         self.MONITOR_SPIDERS_TEMPLATE_PATH = \
             "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/spiderMonitor/index.html"
         self.MONITOR_SITE_TEMPLATE_PATH = \
             "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/spiderMonitor/site.html"
-
-        self.STATICS_HTML_PATH = "{0}//index.html".format(self.RSYNC_PRD1)
-
-        #monitor url
-        self.MONITOR_SPIDERS_URL = "https://www.deepinews.com/spiders/index.html"
-        self.MONITOR_SITE_URL = "https://www.deepinews.com/sites/"
+        self.MONITOR_UPLOAD_LOCAL = "{0}/monitor".format(self.RSYNC_PRD1)
+        self.MONITOR_UPLOAD_PATH_WEBSERVER0 = "/home/dev/Data/Production"
+        self.MONITOR_SITE_HTML_WEBSERVER0 = "/home/dev/Data/Production/statics/sites"
 
     def SettingsFormat(self,
                        SETTINGS_NAME,
@@ -219,57 +218,57 @@ class settingsSpec():
         self.NAME = SETTINGS_NAME
         self.MONGO = SETTINGS_NAME
         self.MONGO_URLS = "{0}_urls".format(SETTINGS_NAME)
-        self.WORK_PATH_PRD1 = "{0}//sites//{1}".format(settings.RSYNC_PRD1,
+        self.WORK_PATH_PRD1 = "{0}/sites/{1}".format(settings.RSYNC_PRD1,
                                                        SETTINGS_NAME)
-        self.WORK_PATH_PRD2 = "{0}//sites//{1}".format(settings.RSYNC_PRD2,
+        self.WORK_PATH_PRD2 = "{0}/sites/{1}".format(settings.RSYNC_PRD2,
                                                        SETTINGS_NAME)
-        self.FINISHED_TXT_PATH = "{0}//sites//{1}//txt//{2}".format(settings.RSYNC_PRD1,
+        self.FINISHED_TXT_PATH = "{0}/sites/{1}/txt/{2}".format(settings.RSYNC_PRD1,
                                                                     SETTINGS_NAME,
                                                                     settings.TODAY)
-        self.FINISHED_HTML_PATH = "{0}//sites//{1}//html//{2}".format(settings.RSYNC_PRD1,
+        self.FINISHED_HTML_PATH = "{0}/sites/{1}/html/{2}".format(settings.RSYNC_PRD1,
                                                                       SETTINGS_NAME,
                                                                       settings.TODAY)
-        self.FINISHED_IMG_PATH = "{0}//sites//{1}//img//{2}".format(settings.RSYNC_PRD1,
+        self.FINISHED_IMG_PATH = "{0}/sites/{1}/img/{2}".format(settings.RSYNC_PRD1,
                                                                     SETTINGS_NAME,
                                                                     settings.TODAY)
-        self.FINISHED_CONTENT_PATH = "{0}//sites//{1}//{2}_content.csv".format(settings.RSYNC_PRD1,
+        self.FINISHED_CONTENT_PATH = "{0}/sites/{1}/{2}_content.csv".format(settings.RSYNC_PRD1,
                                                                                SETTINGS_NAME,
                                                                                SETTINGS_NAME)
-        self.FINISHED_BACKUP_FOLDER_PATH = "{0}//sites//{1}//mongo//{2}".format(settings.RSYNC_PRD1,
+        self.FINISHED_BACKUP_FOLDER_PATH = "{0}/sites/{1}/mongo/{2}".format(settings.RSYNC_PRD1,
                                                                                 SETTINGS_NAME,
                                                                                 settings.TODAY)
-        self.FINISHED_BACKUP_PATH = "{0}//sites//{1}//mongo//{2}//{3}_content_bk.csv".format(settings.RSYNC_PRD1,
+        self.FINISHED_BACKUP_PATH = "{0}/sites/{1}/mongo/{2}/{3}_content_bk.csv".format(settings.RSYNC_PRD1,
                                                                                              SETTINGS_NAME,
                                                                                              settings.TODAY,
                                                                                              SETTINGS_NAME)
-        self.FINISHED_BACKUP_POST_PATH = "{0}//sites//{1}//mongo//{2}//{3}_content_bk.csv".format(settings.RSYNC_PRD1,
+        self.FINISHED_BACKUP_POST_PATH = "{0}/sites/{1}/mongo/{2}/{3}_content_bk.csv".format(settings.RSYNC_PRD1,
                                                                                                   SETTINGS_NAME,
                                                                                                   settings.YESTERDAY,
                                                                                                   SETTINGS_NAME)
-        self.URL_PATH = "{0}//sites//{1}//{2}_urls.csv".format(settings.RSYNC_PRD2,
+        self.URL_PATH = "{0}/sites/{1}/{2}_urls.csv".format(settings.RSYNC_PRD2,
                                                                SETTINGS_NAME,
                                                                SETTINGS_NAME)
-        self.URL_BACKUP_FOLDER_PATH = "{0}//sites//{1}//mongo//{2}".format(settings.RSYNC_PRD2,
+        self.URL_BACKUP_FOLDER_PATH = "{0}/sites/{1}/mongo/{2}".format(settings.RSYNC_PRD2,
                                                                            SETTINGS_NAME,
                                                                            settings.TODAY)
-        self.URL_BACKUP_PATH = "{0}//sites//{1}//mongo//{2}//{3}_urls_bk.csv".format(settings.RSYNC_PRD2,
+        self.URL_BACKUP_PATH = "{0}/sites/{1}/mongo/{2}/{3}_urls_bk.csv".format(settings.RSYNC_PRD2,
                                                                                      SETTINGS_NAME,
                                                                                      settings.TODAY,
                                                                                      SETTINGS_NAME)
-        self.URL_BACKUP_POST_PATH = "{0}//sites//{1}//mongo//{2}//{3}_urls_bk.csv".format(settings.RSYNC_PRD2,
+        self.URL_BACKUP_POST_PATH = "{0}/sites/{1}/mongo/{2}/{3}_urls_bk.csv".format(settings.RSYNC_PRD2,
                                                                                           SETTINGS_NAME,
                                                                                           settings.YESTERDAY,
                                                                                           SETTINGS_NAME)
-        self.AUTHORS_PATH = "{0}//sites//{1}".format(settings.RSYNC_PRD2,
+        self.AUTHORS_PATH = "{0}/sites/{1}".format(settings.RSYNC_PRD2,
                                                      SETTINGS_NAME)
-        self.RESTART_PATH = "{0}//sites//{1}//restart.txt".format(settings.RSYNC_PRD2,
+        self.RESTART_PATH = "{0}/sites/{1}/restart.txt".format(settings.RSYNC_PRD2,
                                                                   SETTINGS_NAME)
-        self.REDIS_REFRESH_PATH = "{0}//sites//{1}//redis_refresh.txt".format(settings.RSYNC_PRD2,
+        self.REDIS_REFRESH_PATH = "{0}/sites/{1}/redis_refresh.txt".format(settings.RSYNC_PRD2,
                                                                               SETTINGS_NAME)
         self.RESTART_INTERVAL = int(RESTART_INTERVAL)
         self.MAX_POOL_SIZE_URL = int(MAX_POOL_SIZE_URL)
         self.MAX_POOL_SIZE_CONTENT = int(MAX_POOL_SIZE_CONTENT)
-        self.URLS = "{0}//{1}.txt".format(settings.CAMEL_FOOD, SETTINGS_NAME)
+        self.URLS = "{0}/{1}.txt".format(settings.CAMEL_FOOD, SETTINGS_NAME)
         self.IS_OPEN_CACHE = str(IS_OPEN_CACHE) == "True"
         self.SOURCE_NAME = SOURCE_NAME
         self.START_TIME = START_TIME

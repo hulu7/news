@@ -22,7 +22,6 @@ class MonitorRun():
                 allSitesData.append(monitor.processSingleSite())
             monitor.processAllSites(allSitesData)
 
-
         except Exception as e:
             print 'Exception: {0} for monitor file of spider {1}'.format(e.message, site.name)
 

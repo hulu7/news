@@ -25,10 +25,10 @@ class WoshipmReceptor():
         self.doraemon.createFilePath(self.work_path_prd2)
 
     def getSettings(self):
-        self.work_path_prd2 = "//home//dev//Data//rsyncData//test//"
+        self.work_path_prd2 = "/home/dev/Data/rsyncData/test/"
         self.mongo = "whoispm_receptor"
         self.finished_ids = "woshipm_receptor"
-        self.log_path = "//home//dev//Data//rsyncData//test//"
+        self.log_path = "/home/dev/Data/rsyncData/test/"
         self.regx = re.compile("/u/[0-9]{0,}")
 
     def parse(self, response):
@@ -36,7 +36,7 @@ class WoshipmReceptor():
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
         key = response['request_title'].strip()
-        href_contens = html.xpath(".//a")
+        href_contens = html.xpath("./a")
         if len(href_contens) == 0:
             print 'No data for: {0}'.format(key)
             return

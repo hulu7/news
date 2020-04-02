@@ -8,6 +8,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 import numpy as np
 import time
+import shutil
 from datetime import datetime
 from datetime import timedelta
 import PIL.Image as Image
@@ -51,6 +52,19 @@ class Doraemon():
         self.bf_huxiu_nlp = BloomFilter(self.rconn, settings.FINISHED_HUXIU_NLP)
         self.sites_info = settings.SITES_INFO
         self.sites_debug = settings.SITES_DEBUG
+
+    def copyFile(self, fromfile=None, tofile=None):
+        if fromfile is None or os.path.exists(fromfile) is False:
+            print "Source file {0} is not exits".format(fromfile)
+            return False
+        try:
+            shutil.copy(fromfile, tofile)
+            return True
+        except Exception as e:
+            print "Exception {0} to copy file {1}  to file {2}.".format(e.message,
+                                                                        fromfile,
+                                                                        tofile)
+            return False
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)
@@ -158,7 +172,7 @@ class Doraemon():
         try:
             self.createFilePath(finished_txt_path)
             print 'Start to store txt: {0}'.format(id)
-            self.file.writeToTxtCover('{0}//{1}_{2}.txt'.format(finished_txt_path, name, id), content)
+            self.file.writeToTxtCover('{0}/{1}_{2}.txt'.format(finished_txt_path, name, id), content)
             print 'End to store txt: {0}'.format(id)
         except Exception as e:
             print 'Exception {0} to store txt: {1}'.format(e.message, id)
@@ -168,7 +182,7 @@ class Doraemon():
         try:
             self.createFilePath(author_txt_path)
             print 'Start to store txt: {0}'.format(author_name)
-            self.file.writeToTxtAdd('{0}//{1}_authors.txt'.format(author_txt_path, settingName), author_name)
+            self.file.writeToTxtAdd('{0}/{1}_authors.txt'.format(author_txt_path, settingName), author_name)
         except Exception as e:
             print 'Exception to store txt: {0} , for {1}'.format(author_name, e.strerror)
         print 'End to store txt: {0}'.format(author_name)
@@ -177,7 +191,7 @@ class Doraemon():
         try:
             self.createFilePath(finished_html_path)
             print 'Start to store html: {0}'.format(id)
-            self.file.writeToHtmlCover('{0}//{1}.html'.format(finished_html_path, id), content)
+            self.file.writeToHtmlCover('{0}/{1}.html'.format(finished_html_path, id), content)
             print 'End to store html: {0}'.format(id)
             return True
         except Exception as e:
@@ -223,7 +237,7 @@ class Doraemon():
         try:
             self.createFilePath(store_path)
             print 'start to download image: {0}'.format(image_url)
-            urllib.urlretrieve(image_url, '{0}//{1}'.format(store_path, image_name))
+            urllib.urlretrieve(image_url, '{0}/{1}'.format(store_path, image_name))
             return True
         except Exception as e:
             print 'exception to download image: {0} for {1}'.format(image_url, e.message)
@@ -441,9 +455,6 @@ class Doraemon():
                     t.add(fullpath)
             t.close()
             print "Finished to compress directory: {0}".format(directory)
-            for file in files:
-                fullpath = os.path.join(root, file)
-                self.deleteFile(fullpath)
         except Exception as e:
             print "Exception to compress directory: {0} for :{1}".format(directory, e.message)
 

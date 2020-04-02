@@ -46,10 +46,10 @@ class UpdateMonitorFiles():
         self.url_backup_post_path = self.settings.URL_BACKUP_POST_PATH
         self.monitor_site_template_path = self.globalSettings.MONITOR_SITE_TEMPLATE_PATH
         self.monitor_spiders_template_path = self.globalSettings.MONITOR_SPIDERS_TEMPLATE_PATH
-        self.monitor_spiders_webserver0 = self.globalSettings.MONITOR_SPIDERS_HTML_WEBSERVER0
+        self.monitor_upload_local = self.globalSettings.MONITOR_UPLOAD_LOCAL
         self.monitor_site_webserver0 = self.globalSettings.MONITOR_SITE_HTML_WEBSERVER0
-        self.spiders_html_path = self.globalSettings.STATICS_HTML_PATH
         self.monitor_site_url = self.globalSettings.MONITOR_SITE_URL
+        self.monitor_upload_webserver0 = self.globalSettings.MONITOR_UPLOAD_PATH_WEBSERVER0
 
     def updateSpiders(self,
                       siteName,
@@ -88,17 +88,15 @@ class UpdateMonitorFiles():
                                   fromFile,
                                   toFile) == True:
                     print 'Success to retry to upload monitor file: {0}'.format(fromFile)
-                    os.remove(fromFile)
-                    print 'Success to retry to remove monitor file: {0}'.format(fromFile)
+                    return True
             except Exception as e:
                 print 'Exception {0} to upload monitor site file: {1}'.format(e.message, fromFile)
+                return False
 
     def updateSingleSite(self,
                          preBackupPath,
                          postBackupPath,
-                         siteName,
-                         siteWorkPath,
-                         remoteFilePath):
+                         siteName):
         singleSiteData = singleSiteDto(self.siteinfo.name, 0, 0, None, 0)
         isPreBackupFileExists = os.path.exists(preBackupPath)
         isPostBackupFileExists = os.path.exists(postBackupPath)
@@ -119,7 +117,7 @@ class UpdateMonitorFiles():
             print "Post url back up file not exits: {0}".format(self.settings.NAME)
             singleSiteData.ycount = 0
         singleSiteData.diff = singleSiteData.tcount - singleSiteData.ycount
-        if self.doraemon.isEmpty(preCsvContent) is False:
+        if preCsvContent is not None:
             if preCsvContent.empty:
                 print "No new back up url: {0}".format(self.settings.NAME)
             else:
@@ -135,9 +133,10 @@ class UpdateMonitorFiles():
                 template = template.replace('MainContent', finalContent)
                 turl = '{0}{1}_{2}.html'.format(self.monitor_site_url, self.settings.NAME, siteName)
                 singleSiteData.turl = turl
-                singleSiteHtmlPath = '{0}//{1}_{2}.html'.format(siteWorkPath, self.settings.NAME, siteName)
-                self.file.writeToHtmlCover(singleSiteHtmlPath, template)
-                self.uploadFile(singleSiteHtmlPath, remoteFilePath)
+                uploadLocalHtmlPath = '{0}/{1}_{2}.html'.format(self.monitor_upload_local,
+                                                                self.settings.NAME,
+                                                                siteName)
+                self.file.writeToHtmlCover(uploadLocalHtmlPath, template)
         return singleSiteData
 
     def processAllSites(self, allSitesData=None):
@@ -155,23 +154,22 @@ class UpdateMonitorFiles():
                                                                          data.prd4.diff))
         template = template.replace('UpdateTime', self.doraemon.getCurrentLocalTime())
         template = template.replace('MainContent', mainContent)
-        self.file.writeToHtmlCover(self.spiders_html_path, template)
-        self.uploadFile(self.spiders_html_path, '{0}/index.html'.format(self.monitor_spiders_webserver0))
+        localHtmlPath = '{0}/index.html'.format(self.monitor_upload_local)
+        self.file.writeToHtmlCover(localHtmlPath, template)
+        self.doraemon.tar(self.monitor_upload_local)
+        fromFile = '{0}.tar.gz'.format(self.monitor_upload_local)
+        self.uploadFile(fromFile,
+                        '{0}/monitor.tar.gz'.format(self.monitor_upload_webserver0))
+        os.remove(fromFile)
 
     def processSingleSite(self):
         spidersContent = allSitesDto(None, None)
         spidersContent.prd3 = self.updateSingleSite(self.url_backup_path,
                                                     self.url_backup_post_path,
-                                                    'prd3',
-                                                    self.work_path_prd3,
-                                                    '{0}/{1}_prd3.html'.format(self.monitor_site_webserver0,
-                                                                               self.settings.NAME))
+                                                    'prd3')
         spidersContent.prd4 = self.updateSingleSite(self.content_backup_path,
                                                     self.content_backup_post_path,
-                                                    'prd4',
-                                                    self.work_path_prd4,
-                                                    '{0}/{1}_prd4.html'.format(self.monitor_site_webserver0,
-                                                                               self.settings.NAME))
+                                                    'prd4')
         return spidersContent
 
 if __name__ == '__main__':

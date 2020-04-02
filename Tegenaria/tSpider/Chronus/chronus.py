@@ -51,7 +51,7 @@ class Chronus():
             previousData[1].extend([0 for i in range(len(files))])
         self.data = [['time'],[str(self.YearMonthDay)]]
         for file in files:
-            file_path = "{0}//{1}//{2}_content.csv".format(self.base_path, file, file)
+            file_path = "{0}/{1}/{2}_content.csv".format(self.base_path, file, file)
             content = self.file.readFromCSV(file_path)
             self.data[0].append(file)
             self.data[1].append(str(len(content) - 1))

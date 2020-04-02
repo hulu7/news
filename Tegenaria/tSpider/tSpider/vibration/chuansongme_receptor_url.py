@@ -24,17 +24,17 @@ class ChuansongmeReceptor():
         self.doraemon.createFilePath(self.work_path_prd2)
 
     def getSettings(self):
-        self.work_path_prd2 = "//home//dev//Data//rsyncData//"
+        self.work_path_prd2 = "/home/dev/Data/rsyncData/"
         self.mongo = "gongzhonghao_test"
         self.finished_ids = "gongzhonghao_test"
-        self.log_path = "//home//dev//Data//rsyncData//"
+        self.log_path = "/home/dev/Data/rsyncData/"
 
     def parse(self, response):
         current_url = response['response'].current_url.encode('gbk')
         print 'Start to parse: {0}'.format(current_url)
         html = etree.HTML(response['response'].page_source)
         key = response['request_title'].strip()
-        href_item = html.xpath(".//*[contains(@class, 'pagedlist_item')]")
+        href_item = html.xpath("./*[contains(@class, 'pagedlist_item')]")
         if len(href_item) == 0:
             print 'No data for: {0}'.format(key)
             return

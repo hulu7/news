@@ -24,10 +24,10 @@ class FengReceptor():
         self.doraemon.createFilePath(self.work_path_prd2)
 
     def getSettings(self):
-        self.work_path_prd2 = "//home//dev//Data//rsyncData//test//"
+        self.work_path_prd2 = "/home/dev/Data/rsyncData/test/"
         self.mongo = "feng_receptor"
         self.finished_ids = "feng_receptor"
-        self.log_path = "//home//dev//Data//rsyncData//test//"
+        self.log_path = "/home/dev/Data/rsyncData/test/"
 
     def parse(self, response):
         time.sleep(1)
