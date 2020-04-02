@@ -382,13 +382,7 @@ class StoreFiles():
             if self.doraemon.storeHtml(newArticleId, template, self.htmlpath):
                 sshUpload = SSHUpload()
                 fromFile = '{0}/{1}.html'.format(self.htmlpath, newArticleId)
-                if sshUpload.start(self.ipwebserver0,
-                                   self.portwebserver0,
-                                   self.userrootwebserver0,
-                                   self.userrootpasswordwebserver0,
-                                   fromFile,
-                                   '{0}/{1}.html'.format(self.htmlwebserver0, newArticleId)) == False:
-                    sshUpload.updateAddFile([fromFile])
+                sshUpload.updateAddFile([fromFile])
             return newData
         except Exception as e:
             print 'Exception {0} when update : {1}'.format(e.message, data.url)

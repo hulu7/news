@@ -24,7 +24,7 @@ class SpiderRun():
         except Exception as e:
             print 'Exception: {0} for content spider {1}'.format(e.message, site.name)
 
-    def applyMultiRun(self):
+    def start(self):
         poolSize = self.doraemon.max_concurrency_spider
         if self.isDebug:
             poolSize = 1
@@ -33,11 +33,6 @@ class SpiderRun():
             process.apply_async(self.runTask, args=(site,))
         process.close()
         process.join()
-        if self.isDebug is False:
-            self.applyMultiRun()
-
-    def start(self):
-        self.applyMultiRun()
 
 if __name__ == '__main__':
     spiderRun = SpiderRun(isdebug=False)
