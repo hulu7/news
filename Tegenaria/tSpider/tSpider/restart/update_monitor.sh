@@ -1,4 +1,4 @@
-echo "****************************update monitor for deepinews******************************"
+echo "****************************update monitor******************************"
 DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%Y-%m-%d %H:%M:%S")
 LOG=/home/dev/Data/Log
@@ -19,5 +19,6 @@ else
     mv * ${TO_PATH}
     cd ${LOCAL_BASE_PATH}
     rm -rf ${LOCAL_BASE_PATH}/home
+    rm -rf monitor.tar.gz
 fi
 echo "*************************update monitor finished**************************"

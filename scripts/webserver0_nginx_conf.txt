@@ -63,19 +63,15 @@ http {
       }
 
       location ~* /article/ {
-	root /home/dev/Data/Production/;
+	    root /home/dev/Data/Production/;
       }
 
       location ~* /assets/ {
-	root /home/dev/Data/Production/;
-      }
-
-      location ~* /spiders/ {
-         root /home/dev/Data/Production/statics/;
+	    root /home/dev/Data/Production/;
       }
 
       location ~* /sites/ {
-	 root /home/dev/Data/Production/statics/;
+	    root /home/dev/Data/Production/statics/;
       }
 
       location /api/ {
@@ -83,7 +79,7 @@ http {
       }
 
       location /matomo/ {
-	proxy_pass http://ota_server/;
+	    proxy_pass http://ota_server/;
       }
 
       location /manager/ {
@@ -281,5 +277,4 @@ http {
     #        index  index.html index.htm;
     #    }
     #}
-
 }

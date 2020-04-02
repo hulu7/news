@@ -5,7 +5,6 @@ sys.path.append("..")
 sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/")
 from multiprocessing.pool import ThreadPool as Pool
-import gc
 import time
 from Tegenaria.tSpider.tSpider.spiders.spider_content import Spider
 from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
@@ -38,11 +37,7 @@ class SpiderRun():
             self.applyMultiRun()
 
     def start(self):
-        if self.isDebug:
-            self.applyMultiRun()
-        else:
-            while(True):
-                self.applyMultiRun()
+        self.applyMultiRun()
 
 if __name__ == '__main__':
     spiderRun = SpiderRun(isdebug=False)
