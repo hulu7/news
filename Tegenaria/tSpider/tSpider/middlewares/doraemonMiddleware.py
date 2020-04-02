@@ -53,6 +53,19 @@ class Doraemon():
         self.sites_info = settings.SITES_INFO
         self.sites_debug = settings.SITES_DEBUG
 
+    def moveFile(self, fromfile=None, tofile=None):
+        if fromfile is None or os.path.exists(fromfile) is False:
+            print "Source file {0} is not exits".format(fromfile)
+            return False
+        try:
+            shutil.move(fromfile, tofile)
+            return True
+        except Exception as e:
+            print "Exception {0} to move file {1} to file {2}.".format(e.message,
+                                                                       fromfile,
+                                                                       tofile)
+            return False
+
     def copyFile(self, fromfile=None, tofile=None):
         if fromfile is None or os.path.exists(fromfile) is False:
             print "Source file {0} is not exits".format(fromfile)
@@ -61,9 +74,9 @@ class Doraemon():
             shutil.copy(fromfile, tofile)
             return True
         except Exception as e:
-            print "Exception {0} to copy file {1}  to file {2}.".format(e.message,
-                                                                        fromfile,
-                                                                        tofile)
+            print "Exception {0} to copy file {1} to file {2}.".format(e.message,
+                                                                       fromfile,
+                                                                       tofile)
             return False
 
     def createFilePath(self, path):
@@ -455,6 +468,26 @@ class Doraemon():
                     t.add(fullpath)
             t.close()
             print "Finished to compress directory: {0}".format(directory)
+        except Exception as e:
+            print "Exception to compress directory: {0} for :{1}".format(directory, e.message)
+
+    def tarAndDelete(self, directory):
+        file_list = os.listdir(directory)
+        if len(file_list) == 0:
+            print"There is no file to compress for: {0}".format(directory)
+            return
+        try:
+            print "Start to compress directory: {0}".format(directory)
+            t = tarfile.open(directory + ".tar.gz", "w:gz")
+            for root, dir, files in os.walk(directory):
+                for file in files:
+                    fullpath = os.path.join(root, file)
+                    t.add(fullpath)
+            t.close()
+            print "Finished to compress directory: {0}".format(directory)
+            for file in files:
+                fullpath = os.path.join(root, file)
+                self.deleteFile(fullpath)
         except Exception as e:
             print "Exception to compress directory: {0} for :{1}".format(directory, e.message)
 

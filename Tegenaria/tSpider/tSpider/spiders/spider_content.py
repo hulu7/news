@@ -36,7 +36,8 @@ class Spider():
                                 self.spiderBone.user_root_password_webserver0,
                                 self.spiderBone.html_webserver0,
                                 self.siteinfo.need_self_image,
-                                self.siteinfo.need_self_html)
+                                self.siteinfo.need_self_html,
+                                self.spiderBone.local_html_path)
 
     def parse(self, current_url, html, page_source):
         data = None

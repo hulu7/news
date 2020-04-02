@@ -12,7 +12,6 @@ sys.path.append("/home/dev/Repository/news/")
 from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
 from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
 from Tegenaria.tSpider.tSpider.storeHtml.aliyunUpload import AliUpload
-from Tegenaria.tSpider.tSpider.storeHtml.sshUpload import SSHUpload
 
 class matchRules():
     def __init__(self, tag=None, key=None, value=None):
@@ -49,7 +48,8 @@ class StoreFiles():
                  userrootpasswordwebserver0=None,
                  htmlwebserver0=None,
                  needselfimage=None,
-                 needselfhtml=None):
+                 needselfhtml=None,
+                 localhtmlpath=None):
         self.doraemon = Doraemon()
         self.file = FileIOMiddleware()
         self.image_count = 0
@@ -67,6 +67,7 @@ class StoreFiles():
         self.htmlwebserver0 = htmlwebserver0
         self.needselfimage = needselfimage
         self.needselfhtml = needselfhtml
+        self.localhtmlpath = localhtmlpath
 
     def parseContentRegxRule(self, content_regx_rule):
         result = matchRules(None, None, None)
@@ -380,9 +381,10 @@ class StoreFiles():
                                            articleContent,
                                            data.url)
             if self.doraemon.storeHtml(newArticleId, template, self.htmlpath):
-                sshUpload = SSHUpload()
-                fromFile = '{0}/{1}.html'.format(self.htmlpath, newArticleId)
-                sshUpload.updateAddFile([fromFile])
+                htmlName = '{0}.html'.format(newArticleId)
+                fromFile = '{0}/{1}'.format(self.htmlpath, htmlName)
+                toFile = '{0}/{1}'.format(self.localhtmlpath, htmlName)
+                self.doraemon.copyFile(fromFile, toFile)
             return newData
         except Exception as e:
             print 'Exception {0} when update : {1}'.format(e.message, data.url)

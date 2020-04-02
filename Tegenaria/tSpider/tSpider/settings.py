@@ -150,7 +150,10 @@ class Settings():
         self.ALI_BUCKET_NAME_DEEPINEWS = "deepinews"
         self.ALI_BUCKET_NAME_DEEPINEWS_IMG = "img"
 
-        #webserver0 html info
+        # local html info
+        self.LOCAL_HTML_PATH = "{0}/local".format(self.RSYNC_PRD1)
+
+        # webserver0 html info
         self.IP_WEBSERVER0 = "223.111.139.227"
         self.PORT_WEBSERVER0 = 22
         self.USER_ROOT_WEBSERVER0 = "root"
