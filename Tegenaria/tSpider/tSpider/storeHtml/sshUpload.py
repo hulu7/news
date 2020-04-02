@@ -106,24 +106,26 @@ class SSHUpload():
             return False
 
     def startUpload(self):
-        if not os.listdir(self.settings.LOCAL_HTML_PATH):
+        fromFile = '{0}.tar.gz'.format(self.settings.LOCAL_HTML_PATH)
+        toFile = '{0}/local.tar.gz'.format(self.settings.MONITOR_UPLOAD_PATH_WEBSERVER0)
+        if not os.listdir(self.settings.LOCAL_HTML_PATH) and os.path.exists(fromFile) is False:
             print 'no html file to tar'
             return
-        try:
-            fromFile = '{0}.tar.gz'.format(self.settings.LOCAL_HTML_PATH)
-            toFile = '{0}/local.tar.gz'.format(self.settings.MONITOR_UPLOAD_PATH_WEBSERVER0)
-            if os.path.exists(fromFile) is False:
-                self.doraemon.tarAndDelete(self.settings.LOCAL_HTML_PATH)
-            if self.start(self.settings.IP_WEBSERVER0,
-                          self.settings.PORT_WEBSERVER0,
-                          self.settings.USER_ROOT_WEBSERVER0,
-                          self.settings.USER_ROOT_PASSWORD_WEBSERVER0,
-                          fromFile,
-                          toFile):
-                os.remove(fromFile)
-                print 'Success to upload html file: {0}'.format(fromFile)
-        except Exception as e:
-            print 'Exception {0} to upload html file: {1}'.format(e.message, fromFile)
+        if os.path.exists(fromFile) is False:
+            self.doraemon.tarAndDelete(self.settings.LOCAL_HTML_PATH)
+        while os.path.exists(fromFile):
+            try:
+                if self.start(self.settings.IP_WEBSERVER0,
+                              self.settings.PORT_WEBSERVER0,
+                              self.settings.USER_ROOT_WEBSERVER0,
+                              self.settings.USER_ROOT_PASSWORD_WEBSERVER0,
+                              fromFile,
+                              toFile):
+                    os.remove(fromFile)
+                    print 'Success to upload html file: {0}'.format(fromFile)
+            except Exception as e:
+                print 'Exception {0} to upload html file: {1}'.format(e.message, fromFile)
+
 
 if __name__ == '__main__':
     sshUpload=SSHUpload()
