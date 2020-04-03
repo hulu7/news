@@ -471,25 +471,26 @@ class Doraemon():
         except Exception as e:
             print "Exception to compress directory: {0} for :{1}".format(directory, e.message)
 
-    def tarAndDelete(self, directory):
+    def tarList(self, directory):
         file_list = os.listdir(directory)
         if len(file_list) == 0:
             print"There is no file to compress for: {0}".format(directory)
             return
         try:
             print "Start to compress directory: {0}".format(directory)
+            lst = []
             t = tarfile.open(directory + ".tar.gz", "w:gz")
             for root, dir, files in os.walk(directory):
                 for file in files:
                     fullpath = os.path.join(root, file)
                     t.add(fullpath)
+                    lst.append(fullpath)
             t.close()
             print "Finished to compress directory: {0}".format(directory)
-            for file in files:
-                fullpath = os.path.join(root, file)
-                self.deleteFile(fullpath)
+            return lst
         except Exception as e:
             print "Exception to compress directory: {0} for :{1}".format(directory, e.message)
+            return []
 
     def isCamelReadyToRun(self, settings):
         if self.isWorkTime(settings.START_TIME, settings.END_TIME) is False:
@@ -539,7 +540,7 @@ class Doraemon():
             print 'input hour is empty.'
             return
         current_time = time.strftime('%H', time.localtime(time.time()))
-        if int(hour) > int(current_time):
+        if int(hour) >= int(current_time):
             return True
         else:
             return False

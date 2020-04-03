@@ -111,8 +111,9 @@ class SSHUpload():
         if not os.listdir(self.settings.LOCAL_HTML_PATH) and os.path.exists(fromFile) is False:
             print 'no html file to tar'
             return
+        uploadedList = []
         if os.path.exists(fromFile) is False:
-            self.doraemon.tarAndDelete(self.settings.LOCAL_HTML_PATH)
+            uploadedList = self.doraemon.tarList(self.settings.LOCAL_HTML_PATH)
         while os.path.exists(fromFile):
             try:
                 if self.start(self.settings.IP_WEBSERVER0,
@@ -122,10 +123,11 @@ class SSHUpload():
                               fromFile,
                               toFile):
                     os.remove(fromFile)
+                    for file in uploadedList:
+                        self.doraemon.deleteFile(file)
                     print 'Success to upload html file: {0}'.format(fromFile)
             except Exception as e:
                 print 'Exception {0} to upload html file: {1}'.format(e.message, fromFile)
-
 
 if __name__ == '__main__':
     sshUpload=SSHUpload()
