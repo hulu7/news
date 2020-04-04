@@ -3,7 +3,6 @@ import sys
 reload(sys)
 import os
 import re
-import paramiko
 sys.path.append("/home/dev/Repository/news/")
 from Tegenaria.tSpider.tSpider.settings import Settings
 from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
@@ -78,32 +77,18 @@ class SSHUpload():
                     fileParts = re.split(r'[/]', fromFile)
                     fileName = fileParts[len(fileParts) - 1]
                     toFile = '{0}/{1}'.format(self.settings.HTML_WEBSERVER0, fileName)
-                    if self.start(self.settings.IP_WEBSERVER0,
-                                  self.settings.PORT_WEBSERVER0,
-                                  self.settings.USER_ROOT_WEBSERVER0,
-                                  self.settings.USER_ROOT_PASSWORD_WEBSERVER0,
-                                  fromFile,
-                                  toFile):
+                    if self.doraemon.sshUpload(self.settings.IP_WEBSERVER0,
+                                               self.settings.PORT_WEBSERVER0,
+                                               self.settings.USER_ROOT_WEBSERVER0,
+                                               self.settings.USER_ROOT_PASSWORD_WEBSERVER0,
+                                               fromFile,
+                                               toFile):
                         updateFiles.append(fromFile)
                         print 'Success to retry to upload: {0}'.format(fromFile)
                 self.updateRemoveFile(updateFiles)
             except Exception as e:
                 self.updateRemoveFile(updateFiles)
                 print 'Exception {0} to retry to upload: {1}'.format(e.message, fromFile)
-
-    def start(self, address, port, username, password, fromFile, toFile):
-        transport = paramiko.Transport((address, port))
-        try:
-            print 'Start to upload file: {0}'.format(fromFile)
-            transport.connect(username=username, password=password)
-            sftp = paramiko.SFTPClient.from_transport(transport)
-            sftp.put(fromFile, toFile)
-            transport.close()
-            print 'Finished to upload file: {0}'.format(fromFile)
-            return True
-        except Exception as e:
-            print 'Exception {0} to upload file: {1}'.format(e.message, fromFile)
-            return False
 
     def startUpload(self):
         fromFile = '{0}.tar.gz'.format(self.settings.LOCAL_HTML_PATH)
@@ -116,12 +101,12 @@ class SSHUpload():
             uploadedList = self.doraemon.tarList(self.settings.LOCAL_HTML_PATH)
         while os.path.exists(fromFile):
             try:
-                if self.start(self.settings.IP_WEBSERVER0,
-                              self.settings.PORT_WEBSERVER0,
-                              self.settings.USER_ROOT_WEBSERVER0,
-                              self.settings.USER_ROOT_PASSWORD_WEBSERVER0,
-                              fromFile,
-                              toFile):
+                if self.doraemon.sshUpload(self.settings.IP_WEBSERVER0,
+                                           self.settings.PORT_WEBSERVER0,
+                                           self.settings.USER_ROOT_WEBSERVER0,
+                                           self.settings.USER_ROOT_PASSWORD_WEBSERVER0,
+                                           fromFile,
+                                           toFile):
                     os.remove(fromFile)
                     for file in uploadedList:
                         self.doraemon.deleteFile(file)

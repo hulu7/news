@@ -32,11 +32,8 @@ class UpdateMongoDeepNews():
         client.close()
 
     def getUsers(self, data):
-
         users = data.split(',')
-
         users.append('admin')
-
         return users
 
     def cutTitle(self, title):
@@ -78,15 +75,22 @@ class UpdateMongoDeepNews():
         return format_data
 
     def updateData(self):
-        isFileExit = os.path.exists(self.path)
-        if isFileExit is True:
-            print "file: {0} exits".format(self.path)
-            raw_data = self.readFromCSV(self.path)
-            for i in range(1, len(raw_data)):
-                self.insert(self.formatData(raw_data[i]))
-            os.remove(self.path)
-            return
-        print "file: {0} not eixts".format(self.path)
+        while True:
+            time.sleep(1)
+            if os.path.exists(self.path):
+                print "file: {0} exits and start to update mongo.".format(self.path)
+                raw_data = self.readFromCSV(self.path)
+                data_length = len(raw_data)
+                for i in range(1, data_length):
+                    self.insert(self.formatData(raw_data[i]))
+                    print 'data {0} is updated.'.format(raw_data[i][1])
+                if data_length < 2:
+                    print "no data to update.".format(self.path)
+                else:
+                    print "update done.".format(self.path)
+                os.remove(self.path)
+                print "file: {0} delete done.".format(self.path)
+                print "waiting..."
 
 if __name__ == '__main__':
     u = UpdateMongoDeepNews()

@@ -79,6 +79,7 @@ class Settings():
         self.LOG_PATH_PRD2 = "{0}/log".format(self.RSYNC_PRD2)
 
         self.MONGO_URI = 'mongodb://127.0.0.1:27017'
+        self.MONGO_DEEPINEWS = 'DeepNewsDatabase'
 
         self.REDIS_HOST = '127.0.0.1'
         self.REDIS_PORT = 6379
@@ -160,6 +161,10 @@ class Settings():
         self.USER_ROOT_PASSWORD_WEBSERVER0 = "rerr48779"
         self.HTML_WEBSERVER0 = "/home/dev/Data/Production/article"
         self.RETRY_FILE = "{0}/retry.txt".format(self.RSYNC_PRD1)
+
+        #webserver0 mongo data info
+        self.LOCAL_MONGO_DATA_PATH = "/home/dev/Data/Production/data4deepinews/{0}.csv".format(self.TODAY)
+        self.REMOTE_MONGO_DATA_PATH = "/home/dev/Data/Production/data4deepinews/{0}.csv".format(self.TODAY)
 
         #template
         self.TEMPLATE_PATH = "/home/dev/Repository/news/Tegenaria/tSpider/tSpider/storeHtml/template_1.html"

@@ -6,7 +6,6 @@ sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/")
 from Tegenaria.tSpider.tSpider.middlewares.doraemonMiddleware import Doraemon
 from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
-from Tegenaria.tSpider.tSpider.storeHtml.sshUpload import SSHUpload
 from Tegenaria.tSpider.tSpider.settings import Settings
 
 class singleSiteDto():
@@ -34,7 +33,6 @@ class UpdateMonitorFiles():
         self.doraemon = Doraemon()
         self.getSettings()
         self.file = FileIOMiddleware()
-        self.ssh = SSHUpload()
 
     def getSettings(self):
         self.settings = self.globalSettings.CreateSettings(self.siteinfo)
@@ -81,12 +79,12 @@ class UpdateMonitorFiles():
     def uploadFile(self, fromFile, toFile):
         while os.path.exists(fromFile):
             try:
-                if self.ssh.start(self.globalSettings.IP_WEBSERVER0,
-                                  self.globalSettings.PORT_WEBSERVER0,
-                                  self.globalSettings.USER_ROOT_WEBSERVER0,
-                                  self.globalSettings.USER_ROOT_PASSWORD_WEBSERVER0,
-                                  fromFile,
-                                  toFile) == True:
+                if self.doraemon.sshUpload(self.globalSettings.IP_WEBSERVER0,
+                                           self.globalSettings.PORT_WEBSERVER0,
+                                           self.globalSettings.USER_ROOT_WEBSERVER0,
+                                           self.globalSettings.USER_ROOT_PASSWORD_WEBSERVER0,
+                                           fromFile,
+                                           toFile):
                     print 'Success to retry to upload monitor file: {0}'.format(fromFile)
                     return True
             except Exception as e:

@@ -18,6 +18,7 @@ import urllib
 import re
 import tarfile
 import urlparse
+import paramiko
 sys.path.append("/home/dev/Repository/news/")
 from Tegenaria.tSpider.tSpider.middlewares.mongodbMiddleware import MongoMiddleware
 from Tegenaria.tSpider.tSpider.settings import Settings
@@ -52,6 +53,20 @@ class Doraemon():
         self.bf_huxiu_nlp = BloomFilter(self.rconn, settings.FINISHED_HUXIU_NLP)
         self.sites_info = settings.SITES_INFO
         self.sites_debug = settings.SITES_DEBUG
+
+    def sshUpload(self, address, port, username, password, fromFile, toFile):
+        transport = paramiko.Transport((address, port))
+        try:
+            print 'Start to upload file: {0}'.format(fromFile)
+            transport.connect(username=username, password=password)
+            sftp = paramiko.SFTPClient.from_transport(transport)
+            sftp.put(fromFile, toFile)
+            transport.close()
+            print 'Finished to upload file: {0}'.format(fromFile)
+            return True
+        except Exception as e:
+            print 'Exception {0} to upload file: {1}'.format(e.message, fromFile)
+            return False
 
     def moveFile(self, fromfile=None, tofile=None):
         if fromfile is None or os.path.exists(fromfile) is False:
