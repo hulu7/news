@@ -81,12 +81,12 @@ class UpdateMongoDeepNews():
                 print "file: {0} exits and start to update mongo.".format(self.path)
                 raw_data = self.readFromCSV(self.path)
                 data_length = len(raw_data)
-                for i in range(1, data_length):
-                    self.insert(self.formatData(raw_data[i]))
-                    print 'data {0} is updated.'.format(raw_data[i][1])
                 if data_length < 2:
                     print "no data to update.".format(self.path)
                 else:
+                    for i in range(1, data_length):
+                        self.insert(self.formatData(raw_data[i]))
+                        print 'data {0} is updated.'.format(raw_data[i][1])
                     print "update done.".format(self.path)
                 os.remove(self.path)
                 print "file: {0} delete done.".format(self.path)
