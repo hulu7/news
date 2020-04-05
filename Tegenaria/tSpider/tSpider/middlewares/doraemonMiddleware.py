@@ -73,26 +73,40 @@ class Doraemon():
             print "Source file {0} is not exits".format(fromfile)
             return False
         try:
-            shutil.move(fromfile, tofile)
+            retry = 1
+            retryLimit = 60
+            while not os.path.exists(tofile) and retry <= retryLimit:
+                if retry > 1:
+                    time.sleep(1)
+                shutil.move(fromfile, tofile)
+                retry += 1
+            if retryLimit < retry:
+                raise Exception('Move file retry limit time reached.')
             return True
         except Exception as e:
-            print "Exception {0} to move file {1} to file {2}.".format(e.message,
-                                                                       fromfile,
-                                                                       tofile)
-            return False
+            raise Exception("Exception {0} to move file {1} to file {2}.".format(e.message,
+                                                                                 fromfile,
+                                                                                 tofile))
 
     def copyFile(self, fromfile=None, tofile=None):
         if fromfile is None or os.path.exists(fromfile) is False:
             print "Source file {0} is not exits".format(fromfile)
             return False
         try:
-            shutil.copy(fromfile, tofile)
+            retry = 1
+            retryLimit = 60
+            while not os.path.exists(tofile) and retry <= retryLimit:
+                if retry > 1:
+                    time.sleep(1)
+                shutil.copy(fromfile, tofile)
+                retry += 1
+            if retryLimit < retry:
+                raise Exception('Copy file retry limit time reached.')
             return True
         except Exception as e:
-            print "Exception {0} to copy file {1} to file {2}.".format(e.message,
-                                                                       fromfile,
-                                                                       tofile)
-            return False
+            raise Exception("Exception {0} to copy file {1} to file {2}.".format(e.message,
+                                                                                 fromfile,
+                                                                                 tofile))
 
     def createFilePath(self, path):
         isFilePathExists = os.path.exists(path)

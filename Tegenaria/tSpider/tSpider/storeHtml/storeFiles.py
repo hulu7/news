@@ -49,7 +49,8 @@ class StoreFiles():
                  htmlwebserver0=None,
                  needselfimage=None,
                  needselfhtml=None,
-                 localhtmlpath=None):
+                 localhtmlpath=None,
+                 logpath=None):
         self.doraemon = Doraemon()
         self.file = FileIOMiddleware()
         self.image_count = 0
@@ -68,6 +69,7 @@ class StoreFiles():
         self.needselfimage = needselfimage
         self.needselfhtml = needselfhtml
         self.localhtmlpath = localhtmlpath
+        self.logpath = logpath
 
     def parseContentRegxRule(self, content_regx_rule):
         result = matchRules(None, None, None)
@@ -384,10 +386,18 @@ class StoreFiles():
                 htmlName = '{0}.html'.format(newArticleId)
                 fromFile = '{0}/{1}'.format(self.htmlpath, htmlName)
                 toFile = '{0}/{1}'.format(self.localhtmlpath, htmlName)
-                self.doraemon.copyFile(fromFile, toFile)
-            return newData
+                if self.doraemon.copyFile(fromFile, toFile):
+                    print 'Copy file {0} done.'.format(fromFile)
+                    return newData
+                else:
+                    message1 = 'Copy file {0} fail.'.format(fromFile)
+                    print message1
+                    self.file.logger(self.logpath, message1)
+            return data
         except Exception as e:
-            print 'Exception {0} when update : {1}'.format(e.message, data.url)
+            message2 = 'Exception {0} when update : {1}'.format(e.message, data.url)
+            print message2
+            self.file.logger(self.logpath, message2)
             return data
 
 if __name__ == '__main__':
