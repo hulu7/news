@@ -59,14 +59,14 @@ class UpdateHtml():
                     file_names = tar.getnames()
                     data_length = len(file_names)
                     if data_length < 2:
-                        print "no data to update."
+                        print "no html to update."
                     for file_name in file_names:
                         fromFilePath = '/{0}'.format(file_name)
                         file_string_arrays = file_name.split('/')
                         currentFileName = file_string_arrays[len(file_string_arrays) - 1]
                         toFilePath = '{0}/{1}'.format(self.articlePath, currentFileName)
                         tar.extract(file_name, '/')
-                        message2 = 'data {0} is decompressed done.'.format(currentFileName)
+                        message2 = 'html {0} is decompressed done.'.format(currentFileName)
                         print message2
                         self.logger(self.logpath, message2)
                         retry = 1

@@ -96,12 +96,12 @@ class UpdateMongoDeepNews():
                     raw_data = self.readFromCSV(self.path)
                     data_length = len(raw_data)
                     if data_length < 2:
-                        print "no data to update."
+                        print "no mongo data to update."
                     else:
                         for i in range(1, data_length):
                             currentUrl = raw_data[i][1]
                             self.insert(self.formatData(raw_data[i]))
-                            message2 = 'data {0} is updated.'.format(currentUrl)
+                            message2 = 'mongo {0} is updated.'.format(currentUrl)
                             print message2
                             self.logger(self.logpath, message2)
                         print "update done."
@@ -109,7 +109,7 @@ class UpdateMongoDeepNews():
                     print "file: {0} delete done.".format(self.path)
                     print "waiting..."
             except Exception as e:
-                message3 = "Exception: {0} to update mongod: {1}.".format(e.message, currentUrl)
+                message3 = "Exception: {0} to update mongo: {1}.".format(e.message, currentUrl)
                 print message3
                 self.logger(self.logpath, message3)
 

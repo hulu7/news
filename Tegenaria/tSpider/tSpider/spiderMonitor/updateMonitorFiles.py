@@ -21,6 +21,21 @@ class singleSiteDto():
         self.turl = turl
         self.diff = diff
 
+class totalDto():
+    def __init__(self,
+                 prd3ytotal=None,
+                 prd3ttotal=None,
+                 prd3difftotal=None,
+                 prd4ytotal=None,
+                 prd4ttotal=None,
+                 prd4difftotal=None):
+        self.prd3ytotal = prd3ytotal
+        self.prd3ttotal = prd3ttotal
+        self.prd3difftotal = prd3difftotal
+        self.prd4ytotal = prd4ytotal
+        self.prd4ttotal = prd4ttotal
+        self.prd4difftotal = prd4difftotal
+
 class allSitesDto():
     def __init__(self, prd3=None, prd4=None):
         self.prd3 = prd3
@@ -140,16 +155,32 @@ class UpdateMonitorFiles():
     def processAllSites(self, allSitesData=None):
         template = self.file.readFromTxt(self.monitor_spiders_template_path)
         mainContent = ''
+        t = totalDto(0, 0, 0, 0, 0, 0)
         for data in allSitesData:
-            mainContent = '{0}{1}'.format(mainContent,self.updateSpiders(data.prd3.sitename,
-                                                                         data.prd3.ycount,
-                                                                         data.prd3.tcount,
-                                                                         data.prd3.turl,
-                                                                         data.prd3.diff,
-                                                                         data.prd4.ycount,
-                                                                         data.prd4.tcount,
-                                                                         data.prd4.turl,
-                                                                         data.prd4.diff))
+            mainContent = '{0}{1}'.format(mainContent, self.updateSpiders(data.prd3.sitename,
+                                                                          data.prd3.ycount,
+                                                                          data.prd3.tcount,
+                                                                          data.prd3.turl,
+                                                                          data.prd3.diff,
+                                                                          data.prd4.ycount,
+                                                                          data.prd4.tcount,
+                                                                          data.prd4.turl,
+                                                                          data.prd4.diff))
+            t.prd3ytotal += data.prd3.ycount
+            t.prd3ttotal += data.prd3.tcount
+            t.prd4ytotal += data.prd4.ycount
+            t.prd4ttotal += data.prd4.tcount
+        t.prd3difftotal = t.prd3ttotal - t.prd4ytotal
+        t.prd4difftotal = t.prd4ttotal - t.prd4ytotal
+        mainContent = '{0}{1}'.format(mainContent, self.updateSpiders('Summary',
+                                                                      t.prd3ytotal,
+                                                                      t.prd3ttotal,
+                                                                      '',
+                                                                      t.prd3difftotal,
+                                                                      t.prd4ytotal,
+                                                                      t.prd4ttotal,
+                                                                      '',
+                                                                      t.prd4difftotal))
         template = template.replace('UpdateTime', self.doraemon.getCurrentLocalTime())
         template = template.replace('MainContent', mainContent)
         localHtmlPath = '{0}/index.html'.format(self.monitor_upload_local)
