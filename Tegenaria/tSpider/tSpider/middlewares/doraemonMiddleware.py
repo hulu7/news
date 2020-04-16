@@ -19,6 +19,8 @@ import re
 import tarfile
 import urlparse
 import paramiko
+from urllib3 import encode_multipart_formdata
+import requests
 sys.path.append("/home/dev/Repository/news/")
 from Tegenaria.tSpider.tSpider.middlewares.mongodbMiddleware import MongoMiddleware
 from Tegenaria.tSpider.tSpider.settings import Settings
@@ -881,6 +883,30 @@ class Doraemon():
         if regx.index == -1 or len(content) == 0:
            return content
         return content[regx.index]
+
+    def uploadFileApi(self, url, fileName, fullPath):
+        try:
+            with open(fullPath, mode="r")as f:
+                file = {
+                    "file": (fileName, f.read())
+                }
+
+                encode_data = encode_multipart_formdata(file)
+
+                file_data = encode_data[0]
+                headers_from_data = {
+                    "Content-Type": encode_data[1]
+                }
+                response = requests.post(url=url, headers=headers_from_data, data=file_data).json()
+                if response['code'] != 200:
+                    print 'Fail to upload file {0} through api {1}'.format(fileName, url)
+                    return False
+                print 'Success to upload file {0} through api {1}'.format(fileName, url)
+                return True
+        except Exception as e:
+            print 'Exception to upload file {0} through api {1} : {2}'.format(fileName, url, e.message)
+            return False
+
 
 class camelDto():
     def __init__(self,

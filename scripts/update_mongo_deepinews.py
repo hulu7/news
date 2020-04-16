@@ -16,6 +16,7 @@ class UpdateMongoDeepNews():
         self.MONGO_URI = 'mongodb://127.0.0.1:27017'
         self.DATABASE = 'DeepNewsDatabase'
         self.today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+        self.rootPath = '/home/dev/Data/Production/data4deepinews'
         self.path = '/home/dev/Data/Production/data4deepinews/{0}.csv'.format(self.today)
         self.logpath = '/home/dev/Data/Log/{0}_log.log'.format(self.today)
 
@@ -86,7 +87,11 @@ class UpdateMongoDeepNews():
         self.writeToTxtAdd(file_path, str(current_time + ": " + content))
 
     def updateData(self):
-        while True:
+        if os.path.exists(self.rootPath) is False:
+            os.makedirs(self.rootPath)
+        tik = 120
+        while tik > 0:
+            tik -= 1
             time.sleep(1)
             try:
                 currentUrl = ''

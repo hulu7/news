@@ -48,7 +48,11 @@ class UpdateHtml():
                                                                                  tofile))
 
     def updateData(self):
-        while True:
+        if os.path.exists(self.articlePath) is False:
+            os.makedirs(self.articlePath)
+        tik = 120
+        while tik > 0:
+            tik -= 1
             time.sleep(1)
             try:
                 if os.path.exists(self.path):

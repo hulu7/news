@@ -92,7 +92,6 @@ class SSHUpload():
 
     def startUpload(self):
         fromFile = '{0}.tar.gz'.format(self.settings.LOCAL_HTML_PATH)
-        toFile = '{0}/local.tar.gz'.format(self.settings.MONITOR_UPLOAD_PATH_WEBSERVER0)
         if not os.listdir(self.settings.LOCAL_HTML_PATH) and os.path.exists(fromFile) is False:
             print 'no html file to tar'
             return
@@ -101,12 +100,9 @@ class SSHUpload():
             uploadedList = self.doraemon.tarList(self.settings.LOCAL_HTML_PATH)
         while os.path.exists(fromFile):
             try:
-                if self.doraemon.sshUpload(self.settings.IP_WEBSERVER0,
-                                           self.settings.PORT_WEBSERVER0,
-                                           self.settings.USER_ROOT_WEBSERVER0,
-                                           self.settings.USER_ROOT_PASSWORD_WEBSERVER0,
-                                           fromFile,
-                                           toFile):
+                if self.doraemon.uploadFileApi(self.settings.UPLOAD_HTML_API,
+                                               'local.tar.gz',
+                                               fromFile):
                     os.remove(fromFile)
                     for file in uploadedList:
                         self.doraemon.deleteFile(file)
