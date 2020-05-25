@@ -5,7 +5,6 @@ isClassifyExists=`ps -fe |grep "start_classify.py" |grep -v "grep" |wc -l`
 if [ ${isClassifyExists} -eq 0 ]; then
    echo "${MYDATE}: Restart classify ..."
    python ${CLASSIFYPATH}/start_classify.py
-   chmod -R 777 /home/dev/Data/Production
 else
    echo "${MYDATE}: classify is running"
 fi

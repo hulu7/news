@@ -5,7 +5,6 @@ isCommitExists=`ps -fe |grep "commit_data.py" |grep -v "grep" |wc -l`
 if [ ${isCommitExists} -eq 0 ]; then
    echo "${MYDATE}: Restart commit ..."
    python ${COMMITPATH}/commit_data.py
-   chmod -R 777 /home/dev/Data/Production
 else
    echo "${MYDATE}: commit is running"
 fi
