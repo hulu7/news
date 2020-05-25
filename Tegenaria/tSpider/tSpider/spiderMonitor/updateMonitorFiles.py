@@ -170,7 +170,7 @@ class UpdateMonitorFiles():
             t.prd3ttotal += data.prd3.tcount
             t.prd4ytotal += data.prd4.ycount
             t.prd4ttotal += data.prd4.tcount
-        t.prd3difftotal = t.prd3ttotal - t.prd4ytotal
+        t.prd3difftotal = t.prd3ttotal - t.prd3ytotal
         t.prd4difftotal = t.prd4ttotal - t.prd4ytotal
         mainContent = '{0}{1}'.format(mainContent, self.updateSpiders('Summary',
                                                                       t.prd3ytotal,
