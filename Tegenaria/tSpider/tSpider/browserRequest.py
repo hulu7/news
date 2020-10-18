@@ -17,14 +17,15 @@ class BrowserRequest():
     def run_task(self, url_title, url_timeout, callback=callable):
         self.file.logger(self.log_path, 'Start: {0}'.format(url_title[0]))
         print 'Start: {0}'.format(url_title[0])
+        is_loading = True
         try:
             eventlet.monkey_patch()
             request = SeleniumMiddleware()
             with eventlet.Timeout(url_timeout, False):
                 request.chrome_request(url_title[0], self.log_path, self.proxy)
-                self.is_loading = False
+                is_loading = False
                 print 'Finish loading: {0}'.format(url_title[0])
-            if self.is_loading:
+            if is_loading:
                 raise Exception('Url fetch timeout')
             response = request.browser
             callback({'response': response, 'request_url': url_title[0], 'request_title': url_title[1]})
@@ -48,7 +49,6 @@ class BrowserRequest():
         self.content = []
         self.log_path = log_path
         self.proxy = proxy
-        self.is_loading = True
         process = Pool(processes)
         for url_title in url_titles:
             process.apply_async(self.run_task, args=(url_title, url_timeout, callback))
