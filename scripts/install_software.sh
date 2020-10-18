@@ -156,6 +156,8 @@ echo "******************************install gensim"
 pip install gensim==3.7.3
 echo "******************************install requests"
 pip install requests==2.6.0
+echo "******************************install eventlet"
+pip install eventlet==0.28.0
 echo "******************************install Chromedriver"
 cd '/opt/'
 wget http://chromedriver.storage.googleapis.com/70.0.3538.16/chromedriver_linux64.zip

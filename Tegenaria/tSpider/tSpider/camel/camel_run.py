@@ -20,7 +20,7 @@ class CamelRun():
         try:
             print 'start to run url spider: {0}'.format(site.name)
             camel = Camel(site)
-            camel.camelBone.start()
+            camel.camelBone.start(self.isDebug)
         except Exception as e:
             print 'Exception: {0} for url spider {1}'.format(e.message, site.name)
 

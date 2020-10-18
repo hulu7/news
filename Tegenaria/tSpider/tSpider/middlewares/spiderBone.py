@@ -49,6 +49,7 @@ class SpiderBone():
         self.concurrency_file_spider = self.globalSettings.CONCURRENCY_FILE_SPIDER
         self.monitor_upload_local = self.globalSettings.MONITOR_UPLOAD_LOCAL
         self.local_html_path = self.globalSettings.LOCAL_HTML_PATH
+        self.content_timeout = self.settings.CONTENT_TIMEOUT
         self.createPath()
 
     def createPath(self):
@@ -112,7 +113,7 @@ class SpiderBone():
             print message7
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_url_titles, self.max_pool_size, self.log_path, None, callback=self.parse)
+        content = request.start_chrome(new_url_titles, self.content_timeout, self.max_pool_size, self.log_path, None, callback=self.parse)
         self.doraemon.recoveryConcurrency(self.concurrency_file_spider, self.max_concurrency_spider)
         message8 = 'End requests for {0}'.format(str(len(content)))
         self.file.logger(self.log_path, message8)

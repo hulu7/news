@@ -758,7 +758,9 @@ class Doraemon():
                              content_title_match=[],
                              content_image_match=[],
                              content_time_match=[],
-                             need_self_image=None)
+                             need_self_image=None,
+                             url_timeout=None,
+                             content_timeout=None)
         for item in items:
             if self.isEmpty(item):
                 continue
@@ -855,6 +857,12 @@ class Doraemon():
             if key == 'NEEDSELFHTML':
                 if self.isEmpty(value) is False:
                     result.need_self_html = value == 'True'
+            if key == 'URLTIMEOUT':
+                if self.isEmpty(value) is False:
+                    result.url_timeout = value
+            if key == 'CONTENTTIMEOUT':
+                if self.isEmpty(value) is False:
+                    result.content_timeout = value
         return result
 
     def getUrlId(self, url, idTag):
@@ -979,7 +987,9 @@ class siteInfoDto():
                  content_image_match=[],
                  content_time_match=[],
                  need_self_image=None,
-                 need_self_html=None):
+                 need_self_html=None,
+                 url_timeout=None,
+                 content_timeout=None):
         self.domain = domain
         self.name = name
         self.restart_interval = restart_interval
@@ -1005,6 +1015,8 @@ class siteInfoDto():
         self.content_time_match = content_time_match
         self.need_self_image = need_self_image
         self.need_self_html = need_self_html
+        self.url_timeout = url_timeout,
+        self.content_timeout = content_timeout
 
 class regxMatchDto():
     def __init__(self,

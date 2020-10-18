@@ -34,6 +34,7 @@ class CamelBone():
         self.max_concurrency = self.globalSettings.MAX_CONCURRENCY
         self.concurrency_file = self.globalSettings.CONCURRENCY_FILE
         self.url_backup_folder_path = self.settings.URL_BACKUP_FOLDER_PATH
+        self.url_timeout = self.settings.URL_TIMEOUT
         self.createPath()
 
     def createPath(self):
@@ -74,8 +75,8 @@ class CamelBone():
         del current_url, results, html
         gc.collect()
 
-    def start(self):
-        if self.doraemon.isCamelReadyToRun(self.settings) is False:
+    def start(self, isdebug=False):
+        if self.doraemon.isCamelReadyToRun(self.settings) is False and isdebug is False:
             message5 = 'It is not ready to run for {0}'.format(self.name)
             print message5
             return
@@ -95,7 +96,7 @@ class CamelBone():
             print 'No url.'
             return
         request = BrowserRequest()
-        content = request.start_chrome(new_urls, self.max_pool_size, self.log_path, None, callback=self.parse)
+        content = request.start_chrome(new_urls, self.url_timeout,self.max_pool_size, self.log_path, None, callback=self.parse)
         self.doraemon.recoveryConcurrency(self.concurrency_file, self.max_concurrency)
         message7 = 'End for {0} requests of {1}.'.format(str(len(content)), self.name)
         self.file.logger(self.log_path, message7)
