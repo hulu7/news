@@ -193,7 +193,9 @@ class Settings():
                        MAX_POOL_SIZE_CONTENT,
                        IS_OPEN_CACHE,
                        START_TIME,
-                       END_TIME):
+                       END_TIME,
+                       URL_TIMEOUT,
+                       CONTENT_TIMEOUT):
         return settingsSpec(SETTINGS_NAME,
                             SOURCE_NAME,
                             RESTART_INTERVAL,
@@ -201,7 +203,9 @@ class Settings():
                             MAX_POOL_SIZE_CONTENT,
                             IS_OPEN_CACHE,
                             START_TIME,
-                            END_TIME)
+                            END_TIME,
+                            URL_TIMEOUT,
+                            CONTENT_TIMEOUT)
 
     def CreateSettings(self, siteinfo=None):
         print "Create setting for: {0}".format(siteinfo.domain)
@@ -212,10 +216,12 @@ class Settings():
                                    siteinfo.content_parallel_number,
                                    siteinfo.is_open_cache,
                                    siteinfo.work_time_start,
-                                   siteinfo.work_time_end)
+                                   siteinfo.work_time_end,
+                                   siteinfo.url_timeout,
+                                   siteinfo.content_timeout)
 
     def CreateCommonSettings(self):
-        return self.SettingsFormat('0', '0', '0', '0', '0', '0', '0', '0')
+        return self.SettingsFormat('0', '0', '0', '0', '0', '0', '0', '0', '0', '0')
 
 class settingsSpec():
     def __init__(self,
@@ -226,7 +232,9 @@ class settingsSpec():
                  MAX_POOL_SIZE_CONTENT=None,
                  IS_OPEN_CACHE=None,
                  START_TIME=None,
-                 END_TIME=None):
+                 END_TIME=None,
+                 URL_TIMEOUT=None,
+                 CONTENT_TIMEOUT=None):
         settings = Settings()
         self.NAME = SETTINGS_NAME
         self.MONGO = SETTINGS_NAME
@@ -286,3 +294,5 @@ class settingsSpec():
         self.SOURCE_NAME = SOURCE_NAME
         self.START_TIME = START_TIME
         self.END_TIME = END_TIME
+        self.URL_TIMEOUT = int(URL_TIMEOUT)
+        self.CONTENT_TIMEOUT = int(CONTENT_TIMEOUT)

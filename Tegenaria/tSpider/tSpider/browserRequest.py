@@ -7,19 +7,27 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
-from multiprocessing.pool import ThreadPool as Pool
+import eventlet
 import gc
+from multiprocessing.pool import ThreadPool as Pool
 from middlewares.fileIOMiddleware import FileIOMiddleware
 from middlewares.seleniumMiddleware import SeleniumMiddleware
 
 class BrowserRequest():
-    def run_task(self, url_title, callback=callable):
+    def run_task(self, url_title, url_timeout, callback=callable):
         self.file.logger(self.log_path, 'Start: {0}'.format(url_title[0]))
         print 'Start: {0}'.format(url_title[0])
-        request = SeleniumMiddleware()
-        request.chrome_request(url_title[0], self.log_path, self.proxy)
-        response = request.browser
+        is_loading = True
         try:
+            eventlet.monkey_patch()
+            request = SeleniumMiddleware()
+            with eventlet.Timeout(url_timeout, False):
+                request.chrome_request(url_title[0], self.log_path, self.proxy)
+                is_loading = False
+                print 'Finish loading: {0}'.format(url_title[0])
+            if is_loading:
+                raise Exception('Url fetch timeout')
+            response = request.browser
             callback({'response': response, 'request_url': url_title[0], 'request_title': url_title[1]})
         except Exception as e:
             self.file.logger(self.log_path, 'Exception: {0} for {1}'.format(e.message, url_title[0]))
@@ -36,14 +44,14 @@ class BrowserRequest():
         del response, request
         gc.collect()
 
-    def start_chrome(self, url_titles, processes, log_path, proxy, callback=callable):
+    def start_chrome(self, url_titles, url_timeout, processes, log_path, proxy, callback=callable):
         self.file = FileIOMiddleware()
         self.content = []
         self.log_path = log_path
         self.proxy = proxy
         process = Pool(processes)
         for url_title in url_titles:
-            process.apply_async(self.run_task, args=(url_title, callback))
+            process.apply_async(self.run_task, args=(url_title, url_timeout, callback))
         process.close()
         process.join()
         self.file.logger(self.log_path, 'Done')
