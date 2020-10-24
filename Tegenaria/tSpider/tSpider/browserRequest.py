@@ -7,7 +7,6 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
-import eventlet
 import gc
 from multiprocessing.pool import ThreadPool as Pool
 from middlewares.fileIOMiddleware import FileIOMiddleware
@@ -17,16 +16,10 @@ class BrowserRequest():
     def run_task(self, url_title, url_timeout, callback=callable):
         self.file.logger(self.log_path, 'Start: {0}'.format(url_title[0]))
         print 'Start: {0}'.format(url_title[0])
-        is_loading = True
         try:
-            eventlet.monkey_patch()
             request = SeleniumMiddleware()
-            with eventlet.Timeout(url_timeout, False):
-                request.chrome_request(url_title[0], self.log_path, self.proxy)
-                is_loading = False
-                print 'Finish loading: {0}'.format(url_title[0])
-            if is_loading:
-                raise Exception('Url fetch timeout')
+            request.chrome_request(url_title[0], self.log_path, self.proxy)
+            print 'Finish loading: {0}'.format(url_title[0])
             response = request.browser
             callback({'response': response, 'request_url': url_title[0], 'request_title': url_title[1]})
         except Exception as e:
@@ -37,8 +30,8 @@ class BrowserRequest():
             del response, request
             gc.collect()
         self.content.append({'current_url': response.current_url, 'page_source': response.page_source})
-        self.file.logger(self.log_path, 'End: {0}'.format(response.current_url))
-        print 'End: {0}'.format(response.current_url)
+        self.file.logger(self.log_path, 'End browser request for: {0}'.format(response.current_url))
+        print 'End browser request for: {0}'.format(response.current_url)
         response.close()
         response.quit()
         del response, request
