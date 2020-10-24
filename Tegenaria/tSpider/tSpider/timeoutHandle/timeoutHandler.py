@@ -103,9 +103,7 @@ class ProcessTimeoutHandler():
 
     def start(self):
         print 'Start to process.'
-        while True:
-            self.processTimeoutProcesses(self.getCurrentProcesses(), self.getTimeoutCache())
-            time.sleep(5)
+        self.processTimeoutProcesses(self.getCurrentProcesses(), self.getTimeoutCache())
 
 if __name__ == '__main__':
     handler=ProcessTimeoutHandler()
