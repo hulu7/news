@@ -20,6 +20,10 @@ class Settings():
         self.SELENIUM_TIMEOUT = 120 #second
         self.CHROMEDRIVER_PATH = "/usr/bin/chromedriver"
 
+        #timeout handler
+        self.PROCESS_TIMEOUT = 2  # minutes
+        self.TIMEOUT_CACHE_FILE = "/home/dev/Data/rsyncData/timeout.cache"
+
         #concurrency
         self.REFRESH_CONCURRENCY_INTERVAL = 30  #minute
         self.MAX_CONCURRENCY = 10

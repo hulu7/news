@@ -156,6 +156,12 @@ echo "******************************install gensim"
 pip install gensim==3.7.3
 echo "******************************install requests"
 pip install requests==2.6.0
+echo "******************************install psutil"
+cd '/opt/'
+wget https://pypi.python.org/packages/source/p/psutil/psutil-3.2.2.tar.gz
+tar zxvf psutil-3.2.2.tar.gz
+cd psutil-3.2.2
+python setup.py install
 echo "******************************install Chromedriver"
 cd '/opt/'
 wget http://chromedriver.storage.googleapis.com/70.0.3538.16/chromedriver_linux64.zip

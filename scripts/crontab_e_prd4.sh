@@ -12,3 +12,4 @@
 */10 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/upload_mongo_data_restart.sh
 */5 * * * * sh /home/dev/Repository/news/scripts/redis_restart.sh
 */120 * * * * sh /home/dev/Repository/news/scripts/backup/run.sh /home/dev/Repository/news/scripts/backup/prd4.txt
+*/1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/processTimeout_restart.sh

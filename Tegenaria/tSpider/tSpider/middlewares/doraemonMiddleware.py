@@ -131,6 +131,18 @@ class Doraemon():
             print 'does not exceed the restart interval and stop'
         return isExceed
 
+    def isExceedTimeoutInterval(self, timeout, past):
+        if self.isEmpty(timeout):
+            print 'timeout is empty'
+            return False
+        now = time.time()
+        isExceed = ((now - past) // 60 >= timeout)
+        if isExceed is True:
+            print 'exceeds the timeout.'
+        else:
+            print 'does not exceeds the timeout.'
+        return isExceed
+
     def isEmpty(self, obj=None):
         if isinstance(obj, unicode):
             obj = obj.encode('utf-8')
