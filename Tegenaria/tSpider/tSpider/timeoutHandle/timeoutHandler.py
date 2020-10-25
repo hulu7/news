@@ -20,12 +20,13 @@ class ProcessTimeoutHandler():
 
         self.cache_file = self.settings.TIMEOUT_CACHE_FILE
         self.timeout = self.settings.PROCESS_TIMEOUT
+        self.timeout_content = self.settings.PROCESS_TIMEOUT_CONTENT
 
     def updateTimeoutCacheFile(self, processes):
         if self.doraemon.isFileExists(self.cache_file):
             self.doraemon.deleteFile(self.cache_file)
         for process in processes:
-            tmp = '{0}-{1}'.format(process.pid, process.past)
+            tmp = '{0}-{1}-{2}'.format(process.pid, process.pname, process.past)
             self.file.writeToTxtAdd(self.cache_file, tmp)
 
     def getTimeoutCache(self):
@@ -36,10 +37,11 @@ class ProcessTimeoutHandler():
             for item in pidTimeoutList:
                 if self.doraemon.isEmpty(item) is False:
                     tmp = item.split('-')
-                    if len(tmp) == 2:
+                    if len(tmp) == 3:
                         result.append(ProcessTimeoutDto(
                             int(tmp[0]),
-                            float(tmp[1]),
+                            tmp[1],
+                            float(tmp[2]),
                             False
                         ))
         return result
@@ -57,12 +59,15 @@ class ProcessTimeoutHandler():
             return result
         for p in curpids:
             pre = self.findTarget(p.pid, prepids)
-            if pre is not None and self.doraemon.isExceedTimeoutInterval(self.timeout, pre.past):
-                result.append(ProcessTimeoutDto(
-                    pre.pid,
-                    pre.past,
-                    True
-                ))
+            if pre is not None:
+                if (pre.pname == 'chrome' and self.doraemon.isExceedTimeoutInterval(self.timeout, pre.past)) or \
+                   (pre.pname == 'python' and self.doraemon.isExceedTimeoutInterval(self.timeout_content, pre.past)):
+                    result.append(ProcessTimeoutDto(
+                        pre.pid,
+                        pre.pname,
+                        pre.past,
+                        True
+                    ))
             else:
                 result.append(p)
         return result
@@ -75,10 +80,12 @@ class ProcessTimeoutHandler():
         for pid in pids:
             try:
                 p = psutil.Process(pid)
-                if p.name() == 'chrome':
+                pname = p.name()
+                if pname == 'chrome' or pname == 'python':
                     print 'Start to store process {0}.'.format(pid)
                     result.append(ProcessTimeoutDto(
                         pid,
+                        pname,
                         p._create_time,
                         False
                     ))

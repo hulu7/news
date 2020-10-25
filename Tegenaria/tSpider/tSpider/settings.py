@@ -23,6 +23,7 @@ class Settings():
         #timeout handler
         self.PROCESS_TIMEOUT = 2  # minutes
         self.TIMEOUT_CACHE_FILE = "/home/dev/Data/rsyncData/timeout.cache"
+        self.PROCESS_TIMEOUT_CONTENT = 60  # minutes
 
         #concurrency
         self.REFRESH_CONCURRENCY_INTERVAL = 30  #minute
