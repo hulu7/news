@@ -1,5 +1,5 @@
 */60 * * * * sh /home/dev/Repository/news/scripts/update_system_time.sh
-*/5 * * * * sh /home/dev/Repository/news/scripts/ServerManagement_restart.sh
+*/1 * * * * sh /home/dev/Repository/news/scripts/ServerManagement_restart.sh
 */1 * * * * sh /home/dev/Repository/news/scripts/adminMongo_restart.sh
 */5 * * * * sh /home/dev/Repository/news/scripts/mongoExport_prd4.sh
 */1 * * * * sh /home/dev/Repository/news/scripts/mongoRestart_prd4.sh
