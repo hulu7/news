@@ -2,8 +2,8 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-sys.path.append("/home/dev/Repository/news/Tegenaria/tSpider/tSpider/")
-from middlewares.fileIOMiddleware import FileIOMiddleware
+sys.path.append("/home/dev/Repository/news/")
+from Tegenaria.tSpider.tSpider.middlewares.fileIOMiddleware import FileIOMiddleware
 from datetime import timedelta
 from datetime import datetime
 import time
@@ -126,14 +126,16 @@ class Settings():
         self.FINISHED_IMAGE_ID = "finished:image_id"
 
         #temp folder for html and img
-        self.TEMP_FOLDER_HTML = "/home/dev/Data/Production/data4deepinews/html"
-        self.TEMP_FOLDER_IMG = "/home/dev/Data/Production/data4deepinews/img"
+        self.TEMP_FOLDER_HTML = '/home/dev/Data/Production/data4deepinews/html'
+        self.TEMP_FOLDER_IMG = '/home/dev/Data/Production/data4deepinews/img'
         self.FINISHED_TEMP_WEIXIN = "finished:temp_weixin"
 
         #remove server information
-        self.HOST_NAME = '223.111.139.227'
+        self.HOST_PASSWORD_FILE = '/home/dev/Repository/news/servers/webserver0.txt'
+        self.HOST_INFO = self.getServerInfo(self.HOST_PASSWORD_FILE)
+        self.HOST_NAME = self.HOST_INFO.ip
         self.USER_NAME = 'root'
-        self.PASSWORD = 'rerr48779'
+        self.PASSWORD = self.HOST_INFO.password
         self.PORT = 22
         self.REMOTE_IMG_PATH = '/home/dev/Data/Production/img_tmp'
         self.REMOTE_HTML_PATH = '/home/dev/Data/Production/html_tmp'
@@ -160,10 +162,12 @@ class Settings():
         self.LOCAL_HTML_PATH = "{0}/local".format(self.RSYNC_PRD1)
 
         # webserver0 html info
-        self.IP_WEBSERVER0 = "223.111.139.227"
+        self.WEBSERVER0_PASSWORD_FILE = '/home/dev/Repository/news/servers/webserver0.txt'
+        self.WEBSERVER0_INFO = self.getServerInfo(self.WEBSERVER0_PASSWORD_FILE)
+        self.IP_WEBSERVER0 = self.WEBSERVER0_INFO.ip
         self.PORT_WEBSERVER0 = 22
         self.USER_ROOT_WEBSERVER0 = "root"
-        self.USER_ROOT_PASSWORD_WEBSERVER0 = "rerr48779"
+        self.USER_ROOT_PASSWORD_WEBSERVER0 = self.WEBSERVER0_INFO.password
         self.HTML_WEBSERVER0 = "/home/dev/Data/Production/article"
         self.RETRY_FILE = "{0}/retry.txt".format(self.RSYNC_PRD1)
         self.UPLOAD_HTML_API = "https://www.deepinews.com/api/articles/uploadhtml"
@@ -185,6 +189,20 @@ class Settings():
         self.MONITOR_UPLOAD_LOCAL = "{0}/monitor".format(self.RSYNC_PRD1)
         self.MONITOR_UPLOAD_PATH_WEBSERVER0 = "/home/dev/Data/Production"
         self.MONITOR_SITE_HTML_WEBSERVER0 = "/home/dev/Data/Production/statics/sites"
+
+    def getServerInfo(self, file):
+        contents = self.file.readFromTxt(file)
+        machines = contents.split('\n')
+        result = None
+        for machine in machines:
+            if machine == '':
+                continue
+            info = machine.split('==')
+            result = machineDto(
+                info[0].strip(),
+                info[1].strip()
+            )
+        return result
 
     def SettingsFormat(self,
                        SETTINGS_NAME,
@@ -297,3 +315,17 @@ class settingsSpec():
         self.END_TIME = END_TIME
         self.URL_TIMEOUT = int(URL_TIMEOUT)
         self.CONTENT_TIMEOUT = int(CONTENT_TIMEOUT)
+
+class machineDto():
+    def __init__(self,
+                 ip,
+                 password):
+        self.ip = ip
+        self.password = password
+
+    def __getitem__(self, item):
+        if item == 'ip':
+            return self.ip
+        elif item == 'password':
+            return self.password
+

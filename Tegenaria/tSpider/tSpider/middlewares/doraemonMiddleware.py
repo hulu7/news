@@ -941,6 +941,18 @@ class camelDto():
         self.download_time = download_time
         self.source = source
 
+    def __getitem__(self, item):
+        if item == 'title':
+            return self.title
+        elif item == 'url':
+            return self.url
+        elif item == 'id':
+            return self.id
+        elif item == 'url':
+            return self.url
+        elif item == 'download_time':
+            return self.download_time
+
 class spiderDto():
     def __init__(self,
                  url,
@@ -966,12 +978,42 @@ class spiderDto():
         self.is_open_cache = is_open_cache
         self.content = content
 
+    def __getitem__(self, item):
+        if item == 'url':
+            return self.url
+        elif item == 'origin_url':
+            return self.origin_url
+        elif item == 'public_time':
+            return self.public_time
+        elif item == 'author_name':
+            return self.author_name
+        elif item == 'title':
+            return self.title
+        elif item == 'id':
+            return self.id
+        elif item == 'download_time':
+            return self.download_time
+        elif item == 'source':
+            return self.source
+        elif item == 'images':
+            return self.images
+        elif item == 'is_open_cache':
+            return self.is_open_cache
+        elif item == 'content':
+            return self.content
+
 class noNameDto():
     def __init__(self,
                  page_url,
                  authors):
         self.page_url = page_url
         self.authors = authors
+
+    def __getitem__(self, item):
+        if item == 'page_url':
+            return self.page_url
+        elif item == 'authors':
+            return self.authors
 
 class siteInfoDto():
     def __init__(self,
@@ -1030,9 +1072,71 @@ class siteInfoDto():
         self.url_timeout = url_timeout,
         self.content_timeout = content_timeout
 
+    def __getitem__(self, item):
+        if item == 'domain':
+            return self.domain
+        elif item == 'name':
+            return self.name
+        elif item == 'restart_interval':
+            return self.restart_interval
+        elif item == 'url_parallel_number':
+            return self.url_parallel_number
+        elif item == 'is_open_cache':
+            return self.is_open_cache
+        elif item == 'work_time_start':
+            return self.work_time_start
+        elif item == 'work_time_end':
+            return self.work_time_end
+        elif item == 'good_keys':
+            return self.good_keys
+        elif item == 'bad_keys':
+            return self.bad_keys
+        elif item == 'href_items':
+            return self.href_items
+        elif item == 'href':
+            return self.href
+        elif item == 'url_match':
+            return self.url_match
+        elif item == 'url_title_match':
+            return self.url_title_match
+        elif item == 'url_id_tag':
+            return self.url_id_tag
+        elif item == 'content_match':
+            return self.content_match
+        elif item == 'content_child_match':
+            return self.content_child_match
+        elif item == 'content_url_match':
+            return self.content_url_match
+        elif item == 'url_title_match':
+            return self.url_title_match
+        elif item == 'content_id_tag':
+            return self.content_id_tag
+        elif item == 'article_match':
+            return self.article_match
+        elif item == 'content_title_match':
+            return self.content_title_match
+        elif item == 'content_image_match':
+            return self.content_image_match
+        elif item == 'content_time_match':
+            return self.content_time_match
+        elif item == 'need_self_image':
+            return self.need_self_image
+        elif item == 'need_self_html':
+            return self.need_self_html
+        elif item == 'url_timeout':
+            return self.url_timeout
+        elif item == 'content_timeout':
+            return self.content_timeout
+
 class regxMatchDto():
     def __init__(self,
                  regx=None,
                  index=None):
         self.regx = regx
         self.index = index
+
+    def __getitem__(self, item):
+        if item == 'regx':
+            return self.regx
+        elif item == 'index':
+            return self.index
