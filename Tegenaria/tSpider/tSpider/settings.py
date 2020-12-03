@@ -141,6 +141,10 @@ class Settings():
         self.REMOTE_HTML_PATH = '/home/dev/Data/Production/html_tmp'
         self.MAX_UPLOAD_PROCESS = 20
 
+        #aliyun oss access token
+        self.ALI_OSS_TOKEN_FILE = '/home/dev/Repository/news/servers/aliyun.txt'
+        self.ALI_OSS_INFO = self.getServerInfo(self.ALI_OSS_TOKEN_FILE)
+
         #refresh the redis interval
         self.REFRESH_REDIS_INTERVAL = 1440
 
