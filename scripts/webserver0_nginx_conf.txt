@@ -44,8 +44,8 @@ http {
       #listen 80;
       server_name www.deepinews.com deepinews.com;
 
-      ssl_certificate /etc/letsencrypt/live/www.deepinews.com/fullchain.pem;
-      ssl_certificate_key /etc/letsencrypt/live/www.deepinews.com/privkey.pem;
+      ssl_certificate /etc/letsencrypt/live/www.deepinews.com/cert.crt;
+      ssl_certificate_key /etc/letsencrypt/live/www.deepinews.com/key.key;
       ssl_session_cache    shared:SSL:30m;
       ssl_session_timeout  1d;
       ssl_ciphers  ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
@@ -101,7 +101,7 @@ http {
 
    server {
         listen 10008;
-        server_name 223.111.139.227;
+        server_name www.deepinews.com deepinews.com;
         access_log  /nginx-logs/10008.access.log;
 
         location / {
@@ -117,7 +117,7 @@ http {
 
     server {
         listen       10001;
-        server_name  223.111.139.227;
+        server_name  www.deepinews.com deepinews.com;
 
         #charset koi8-r;
 
@@ -165,7 +165,7 @@ http {
 
     server {
         listen       10002;
-        server_name  223.111.139.227;
+        server_name  www.deepinews.com deepinews.com;
         access_log  /nginx-logs/10002.access.log;
         location / {
               proxy_pass http://localhost:8090;
@@ -192,7 +192,7 @@ http {
 
     server {
         listen       10003;
-        server_name  223.111.139.227;
+        server_name  www.deepinews.com deepinews.com;
         access_log  /nginx-logs/10003.access.log;
         location / {
               proxy_pass http://localhost:3000;
@@ -210,7 +210,7 @@ http {
 
     server {
         listen       10005;
-        server_name  223.111.139.227;
+        server_name  www.deepinews.com deepinews.com;
         access_log  /nginx-logs/10005.access.log;
         location / {
                    proxy_pass http://0.0.0.0:1234;
@@ -226,7 +226,7 @@ http {
 
     server {
         listen 10006;
-        server_name 223.111.139.227;
+        server_name www.deepinews.com deepinews.com;
         access_log  /nginx-logs/10006.access.log;
 
         root /Nginx/html/piwik;

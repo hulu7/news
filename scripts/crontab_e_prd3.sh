@@ -1,3 +1,6 @@
+*/5 * * * * echo 1 > /proc/sys/vm/drop_caches
+*/5 * * * * echo 2 > /proc/sys/vm/drop_caches
+*/5 * * * * echo 3 > /proc/sys/vm/drop_caches
 */30 * * * * sh /home/dev/Repository/news/scripts/update_system_time.sh
 */1 * * * * sh /home/dev/Repository/news/Tegenaria/tSpider/tSpider/restart/camel_restart.sh
 */5 * * * * sh /home/dev/Repository/news/scripts/prd3_2_prd4.sh
