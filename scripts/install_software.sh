@@ -91,7 +91,7 @@ echo '[global]
 index-url=http://pypi.douban.com/simple
 trusted-host = pypi.douban.com' >> pip.conf
 echo "******************************install pip upgrade"
-echo 'pip install --upgrade pip'
+echo 'python -m pip install pip==20.0.2'
 echo "******************************install pyOpenSSL"
 echo 'y' | pip uninstall pyOpenSSL
 pip install pyOpenSSL==0.13.1
@@ -183,11 +183,12 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.0.asc
 echo 'y' | yum install -y mongodb-org
 echo "******************************install Nodejs"
 cd '/opt/'
-wget https://nodejs.org/dist/v10.13.0/node-v10.13.0.tar.gz
-tar -zxvf node-v10.13.0.tar.gz
-cd 'node-v10.13.0'
-./configure
-make && make install
+wget https://nodejs.org/dist/v10.16.3/node-v10.16.3-linux-x64.tar.xz
+xz -d node-v10.16.3-linux-x64.tar.xz
+tar xf node-v10.16.3-linux-x64.tar
+mv node-v10.16.3-linux-x64 nodejs
+ln -sv '/opt/nodejs/bin/npm' '/usr/local/bin/'
+ln -sv '/opt/nodejs/bin/node' '/usr/local/bin/'
 echo "******************************install Redis"
 cd '/usr/local/'
 wget https://github.com/antirez/redis/archive/4.0.11.tar.gz

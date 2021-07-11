@@ -89,34 +89,29 @@ class UpdateMongoDeepNews():
     def updateData(self):
         if os.path.exists(self.rootPath) is False:
             os.makedirs(self.rootPath)
-        tik = 120
-        while tik > 0:
-            tik -= 1
-            time.sleep(1)
-            try:
-                currentUrl = ''
-                if os.path.exists(self.path):
-                    message1 = "file: {0} exits and start to update mongo.".format(self.path)
-                    print message1
-                    raw_data = self.readFromCSV(self.path)
-                    data_length = len(raw_data)
-                    if data_length < 2:
-                        print "no mongo data to update."
-                    else:
-                        for i in range(1, data_length):
-                            currentUrl = raw_data[i][1]
-                            self.insert(self.formatData(raw_data[i]))
-                            message2 = 'mongo {0} is updated.'.format(currentUrl)
-                            print message2
-                            self.logger(self.logpath, message2)
-                        print "update done."
-                    os.remove(self.path)
-                    print "file: {0} delete done.".format(self.path)
-                    print "waiting..."
-            except Exception as e:
-                message3 = "Exception: {0} to update mongo: {1}.".format(e.message, currentUrl)
-                print message3
-                self.logger(self.logpath, message3)
+        try:
+            currentUrl = ''
+            if os.path.exists(self.path):
+                message1 = "file: {0} exits and start to update mongo.".format(self.path)
+                print message1
+                raw_data = self.readFromCSV(self.path)
+                data_length = len(raw_data)
+                if data_length < 2:
+                    print "no mongo data to update."
+                else:
+                    for i in range(1, data_length):
+                        currentUrl = raw_data[i][1]
+                        self.insert(self.formatData(raw_data[i]))
+                        message2 = 'mongo {0} is updated.'.format(currentUrl)
+                        print message2
+                        self.logger(self.logpath, message2)
+                    print "update done."
+                os.remove(self.path)
+                print "file: {0} delete done.".format(self.path)
+        except Exception as e:
+            message3 = "Exception: {0} to update mongo: {1}.".format(e.message, currentUrl)
+            print message3
+            self.logger(self.logpath, message3)
 
 if __name__ == '__main__':
     u = UpdateMongoDeepNews()
