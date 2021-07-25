@@ -341,6 +341,7 @@ class StoreFiles():
             self.image_count = 0
             newData = copy.copy(data)
             newArticleId = self.doraemon.getMD5('{0}_{1}'.format(data.author_name, data.id))
+            data.new_id = newArticleId
             newData.url = '{0}{1}.html'.format(self.articleurl, newArticleId)
             template = self.file.readFromTxt(self.templatepath)
             match = self.parseContentRegxRule(content_regx_rule)
@@ -382,17 +383,7 @@ class StoreFiles():
                                            newData.public_time,
                                            articleContent,
                                            data.url)
-            if self.doraemon.storeHtml(newArticleId, template, self.htmlpath):
-                htmlName = '{0}.html'.format(newArticleId)
-                fromFile = '{0}/{1}'.format(self.htmlpath, htmlName)
-                toFile = '{0}/{1}'.format(self.localhtmlpath, htmlName)
-                if self.doraemon.copyFile(fromFile, toFile):
-                    print 'Copy file {0} done.'.format(fromFile)
-                    return newData
-                else:
-                    message1 = 'Copy file {0} fail.'.format(fromFile)
-                    print message1
-                    self.file.logger(self.logpath, message1)
+            self.doraemon.storeHtml(newArticleId, template, self.htmlpath)
             return data
         except Exception as e:
             message2 = 'Exception {0} when update : {1}'.format(e.message, data.url)

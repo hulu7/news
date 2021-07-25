@@ -19,6 +19,7 @@ class CommitData():
     def __init__(self):
         self.rconn = redis.Redis('127.0.0.1', 6379)
         self.bf_huxiu = BloomFilter(self.rconn, 'supplier:commit_huxiu')
+        self.local_content_path = '/home/dev/Data/rsyncData/prd4'
         self.class_finished_path = '/home/dev/Data/Production/catalogs'
         self.today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         self.log_path = '/home/dev/Data/Production/log/{0}_log.log'.format(self.today)
@@ -141,25 +142,33 @@ class CommitData():
         today_int = int(str(self.today).replace('-', ''))
         commit_csv_exists = os.path.exists(commit_csv_path)
         if commit_csv_exists is False:
-            self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source', 'author_name', 'images'])
+            self.writeToCSVWithoutHeader(commit_csv_path, ['id', 'new_id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source', 'author_name', 'images'])
 
         for data in current_catalog_data:
             if current_catalog_data.index(data) == 0:
                 continue
-            if source_name != data[8]:
+            if source_name != data[9]:
                 continue
-            if len(data[3]) == 0:
+            if len(data[4]) == 0:
                 continue
 
-            item_date_int = int(data[3])
+            item_date_int = int(data[4])
             if item_date_int >= today_int:
                 id = data[0].replace('\xef\xbb\xbf','')
-                title = data[1]
+                new_id = data[1]
+                title = data[2]
                 if self.isDuplicated(title, self.bf) is False:
-                    file = '{0}_{1}.txt'.format(source_name, id)
-                    origin_txt_path = '{0}/{1}/txt/{2}'.format(self.class_finished_path, catalog_name, file)
-                    destination_txt_path = '{0}/{1}'.format(customer_data_folder_txt, file)
+                    # txt copy
+                    txt_file = '{0}_{1}.txt'.format(source_name, id)
+                    origin_txt_path = '{0}/{1}/txt/{2}'.format(self.class_finished_path, catalog_name, txt_file)
+                    destination_txt_path = '{0}/{1}'.format(customer_data_folder_txt, txt_file)
                     origin_txt_exists = os.path.exists(origin_txt_path)
+
+                    # html copy
+                    html_file = '{0}.html'.format(new_id)
+                    origin_html_path = '{0}/sites/{1}/html/{2}/{3}'.format(self.local_content_path, source_name, self.today, html_file)
+                    destination_html_path = '{0}/local/{1}'.format(self.local_content_path, html_file)
+
                     if origin_txt_exists is False:
                         continue
                     content_txt = self.readFromTxt(origin_txt_path)
@@ -168,6 +177,7 @@ class CommitData():
                     content = content_txt[0]
                     if customer_id in ['dn201949100', 'dn201900001']:
                         if self.isDuplicated(title, self.bf_huxiu) is False and self.isContentForRightCatalog(content, title) is True and self.isTitleForRightCatalog(title) is True:
+                            copyfile(origin_html_path, destination_html_path)
                             self.storeFinished(title, self.bf_huxiu)
                         else:
                             continue

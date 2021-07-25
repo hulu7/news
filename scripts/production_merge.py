@@ -137,9 +137,9 @@ class ProductionMerge():
                 self.writeToCSVWithoutHeader(out_csv_file, ['title', 'url', 'time', 'catalog', 'user', 'source', 'images'])
 
             for item in csv_content[1:]:
-                if self.isDuplicated(item[1]) is True:
+                if self.isDuplicated(item[2]) is True:
                     for content in output_content:
-                        if content[0] == item[1]:
+                        if content[0] == item[2]:
                             if user not in content[4]:
                                 content[4] = "{0},{1}".format(content[4], user)
                     continue
@@ -148,8 +148,8 @@ class ProductionMerge():
                     continue
                 if item[3] == '':
                     item[3] = str(self.today).replace('-', '')
-                output_content.append([item[1], item[2], item[3], catalog[item[4]], user, item[7], item[9]])
-                self.storeFinished(item[1])
+                output_content.append([item[2], item[3], item[4], catalog[item[5]], user, item[8], item[10]])
+                self.storeFinished(item[2])
 
         for content in output_content:
             self.writeToCSVWithoutHeader(out_csv_file, content)

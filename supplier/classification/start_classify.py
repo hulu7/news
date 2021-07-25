@@ -136,11 +136,12 @@ class UpdateProductionClass():
             else:
                 self.writeToCSVWithoutHeader(catalog_cache_path, ['id'])
             if isCatalogFileExists is False:
-                self.writeToCSVWithoutHeader(catalog_path, ['id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source', 'author_name', 'images'])
+                self.writeToCSVWithoutHeader(catalog_path, ['id', 'new_id', 'title', 'url', 'time', 'catalog', 'deep', 'is_open_cache', 'source', 'author_name', 'images'])
         total = '0'
         for item in content:
             if content.index(item) == 0:
                 self.id_index = item.index('id')
+                self.new_id_index = item.index('new_id')
                 self.title_index = item.index('title')
                 self.url_index = item.index('url')
                 self.time_index = item.index('download_time')
@@ -150,6 +151,7 @@ class UpdateProductionClass():
                 self.images = item.index('images')
                 continue
             id = item[self.id_index]
+            new_id = item[self.new_id_index]
             title = item[self.title_index]
             url = item[self.url_index]
             time_ = item[self.time_index]
@@ -174,7 +176,7 @@ class UpdateProductionClass():
                 self.writeToCSVWithoutHeader(catalog_cache_path, [id])
                 self.finishedIds.append(id)
                 self.storeFinished(title)
-                self.writeToCSVWithoutHeader(catalog_path, [id, title, url, YMD, catalog, deep, is_open_cache, source, author_name, images])
+                self.writeToCSVWithoutHeader(catalog_path, [id, new_id, title, url, YMD, catalog, deep, is_open_cache, source, author_name, images])
                 origin_txt_path = '{0}/{1}'.format(self.txt_path, file)
                 classed_txt_path = '{0}/{1}/txt/{2}'.format(self.class_finished_path, catalog, file)
                 copyfile(origin_txt_path, classed_txt_path)

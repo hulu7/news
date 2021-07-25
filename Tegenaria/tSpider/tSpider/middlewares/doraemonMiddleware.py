@@ -705,6 +705,7 @@ class Doraemon():
             'author_name': spiderDto.author_name,
             'title': spiderDto.title,
             'id': spiderDto.id,
+            'new_id': spiderDto.new_id,
             'download_time': spiderDto.download_time,
             'source': spiderDto.source,
             'images': spiderDto.images,
@@ -972,6 +973,7 @@ class spiderDto():
         self.author_name = author_name
         self.title = title
         self.id = id
+        self.new_id = ''
         self.download_time = download_time
         self.source = source
         self.images = images
