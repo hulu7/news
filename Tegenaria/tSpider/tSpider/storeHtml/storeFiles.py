@@ -341,7 +341,7 @@ class StoreFiles():
             self.image_count = 0
             newData = copy.copy(data)
             newArticleId = self.doraemon.getMD5('{0}_{1}'.format(data.author_name, data.id))
-            data.new_id = newArticleId
+            newData.new_id = newArticleId
             newData.url = '{0}{1}.html'.format(self.articleurl, newArticleId)
             template = self.file.readFromTxt(self.templatepath)
             match = self.parseContentRegxRule(content_regx_rule)
@@ -384,7 +384,7 @@ class StoreFiles():
                                            articleContent,
                                            data.url)
             self.doraemon.storeHtml(newArticleId, template, self.htmlpath)
-            return data
+            return newData
         except Exception as e:
             message2 = 'Exception {0} when update : {1}'.format(e.message, data.url)
             print message2
